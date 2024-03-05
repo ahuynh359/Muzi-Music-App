@@ -7,4 +7,7 @@
     <string name="recently_played">Recently played</string>
     <string name="spotifywrapped">#SPOTIFYWRAPPED</string>
     <string name="your_2024_in_review">Your 2024 in review</string>
+    <string name="your_albums">Your albums</string>
+    <string name="your_songs">Your songs</string>
+    <string name="your_artists">Your artists</string>
 </resources>
