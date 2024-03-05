@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.ahuynh.muzimusic.databinding.FragmentHomeBinding;
 import com.ahuynh.muzimusic.databinding.FragmentSearchBinding;
-import com.ahuynh.muzimusic.ui.base.BaseFragment;
 
 public class SearchFragment extends Fragment {
 

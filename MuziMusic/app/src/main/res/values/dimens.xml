@@ -7,4 +7,10 @@
     <dimen name="_15dp">15dp</dimen>
     <dimen name="_24dp">24dp</dimen>
     <dimen name="_22dp">22dp</dimen>
+    <dimen name="_17dp">17dp</dimen>
+    <dimen name="_108dp">108dp</dimen>
+    <dimen name="_20dp">20dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_47dp">47dp</dimen>
+    <dimen name="_10dp">10dp</dimen>
 </resources>

@@ -5,4 +5,6 @@
     <string name="chart">Chart</string>
     <string name="library">Library</string>
     <string name="recently_played">Recently played</string>
+    <string name="spotifywrapped">#SPOTIFYWRAPPED</string>
+    <string name="your_2024_in_review">Your 2024 in review</string>
 </resources>
