@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.daggerHilt)
+
 }
 
 android {
@@ -37,19 +37,20 @@ android {
 
 dependencies {
 
+
+    //View Model
+    implementation (libs.lifecycle.viewmodel)
+    implementation (libs.lifecycle.common.java8)
+
+    //Glide
+    implementation (libs.glide)
+
     //Circle image view
     implementation (libs.circleimageview)
-
-    //Navigation Graph
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
 
     //Splash
     implementation(libs.core.splashscreen)
 
-    //Dagger Hilt
-    implementation (libs.hilt.android)
-    annotationProcessor (libs.hilt.compiler)
 
     implementation(libs.appcompat)
     implementation(libs.material)

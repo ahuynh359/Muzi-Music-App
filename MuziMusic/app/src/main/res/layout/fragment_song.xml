@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.component.song.SongFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_27dp"
+        android:layout_marginTop="@dimen/_17dp"
+        android:drawableStart="@drawable/ic_sort"
+        android:text="@string/recents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_21dp"
+        android:background="@null"
+        android:src="@drawable/ic_grid"
+        app:layout_constraintBottom_toBottomOf="@id/btn_sort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_sort" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imv_song"
+        android:layout_width="@dimen/_58dp"
+        android:layout_height="@dimen/_58dp"
+        android:layout_marginTop="@dimen/_25dp"
+        android:src="@drawable/song"
+        android:text="@string/recently_played"
+        app:layout_constraintStart_toStartOf="@id/btn_sort"
+        app:layout_constraintTop_toBottomOf="@id/btn_sort" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_spotify"
+        style="@style/TextRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8dp"
+        android:text="@string/spotifywrapped"
+        android:textColor="@color/dusty_gray"
+        app:layout_constraintBottom_toTopOf="@+id/tv_songs"
+        app:layout_constraintStart_toEndOf="@id/imv_song"
+        app:layout_constraintTop_toTopOf="@id/imv_song" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_songs"
+        style="@style/TextTitleBig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_songs"
+        app:layout_constraintBottom_toBottomOf="@id/imv_song"
+        app:layout_constraintStart_toStartOf="@id/tv_spotify"
+        app:layout_constraintTop_toBottomOf="@id/tv_spotify" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcy_songs"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="@id/btn_grid"
+        app:layout_constraintStart_toStartOf="@id/btn_sort"
+        app:layout_constraintTop_toBottomOf="@id/imv_song"
+        tools:listitem="@layout/item_song" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,44 +5,55 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.splashscreen.SplashScreen;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
 
 import com.ahuynh.muzimusic.R;
 import com.ahuynh.muzimusic.databinding.ActivityMainBinding;
+import com.ahuynh.muzimusic.ui.component.album.AlbumFragment;
+import com.ahuynh.muzimusic.ui.component.artist.ArtistFragment;
+import com.ahuynh.muzimusic.ui.component.chart.ChartFragment;
+import com.ahuynh.muzimusic.ui.component.song.SongFragment;
 
-import dagger.hilt.android.AndroidEntryPoint;
 
-@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //EdgeToEdge.enable(this);
+
         SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+
+        //Không cho theme tối
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
-        setUpNavigationGraph();
+        setUpBottomNav();
 
     }
+    
+    private void setUpBottomNav() {
 
-    private void setUpNavigationGraph() {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        NavController navController = navHostFragment.getNavController();
+        binding.btmNav.setOnItemSelectedListener(menuItem -> {
+            Fragment currentFragment = null;
+            int itemId = menuItem.getItemId();
 
-        NavigationUI.setupWithNavController(
-                binding.btmNav, navController
-        );
+            if (itemId == R.id.songFragment) {
+                currentFragment = new SongFragment();
+            } else if (itemId == R.id.albumFragment) {
+                currentFragment = new AlbumFragment();
+            } else if (itemId == R.id.artistFragment) {
+                currentFragment = new ArtistFragment();
+            } else if (itemId == R.id.chartFragment) {
+                currentFragment = new ChartFragment();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, currentFragment).commit();
+            return true;
+        });
     }
+
+
 }
