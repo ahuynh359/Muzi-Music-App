@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
-
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -37,6 +37,15 @@ android {
 
 dependencies {
 
+    implementation(libs.reactivestreams)
+
+    //Rx Java
+    implementation (libs.rxjava)
+    implementation (libs.rxandroid)
+
+    //Dagger Hilt
+    implementation (libs.hilt.android)
+    annotationProcessor (libs.hilt.compiler)
     //Glide
     implementation (libs.glide)
 

@@ -20,7 +20,6 @@ public class MusicLibraryHelper {
         public static   List<Song> fetchMusicLibrary(Context context) {
             String collection;
             List<Song> songList = new ArrayList<>();
-            Log.d("ABCDE1",Integer.toString(songList.size()));
             if (VersionHelper.isVersionQ())
                 collection = MediaStore.Audio.Media.BUCKET_DISPLAY_NAME;
             else
@@ -32,7 +31,7 @@ public class MusicLibraryHelper {
                     MediaStore.Audio.Media.TRACK,
                     MediaStore.Audio.Media.TITLE,
                     MediaStore.Audio.Media.DISPLAY_NAME,
-                    MediaStore.Audio.Media.DURATION,  // error from android side, it works < 29
+                    MediaStore.Audio.Media.DURATION,
                     MediaStore.Audio.Media.ALBUM_ID,
                     MediaStore.Audio.Media.ALBUM,
                     collection,
@@ -103,7 +102,6 @@ public class MusicLibraryHelper {
 
             if (!musicCursor.isClosed())
                 musicCursor.close();
-            Log.d("ABCDE",Integer.toString(songList.size()));
             return songList;
         }
 }

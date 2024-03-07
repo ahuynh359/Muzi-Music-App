@@ -17,9 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.ahuynh.muzimusic.MainViewModel;
 import com.ahuynh.muzimusic.R;
 import com.ahuynh.muzimusic.databinding.ActivityMainBinding;
 import com.ahuynh.muzimusic.ui.component.album.AlbumFragment;
@@ -28,14 +26,16 @@ import com.ahuynh.muzimusic.ui.component.chart.ChartFragment;
 import com.ahuynh.muzimusic.ui.component.song.SongFragment;
 import com.ahuynh.muzimusic.utils.PermissionHelper;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
 
     private ActivityMainBinding binding;
     private Fragment currentFragment;
-    private MainViewModel viewModel;
 
 
     @Override
@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
 
         setUpBottomNav();
 
+
     }
+
+
 
     private void checkAndRequestPermissions() {
         if (!PermissionHelper.hasPermissions(MainActivity.this)) {

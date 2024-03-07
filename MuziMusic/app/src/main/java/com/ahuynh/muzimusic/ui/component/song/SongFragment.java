@@ -11,24 +11,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ahuynh.muzimusic.MainViewModel;
 import com.ahuynh.muzimusic.databinding.FragmentSongBinding;
 import com.ahuynh.muzimusic.model.Song;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SongFragment extends Fragment {
 
     private FragmentSongBinding binding;
-    private MainViewModel viewModel;
+    private SongViewModel viewModel;
     private SongAdapter adapter;
     private List<Song> songList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(SongViewModel.class);
         songList = new ArrayList<>();
 
     }
@@ -51,9 +53,9 @@ public class SongFragment extends Fragment {
     }
 
     private void setUpSongList() {
-        viewModel.loadSongsFromLocal(getActivity());
-        viewModel.getSongList().observe(getViewLifecycleOwner(), songs -> {
-            adapter =  new SongAdapter(songList);
+
+        viewModel.getSongList(requireActivity()).observe(getViewLifecycleOwner(), songs -> {
+            adapter =  new SongAdapter(songs);
             binding.rcySongs.setLayoutManager(new LinearLayoutManager(getActivity()));
             binding.rcySongs.setAdapter(adapter);
         });
