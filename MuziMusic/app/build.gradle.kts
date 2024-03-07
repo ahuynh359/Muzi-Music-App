@@ -37,11 +37,6 @@ android {
 
 dependencies {
 
-
-    //View Model
-    implementation (libs.lifecycle.viewmodel)
-    implementation (libs.lifecycle.common.java8)
-
     //Glide
     implementation (libs.glide)
 
