@@ -12,10 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ahuynh.muzimusic.databinding.FragmentSongBinding;
-import com.ahuynh.muzimusic.model.Song;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -25,13 +21,14 @@ public class SongFragment extends Fragment {
     private FragmentSongBinding binding;
     private SongViewModel viewModel;
     private SongAdapter adapter;
-    private List<Song> songList;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SongViewModel.class);
-        songList = new ArrayList<>();
+        viewModel = new ViewModelProvider(requireActivity()).get(SongViewModel.class);
+
+
 
     }
 
@@ -40,6 +37,7 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSongBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         return view;
     }
 
@@ -50,12 +48,13 @@ public class SongFragment extends Fragment {
         setUpSongList();
 
 
+
     }
 
     private void setUpSongList() {
 
-        viewModel.getSongList(requireActivity()).observe(getViewLifecycleOwner(), songs -> {
-            adapter =  new SongAdapter(songs);
+        viewModel.getSongList().observe(getViewLifecycleOwner(), songs -> {
+            adapter = new SongAdapter(songs);
             binding.rcySongs.setLayoutManager(new LinearLayoutManager(getActivity()));
             binding.rcySongs.setAdapter(adapter);
         });
@@ -70,4 +69,6 @@ public class SongFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

@@ -1,30 +1,35 @@
 package com.ahuynh.muzimusic.ui.component.song;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ahuynh.muzimusic.databinding.ItemGeneralRoundBigVerticalBinding;
-import com.ahuynh.muzimusic.model.Song;
+import com.ahuynh.muzimusic.databinding.ItemSongBinding;
+import com.ahuynh.muzimusic.data.model.Song;
+import com.ahuynh.muzimusic.utils.MusicLibraryHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
-    private final List<Song> songList;
-    //public final ISongSelectListener listener;
+    public static List<Song> songList = new ArrayList<>();
+
 
     public SongAdapter(List<Song> songList) {
-        this.songList = songList;
-        //this.listener = listener;
+        SongAdapter.songList = songList;
+
     }
 
     @NonNull
     @Override
     public SongAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemGeneralRoundBigVerticalBinding binding = ItemGeneralRoundBigVerticalBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemSongBinding binding = ItemSongBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -40,15 +45,25 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ItemGeneralRoundBigVerticalBinding binding;
+        private ItemSongBinding binding;
 
-        public ViewHolder(@NonNull ItemGeneralRoundBigVerticalBinding binding) {
+        public ViewHolder(@NonNull ItemSongBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(binding.getRoot().getContext(), "Clicj item " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
         public void bind(Song song) {
-            binding.tvName.setText(song.displayName);
+
+            binding.tvNameSong.setText(song.getDisplayName());
+            binding.tvSinger.setText(song.getArtist());
+            Bitmap imv = MusicLibraryHelper.getThumbnail(binding.getRoot().getContext(), song.getAlbumArt());
+            if (imv != null)
+                binding.imvSong.setImageBitmap(imv);
 
         }
 

@@ -3,14 +3,18 @@ package com.ahuynh.muzimusic.utils;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import com.ahuynh.muzimusic.R;
-import com.ahuynh.muzimusic.model.Song;
+import com.ahuynh.muzimusic.data.model.Song;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,4 +108,20 @@ public class MusicLibraryHelper {
                 musicCursor.close();
             return songList;
         }
+
+    public static Bitmap getThumbnail(Context context, String uri) {
+        try {
+            ParcelFileDescriptor fileDescriptor = context.getContentResolver().openFileDescriptor(Uri.parse(uri), "r");
+            if (uri == null) {
+                return null;
+            }
+
+            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor.getFileDescriptor());
+            fileDescriptor.close();
+            return bitmap;
+        } catch (IOException e) {
+            Log.d("ABC", "Error when decode image");
+            return null;
+        }
+    }
 }

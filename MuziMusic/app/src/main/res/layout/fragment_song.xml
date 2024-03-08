@@ -15,7 +15,7 @@
         android:drawableStart="@drawable/ic_sort"
         android:text="@string/recents"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/imv_song" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_grid"
@@ -29,14 +29,15 @@
         app:layout_constraintTop_toTopOf="@id/btn_sort" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:layout_marginStart="@dimen/_27dp"
+        android:layout_marginTop="@dimen/_17dp"
         android:id="@+id/imv_song"
         android:layout_width="@dimen/_58dp"
         android:layout_height="@dimen/_58dp"
-        android:layout_marginTop="@dimen/_25dp"
         android:src="@drawable/song"
         android:text="@string/recently_played"
-        app:layout_constraintStart_toStartOf="@id/btn_sort"
-        app:layout_constraintTop_toBottomOf="@id/btn_sort" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_spotify"
@@ -64,12 +65,12 @@
         android:id="@+id/rcy_songs"
         android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_10dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="@id/btn_grid"
         app:layout_constraintStart_toStartOf="@id/btn_sort"
-        app:layout_constraintTop_toBottomOf="@id/imv_song"
+        app:layout_constraintTop_toBottomOf="@id/btn_sort"
         tools:listitem="@layout/item_song" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -17,14 +18,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.ahuynh.muzimusic.R;
+import com.ahuynh.muzimusic.data.model.Song;
 import com.ahuynh.muzimusic.databinding.ActivityMainBinding;
 import com.ahuynh.muzimusic.ui.component.album.AlbumFragment;
 import com.ahuynh.muzimusic.ui.component.artist.ArtistFragment;
 import com.ahuynh.muzimusic.ui.component.chart.ChartFragment;
 import com.ahuynh.muzimusic.ui.component.song.SongFragment;
+import com.ahuynh.muzimusic.ui.component.song.SongViewModel;
+import com.ahuynh.muzimusic.utils.MusicLibraryHelper;
 import com.ahuynh.muzimusic.utils.PermissionHelper;
+
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Fragment currentFragment;
+    private SongViewModel viewModel;
 
 
     @Override
@@ -49,14 +57,25 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        viewModel = new ViewModelProvider(this).get(SongViewModel.class);
 
 
         setUpBottomNav();
+        loadData();
 
 
     }
 
+    private void loadData() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                List<Song> songList = MusicLibraryHelper.fetchMusicLibrary(MainActivity.this);
+                viewModel.setSongList(songList);
+            }
+        });
+
+    }
 
 
     private void checkAndRequestPermissions() {

@@ -37,7 +37,9 @@ android {
 
 dependencies {
 
-    implementation(libs.reactivestreams)
+    //Room
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
 
     //Rx Java
     implementation (libs.rxjava)

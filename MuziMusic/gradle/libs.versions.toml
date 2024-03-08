@@ -13,6 +13,7 @@ material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 reactivestreams = "1.1.1"
+roomRuntime = "2.6.1"
 rxandroid = "3.0.0"
 rxjava = "3.1.2"
 
@@ -31,6 +32,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 reactivestreams = { module = "android.arch.lifecycle:reactivestreams", version.ref = "reactivestreams" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 

@@ -10,10 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ahuynh.muzimusic.databinding.FragmentHomeBinding;
+import com.ahuynh.muzimusic.ui.component.song.SongViewModel;
 
 
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
+
 
     @Override
     public View onCreateView (LayoutInflater inflater,
@@ -21,6 +23,7 @@ public class HomeFragment extends Fragment {
                               Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         return view;
     }
 
