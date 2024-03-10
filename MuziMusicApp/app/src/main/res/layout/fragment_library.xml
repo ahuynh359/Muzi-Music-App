@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.component.library.LibraryFragment">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imv_avatar"
+        android:layout_width="@dimen/_35dp"
+        android:layout_height="@dimen/_35dp"
+        android:layout_marginStart="@dimen/_12dp"
+        android:layout_marginTop="@dimen/_35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:text="@string/your_library"
+        app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
+        app:layout_constraintStart_toEndOf="@id/imv_avatar"
+        app:layout_constraintTop_toTopOf="@id/imv_avatar" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_add_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_15dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imv_avatar" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        app:layout_constraintStart_toStartOf="@id/imv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/imv_avatar"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_song"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/songs"
+            android:textAppearance="@style/ChipText" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_album"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/albums"
+            android:textAppearance="@style/ChipText" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_artist"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/artists"
+            android:textAppearance="@style/ChipText" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_playlist"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/playlists"
+            android:textAppearance="@style/ChipText" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_recent"
+        style="@style/TextBoldSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_3dp"
+        android:layout_marginTop="@dimen/_20dp"
+        android:drawableStart="@drawable/ic_sort"
+        android:text="@string/recents"
+        app:layout_constraintStart_toStartOf="@id/imv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/chip_group" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_grid"
+        android:text="@string/recents"
+        app:layout_constraintBottom_toBottomOf="@id/btn_recent"
+        app:layout_constraintEnd_toEndOf="@id/btn_add_playlist"
+        app:layout_constraintTop_toTopOf="@id/btn_recent" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn_add_playlist"
+        app:layout_constraintStart_toStartOf="@id/imv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/btn_recent"
+        android:layout_marginTop="14dp"
+        android:id="@+id/shimmer_recyclerview"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_0dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+            <include layout="@layout/item_song_shimmer"/>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/rcy_item"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_0dp"
+        android:layout_marginTop="14dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn_add_playlist"
+        app:layout_constraintStart_toStartOf="@id/imv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/btn_recent"
+        tools:listitem="@layout/item_song" />
+
+
+<!--    <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--        app:indicatorColor="@color/white"-->
+<!--        android:indeterminate="true"-->
+<!--        android:id="@+id/progress_circular"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

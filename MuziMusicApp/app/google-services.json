@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "490772719461",
+    "project_id": "muzimusic-c2598",
+    "storage_bucket": "muzimusic-c2598.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490772719461:android:72b952ec699eca6864238c",
+        "android_client_info": {
+          "package_name": "com.ahuynh.muzimusicapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAclPTnRN8TDzoyUysqxCK2oF8g8Brafu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

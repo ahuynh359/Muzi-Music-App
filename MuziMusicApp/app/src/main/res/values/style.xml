@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="TextTitleBig" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">26dp</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+    <style name="TextTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">19sp</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+
+    <style name="TextHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+
+    <style name="TextRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/regular</item>
+    </style>
+
+    <style name="TextMedium" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="CustomChip" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconEnabled">false</item>
+        <item name="checkedIcon">@null</item>
+        <item name="chipBackgroundColor">@color/bg_chip</item>
+        <item name="android:textColor">@color/text_chip</item>
+    </style>
+
+    <style name="ChipText" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+
+    <style name="TextBold" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+
+    <style name="TextBoldSmall" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/bold</item>
+    </style>
+</resources>
