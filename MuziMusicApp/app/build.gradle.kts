@@ -44,9 +44,14 @@ android {
 }
 
 dependencies {
+    //Media3
+    implementation(libs.androidx.media3.datasource.okhttp)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.exoplayer)
+
     //Eventbus
     implementation(libs.eventbus)
-
 
     //Shimmer
     implementation (libs.shimmer)
@@ -57,6 +62,7 @@ dependencies {
 
     //Firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
 
     //Glide
     implementation (libs.glide)
@@ -70,13 +76,15 @@ dependencies {
 
     //Dagger Hilt
     implementation(libs.hilt.android)
-    implementation(libs.firebase.firestore)
-    implementation(libs.androidx.ui.android)
     kapt(libs.hilt.android.compiler)
 
     //Splash Screen
     implementation(libs.androidx.core.splashscreen)
 
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.ui.android)
+    implementation (libs.androidx.core.ktx)
+    implementation (libs.androidx.media)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
