@@ -13,8 +13,7 @@ object Constants {
     const val ACTION_ADD_SONG_TAIL = 18
 
 
-    const val NOTIFICATION_ID = 101
-    const val NOTIFICATION_CHANNEL_NAME = "com.muzimusicapp.MuziMusic"
+    const val NOTIFICATION_CHANNEL_NAME = "Muzi Music"
     const val NOTIFICATION_CHANNEL_ID = "101"
 
 

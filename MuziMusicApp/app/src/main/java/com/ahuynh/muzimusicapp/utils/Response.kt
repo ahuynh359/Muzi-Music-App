@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.model
+package com.ahuynh.muzimusicapp.utils
 
 sealed class Response<out T> {
     data object Loading: Response<Nothing>()
