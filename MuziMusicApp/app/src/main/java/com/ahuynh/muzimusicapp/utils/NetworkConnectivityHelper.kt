@@ -6,7 +6,7 @@ import android.net.Network
 import androidx.lifecycle.LiveData
 
 
-class NetworkConnectivityHelper(context: Context) : LiveData<Status>() {
+class NetworkConnectivityHelper(context: Context) : LiveData<Boolean>() {
 
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
             as ConnectivityManager
@@ -15,24 +15,23 @@ class NetworkConnectivityHelper(context: Context) : LiveData<Status>() {
     private val callback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            postValue(Status.Available)
+            postValue(true)
         }
 
         override fun onUnavailable() {
             super.onUnavailable()
-            postValue(Status.Unavailable)
+            postValue(false)
         }
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            postValue(Status.Unavailable)
+            postValue(false)
         }
     }
 
     override fun onActive() {
         super.onActive()
-
-        postValue(Status.Unavailable)
+        postValue(false)
         connectivityManager.registerDefaultNetworkCallback(callback)
     }
 
@@ -42,6 +41,3 @@ class NetworkConnectivityHelper(context: Context) : LiveData<Status>() {
     }
 }
 
-enum class Status {
-    Available, Unavailable
-}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/player"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_bg_square"
+    android:padding="@dimen/_10dp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imv_song"
+        android:layout_width="@dimen/_38dp"
+        android:layout_height="@dimen/_38dp"
+        android:background="@drawable/custom_bg_square"
+        android:src="@drawable/harry_styles"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:fontFamily="@font/medium"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_singer"
+        app:layout_constraintStart_toEndOf="@id/imv_song"
+        app:layout_constraintTop_toTopOf="@id/imv_song"
+        tools:text="Easy" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:textColor="#B3B3B3"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/imv_song"
+        app:layout_constraintStart_toStartOf="@id/tv_song"
+        app:layout_constraintTop_toBottomOf="@id/tv_song"
+        tools:text="Troye Sivan" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_play_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

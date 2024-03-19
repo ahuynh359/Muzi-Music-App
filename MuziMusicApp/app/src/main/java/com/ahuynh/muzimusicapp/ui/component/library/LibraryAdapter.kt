@@ -17,6 +17,11 @@ class LibraryAdapter(private val listener: OnItemClicked) :
 
     inner class ViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClicked(currentList[layoutPosition])
+            }
+        }
         fun bind(song: Song) {
             Glide
                 .with(binding.imvSong.context)
@@ -34,7 +39,7 @@ class LibraryAdapter(private val listener: OnItemClicked) :
 
     private class DiffCallback : DiffUtil.ItemCallback<Song>() {
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {

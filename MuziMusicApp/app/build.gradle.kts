@@ -44,11 +44,17 @@ android {
 }
 
 dependencies {
+
+    // Exoplayer
+    implementation (libs.androidx.media3.exoplayer)
+    implementation (libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.exoplayer.hls)
+
     //Media3
-    implementation(libs.androidx.media3.datasource.okhttp)
-    implementation(libs.androidx.media3.ui)
-    implementation(libs.androidx.media3.session)
-    implementation(libs.androidx.media3.exoplayer)
+//    implementation(libs.androidx.media3.datasource.okhttp)
+//    implementation(libs.androidx.media3.ui)
+//    implementation(libs.androidx.media3.session)
+//    implementation(libs.androidx.media3.exoplayer)
 
     //Eventbus
     implementation(libs.eventbus)
