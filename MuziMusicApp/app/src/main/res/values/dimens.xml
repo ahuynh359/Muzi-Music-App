@@ -24,4 +24,7 @@
     <dimen name="_3dp">3dp</dimen>
     <dimen name="_14dp">14dp</dimen>
     <dimen name="_38dp">38dp</dimen>
+    <dimen name="_54dp">54dp</dimen>
+    <dimen name="_380dp">380dp</dimen>
+    <dimen name="_85dp">85dp</dimen>
 </resources>

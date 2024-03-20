@@ -48,4 +48,12 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/bold</item>
     </style>
+
+    <style name="CustomSlider" parent="Widget.MaterialComponents.Slider">
+        <item name="materialThemeOverlay">@style/slider</item>
+    </style>
+    <style name="slider">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
 </resources>

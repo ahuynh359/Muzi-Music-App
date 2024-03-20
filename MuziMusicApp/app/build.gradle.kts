@@ -46,6 +46,9 @@ android {
 
 dependencies {
 
+    //Swipe Fresh Layout
+    implementation(libs.androidx.swiperefreshlayout)
+
     // Exoplayer
     implementation (libs.androidx.media3.exoplayer)
     implementation (libs.androidx.media3.ui)

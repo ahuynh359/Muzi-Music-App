@@ -11,6 +11,8 @@ import com.ahuynh.muzimusicapp.databinding.FragmentLibraryBinding
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
+import com.ahuynh.muzimusicapp.utils.Helper
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,13 +24,14 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
     private val viewModel by viewModels<LibraryViewModel>()
     private var adapter = LibraryAdapter(this)
     private lateinit var snackbar: Snackbar
+    private var listSong: ArrayList<Song> = arrayListOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         snackbar = Snackbar.make(
-            binding.rootView,
+            binding.swipeRefresh,
             "No Internet Connection",
             Snackbar.LENGTH_INDEFINITE
         ).setAction("Wifi") {
@@ -36,9 +39,17 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
         }
         observers()
         binding.rcyItem.adapter = adapter
+        fetchData()
 
+        binding.swipeRefresh.setOnRefreshListener {
+            fetchData()
+        }
+
+
+    }
+
+    private fun fetchData() {
         viewModel.getSong()
-
     }
 
 
@@ -66,11 +77,13 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
                 }
 
                 is Response.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
                     adapter.submitList(response.data)
+                    listSong = response.data as ArrayList<Song>
                     binding.shimmerRecyclerview.stopShimmer()
                     binding.rcyItem.visibility = View.VISIBLE
                     binding.shimmerRecyclerview.visibility = View.GONE
-                    Log.d("LibraryFragment", response.data.toString())
+                    Log.d("LibraryFragment", listSong.toString())
                 }
 
                 is Response.Failure -> {
@@ -87,12 +100,14 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
     override fun onItemClicked(song: Song) {
         Toast.makeText(requireContext(),song.name,Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
-//        Helper.sendMusicAction(
-//            requireContext(),
-//            ACTION_PLAY,
-//            song,
-//            ArrayList(it)
-//        )
+        Helper.sendMusic(
+            requireContext(),
+            ACTION_PLAY,
+            song,
+            songList = listSong
+        )
+
+
 
     }
 }
