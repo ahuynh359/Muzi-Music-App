@@ -2,11 +2,9 @@ package com.ahuynh.muzimusicapp.utils
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.annotation.RequiresApi
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 
@@ -34,7 +32,6 @@ object Helper {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun sendMusic(
         context: Context,
         action: Int,
@@ -52,7 +49,11 @@ object Helper {
             putExtra(Constants.DATA, bundle)
         }
 
-        context.startForegroundService(intent)
+        if (VersionHelper.isO()) {
+            context.startForegroundService(intent)
+        } else {
+            context.startService(intent)
+        }
 
     }
 }

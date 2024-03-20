@@ -26,6 +26,8 @@ import com.ahuynh.muzimusicapp.utils.Helper.parcelable
 import com.ahuynh.muzimusicapp.utils.Helper.parcelableArrayList
 import kotlinx.coroutines.Job
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MusicService : Service() {
 
@@ -42,9 +44,8 @@ class MusicService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("MusicService", "On Create")
         EventBus.getDefault().register(this)
-//
+//        Log.d("MusicService", "On Create 1 ")
 //        val notification = NotificationCompat.Builder(
 //            this@MusicService,
 //            NOTIFICATION_CHANNEL_NAME,
@@ -53,11 +54,11 @@ class MusicService : Service() {
 //            .setSmallIcon(R.drawable.song)
 //            .setAutoCancel(false)
 //            .build()
+//        Log.d("MusicService", "On Create 2")
 //        startForeground(NOTIFICATION_ID, notification)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.d("MusicService", "on start command")
         val action = intent.getIntExtra(ACTION, 0)
         val data = intent.getBundleExtra(DATA)
 
@@ -82,19 +83,33 @@ class MusicService : Service() {
         return START_NOT_STICKY
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRequestSongInfo(event: EventBusModel.RequestSongEvent) {
+        if (currentSongIndex != -1 && currentSongIndex < songList.size) {
+            EventBus.getDefault()
+                .postSticky(EventBusModel.SongInfoEvent(songList[currentSongIndex]))
+            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
+
+            player?.let {
+                EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(it.isPlaying))
+            }
+        }
+    }
+
     private fun changeMusic(currentSongIndex: Int) {
-        Log.d("MusicService", "change music")
+
 
         player?.let {
             if (it.isPlaying)
                 it.stop()
             it.release()
+
         }
         val song = songList[currentSongIndex]
         currentSong = song
-
+        Log.d("MusicService", currentSong.toString())
         EventBus.getDefault().postSticky(EventBusModel.SongInfoEvent(song))
-        preparePlay(song)
+        //preparePlay(song)
     }
 
     private fun playPauseMusic() {
@@ -110,7 +125,7 @@ class MusicService : Service() {
         val index = songList.indexOf(song)
         if (index == -1) {
             songList.add(currentSongIndex + 1, song)
-            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
+            // EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
         }
     }
 
@@ -118,7 +133,7 @@ class MusicService : Service() {
         val index = songList.indexOf(song)
         if (index == -1) {
             songList.add(song)
-            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
+            //EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
         }
     }
 

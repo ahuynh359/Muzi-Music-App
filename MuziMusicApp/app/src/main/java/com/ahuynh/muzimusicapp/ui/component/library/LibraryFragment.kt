@@ -103,7 +103,6 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
     override fun onItemClicked(song: Song) {
         Toast.makeText(requireContext(),song.name,Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
-
         Helper.sendMusic(
             requireContext(),
             ACTION_PLAY,
