@@ -1,11 +1,13 @@
 package com.ahuynh.muzimusicapp.ui.component.library
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentLibraryBinding
 import com.ahuynh.muzimusicapp.model.Song
@@ -97,9 +99,11 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClicked(song: Song) {
         Toast.makeText(requireContext(),song.name,Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
+
         Helper.sendMusic(
             requireContext(),
             ACTION_PLAY,

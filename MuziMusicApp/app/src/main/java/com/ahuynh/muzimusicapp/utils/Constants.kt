@@ -19,7 +19,12 @@ object Constants {
 
 
     const val SONG = "song"
+    const val SONG_LIST = "song list"
     const val SONG_ID = "id"
+    const val DATA = "data"
+    const val ACTION = "action"
+
+    var IS_SHUFFLE = false
 
 
 
