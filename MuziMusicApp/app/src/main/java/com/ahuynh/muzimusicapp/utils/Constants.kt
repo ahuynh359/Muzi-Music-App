@@ -18,4 +18,10 @@ object Constants {
     const val NOTIFICATION_ID = 101
 
 
+    const val SONG = "song"
+    const val SONG_ID = "id"
+
+
+
+
 }

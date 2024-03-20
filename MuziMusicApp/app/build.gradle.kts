@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -50,12 +51,6 @@ dependencies {
     implementation (libs.androidx.media3.ui)
     implementation(libs.androidx.media3.exoplayer.hls)
 
-    //Media3
-//    implementation(libs.androidx.media3.datasource.okhttp)
-//    implementation(libs.androidx.media3.ui)
-//    implementation(libs.androidx.media3.session)
-//    implementation(libs.androidx.media3.exoplayer)
-
     //Eventbus
     implementation(libs.eventbus)
 
@@ -82,6 +77,8 @@ dependencies {
 
     //Dagger Hilt
     implementation(libs.hilt.android)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.database.ktx)
     kapt(libs.hilt.android.compiler)
 
     //Splash Screen

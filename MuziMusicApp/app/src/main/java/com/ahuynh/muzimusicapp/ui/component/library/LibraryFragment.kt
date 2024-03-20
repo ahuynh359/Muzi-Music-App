@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentLibraryBinding
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,7 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
         observers()
         binding.rcyItem.adapter = adapter
 
+        viewModel.getSong()
 
     }
 
@@ -57,7 +59,7 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
         }
 
         //Observe songs
-        viewModel.getAllSongs().observe(viewLifecycleOwner) { response ->
+        viewModel.song.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Response.Loading -> {
                     Log.d("LibraryFragment", "Loading")
@@ -68,6 +70,7 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
                     binding.shimmerRecyclerview.stopShimmer()
                     binding.rcyItem.visibility = View.VISIBLE
                     binding.shimmerRecyclerview.visibility = View.GONE
+                    Log.d("LibraryFragment", response.data.toString())
                 }
 
                 is Response.Failure -> {
@@ -83,5 +86,13 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
 
     override fun onItemClicked(song: Song) {
         Toast.makeText(requireContext(),song.name,Toast.LENGTH_SHORT).show()
+        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+//        Helper.sendMusicAction(
+//            requireContext(),
+//            ACTION_PLAY,
+//            song,
+//            ArrayList(it)
+//        )
+
     }
 }
