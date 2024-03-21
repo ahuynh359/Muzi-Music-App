@@ -5,8 +5,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.OptIn
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -15,16 +16,23 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.extractor.DefaultExtractorsFactory
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
 import com.ahuynh.muzimusicapp.utils.Constants.DATA
+import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_CHANNEL_NAME
+import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_ID
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Helper.parcelable
 import com.ahuynh.muzimusicapp.utils.Helper.parcelableArrayList
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -45,17 +53,17 @@ class MusicService : Service() {
     override fun onCreate() {
         super.onCreate()
         EventBus.getDefault().register(this)
-//        Log.d("MusicService", "On Create 1 ")
-//        val notification = NotificationCompat.Builder(
-//            this@MusicService,
-//            NOTIFICATION_CHANNEL_NAME,
-//        )
-//            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-//            .setSmallIcon(R.drawable.song)
-//            .setAutoCancel(false)
-//            .build()
-//        Log.d("MusicService", "On Create 2")
-//        startForeground(NOTIFICATION_ID, notification)
+
+        val notification = NotificationCompat.Builder(
+            this@MusicService,
+            NOTIFICATION_CHANNEL_NAME,
+        )
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSmallIcon(R.drawable.song)
+            .setAutoCancel(false)
+            .build()
+
+        startForeground(NOTIFICATION_ID, notification)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -63,28 +71,37 @@ class MusicService : Service() {
         val data = intent.getBundleExtra(DATA)
 
         data?.let {
-            val song = data.parcelable<Song>(SONG)
-            val list = data.parcelableArrayList<Song>(SONG_LIST)
+            val song: Song? = data.parcelable<Song>(SONG)
+            val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
-            currentSong = song
             if (list != null) {
                 songList = list
-            }
-            currentSongIndex = songList.indexOf(currentSong)
-            changeMusic(currentSongIndex)
-        }
 
-        when (action) {
-            ACTION_PLAY -> {
-                playPauseMusic()
+                if (song != null) {
+                    currentSongIndex = songList.indexOf(song)
+                    listenToMusic(currentSongIndex)
+                }
             }
+
         }
+//
+//        when (action) {
+//            ACTION_PLAY -> {
+//                playPauseMusic()
+//            }
+//        }
 
         return START_NOT_STICKY
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onRequestSongInfo(event: EventBusModel.RequestSongEvent) {
+    fun onMusicTimeSeekEvent(event: EventBusModel.MusicTimeSeekEvent) {
+        Log.d("MusicSerivce", "Seek to ${event.timeMillis}")
+        player?.seekTo(event.timeMillis)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRequestSongEvent(event: EventBusModel.RequestSongEvent) {
         if (currentSongIndex != -1 && currentSongIndex < songList.size) {
             EventBus.getDefault()
                 .postSticky(EventBusModel.SongInfoEvent(songList[currentSongIndex]))
@@ -92,12 +109,12 @@ class MusicService : Service() {
 
             player?.let {
                 EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(it.isPlaying))
+
             }
         }
     }
 
-    private fun changeMusic(currentSongIndex: Int) {
-
+    private fun listenToMusic(currentSongIndex: Int) {
 
         player?.let {
             if (it.isPlaying)
@@ -105,11 +122,12 @@ class MusicService : Service() {
             it.release()
 
         }
+
         val song = songList[currentSongIndex]
         currentSong = song
-        Log.d("MusicService", currentSong.toString())
+
         EventBus.getDefault().postSticky(EventBusModel.SongInfoEvent(song))
-        //preparePlay(song)
+        preparePlay(song)
     }
 
     private fun playPauseMusic() {
@@ -153,38 +171,62 @@ class MusicService : Service() {
                     it.setMediaSource(progressiveMediaSource)
                     it.prepare()
                     it.play()
-                    sendInit(it)
+                    sendTime(it)
+
                 }
             player?.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
                     EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(isPlaying))
                 }
+
+
             })
         } catch (e: Exception) {
-            Toast.makeText(this, "Can't play this sing", Toast.LENGTH_SHORT).show()
+            Log.d("MusicService", e.toString())
             stopSelf()
         }
     }
 
+    @kotlin.OptIn(DelicateCoroutinesApi::class)
     @OptIn(UnstableApi::class)
-    private fun sendInit(player: ExoPlayer) {
+    private fun sendTime(player: ExoPlayer) {
+        //Music is playing
         EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(true))
-        timeSend()
-        EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(player.audioSessionId))
+
+        jobTime?.cancel()
+
+        jobTime = GlobalScope.launch(Dispatchers.Main) {
+            while (true) {
+                player.let {
+                    Log.d("MusicService",player.currentPosition.toString())
+                    Log.d("MusicService",player.duration.toString())
+                    EventBus.getDefault().postSticky(
+                        EventBusModel.MusicTimeEvent(
+                            player.currentPosition,
+                            player.duration
+                        )
+                    )
+                    delay(1000) // Update every second
+
+                }
+            }
+        }
+        //EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(player.audioSessionId))
 
     }
 
-    private fun timeSend() {
-        TODO("Not yet implemented")
-    }
 
     override fun onDestroy() {
         super.onDestroy()
         player?.release()
         player = null
 
+        val notificationManagerCompat = NotificationManagerCompat.from(this)
+        notificationManagerCompat.cancel(NOTIFICATION_ID)
+
         jobTime?.cancel()
+
         EventBus.getDefault().postSticky(EventBusModel.SongInfoEvent(null))
         EventBus.getDefault().unregister(this)
     }

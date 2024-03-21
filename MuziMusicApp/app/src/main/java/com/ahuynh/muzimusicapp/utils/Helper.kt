@@ -31,6 +31,15 @@ object Helper {
         else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
     }
 
+    fun convertMillisToMinutesAndSeconds(durationInMillis: Long): String {
+        val totalSeconds = durationInMillis / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return String.format("%d:%d", minutes, seconds)
+    }
+
+
+
 
     fun sendMusic(
         context: Context,

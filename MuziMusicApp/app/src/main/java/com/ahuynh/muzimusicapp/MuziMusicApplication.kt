@@ -19,7 +19,7 @@ class MuziMusicApplication : Application(){
     private fun createNotificationChannel() {
         if (VersionHelper.isO()) {
             val channel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
+                NOTIFICATION_CHANNEL_NAME,
                 NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
