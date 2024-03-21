@@ -74,13 +74,13 @@ class MusicService : Service() {
             val song: Song? = data.parcelable<Song>(SONG)
             val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
-            if (list != null) {
-                songList = list
+            song?.let {
 
-                if (song != null) {
-                    currentSongIndex = songList.indexOf(song)
-                    listenToMusic(currentSongIndex)
-                }
+                songList = list!!
+                currentSongIndex = songList.indexOf(song)
+                Log.d("MusicService Current Song 1", currentSongIndex.toString())
+                listenToMusic(currentSongIndex)
+
             }
 
         }
@@ -102,7 +102,7 @@ class MusicService : Service() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRequestSongEvent(event: EventBusModel.RequestSongEvent) {
-        if (currentSongIndex != -1 && currentSongIndex < songList.size) {
+        if (currentSongIndex > -1 && currentSongIndex < songList.size) {
             EventBus.getDefault()
                 .postSticky(EventBusModel.SongInfoEvent(songList[currentSongIndex]))
             EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
@@ -198,9 +198,9 @@ class MusicService : Service() {
 
         jobTime = GlobalScope.launch(Dispatchers.Main) {
             while (true) {
-                player.let {
-                    Log.d("MusicService",player.currentPosition.toString())
-                    Log.d("MusicService",player.duration.toString())
+                player?.let {
+                    Log.d("MusicService", player.currentPosition.toString())
+                    Log.d("MusicService", player.duration.toString())
                     EventBus.getDefault().postSticky(
                         EventBusModel.MusicTimeEvent(
                             player.currentPosition,
@@ -208,7 +208,6 @@ class MusicService : Service() {
                         )
                     )
                     delay(1000) // Update every second
-
                 }
             }
         }

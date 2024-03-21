@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.Helper
+import com.ahuynh.muzimusicapp.utils.Helper.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.bumptech.glide.Glide
@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {
@@ -44,10 +45,14 @@ class PlayerActivity : AppCompatActivity() {
 
         setUpSeekbar()
 
+        binding.btnDown.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
-                if (it) R.drawable.ic_play
-                else R.drawable.ic_pause
+                if (it) com.ahuynh.muzimusicapp.R.drawable.ic_play
+                else com.ahuynh.muzimusicapp.R.drawable.ic_pause
             )
         }
 
@@ -148,7 +153,7 @@ class PlayerActivity : AppCompatActivity() {
                     .load(song.image)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.big_song)
+                    .placeholder(com.ahuynh.muzimusicapp.R.drawable.big_song)
                     .into(binding.imvSong);
             }
 
@@ -168,13 +173,30 @@ class PlayerActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onMusicTimeEvent(event: EventBusModel.MusicTimeEvent) {
         Log.d("PlayerActivity", event.timeMillis.toString())
+        if (event.duration > 0) {
+            binding.shimmerSlider.stopShimmer()
+            binding.slider.visibility = View.VISIBLE
+            binding.shimmerSlider.visibility = View.GONE
+            binding.tvEndTime.text = (event.duration / 1000).toInt().toTimeFormat()
+            if (!isSliderPressed) binding.slider.value = event.timeMillis.toFloat()
+            binding.slider.valueTo = event.duration.toFloat()
+            binding.tvStartTime.text = (event.timeMillis / 1000).toInt().toTimeFormat()
+        } else {
+            binding.shimmerSlider.startShimmer()
+            binding.tvEndTime.text = "N:/N"
+            binding.tvStartTime.text = "00:00"
+        }
 
-        binding.tvEndTime.text = Helper.convertMillisToMinutesAndSeconds(event.duration)
+
+
+
+
     }
+
 
     private fun setUpSeekbar() {
         binding.slider.setLabelFormatter { value: Float ->
-            (value / 1000).toInt().toString()
+            (value / 1000).toInt().toTimeFormat()
         }
 
         binding.slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
@@ -183,11 +205,14 @@ class PlayerActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(p0: Slider) {
+                EventBus.getDefault()
+                    .post(EventBusModel.MusicTimeSeekEvent(binding.slider.value.toLong()))
                 isSliderPressed = false
 
             }
 
         })
     }
+
 
 }

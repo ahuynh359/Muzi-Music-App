@@ -31,11 +31,18 @@ object Helper {
         else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
     }
 
-    fun convertMillisToMinutesAndSeconds(durationInMillis: Long): String {
-        val totalSeconds = durationInMillis / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return String.format("%d:%d", minutes, seconds)
+    fun Int.toTimeFormat(): String {
+        val hour = this / 3600
+        val minute = (this % 3600) / 60
+        val second = (this % 3600) % 60
+
+        return if (hour == 0) {
+            if (minute < 10)
+                String.format("%d:%02d", minute, second)
+            else String.format("%02d:02d", minute, second)
+        } else {
+            String.format("%d:%02d:%02d", hour, minute, second)
+        }
     }
 
 
