@@ -27,6 +27,7 @@ import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_CLEAR
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
@@ -34,7 +35,6 @@ import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.Constants.DATA
 import com.ahuynh.muzimusicapp.utils.Constants.INTENT_ACTION
-import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_CHANNEL_NAME
 import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_ID
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST
@@ -70,7 +70,7 @@ class MusicService : Service() {
 
         val notification = NotificationCompat.Builder(
             this@MusicService,
-            NOTIFICATION_CHANNEL_NAME,
+            Constants.NOTIFICATION_CHANNEL_ID,
         )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.drawable.song)
@@ -211,7 +211,7 @@ class MusicService : Service() {
                     )
                 }
             val notification =
-                NotificationCompat.Builder(this@MusicService, NOTIFICATION_CHANNEL_NAME)
+                NotificationCompat.Builder(this@MusicService, Constants.NOTIFICATION_CHANNEL_ID)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setSmallIcon(R.drawable.note)
                     .setContentIntent(resultPendingIntent)
