@@ -20,7 +20,9 @@ class EventBusModel {
     //Update text view duration
     data class MusicTimeEvent(val timeMillis: Long, val duration: Long)
 
+
     class RequestSongEvent()
+    class ClearMusic()
 
 
 }

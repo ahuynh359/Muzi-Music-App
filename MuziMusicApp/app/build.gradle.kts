@@ -46,6 +46,9 @@ android {
 
 dependencies {
 
+    //Coil
+    implementation(libs.coil)
+
     //Swipe Fresh Layout
     implementation(libs.androidx.swiperefreshlayout)
 

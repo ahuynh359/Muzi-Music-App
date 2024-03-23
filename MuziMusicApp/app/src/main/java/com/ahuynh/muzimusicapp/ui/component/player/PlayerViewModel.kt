@@ -13,6 +13,6 @@ import javax.inject.Inject
 class PlayerViewModel  @Inject constructor(private val libraryRepository: LibraryRepository) : ViewModel(){
     var isPlaying: MutableLiveData<Boolean> = MutableLiveData(false)
     var song: MutableLiveData<Song> = MutableLiveData()
-    var songList: MutableLiveData<List<Song>> = MutableLiveData()
-    var isClear: MutableLiveData<Song> = MutableLiveData()
+    var songList: MutableLiveData<ArrayList<Song>> = MutableLiveData()
+    var isClear: Boolean = false
 }

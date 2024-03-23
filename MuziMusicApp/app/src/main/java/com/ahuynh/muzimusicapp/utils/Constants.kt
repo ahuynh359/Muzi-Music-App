@@ -25,6 +25,7 @@ object Constants {
     const val ACTION = "action"
 
     var IS_SHUFFLE = false
+    var INTENT_ACTION = "intent_service"
 
 
 

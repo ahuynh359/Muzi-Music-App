@@ -11,6 +11,9 @@ import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
+import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
+import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Helper.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
@@ -58,17 +61,46 @@ class PlayerActivity : AppCompatActivity() {
 
 
 
+
+
         binding.btnPlayPause.setOnClickListener {
-//            if (viewModel.isClear.value) {
-//                sendMusic(
-//                    ACTION_PLAY,
-//                    viewModel.song.value,
-//                    viewModel.songList.value!!
-//                )
-//                viewModel.isClear = false
-//            } else {
-//                sendMusic(ACTION_PLAY)
-//            }
+
+            if (viewModel.isClear) {
+                sendMusic(
+                    ACTION_PLAY,
+                    viewModel.song.value,
+                    viewModel.songList.value!!
+                )
+                viewModel.isClear = false
+            } else {
+                sendMusic(ACTION_PLAY)
+            }
+        }
+
+        binding.btnPre.setOnClickListener {
+            if (viewModel.isClear) {
+                sendMusic(
+                    ACTION_PRE,
+                    viewModel.song.value,
+                    viewModel.songList.value!!
+                )
+                viewModel.isClear = false
+            } else {
+                sendMusic(ACTION_PRE)
+            }
+        }
+
+        binding.btnNext.setOnClickListener {
+            if (viewModel.isClear) {
+                sendMusic(
+                    ACTION_NEXT,
+                    viewModel.song.value,
+                    viewModel.songList.value!!
+                )
+                viewModel.isClear = false
+            } else {
+                sendMusic(ACTION_NEXT)
+            }
         }
 
 
@@ -193,7 +225,14 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onClearMusic(event: EventBusModel.ClearMusic) {
+        viewModel.isClear = true
+        viewModel.isPlaying.postValue(false)
+        binding.slider.value = 0f
 
+
+    }
     private fun setUpSeekbar() {
         binding.slider.setLabelFormatter { value: Float ->
             (value / 1000).toInt().toTimeFormat()
