@@ -5,9 +5,6 @@ import android.app.Service
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.IBinder
 import android.util.Log
 import androidx.annotation.OptIn
@@ -21,9 +18,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.extractor.DefaultExtractorsFactory
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
@@ -39,8 +33,8 @@ import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_ID
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.Helper.parcelable
-import com.ahuynh.muzimusicapp.utils.Helper.parcelableArrayList
+import com.ahuynh.muzimusicapp.utils.Utils.parcelable
+import com.ahuynh.muzimusicapp.utils.Utils.parcelableArrayList
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

@@ -1,14 +1,24 @@
 package com.ahuynh.muzimusicapp.utils
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.Settings
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-object Helper {
+object Utils {
 
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
         SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
@@ -45,6 +55,43 @@ object Helper {
         }
     }
 
+    fun checkSinglePermissionAny(
+        activity: Activity,
+        permissionName: String,
+        permissionCode: Int
+    ): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                activity,
+                permissionName
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(permissionName),
+                permissionCode
+            )
+        } else {
+            return true
+        }
+        return false
+    }
+
+
+
+    fun appSettingOpen(context: Context) {
+        val settingIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        settingIntent.data = Uri.parse("package:${context.packageName}")
+        context.startActivity(settingIntent)
+    }
+
+    fun warningPermissionDialog(context: Context, listener: DialogInterface.OnClickListener) {
+        MaterialAlertDialogBuilder(context)
+            .setMessage("All Permission are required for this app")
+            .setCancelable(false)
+            .setPositiveButton("Ok", listener)
+            .create()
+            .show()
+    }
 
 
 

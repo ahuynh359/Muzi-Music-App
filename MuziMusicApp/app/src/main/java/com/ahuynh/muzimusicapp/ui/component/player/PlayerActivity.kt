@@ -15,7 +15,7 @@ import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.Helper.toTimeFormat
+import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.bumptech.glide.Glide

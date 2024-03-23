@@ -17,7 +17,6 @@ class MuziMusicApplication : Application(){
     //Create an notification channel starting from API 26
     private fun createNotificationChannel() {
         if (VersionHelper.isO()) {
-
             val channel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
                 getString(R.string.notifications),

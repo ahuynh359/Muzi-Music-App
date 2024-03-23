@@ -14,7 +14,7 @@ import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
-import com.ahuynh.muzimusicapp.utils.Helper
+import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,7 +103,7 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
     override fun onItemClicked(song: Song) {
         Toast.makeText(requireContext(),song.name,Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
-        Helper.sendMusic(
+        Utils.sendMusic(
             requireContext(),
             ACTION_PLAY,
             song,
