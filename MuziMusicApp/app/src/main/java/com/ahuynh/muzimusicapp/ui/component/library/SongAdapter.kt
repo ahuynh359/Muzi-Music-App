@@ -12,14 +12,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 
-class LibraryAdapter(private val listener: OnItemClicked) :
-    ListAdapter<Song, LibraryAdapter.ViewHolder>(DiffCallback()) {
+class SongAdapter(private val listener: OnSongClicked) :
+    ListAdapter<Song, SongAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onItemClicked(currentList[layoutPosition])
+                listener.onSongClicked(currentList[layoutPosition])
             }
         }
         fun bind(song: Song) {
@@ -65,6 +65,6 @@ class LibraryAdapter(private val listener: OnItemClicked) :
 }
 
 
-interface OnItemClicked {
-    fun onItemClicked(song: Song)
+interface OnSongClicked {
+    fun onSongClicked(song: Song)
 }

@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.utils
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -11,7 +10,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ahuynh.muzimusicapp.model.Song
@@ -86,7 +84,7 @@ object Utils {
 
     fun warningPermissionDialog(context: Context, listener: DialogInterface.OnClickListener) {
         MaterialAlertDialogBuilder(context)
-            .setMessage("All Permission are required for this app")
+            .setMessage("All Permissions Are Required For This App")
             .setCancelable(false)
             .setPositiveButton("Ok", listener)
             .create()

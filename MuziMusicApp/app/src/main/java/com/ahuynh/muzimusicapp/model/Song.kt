@@ -11,6 +11,5 @@ data class Song(
     val image: String ? = null,
     val lyrics: String ? = null,
     val singer: String ? = null,
-    val playlistId: Int? = null
 ) : Parcelable
 

@@ -11,7 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <de.hdodenhof.circleimageview.CircleImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearanceOverlay="@style/circle"
             android:id="@+id/imv_avatar"
             android:layout_width="@dimen/_35dp"
             android:layout_height="@dimen/_35dp"
@@ -27,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10dp"
-            android:text="Library"
+            android:text="@string/library"
             app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
             app:layout_constraintStart_toEndOf="@id/imv_avatar"
             app:layout_constraintTop_toTopOf="@id/imv_avatar" />
@@ -118,7 +120,7 @@
             app:layout_constraintStart_toStartOf="@id/imv_avatar"
             app:layout_constraintTop_toBottomOf="@id/btn_recent"
             android:layout_marginTop="14dp"
-            android:id="@+id/shimmer_recyclerview"
+            android:id="@+id/shimmer_song"
             android:layout_width="@dimen/_0dp"
             android:layout_height="@dimen/_0dp">
             <LinearLayout
@@ -138,7 +140,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:visibility="gone"
-            android:id="@+id/rcy_item"
+            android:id="@+id/rcy_song"
             android:layout_width="@dimen/_0dp"
             android:layout_height="@dimen/_0dp"
             android:layout_marginTop="14dp"
@@ -148,6 +150,19 @@
             app:layout_constraintStart_toStartOf="@id/imv_avatar"
             app:layout_constraintTop_toBottomOf="@id/btn_recent"
             tools:listitem="@layout/item_song" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcy_playlist"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="@dimen/_0dp"
+            android:layout_marginTop="14dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_add_playlist"
+            app:layout_constraintStart_toStartOf="@id/imv_avatar"
+            app:layout_constraintTop_toBottomOf="@id/btn_recent"
+            tools:listitem="@layout/item_playlist" />
 
         <include
             android:layout_marginBottom="@dimen/_5dp"

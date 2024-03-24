@@ -22,6 +22,7 @@ object Constants {
     const val SONG = "song"
     const val SONG_LIST = "song list"
     const val SONG_ID = "id"
+    const val PLAYLIST = "playlist"
     const val DATA = "data"
     const val ACTION = "action"
 
