@@ -1,8 +1,13 @@
 package com.ahuynh.muzimusicapp.utils
 
 object Constants {
+    enum class SortingOrder {
+        ASCENDING,
+        DESCENDING
+    }
 
-
+    //Property in firebase
+    const val NAME  = "name"
 
     const val ACTION_PLAY = 12
     const val ACTION_PRE = 13

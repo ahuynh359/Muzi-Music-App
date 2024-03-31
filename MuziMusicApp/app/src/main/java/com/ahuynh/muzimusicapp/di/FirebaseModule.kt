@@ -35,7 +35,7 @@ class FirebaseModule {
 
     @Singleton
     @Provides
-    fun provideFirestore(db: FirebaseFirestore): CollectionReference {
+    fun provideSongColRef(db: FirebaseFirestore): CollectionReference {
         return db.collection("song")
     }
 }

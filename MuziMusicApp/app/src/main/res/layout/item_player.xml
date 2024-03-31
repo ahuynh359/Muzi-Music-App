@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_pause"
+        android:src="@drawable/ic_pause_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

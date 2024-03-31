@@ -22,14 +22,20 @@
 
     </androidx.fragment.app.FragmentContainerView>
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btm_navigation"
+        android:background="@color/black"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
         android:layout_width="@dimen/_0dp"
-        android:layout_height="@dimen/_56dp"
-        app:backgroundTint="#E6191C1D"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@drawable/custom_bottom_nav_icon"
+        app:itemRippleColor="@color/white"
+        app:itemTextColor="@drawable/custom_bottom_nav_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container"
         app:menu="@menu/btm_menu" />
 
 

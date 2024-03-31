@@ -28,4 +28,5 @@
     <dimen name="_380dp">380dp</dimen>
     <dimen name="_85dp">85dp</dimen>
     <dimen name="_400dp">400dp</dimen>
+    <dimen name="_12sp">12sp</dimen>
 </resources>

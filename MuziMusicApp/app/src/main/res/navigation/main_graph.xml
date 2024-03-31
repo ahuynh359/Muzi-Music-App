@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/libraryFragment">
+    app:startDestination="@id/songFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeFragment"
+        android:id="@+id/songFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.song.SongFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_song" />
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment"
