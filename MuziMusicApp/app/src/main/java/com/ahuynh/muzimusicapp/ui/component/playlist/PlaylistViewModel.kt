@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.ui.component.playlist
 
-import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference

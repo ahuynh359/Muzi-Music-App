@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.databinding.ItemLyricsBinding
-import com.ahuynh.muzimusicapp.data.model.Lyric
+import com.ahuynh.muzimusicapp.model.Lyric
 
 class PlayerAdapter(
     private val listener: OnLyricClicked,

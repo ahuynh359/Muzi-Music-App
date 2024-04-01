@@ -13,9 +13,5 @@
         android:icon="@drawable/ic_chart"
         android:title="@string/chart" />
 
-    <item
-        android:id="@+id/libraryFragment"
-        android:icon="@drawable/ic_library"
-        android:title="@string/library" />
 
 </menu>

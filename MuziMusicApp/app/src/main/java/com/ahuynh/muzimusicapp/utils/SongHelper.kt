@@ -6,8 +6,8 @@ import android.database.Cursor
 import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.ahuynh.muzimusicapp.data.model.LocalSong
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.model.LocalSong
+import com.ahuynh.muzimusicapp.model.Song
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

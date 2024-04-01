@@ -1,6 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.song
 
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.NAME
 import com.ahuynh.muzimusicapp.utils.Constants.SONG

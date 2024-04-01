@@ -15,16 +15,7 @@
         android:name="com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment"
         android:label="Chart"
         tools:layout="@layout/fragment_chart" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.search.SearchFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search" />
-    <fragment
-        android:id="@+id/libraryFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.library.LibraryFragment"
-        android:label="Library"
-        tools:layout="@layout/fragment_library" />
+
     <fragment
         android:id="@+id/playlistFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
@@ -32,7 +23,7 @@
         tools:layout="@layout/fragment_playlist" >
         <argument
             android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
+            app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist" />
         <argument
             android:name="songs"
             app:argType="com.ahuynh.muzimusicapp.model.Song[]" />

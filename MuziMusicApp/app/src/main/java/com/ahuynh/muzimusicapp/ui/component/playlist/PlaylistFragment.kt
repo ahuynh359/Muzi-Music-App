@@ -1,24 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.playlist
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.OptIn
 import androidx.fragment.app.viewModels
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.common.util.Util.startForegroundService
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
-import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
-import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Constants.DATA
-import com.ahuynh.muzimusicapp.utils.Constants.SONG
-import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST
 import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +20,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     private val TAG = "PlaylistFragment"
     private val playlistAdapter = PlaylistAdapter(this)
     private var sortingAsc = true
-    private var listSong: ArrayList<Song> = arrayListOf()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -86,7 +76,6 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
                     val list = response.data
                     playlistAdapter.submitList(list)
                     binding.rcyPlaylist.visibility = View.VISIBLE
-                    listSong = list as ArrayList<Song>
                     hideShimmer()
                 }
 
@@ -107,25 +96,6 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
 
-    @OptIn(UnstableApi::class)
-    private fun sendMusicAction(
-        action: Int,
-        song: Song? = null,
-        songList: ArrayList<Song> = arrayListOf()
-    ) {
-        val intent = Intent(requireContext().applicationContext, MusicService::class.java)
-
-        intent.putExtra("action", action)
-        song?.let {
-            val bundle = Bundle().apply {
-                putParcelable(SONG, it)
-                putParcelableArrayList(SONG_LIST, songList)
-            }
-            intent.putExtra(DATA, bundle)
-        }
-
-        startForegroundService(requireContext().applicationContext, intent)
-    }
 
     override fun onPlaylistClicked(playlist: Playlist) {
         TODO("Not yet implemented")
