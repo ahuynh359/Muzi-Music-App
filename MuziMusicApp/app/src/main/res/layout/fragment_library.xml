@@ -127,14 +127,14 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
-                <include layout="@layout/item_song_shimmer"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
+                <include layout="@layout/item_shimmer_round"/>
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 

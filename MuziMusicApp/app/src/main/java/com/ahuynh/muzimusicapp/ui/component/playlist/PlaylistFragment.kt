@@ -4,50 +4,108 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.OptIn
+import androidx.fragment.app.viewModels
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.util.Util.startForegroundService
-import androidx.navigation.fragment.navArgs
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.library.OnSongClicked
-import com.ahuynh.muzimusicapp.ui.component.library.SongAdapter
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.DATA
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST
+import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistBinding::inflate) {
+class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistBinding::inflate),
+    OnPlaylistClicked {
+
+    private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
+    private val TAG = "PlaylistFragment"
+    private val playlistAdapter = PlaylistAdapter(this)
+    private var sortingAsc = true
+    private var listSong: ArrayList<Song> = arrayListOf()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val args: PlaylistFragmentArgs by navArgs()
         super.onViewCreated(view, savedInstanceState)
-        val songs: ArrayList<Song> = args.songs.toMutableList() as ArrayList<Song>
-        val adapter = SongAdapter(object : OnSongClicked {
-            override fun onSongClicked(song: Song) {
-                startActivity(Intent(requireContext(), PlayerActivity::class.java))
-                sendMusicAction(
-                    Constants.ACTION_PLAY,
-                    song,
-                    songList = songs
-                )
+
+        getData()
+        handleUI()
+        observe()
+
+    }
+
+    private fun getData() {
+        viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+    }
+
+    private fun handleUI() {
+        binding.rcyPlaylist.adapter = playlistAdapter
+        binding.btnAZ.setOnClickListener {
+            toggleSort()
+        }
+        binding.btnAdd.setOnClickListener {
+            FormPlaylistFragment().show(requireActivity().supportFragmentManager, null)
+        }
+
+    }
+
+    private fun toggleSort() {
+        sortingAsc = !sortingAsc
+        if (sortingAsc) {
+            binding.btnAZ.text = "A - Z"
+            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        } else {
+            binding.btnAZ.text = "Z - A"
+            viewModel.getAllPlaylist(Constants.SortingOrder.DESCENDING)
+        }
+
+    }
+
+    private fun observe() {
+        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) { res ->
+            when (res) {
+                is Response.Loading -> {}
+                is Response.Success -> {
+                    playlistAdapter.submitList(mutableListOf())
+                    viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+                }
+                is Response.Failure -> {}
             }
+        }
+        viewModel.playlists.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Response.Loading -> {
+                }
+                is Response.Success -> {
+                    val list = response.data
+                    playlistAdapter.submitList(list)
+                    binding.rcyPlaylist.visibility = View.VISIBLE
+                    listSong = list as ArrayList<Song>
+                    hideShimmer()
+                }
 
-        })
-
-        binding.rcySong.adapter = adapter
-
-
-
-        adapter.submitList(args.songs.toMutableList())
-        Log.d("PlaylistFragment", args.songs.toMutableList().toString())
+                is Response.Failure -> {
+                    hideShimmer()
+                    Toast.makeText(context, "Error at server side", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, response.errorMessage)
+                }
+            }
+        }
 
 
     }
+
+    private fun hideShimmer() {
+        binding.shimmerPlaylist.stopShimmer()
+        binding.shimmerPlaylist.visibility = View.GONE
+    }
+
 
     @OptIn(UnstableApi::class)
     private fun sendMusicAction(
@@ -67,6 +125,10 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
         }
 
         startForegroundService(requireContext().applicationContext, intent)
+    }
+
+    override fun onPlaylistClicked(playlist: Playlist) {
+        TODO("Not yet implemented")
     }
 
 }

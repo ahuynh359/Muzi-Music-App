@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.library
+package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

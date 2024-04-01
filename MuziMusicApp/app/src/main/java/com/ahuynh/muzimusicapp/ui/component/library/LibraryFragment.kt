@@ -7,11 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.FragmentLibraryBinding
-import com.ahuynh.muzimusicapp.model.Playlist
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
@@ -63,12 +62,12 @@ class LibraryFragment : BaseFragment<FragmentLibraryBinding>(FragmentLibraryBind
             override fun onPlaylistClicked(playlist: Playlist) {
                 Toast.makeText(activity, playlist.name, Toast.LENGTH_SHORT).show()
                 val list: List<Song> = getSongsByIds(listSong, playlist.songs!!)
-                val action =
-                    LibraryFragmentDirections.actionLibraryFragmentToPlaylistFragment(
-                        playlist,
-                        list.toTypedArray()
-                    )
-                findNavController().navigate(action)
+//                val action =
+//                    LibraryFragmentDirections.actionLibraryFragmentToPlaylistFragment(
+//                        playlist,
+//                        list.toTypedArray()
+//                    )
+//                findNavController().navigate(action)
                 Log.d("LibraryFragment", list.toString())
             }
 

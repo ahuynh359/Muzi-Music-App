@@ -28,4 +28,8 @@
     <string name="descriptionText">For music notification and music controller</string>
     <string name="group_name">Notification</string>
     <string name="a_z">A - Z</string>
+    <string name="playlist">Playlist</string>
+    <string name="give_your_playlist_a_name">Give your playlist a name</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
 </resources>

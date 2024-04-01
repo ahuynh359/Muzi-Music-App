@@ -24,11 +24,7 @@
         android:id="@+id/libraryFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.library.LibraryFragment"
         android:label="Library"
-        tools:layout="@layout/fragment_library" >
-        <action
-            android:id="@+id/action_libraryFragment_to_playlistFragment"
-            app:destination="@id/playlistFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_library" />
     <fragment
         android:id="@+id/playlistFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
@@ -36,7 +32,7 @@
         tools:layout="@layout/fragment_playlist" >
         <argument
             android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.model.Playlist" />
+            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
         <argument
             android:name="songs"
             app:argType="com.ahuynh.muzimusicapp.model.Song[]" />

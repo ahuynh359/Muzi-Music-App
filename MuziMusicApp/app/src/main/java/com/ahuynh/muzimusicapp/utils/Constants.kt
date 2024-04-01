@@ -8,6 +8,8 @@ object Constants {
 
     //Property in firebase
     const val NAME  = "name"
+    const val SONG = "song"
+    const val PLAYLIST = "playlist"
 
     const val ACTION_PLAY = 12
     const val ACTION_PRE = 13
@@ -24,10 +26,8 @@ object Constants {
     const val PERMISSION_REQUEST_ID = 1
 
 
-    const val SONG = "song"
     const val SONG_LIST = "song list"
     const val SONG_ID = "id"
-    const val PLAYLIST = "playlist"
     const val DATA = "data"
     const val ACTION = "action"
 

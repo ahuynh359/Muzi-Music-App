@@ -1,18 +1,21 @@
 package com.ahuynh.muzimusicapp.ui.component.song
 
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.NAME
+import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 
 @Singleton
 class SongRepository @Inject constructor(
+    @Named(SONG)
     private val songCollRef: CollectionReference
 ) {
 

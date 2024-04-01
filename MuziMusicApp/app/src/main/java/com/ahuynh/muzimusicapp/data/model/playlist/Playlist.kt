@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.model
+package com.ahuynh.muzimusicapp.data.model.playlist
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -10,3 +10,5 @@ data class Playlist(
     val image: String? = null,
     val songs: ArrayList<String>? = arrayListOf(),
 ) : Parcelable
+
+
