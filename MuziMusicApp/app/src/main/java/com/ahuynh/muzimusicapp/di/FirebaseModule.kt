@@ -2,11 +2,8 @@ package com.ahuynh.muzimusicapp.di
 
 import com.ahuynh.muzimusicapp.utils.Constants.PLAYLIST
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class FirebaseModule {
 
-    @Provides
-    @Singleton
-    fun provideFirebaseDatabaseInstance(): FirebaseDatabase {
-        return FirebaseDatabase.getInstance()
-    }
 
     @Provides
     @Singleton
@@ -30,11 +22,6 @@ class FirebaseModule {
         return FirebaseFirestore.getInstance()
     }
 
-    @Singleton
-    @Provides
-    fun provideFirebaseStorageInstance(): StorageReference {
-        return FirebaseStorage.getInstance().getReference("song_image")
-    }
 
     @Named(SONG)
     @Provides

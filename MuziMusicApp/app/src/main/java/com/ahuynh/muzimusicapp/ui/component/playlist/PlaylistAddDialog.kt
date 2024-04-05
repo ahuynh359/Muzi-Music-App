@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.databinding.FragmentFormPlaylistBinding
+import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FormPlaylistFragment : DialogFragment() {
+class PlaylistAddDialog : DialogFragment() {
     private var _binding: FragmentFormPlaylistBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})

@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imv_song"
+        android:id="@+id/imv_playlist"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:scaleType="centerCrop"
@@ -19,25 +19,35 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintBottom_toTopOf="@+id/tv_user"
-        app:layout_constraintTop_toTopOf="@id/imv_song"
+        app:layout_constraintBottom_toTopOf="@+id/tv_playlist"
+        app:layout_constraintTop_toTopOf="@id/imv_playlist"
         android:layout_marginStart="@dimen/_15dp"
-        android:id="@+id/tv_playlist"
+        android:id="@+id/tv_playlist_name"
         style="@style/TextMedium"
         tools:text="My Drug"
-        app:layout_constraintStart_toEndOf="@id/imv_song"
+        app:layout_constraintStart_toEndOf="@id/imv_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:textColor="@color/nobel"
         android:textSize="13sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_playlist"
-        android:id="@+id/tv_user"
+        app:layout_constraintTop_toBottomOf="@id/tv_playlist_name"
+        android:id="@+id/tv_playlist"
         style="@style/TextMedium"
-        tools:text="User Name"
-        app:layout_constraintBottom_toBottomOf="@id/imv_song"
-        app:layout_constraintStart_toStartOf="@id/tv_playlist"
+        android:text="@string/playlist"
+        app:layout_constraintBottom_toBottomOf="@id/imv_playlist"
+        app:layout_constraintStart_toStartOf="@id/tv_playlist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+<!--    <androidx.appcompat.widget.AppCompatImageButton
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_more_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imv_playlist"
+        app:layout_constraintTop_toTopOf="@id/imv_playlist"
+        android:id="@+id/btn_more"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

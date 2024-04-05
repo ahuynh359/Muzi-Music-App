@@ -41,7 +41,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             toggleSort()
         }
         binding.btnAdd.setOnClickListener {
-            FormPlaylistFragment().show(requireActivity().supportFragmentManager, null)
+            PlaylistAddDialog().show(requireActivity().supportFragmentManager, null)
         }
 
     }
@@ -104,5 +104,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailFragment(playlist)
         findNavController().navigate(action)
     }
+
+
 
 }

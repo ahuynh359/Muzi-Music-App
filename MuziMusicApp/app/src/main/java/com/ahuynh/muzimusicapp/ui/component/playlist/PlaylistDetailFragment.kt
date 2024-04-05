@@ -53,7 +53,10 @@ class PlaylistDetailFragment :
             songAdapter = PlaylistSongAdapter(this, songListOfPlaylist)
             binding.rcySongs.adapter = songAdapter
             binding.rcySongs.visibility = View.VISIBLE
-            binding.tvNoSong.visibility = View.GONE
+        }
+
+        binding.btnMore.setOnClickListener {
+            PlaylistModelBottomSheet().show(requireActivity().supportFragmentManager,  PlaylistModelBottomSheet.TAG)
         }
 
     }
@@ -73,6 +76,7 @@ class PlaylistDetailFragment :
             song, songListOfPlaylist
         )
     }
+
 
 
 }

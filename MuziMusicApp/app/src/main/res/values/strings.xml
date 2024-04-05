@@ -32,4 +32,10 @@
     <string name="give_your_playlist_a_name">Give your playlist a name</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <string name="description">Description</string>
+    <string name="no_songs">No Songs</string>
+    <string name="add_new">Add New</string>
+    <string name="add_to_this_playlist">Add to this playlist</string>
+    <string name="delete_playlist">Delete playlist</string>
+    <string name="edit_playlist">Edit Playlist</string>
 </resources>

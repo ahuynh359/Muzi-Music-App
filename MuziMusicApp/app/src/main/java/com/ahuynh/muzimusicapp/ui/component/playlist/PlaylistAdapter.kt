@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.databinding.ItemPlaylistBinding
+import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -20,18 +20,18 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
             binding.root.setOnClickListener {
                 listener.onPlaylistClicked(currentList[layoutPosition])
             }
+
         }
 
         fun bind(playlist: Playlist) {
             Glide
-                .with(binding.imvSong.context)
+                .with(binding.imvPlaylist.context)
                 .load(playlist.image)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.note)
-                .into(binding.imvSong);
-            binding.tvPlaylist.text = playlist.name
-            binding.tvUser.text = "User"
+                .into(binding.imvPlaylist);
+            binding.tvPlaylistName.text = playlist.name
 
         }
 
@@ -68,4 +68,5 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
 
 interface OnPlaylistClicked {
     fun onPlaylistClicked(playlist: Playlist)
+
 }

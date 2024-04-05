@@ -67,7 +67,7 @@ class MusicService : Service() {
             Constants.NOTIFICATION_CHANNEL_ID,
         )
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.song)
+            .setSmallIcon(R.drawable.note)
             .setAutoCancel(false)
             .build()
 
