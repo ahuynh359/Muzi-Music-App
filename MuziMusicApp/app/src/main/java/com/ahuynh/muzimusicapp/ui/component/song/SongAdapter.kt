@@ -29,7 +29,7 @@ class SongAdapter(private val listener: OnSongClicked) :
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.note)
-                .into(binding.imvSong);
+                .into(binding.imvSong)
             binding.tvNameSong.text = song.name
             binding.tvSinger.text = song.singer
 

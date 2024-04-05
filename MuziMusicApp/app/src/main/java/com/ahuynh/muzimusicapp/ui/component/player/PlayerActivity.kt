@@ -3,11 +3,12 @@ package com.ahuynh.muzimusicapp.ui.component.player
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
+import com.ahuynh.muzimusicapp.model.Lyric
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -15,8 +16,9 @@ import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.Utils.convertStringToLyric
+import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -29,7 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 @AndroidEntryPoint
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     private lateinit var snackbar: Snackbar
     private lateinit var binding : ActivityPlayerBinding
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
@@ -37,32 +39,47 @@ class PlayerActivity : AppCompatActivity() {
     }
     private val viewModel by viewModels<PlayerViewModel>()
     private var isSliderPressed = false
+    private var playerAdapter: PlayerAdapter = PlayerAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Get current song, list song, isPlaying or not from service
+        handleUI()
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
-
         setUpSeekbar()
+        observe()
 
-        binding.btnDown.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
 
+    }
+
+    private fun observe() {
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
-                if (it) com.ahuynh.muzimusicapp.R.drawable.ic_play
-                else com.ahuynh.muzimusicapp.R.drawable.ic_pause
+                if (it) R.drawable.ic_play
+                else R.drawable.ic_pause
             )
         }
 
+        viewModel.song.observe(this){
 
+        }
+    }
 
+    private fun getSongLyrics(text : String) : ArrayList<Lyric>{
+        val lyrics = arrayListOf<Lyric>()
+        if(text.isEmpty()){
+            lyrics.add(Lyric(0,"No lyrics"))
+        } else {
+            val list = text.split('\n') as ArrayList<String>
+            for (line in list)
+                lyrics.add(line.convertStringToLyric())
+        }
+        return lyrics
+    }
 
-
+    private fun handleUI() {
         binding.btnPlayPause.setOnClickListener {
 
             if (viewModel.isClear) {
@@ -76,7 +93,6 @@ class PlayerActivity : AppCompatActivity() {
                 sendMusic(ACTION_PLAY)
             }
         }
-
         binding.btnPre.setOnClickListener {
             if (viewModel.isClear) {
                 sendMusic(
@@ -89,7 +105,9 @@ class PlayerActivity : AppCompatActivity() {
                 sendMusic(ACTION_PRE)
             }
         }
-
+        binding.btnDown.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         binding.btnNext.setOnClickListener {
             if (viewModel.isClear) {
                 sendMusic(
@@ -102,8 +120,7 @@ class PlayerActivity : AppCompatActivity() {
                 sendMusic(ACTION_NEXT)
             }
         }
-
-
+        binding.rcyLyrics.adapter = playerAdapter
     }
 
     fun sendMusic(
@@ -165,13 +182,11 @@ class PlayerActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onAudioSessionIdEvent(event: EventBusModel.AudioSessionIdEvent) {
-
     }
 
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
-
         event.song?.let { song ->
             viewModel.song.postValue(song)
 
@@ -190,21 +205,16 @@ class PlayerActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onMusicPlayingEvent(event: EventBusModel.MusicPlayingEvent) {
-
-
         viewModel.isPlaying.postValue(event.isPlaying)
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onMusicTimeEvent(event: EventBusModel.MusicTimeEvent) {
-        Log.d("PlayerActivity", event.timeMillis.toString())
         if (event.duration > 0) {
             binding.shimmerSlider.stopShimmer()
             binding.slider.visibility = View.VISIBLE
@@ -251,6 +261,9 @@ class PlayerActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onLyricsClicked(lyric: Lyric) {
     }
 
 

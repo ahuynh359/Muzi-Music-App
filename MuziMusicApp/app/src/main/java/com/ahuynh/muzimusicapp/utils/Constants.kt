@@ -1,5 +1,7 @@
 package com.ahuynh.muzimusicapp.utils
 
+import com.ahuynh.muzimusicapp.model.Song
+
 object Constants {
     enum class SortingOrder {
         ASCENDING,
@@ -34,7 +36,7 @@ object Constants {
     var IS_SHUFFLE = false
     var INTENT_ACTION = "intent_service"
 
-
+    var SONG_LIST_DATA : List<Song> = listOf()
 
 
 }

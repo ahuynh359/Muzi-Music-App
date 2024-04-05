@@ -12,6 +12,7 @@ import android.os.Parcelable
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.ahuynh.muzimusicapp.model.Lyric
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -51,6 +52,18 @@ object Utils {
         } else {
             String.format("%d:%02d:%02d", hour, minute, second)
         }
+    }
+
+    fun String.convertStringToLyric(): Lyric {
+        val closeBracketIndex = indexOf(']')
+        val time = substring(1, closeBracketIndex)
+        val towDot = time.indexOf(':')
+        val dot = time.indexOf('.')
+        val minute = time.substring(1, towDot).toInt()
+        val second = time.substring(dot + 1, dot).toInt()
+        val millis = time.substring(dot + 1).toInt()
+        val timeMillis = minute * 60 * 1000 + second * 1000 + millis * 10
+        return Lyric(timeMillis, substring(closeBracketIndex + 1).trim())
     }
 
     fun checkSinglePermissionAny(

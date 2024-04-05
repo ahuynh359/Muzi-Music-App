@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -98,7 +99,10 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
 
 
     override fun onPlaylistClicked(playlist: Playlist) {
-        TODO("Not yet implemented")
+        Log.d(TAG, playlist.toString())
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailFragment(playlist)
+        findNavController().navigate(action)
     }
 
 }

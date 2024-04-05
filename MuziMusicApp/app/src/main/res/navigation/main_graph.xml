@@ -24,8 +24,17 @@
         <argument
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist" />
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistDetailFragment"
+            app:destination="@id/playlistDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistDetailFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistDetailFragment"
+        android:label="fragment_playlist_detail"
+        tools:layout="@layout/fragment_playlist_detail" >
         <argument
-            android:name="songs"
-            app:argType="com.ahuynh.muzimusicapp.model.Song[]" />
+            android:name="playlist"
+            app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist" />
     </fragment>
 </navigation>
