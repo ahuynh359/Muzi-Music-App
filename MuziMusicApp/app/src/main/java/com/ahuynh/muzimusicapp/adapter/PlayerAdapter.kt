@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.player
+package com.ahuynh.muzimusicapp.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.databinding.ItemLyricsBinding
-import com.ahuynh.muzimusicapp.model.Lyric
+import com.ahuynh.muzimusicapp.data.model.Lyric
 
 class PlayerAdapter(private val listener: OnLyricsClicked) :
     ListAdapter<Lyric, PlayerAdapter.ViewHolder>(DiffCallback()) {

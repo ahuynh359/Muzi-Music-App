@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.player
+package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.google.firebase.firestore.CollectionReference

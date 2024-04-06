@@ -9,8 +9,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.FragmentFormPlaylistBinding
-import com.ahuynh.muzimusicapp.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
 import dagger.hilt.android.AndroidEntryPoint
 

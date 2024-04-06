@@ -7,9 +7,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.adapter.OnLyricsClicked
+import com.ahuynh.muzimusicapp.adapter.PlayerAdapter
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
-import com.ahuynh.muzimusicapp.model.Lyric
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Lyric
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT

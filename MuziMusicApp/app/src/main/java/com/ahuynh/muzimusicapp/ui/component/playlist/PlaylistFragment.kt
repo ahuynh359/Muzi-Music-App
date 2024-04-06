@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.adapter.OnPlaylistClicked
+import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
-import com.ahuynh.muzimusicapp.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +47,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             val bundle = bundleOf("playlist" to null)
             val dialogFragment = PlaylistAddDialog()
             dialogFragment.arguments = bundle
-            dialogFragment.show(parentFragmentManager, "PlaylistAddDialog")
+            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
 
 
         }
@@ -83,8 +85,9 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
         }
 
         viewModel.message.observe(viewLifecycleOwner) { response ->
-            response?.let {
+            if(response != null){
                 Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+                viewModel.message.postValue(null)
             }
 
         }

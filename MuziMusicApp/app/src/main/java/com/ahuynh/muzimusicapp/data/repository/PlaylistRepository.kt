@@ -1,8 +1,8 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist
+package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.di.IoDispatcher
-import com.ahuynh.muzimusicapp.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
@@ -45,7 +45,7 @@ class PlaylistRepository @Inject constructor(
                     .await()
 
                 if (!existingPlaylistQuery.isEmpty) {
-                    return@withContext Response.Failure("Playlist with name ${playlist.namePlaylist} already exists")
+                    return@withContext Response.Failure("Add Playlist with name ${playlist.namePlaylist} already exists")
                 }
                 val id = UUID.randomUUID().toString()
                 val play = hashMapOf(
@@ -85,7 +85,7 @@ class PlaylistRepository @Inject constructor(
                     .await()
 
                 if (!existingPlaylistQuery.isEmpty) {
-                    return@withContext Response.Failure("Playlist with name $newName already exists")
+                    return@withContext Response.Failure("Update Playlist with name $newName already exists")
                 }
                 val playlistRef = playlistCollRef.document(playlist.id!!)
                 val updateData = hashMapOf(

@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.model
+package com.ahuynh.muzimusicapp.data.model
 
 import android.net.Uri
 

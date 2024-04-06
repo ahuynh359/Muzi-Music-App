@@ -1,6 +1,6 @@
 package com.ahuynh.muzimusicapp.utils
 
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 
 class EventBusModel {
 

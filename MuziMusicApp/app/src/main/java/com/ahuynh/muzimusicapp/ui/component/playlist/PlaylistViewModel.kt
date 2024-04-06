@@ -2,8 +2,9 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) :
     BaseViewModel() {
-    var message = MutableLiveData<String?>(null)
+
     var playlists = MutableLiveData<List<Playlist>>()
     var addPlaylistStatus = MutableLiveData<Boolean>()
     var deletePlaylistStatus = MutableLiveData<Boolean>()

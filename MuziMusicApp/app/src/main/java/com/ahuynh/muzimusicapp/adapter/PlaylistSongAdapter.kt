@@ -1,11 +1,11 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist
+package com.ahuynh.muzimusicapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -33,7 +33,7 @@ class PlaylistSongAdapter(private val listener: OnPlaylistSongClicked, private v
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PlaylistSongAdapter.ViewHolder {
+    ): ViewHolder {
         val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -42,7 +42,7 @@ class PlaylistSongAdapter(private val listener: OnPlaylistSongClicked, private v
         return songList.size
     }
 
-    override fun onBindViewHolder(holder: PlaylistSongAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(songList[position])
     }
 }

@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.ahuynh.muzimusicapp.adapter.OnSongClicked
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants

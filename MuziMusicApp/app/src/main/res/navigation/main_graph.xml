@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_playlist" >
         <argument
             android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist" />
+            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
         <action
             android:id="@+id/action_playlistFragment_to_playlistDetailFragment"
             app:destination="@id/playlistDetailFragment" />
@@ -38,7 +38,7 @@
         tools:layout="@layout/fragment_playlist_detail" >
         <argument
             android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist" />
+            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
     </fragment>
     <dialog
         android:id="@+id/playlistModelBottomSheet"
@@ -47,7 +47,7 @@
         <argument
             android:name="playlist"
             android:defaultValue="@null"
-            app:argType="com.ahuynh.muzimusicapp.model.playlist.Playlist"
+            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist"
             app:nullable="true" />
     </dialog>
 </navigation>

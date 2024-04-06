@@ -6,6 +6,7 @@ import kotlinx.coroutines.Job
 
 open class BaseViewModel : ViewModel() {
     protected var parentJob: Job? = null
+    var message = MutableLiveData<String?>(null)
     var isLoading = MutableLiveData(false)
         private set
 

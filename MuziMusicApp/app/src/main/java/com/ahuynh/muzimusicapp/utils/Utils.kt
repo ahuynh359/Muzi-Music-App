@@ -12,8 +12,8 @@ import android.os.Parcelable
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.ahuynh.muzimusicapp.model.Lyric
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Lyric
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 

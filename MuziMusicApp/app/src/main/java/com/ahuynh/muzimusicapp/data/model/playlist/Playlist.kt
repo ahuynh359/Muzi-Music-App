@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.model.playlist
+package com.ahuynh.muzimusicapp.data.model.playlist
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

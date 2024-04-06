@@ -1,7 +1,7 @@
-package com.ahuynh.muzimusicapp.ui.component.song
+package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.di.IoDispatcher
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.NAME
 import com.ahuynh.muzimusicapp.utils.Constants.SONG

@@ -58,7 +58,7 @@ class PlaylistModelBottomSheet : BottomSheetDialogFragment() {
             val bundle = bundleOf("playlist" to currentPlaylist)
             val dialogFragment = PlaylistAddDialog()
             dialogFragment.arguments = bundle
-            dialogFragment.show(parentFragmentManager, "PlaylistAddDialog")
+            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
             dismiss()
         }
     }

@@ -2,7 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ahuynh.muzimusicapp.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.repository.PlayerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
