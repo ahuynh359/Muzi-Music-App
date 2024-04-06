@@ -11,7 +11,7 @@ import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
-abstract class BaseFragment<VB : ViewBinding>(
+open class BaseFragment<VB : ViewBinding>(
     private val inflate: Inflate<VB>
 ) : Fragment() {
 

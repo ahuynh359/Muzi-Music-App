@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="@id/btn_add"
         app:layout_constraintStart_toStartOf="@id/btn_a_z"
         app:layout_constraintTop_toBottomOf="@id/btn_a_z"
-        tools:listitem="@layout/item_song" />
+        tools:listitem="@layout/item_playlist" />
 
     <include
         android:visibility="gone"
@@ -88,5 +88,16 @@
         android:layout_width="0dp"
         layout="@layout/item_player"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--    <androidx.core.widget.ContentLoadingProgressBar-->
+<!--        android:theme="@style/ContentLoadingProgress"-->
+<!--        style="?android:attr/progressBarStyle"-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

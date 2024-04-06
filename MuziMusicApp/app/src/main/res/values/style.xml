@@ -72,4 +72,7 @@
     <style name="circle">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="ContentLoadingProgress">
+        <item name="colorAccent">@color/white</item>
+    </style>
 </resources>

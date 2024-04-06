@@ -1,39 +1,73 @@
 package com.ahuynh.muzimusicapp.ui.component.playlist
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) : ViewModel() {
-     var playlists = MutableLiveData<Response<List<Playlist>>>()
-     var addPlaylistStatus = MutableLiveData<Response<Boolean>>()
+class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) :
+    BaseViewModel() {
+    var message = MutableLiveData<String?>(null)
+    var playlists = MutableLiveData<List<Playlist>>()
+    var addPlaylistStatus = MutableLiveData<Boolean>()
+    var deletePlaylistStatus = MutableLiveData<Boolean>()
+    var updatePlaylistStatus = MutableLiveData<Boolean>()
+
 
 
     fun getAllPlaylist(order: Constants.SortingOrder) {
-        Log.d("PlaylistFragment","Call API")
-        playlists.postValue(Response.Loading)
-        viewModelScope.launch {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
             val response = playlistRepository.getAllPlaylist(order)
-            playlists.postValue(response)
+            if (response is Response.Success) {
+                playlists.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
         }
+        registerEventParentJobFinish()
     }
 
     fun addNewPlaylist(playlist : PlaylistModel){
-        addPlaylistStatus.postValue(Response.Loading)
-        viewModelScope.launch {
+        parentJob = viewModelScope.launch {
             val response = playlistRepository.addPlaylist(playlist)
-            addPlaylistStatus.postValue(response)
+            if (response is Response.Success) {
+                addPlaylistStatus.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
         }
+        registerEventParentJobFinish()
+    }
+
+    fun deletePlaylist(playlist: Playlist) {
+        parentJob = viewModelScope.launch {
+            val response = playlistRepository.deletePlaylist(playlist)
+            if (response is Response.Success) {
+                deletePlaylistStatus.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun updatePlaylist(playlist: Playlist, newName: String) {
+        parentJob = viewModelScope.launch {
+            val response = playlistRepository.updatePlaylist(playlist, newName)
+            if (response is Response.Success) {
+                updatePlaylistStatus.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
     }
 }

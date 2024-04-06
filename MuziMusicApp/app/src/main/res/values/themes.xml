@@ -11,4 +11,5 @@
     </style>
 
     <style name="Theme.MuziMusicApp" parent="Base.Theme.MuziMusicApp" />
+
 </resources>

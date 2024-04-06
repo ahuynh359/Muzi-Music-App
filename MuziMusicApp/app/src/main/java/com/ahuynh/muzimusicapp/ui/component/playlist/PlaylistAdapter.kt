@@ -20,6 +20,9 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
             binding.root.setOnClickListener {
                 listener.onPlaylistClicked(currentList[layoutPosition])
             }
+            binding.btnMore.setOnClickListener {
+                listener.onMoreItemClicked(currentList[layoutPosition])
+            }
 
         }
 
@@ -68,5 +71,6 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
 
 interface OnPlaylistClicked {
     fun onPlaylistClicked(playlist: Playlist)
+    fun onMoreItemClicked(playlist: Playlist)
 
 }

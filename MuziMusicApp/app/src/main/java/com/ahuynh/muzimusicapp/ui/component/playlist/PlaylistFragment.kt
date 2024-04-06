@@ -1,24 +1,25 @@
 package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistBinding::inflate),
     OnPlaylistClicked {
+    companion object {
+        const val TAG = "PlaylistFragment"
+    }
 
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
-    private val TAG = "PlaylistFragment"
     private val playlistAdapter = PlaylistAdapter(this)
     private var sortingAsc = true
 
@@ -41,7 +42,12 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             toggleSort()
         }
         binding.btnAdd.setOnClickListener {
-            PlaylistAddDialog().show(requireActivity().supportFragmentManager, null)
+            val bundle = bundleOf("playlist" to null)
+            val dialogFragment = PlaylistAddDialog()
+            dialogFragment.arguments = bundle
+            dialogFragment.show(parentFragmentManager, "PlaylistAddDialog")
+
+
         }
 
     }
@@ -59,52 +65,52 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
     private fun observe() {
-        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) { res ->
-            when (res) {
-                is Response.Loading -> {}
-                is Response.Success -> {
-                    playlistAdapter.submitList(mutableListOf())
-                    viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
-                }
-                is Response.Failure -> {}
-            }
-        }
-        viewModel.playlists.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Response.Loading -> {
-                }
-                is Response.Success -> {
-                    val list = response.data
-                    playlistAdapter.submitList(list)
-                    binding.rcyPlaylist.visibility = View.VISIBLE
-                    hideShimmer()
-                }
 
-                is Response.Failure -> {
-                    hideShimmer()
-                    Toast.makeText(context, "Error at server side", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, response.errorMessage)
-                }
+        viewModel.playlists.observe(viewLifecycleOwner) { response ->
+            playlistAdapter.submitList(response)
+            binding.rcyPlaylist.visibility = View.VISIBLE
+            hideShimmer()
+        }
+        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
+            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        }
+        viewModel.updatePlaylistStatus.observe(viewLifecycleOwner) {
+            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        }
+
+        viewModel.deletePlaylistStatus.observe(viewLifecycleOwner) {
+            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        }
+
+        viewModel.message.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
             }
+
         }
 
 
     }
 
     private fun hideShimmer() {
+        binding.rcyPlaylist.visibility = View.VISIBLE
         binding.shimmerPlaylist.stopShimmer()
         binding.shimmerPlaylist.visibility = View.GONE
     }
 
 
-
     override fun onPlaylistClicked(playlist: Playlist) {
-        Log.d(TAG, playlist.toString())
         val action =
             PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailFragment(playlist)
         findNavController().navigate(action)
     }
 
+    override fun onMoreItemClicked(playlist: Playlist) {
+        val bundle = bundleOf("playlist" to playlist)
+        val dialogFragment = PlaylistModelBottomSheet()
+        dialogFragment.arguments = bundle
+        dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
+    }
 
 
 }

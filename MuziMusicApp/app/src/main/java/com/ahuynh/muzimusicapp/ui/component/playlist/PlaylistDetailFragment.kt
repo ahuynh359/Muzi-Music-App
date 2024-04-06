@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistDetailBinding
@@ -24,13 +25,14 @@ class PlaylistDetailFragment :
     OnPlaylistSongClicked {
     private lateinit var songAdapter: PlaylistSongAdapter
     private val TAG = "PlaylistDetailFragment"
+    private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private val args: PlaylistFragmentArgs by navArgs()
     private lateinit var songListOfPlaylist : ArrayList<Song>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentPlaylist = PlaylistFragmentArgs.fromBundle(requireArguments()).playlist
+        val currentPlaylist = PlaylistDetailFragmentArgs.fromBundle(requireArguments()).playlist
 
         currentPlaylist?.let {
             Glide
@@ -56,7 +58,12 @@ class PlaylistDetailFragment :
         }
 
         binding.btnMore.setOnClickListener {
-            PlaylistModelBottomSheet().show(requireActivity().supportFragmentManager,  PlaylistModelBottomSheet.TAG)
+
+        }
+
+        viewModel.updatePlaylistStatus.observe(viewLifecycleOwner){res->
+
+
         }
 
     }

@@ -2,19 +2,15 @@ package com.ahuynh.muzimusicapp.ui.component.song
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST_DATA
-import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,18 +19,16 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     OnSongClicked {
 
     private val viewModel by viewModels<SongViewModel>()
-    private val TAG = "SongFragment"
+
+    companion object {
+        const val TAG = "SongFragment"
+    }
     private val songAdapter = SongAdapter(this)
     private var sortingAsc = true
-    private var isLinear = true
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var gridLayoutManager: GridLayoutManager
     private var listSong: ArrayList<Song> = arrayListOf()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(context)
-        gridLayoutManager = GridLayoutManager(context, 2)
-
         getData()
         handleUI()
         observe()
@@ -55,7 +49,6 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
 
-
     private fun toggleSort() {
         sortingAsc = !sortingAsc
         if (sortingAsc) {
@@ -68,27 +61,22 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     private fun observe() {
-        viewModel.songs.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Response.Loading -> {
-                }
+        viewModel.songList.observe(viewLifecycleOwner) {
+            songAdapter.submitList(it)
+            binding.rcySong.visibility = View.VISIBLE
+            listSong = it as ArrayList<Song>
+            SONG_LIST_DATA = it
+            hideShimmer()
 
-                is Response.Success -> {
-                    val list = response.data
-                    songAdapter.submitList(list)
-                    binding.rcySong.visibility = View.VISIBLE
-                    listSong = list as ArrayList<Song>
-                    SONG_LIST_DATA = list as ArrayList<Song>
-                    hideShimmer()
-                }
-
-                is Response.Failure -> {
-                    hideShimmer()
-                    Toast.makeText(context, "Error at server side", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, response.errorMessage)
-                }
-            }
         }
+
+        viewModel.message.observe(viewLifecycleOwner) { response ->
+            response?.let {
+                Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
     }
 
     private fun hideShimmer() {

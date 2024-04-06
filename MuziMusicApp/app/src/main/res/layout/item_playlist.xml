@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-<!--    <androidx.appcompat.widget.AppCompatImageButton
+   <androidx.appcompat.widget.AppCompatImageButton
         android:background="@android:color/transparent"
         android:src="@drawable/ic_more_small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +48,6 @@
         app:layout_constraintTop_toTopOf="@id/imv_playlist"
         android:id="@+id/btn_more"
         android:layout_width="50dp"
-        android:layout_height="50dp"/>-->
+        android:layout_height="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
