@@ -37,6 +37,7 @@ object Constants {
     var INTENT_ACTION = "intent_service"
 
     var SONG_LIST_DATA : List<Song> = listOf()
+    var SEEK_BAR_VALUE = 1
 
 
 }

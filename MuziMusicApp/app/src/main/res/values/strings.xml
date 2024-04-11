@@ -41,4 +41,7 @@
     <string name="cancle">CANCLE</string>
     <string name="delete">DELETE</string>
     <string name="edit">Edit</string>
+    <string name="sleep_timer">Sleep Timer</string>
+    <string name="min">1 min</string>
+    <string name="start">START</string>
 </resources>

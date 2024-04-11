@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.OnLyricsClicked
 import com.ahuynh.muzimusicapp.adapter.PlayerAdapter
-import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistAddDialog
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
@@ -30,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
@@ -38,6 +40,9 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     private lateinit var binding : ActivityPlayerBinding
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
         NetworkConnectivityHelper(this)
+    }
+    private val sleepTimerDialog: SleepTimerDialog by lazy {
+        SleepTimerDialog()
     }
     private val viewModel by viewModels<PlayerViewModel>()
     private var isSliderPressed = false
@@ -66,6 +71,13 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
 
         viewModel.song.observe(this){
 
+        }
+        viewModel.sleepTime.observe(this){
+            binding.tvTimer.text = it
+            if(it.equals("00:00:00")){
+                finishAffinity();
+                exitProcess(0);
+            }
         }
     }
 
@@ -123,6 +135,11 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
             }
         }
         binding.rcyLyrics.adapter = playerAdapter
+        binding.btnSleep.setOnClickListener {
+            if (!sleepTimerDialog.isAdded) {
+                sleepTimerDialog.show(supportFragmentManager, PlaylistAddDialog.TAG)
+            }
+        }
     }
 
     fun sendMusic(
