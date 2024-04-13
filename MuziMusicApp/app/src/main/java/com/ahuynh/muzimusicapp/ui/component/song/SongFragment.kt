@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.OnSongClicked
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
     OnSongClicked {
 
-    private val viewModel by viewModels<SongViewModel>()
+    private val viewModel by viewModels<SongViewModel>({requireActivity()})
 
     companion object {
         const val TAG = "SongFragment"
@@ -87,6 +87,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     override fun onSongClicked(song: Song) {
+        viewModel.updateSongListen(song)
+        if (sortingAsc) {
+            viewModel.getAllSongs(Constants.SortingOrder.ASCENDING)
+        } else {
+            viewModel.getAllSongs(Constants.SortingOrder.DESCENDING)
+        }
         Toast.makeText(context, song.id.toString(), Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
@@ -94,6 +100,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             Constants.ACTION_PLAY,
             song, listSong
         )
+
     }
 
 }

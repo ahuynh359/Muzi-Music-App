@@ -1,7 +1,8 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.di.IoDispatcher
+import android.util.Log
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.NAME
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
@@ -30,6 +31,37 @@ class SongRepository @Inject constructor(
                 val query =
                     if (order == Constants.SortingOrder.DESCENDING) Query.Direction.DESCENDING else Query.Direction.ASCENDING
                 val songs = songCollRef.orderBy(NAME, query).get().await()
+                    .toObjects(Song::class.java)
+                Response.Success(songs)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+    suspend fun updateSongListen(song: Song): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+
+                val currentSong = songCollRef.document(song.id!!)
+                val listen = song.listen?.plus(1)
+                Log.d("SongRepository",song.listen.toString())
+                Log.d("SongRepository",listen.toString())
+                val updateData = hashMapOf(
+                    "listen" to listen
+                )
+                currentSong.update(updateData as Map<String, Int?>).await()
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    suspend fun getAllSongByListen(): Response<List<Song>> {
+        return withContext(dispatcher) {
+            try {
+
+                val songs = songCollRef.orderBy("listen", Query.Direction.DESCENDING).get().await()
                     .toObjects(Song::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {

@@ -2,8 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.song
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -29,5 +29,34 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
         }
         registerEventParentJobFinish()
     }
+
+    fun updateSongListen(song : Song){
+        isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.updateSongListen(song)
+            if (response is Response.Success) {
+                message.postValue("Ok")
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+    fun getAllSongByListen(){
+        isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.getAllSongByListen()
+            if (response is Response.Success) {
+                songList.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
+
+
+
 
 }

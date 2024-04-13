@@ -12,3 +12,8 @@ plugins {
     id("com.google.gms.google-services") version "4.4.1" apply false
 
 }
+allprojects {
+    repositories {
+        maven { url = uri("https://www.jitpack.io" ) }
+    }
+}

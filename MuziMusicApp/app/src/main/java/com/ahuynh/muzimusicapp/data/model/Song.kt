@@ -9,7 +9,8 @@ data class Song(
     val id: String? = null,
     val file: String ? = null,
     val image: String ? = null,
-    val lyrics: String ? = null,
-    val singer: String ? = null,
+    val lyrics: String? = null,
+    val singer: String? = null,
+    val listen: Int? = 0,
 ) : Parcelable
 
