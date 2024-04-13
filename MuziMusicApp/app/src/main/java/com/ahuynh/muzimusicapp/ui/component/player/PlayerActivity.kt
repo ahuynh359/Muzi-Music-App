@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.player
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,9 @@ import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
+    companion object {
+        const val TAG = "PlayerActivityABC"
+    }
     private lateinit var snackbar: Snackbar
     private lateinit var binding : ActivityPlayerBinding
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
@@ -47,6 +51,7 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     private val viewModel by viewModels<PlayerViewModel>()
     private var isSliderPressed = false
     private var playerAdapter: PlayerAdapter = PlayerAdapter(this)
+    private var songLyrics: ArrayList<Lyric> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +74,13 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
             )
         }
 
-        viewModel.song.observe(this){
+        viewModel.song.observe(this) { song ->
+            Log.d(TAG, getSongLyrics(song.lyrics!!).toString())
+            playerAdapter.submitList(getSongLyrics(song.lyrics))
+            songLyrics = getSongLyrics(song.lyrics)
 
         }
+
         viewModel.sleepTime.observe(this){
             binding.tvTimer.text = it
             if(it.equals("00:00:00")){
@@ -79,6 +88,40 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
                 exitProcess(0);
             }
         }
+        viewModel.currentSongTime.observe(this) { time ->
+            binding.rcyLyrics.post {
+                smartScrollLyrics(time)
+            }
+
+        }
+    }
+
+    private fun smartScrollLyrics(time: Int) {
+        val indexLine = indexLine(time, songLyrics)
+    }
+
+    private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
+        var left = 0
+        var right = lyrics.size - 1
+
+        while (left <= right) {
+            val middle = (left + right) / 2
+            if (time < lyrics[middle].startTime) {
+                right = middle - 1
+
+            } else {
+                if (middle < lyrics.size - 1) {
+                    if (time < lyrics[middle + 1].startTime) {
+                        return middle
+                    } else {
+                        left = middle + 1
+                    }
+                } else {
+                    return middle
+                }
+            }
+        }
+        return -1
     }
 
     private fun getSongLyrics(text : String) : ArrayList<Lyric>{
@@ -86,10 +129,12 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
         if(text.isEmpty()){
             lyrics.add(Lyric(0,"No lyrics"))
         } else {
-            val list = text.split('\n') as ArrayList<String>
-            for (line in list)
+            val list = text.split("\\n").map { it.trimEnd('\\') }
+            for (line in list) {
                 lyrics.add(line.convertStringToLyric())
+            }
         }
+
         return lyrics
     }
 

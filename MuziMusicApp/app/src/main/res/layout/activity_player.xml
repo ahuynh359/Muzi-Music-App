@@ -239,6 +239,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_marginTop="@dimen/_20dp"
                 android:id="@+id/rcy_lyrics"
                 android:layout_width="0dp"

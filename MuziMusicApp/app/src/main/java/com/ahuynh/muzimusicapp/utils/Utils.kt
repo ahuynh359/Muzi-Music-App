@@ -60,9 +60,10 @@ object Utils {
         val towDot = time.indexOf(':')
         val dot = time.indexOf('.')
         val minute = time.substring(1, towDot).toInt()
-        val second = time.substring(dot + 1, dot).toInt()
+        val second = time.substring(towDot + 1, dot).toInt()
         val millis = time.substring(dot + 1).toInt()
         val timeMillis = minute * 60 * 1000 + second * 1000 + millis * 10
+
         return Lyric(timeMillis, substring(closeBracketIndex + 1).trim())
     }
 

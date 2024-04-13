@@ -17,4 +17,5 @@ class PlayerViewModel @Inject constructor(private val playerRepository: PlayerRe
     var isClear: Boolean = false
     var sleepTime = MutableLiveData<String>()
     var sleepTimerState = MutableLiveData<SleepTimerState>()
+    var currentSongTime  = MutableLiveData<Int>(0)
 }
