@@ -44,4 +44,5 @@
     <string name="sleep_timer">Sleep Timer</string>
     <string name="min">1 min</string>
     <string name="start">START</string>
+    <string name="all_songs">All Songs</string>
 </resources>

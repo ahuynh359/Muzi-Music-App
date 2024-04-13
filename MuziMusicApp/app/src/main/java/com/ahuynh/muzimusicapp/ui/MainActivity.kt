@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 PERMISSION_REQUEST_ID
             )
         ) {
-            Toast.makeText(this@MainActivity, "Granted", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_LONG).show()
         }
     }
 

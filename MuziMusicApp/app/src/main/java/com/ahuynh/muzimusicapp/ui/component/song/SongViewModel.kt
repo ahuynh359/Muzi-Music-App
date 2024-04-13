@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +16,10 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
 
     var songList = MutableLiveData<List<Song>>()
 
-    fun getAllSongs(order: Constants.SortingOrder) {
+    fun getAllSongs() {
         isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.getAllSong(order)
+            val response = repository.getAllSong()
             if (response is Response.Success) {
                 songList.postValue(response.data)
             } else if (response is Response.Failure) {

@@ -8,28 +8,16 @@
     tools:context=".ui.component.song.SongFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_a_z"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/btn_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20dp"
-        android:drawableStart="@drawable/ic_sort"
         android:fontFamily="@font/bold"
-        android:text="@string/a_z"
-        android:textSize="@dimen/_12sp"
+        android:text="@string/all_songs"
+        android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-<!--    <androidx.appcompat.widget.AppCompatImageButton-->
-<!--        android:id="@+id/btn_grid"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="@dimen/_15dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:src="@drawable/ic_grid"-->
-<!--        android:text="@string/recents"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/btn_a_z"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@id/btn_a_z" />-->
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_song"
@@ -39,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_a_z">
+        app:layout_constraintTop_toBottomOf="@id/btn_title">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@id/player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_a_z"
+        app:layout_constraintTop_toBottomOf="@id/btn_title"
         tools:listitem="@layout/item_song" />
 
     <include

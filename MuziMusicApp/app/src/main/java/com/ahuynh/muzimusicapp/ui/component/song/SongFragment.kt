@@ -20,13 +20,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
     OnSongClicked {
 
-    private val viewModel by viewModels<SongViewModel>({requireActivity()})
+    private val viewModel by viewModels<SongViewModel>()
 
     companion object {
         const val TAG = "SongFragment"
     }
     private val songAdapter = SongAdapter(this)
-    private var sortingAsc = true
     private var listSong: ArrayList<Song> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,28 +37,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     private fun getData() {
-        viewModel.getAllSongs(Constants.SortingOrder.ASCENDING)
+        viewModel.getAllSongs()
     }
 
     private fun handleUI() {
         binding.rcySong.adapter = songAdapter
-        binding.btnAZ.setOnClickListener {
-            toggleSort()
-        }
 
-
-    }
-
-
-    private fun toggleSort() {
-        sortingAsc = !sortingAsc
-        if (sortingAsc) {
-            binding.btnAZ.text = "A - Z"
-            viewModel.getAllSongs(Constants.SortingOrder.ASCENDING)
-        } else {
-            binding.btnAZ.text = "Z - A"
-            viewModel.getAllSongs(Constants.SortingOrder.DESCENDING)
-        }
     }
 
     private fun observe() {
@@ -76,7 +59,6 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             response?.let {
                 Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
             }
-
         }
 
     }
@@ -88,12 +70,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
     override fun onSongClicked(song: Song) {
         viewModel.updateSongListen(song)
-        if (sortingAsc) {
-            viewModel.getAllSongs(Constants.SortingOrder.ASCENDING)
-        } else {
-            viewModel.getAllSongs(Constants.SortingOrder.DESCENDING)
-        }
-        Toast.makeText(context, song.id.toString(), Toast.LENGTH_SHORT).show()
+        getData()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(),

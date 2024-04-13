@@ -3,8 +3,6 @@ package com.ahuynh.muzimusicapp.data.repository
 import android.util.Log
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.di.IoDispatcher
-import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Constants.NAME
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
@@ -25,12 +23,10 @@ class SongRepository @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun getAllSong(order: Constants.SortingOrder): Response<List<Song>> {
+    suspend fun getAllSong(): Response<List<Song>> {
         return withContext(dispatcher) {
             try {
-                val query =
-                    if (order == Constants.SortingOrder.DESCENDING) Query.Direction.DESCENDING else Query.Direction.ASCENDING
-                val songs = songCollRef.orderBy(NAME, query).get().await()
+                val songs = songCollRef.get().await()
                     .toObjects(Song::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {
