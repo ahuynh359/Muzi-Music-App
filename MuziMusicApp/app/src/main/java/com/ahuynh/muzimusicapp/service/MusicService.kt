@@ -5,8 +5,10 @@ import android.app.Service
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -18,6 +20,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.extractor.DefaultExtractorsFactory
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
@@ -52,7 +57,6 @@ class MusicService : Service() {
     private var songList: ArrayList<Song> = arrayListOf()
     private var currentSong: Song? = null
     private var currentSongIndex: Int = -1
-    //private lateinit var defaultBitmap: Bitmap
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -61,38 +65,44 @@ class MusicService : Service() {
     override fun onCreate() {
         super.onCreate()
         EventBus.getDefault().register(this)
+        createNotification()
 
+    }
+
+    private fun createNotification() {
         val notification = NotificationCompat.Builder(
             this@MusicService,
             Constants.NOTIFICATION_CHANNEL_ID,
-        )
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.note)
-            .setAutoCancel(false)
-            .build()
+        ).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.drawable.note)
+            .setAutoCancel(false).build()
 
         startForeground(NOTIFICATION_ID, notification)
     }
 
+    //Called with startService()
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val action = intent.getIntExtra(ACTION, 0)
         val data = intent.getBundleExtra(DATA)
 
+        //Get music and list sent from PlayerActivity
         data?.let {
             val song: Song? = data.parcelable<Song>(SONG)
             val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
             song?.let {
-
                 songList = list!!
-                currentSongIndex = songList.indexOf(song)
-                Log.d("MusicService Current Song 1", currentSongIndex.toString())
-                listenToMusic(currentSongIndex)
 
+                if (Constants.IS_SHUFFLE) {
+                    val shuffledSongList = ArrayList(songList).apply { shuffle() }
+                    songList = shuffledSongList
+                }
+                currentSongIndex = songList.indexOf(song)
+                listenToMusic(currentSongIndex)
             }
 
         }
 
+        //What Action ?
         when (action) {
             ACTION_PLAY -> {
                 playPauseMusic()
@@ -131,24 +141,24 @@ class MusicService : Service() {
         }
     }
 
-
-
     private fun listenToMusic(currentSongIndex: Int) {
+        //If current music is playing then stop
         player?.let {
             if (it.isPlaying)
                 it.stop()
             it.release()
-
         }
 
         val song = songList[currentSongIndex]
         currentSong = song
 
+        //Send current song info back to UI
         EventBus.getDefault().postSticky(EventBusModel.SongInfoEvent(song))
         preparePlay(song)
         sendNotification()
     }
 
+    //Update button play pause
     private fun playPauseMusic() {
         player?.let {
             if (it.isPlaying) it.pause()
@@ -158,6 +168,7 @@ class MusicService : Service() {
         sendNotification()
 
     }
+
 
     private fun addSongNext(song: Song) {
         val index = songList.indexOf(song)
@@ -175,27 +186,35 @@ class MusicService : Service() {
         }
     }
 
+    //Use coil to load image from url convert to bitmap with coroutine
+    private suspend fun getCurrentSongBitMap(): Bitmap {
+        val loader = ImageLoader(this@MusicService)
+        val request =
+            ImageRequest.Builder(this@MusicService)
+                .data(songList[currentSongIndex].image)
+                .allowHardware(false)
+                .build()
+
+        var bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.note)
+        try {
+            val result = (loader.execute(request) as SuccessResult).drawable
+            bitmap = (result as BitmapDrawable).bitmap
+        } catch (_: Exception) {
+        }
+        return bitmap
+    }
+
     @kotlin.OptIn(DelicateCoroutinesApi::class)
     private fun sendNotification() {
-//        GlobalScope.launch(Dispatchers.Main) {
-//            val loader = ImageLoader(this@MusicService)
-//            val request = ImageRequest.Builder(this@MusicService)
-//                .data(songList[currentSongIndex].image)
-//                .allowHardware(false)
-//                .build()
-//            defaultBitmap =
-//                BitmapFactory.decodeResource(applicationContext.resources, R.drawable.note)
-//            try {
-//                val result = (loader.execute(request) as SuccessResult).drawable
-//                defaultBitmap = (result as BitmapDrawable).bitmap
-//            } catch (e: Exception) {
-//                Log.d("MusicService", e.message.toString())
-//            }
-//        }
+        GlobalScope.launch(Dispatchers.Main) {
+
+            val bitmap = getCurrentSongBitMap()
+
         player?.let { media ->
             val song = songList[currentSongIndex]
-            val resultIntent = Intent(this@MusicService, PlayerActivity::class.java)
 
+            //Handle when click on notification
+            val resultIntent = Intent(this@MusicService, PlayerActivity::class.java)
             val resultPendingIntent: PendingIntent? =
                 TaskStackBuilder.create(this@MusicService).run {
                     addNextIntentWithParentStack(resultIntent)
@@ -215,7 +234,7 @@ class MusicService : Service() {
                         getPendingIntent(this@MusicService, ACTION_PRE)
                     )
                     .addAction(
-                        if (media.isPlaying) R.drawable.ic_pause else R.drawable.ic_play,
+                        if (media.isPlaying) R.drawable.ic_play else R.drawable.ic_pause,
                         "Play",
                         getPendingIntent(this@MusicService, ACTION_PLAY)
                     )
@@ -224,18 +243,24 @@ class MusicService : Service() {
                         "Next",
                         getPendingIntent(this@MusicService, ACTION_NEXT)
                     )
+                    .setStyle(
+                        androidx.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(0, 1, 2)
+                    )
                     .setProgress(
                         media.duration.toInt(),
                         media.currentPosition.toInt(),
                         false
                     )
+
                     .setContentTitle(song.name)
                     .setContentText(song.singer)
-                    //.setLargeIcon(defaultBitmap)
+                    .setLargeIcon(bitmap)
                     .setAutoCancel(false)
                     .setOngoing(true)
                     .build()
             startForeground(NOTIFICATION_ID, notification)
+        }
         }
 
     }
@@ -259,7 +284,7 @@ class MusicService : Service() {
             player = ExoPlayer.Builder(this)
                 .setMediaSourceFactory(DefaultMediaSourceFactory(this@MusicService))
                 .build().also {
-                    var mediaItem = MediaItem.fromUri(song.file!!)
+                    val mediaItem = MediaItem.fromUri(song.file!!)
                     val dataSourceFactory = DefaultDataSource.Factory(this)
                     val extractorsFactory =
                         DefaultExtractorsFactory().setConstantBitrateSeekingEnabled(true)
@@ -281,7 +306,6 @@ class MusicService : Service() {
 
             })
         } catch (e: Exception) {
-            Log.d("MusicService", e.toString())
             stopSelf()
         }
     }
@@ -289,23 +313,20 @@ class MusicService : Service() {
     @kotlin.OptIn(DelicateCoroutinesApi::class)
     @OptIn(UnstableApi::class)
     private fun sendTime(player: ExoPlayer) {
-        //Music is playing
         EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(true))
 
         jobTime?.cancel()
 
         jobTime = GlobalScope.launch(Dispatchers.Main) {
             while (true) {
-                player?.let {
-                    Log.d("MusicService", player.currentPosition.toString())
-                    Log.d("MusicService", player.duration.toString())
+                player.let {
                     EventBus.getDefault().postSticky(
                         EventBusModel.MusicTimeEvent(
                             player.currentPosition,
                             player.duration
                         )
                     )
-                    delay(1000) // Update every second
+                    delay(1000)
                 }
             }
         }

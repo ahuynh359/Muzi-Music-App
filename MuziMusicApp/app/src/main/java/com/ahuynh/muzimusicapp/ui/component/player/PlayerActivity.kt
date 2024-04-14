@@ -139,6 +139,14 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     }
 
     private fun handleUI() {
+        binding.btnRepeat.setOnClickListener {
+            if (!Constants.IS_SHUFFLE) {
+                binding.btnRepeat.setImageResource(R.drawable.ic_repeat_selected)
+            } else {
+                binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
+            }
+            Constants.IS_SHUFFLE = !Constants.IS_SHUFFLE
+        }
         binding.btnPlayPause.setOnClickListener {
 
             if (viewModel.isClear) {

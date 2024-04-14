@@ -3,12 +3,11 @@ package com.ahuynh.muzimusicapp.utils
 import com.ahuynh.muzimusicapp.data.model.Song
 
 class EventBusModel {
+    //Update button play pause
+    data class MusicPlayingEvent(val isPlaying: Boolean)
 
     //Update Playlist
     data class SongListEvent(val songList: ArrayList<Song>)
-
-    //Update button play pause
-    data class MusicPlayingEvent(val isPlaying: Boolean)
 
     //Update info for song
     data class SongInfoEvent(val song: Song?)
