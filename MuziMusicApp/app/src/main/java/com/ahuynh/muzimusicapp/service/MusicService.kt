@@ -135,9 +135,14 @@ class MusicService : Service() {
             currentSongIndex++;
             listenToMusic(currentSongIndex)
         } else {
-            player?.pause()
-            EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(false))
-            sendNotification()
+            if (Constants.IS_REPEAT) {
+                currentSongIndex = 0
+                listenToMusic(currentSongIndex)
+            } else {
+                player?.pause()
+                EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(false))
+                sendNotification()
+            }
         }
     }
 

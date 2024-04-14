@@ -102,7 +102,7 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
             binding.tvTimer.text = it
             if(it.equals("00:00:00")){
                 finishAffinity();
-                exitProcess(0);
+                exitProcess(0)
             }
         }
         viewModel.currentSongTime.observe(this) { time ->
