@@ -34,12 +34,12 @@ object Constants {
     const val ACTION = "action"
 
     var IS_SHUFFLE = false
+    var IS_REPEAT = false
     var INTENT_ACTION = "intent_service"
 
     var SONG_LIST_DATA : List<Song> = listOf()
     var SEEK_BAR_VALUE = 1
 
-    const val SHUFFLE = "shuffle"
 
 
 }

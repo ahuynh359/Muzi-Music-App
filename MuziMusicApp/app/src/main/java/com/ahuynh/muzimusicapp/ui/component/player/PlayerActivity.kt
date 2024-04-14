@@ -67,6 +67,23 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     }
 
     private fun observe() {
+        viewModel.getShuffle()
+        viewModel.getRepeat()
+
+        viewModel.isShuffle.observe(this) {
+            if (it) {
+                binding.btnShuffle.setImageResource(R.drawable.ic_shuffle_selected)
+            } else
+                binding.btnShuffle.setImageResource(R.drawable.ic_shuffle)
+        }
+
+        viewModel.isRepeat.observe(this) {
+            if (it) {
+                binding.btnRepeat.setImageResource(R.drawable.ic_repeat_selected)
+            } else
+                binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
+        }
+
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
                 if (it) R.drawable.ic_play
@@ -94,6 +111,7 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
             }
 
         }
+
     }
 
     private fun smartScrollLyrics(time: Int) {
@@ -139,13 +157,14 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     }
 
     private fun handleUI() {
+        binding.btnShuffle.setOnClickListener {
+            val value = viewModel.isShuffle.value ?: false
+            viewModel.setShuffle(!value)
+        }
+
         binding.btnRepeat.setOnClickListener {
-            if (!Constants.IS_SHUFFLE) {
-                binding.btnRepeat.setImageResource(R.drawable.ic_repeat_selected)
-            } else {
-                binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
-            }
-            Constants.IS_SHUFFLE = !Constants.IS_SHUFFLE
+            val value = viewModel.isRepeat.value ?: false
+            viewModel.setRepeat(!value)
         }
         binding.btnPlayPause.setOnClickListener {
 

@@ -8,6 +8,7 @@ import javax.inject.Singleton
 class SharePreferences @Inject constructor(private val context: Context) {
     companion object {
         const val SHUFFLE = "shuffle"
+        const val REPEAT = "repeat"
         const val APP_SHARE_KEY = "com.ahuynh.muzimusicapp"
     }
 
@@ -20,6 +21,15 @@ class SharePreferences @Inject constructor(private val context: Context) {
 
     fun setShuffle(isShuffle: Boolean) {
         editor.putBoolean(SHUFFLE, isShuffle)
+        editor.commit()
+    }
+
+    fun isRepeat(): Boolean {
+        return pref.getBoolean(REPEAT, false)
+    }
+
+    fun setRepeat(isRepeat: Boolean) {
+        editor.putBoolean(REPEAT, isRepeat)
         editor.commit()
     }
 
