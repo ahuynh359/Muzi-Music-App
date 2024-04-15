@@ -10,9 +10,9 @@ import com.ahuynh.muzimusicapp.adapter.OnPlaylistSongClicked
 import com.ahuynh.muzimusicapp.adapter.PlaylistSongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistDetailBinding
+import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST_DATA
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
@@ -78,7 +78,7 @@ class PlaylistDetailFragment :
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(),
-            Constants.ACTION_PLAY,
+            MusicService.ACTION_PLAY,
             song, songListOfPlaylist
         )
     }

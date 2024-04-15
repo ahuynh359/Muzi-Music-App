@@ -16,9 +16,6 @@ import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistAddDialog
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.Utils.convertStringToLyric
@@ -70,18 +67,25 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
         viewModel.getShuffle()
         viewModel.getRepeat()
 
+        Log.d("ABC",viewModel.isShuffle.value.toString())
+
         viewModel.isShuffle.observe(this) {
+            Log.d("ABC aaa",it.toString())
             if (it) {
                 binding.btnShuffle.setImageResource(R.drawable.ic_shuffle_selected)
-            } else
+            } else{
                 binding.btnShuffle.setImageResource(R.drawable.ic_shuffle)
+            }
+
         }
 
         viewModel.isRepeat.observe(this) {
             if (it) {
                 binding.btnRepeat.setImageResource(R.drawable.ic_repeat_selected)
-            } else
+            } else{
                 binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
+            }
+
         }
 
         viewModel.isPlaying.observe(this) {
@@ -170,25 +174,25 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
 
             if (viewModel.isClear) {
                 sendMusic(
-                    ACTION_PLAY,
+                    MusicService.ACTION_PLAY,
                     viewModel.song.value,
                     viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
-                sendMusic(ACTION_PLAY)
+                sendMusic(MusicService.ACTION_PLAY)
             }
         }
         binding.btnPre.setOnClickListener {
             if (viewModel.isClear) {
                 sendMusic(
-                    ACTION_PRE,
+                    MusicService.ACTION_PRE,
                     viewModel.song.value,
                     viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
-                sendMusic(ACTION_PRE)
+                sendMusic(MusicService.ACTION_PRE)
             }
         }
         binding.btnDown.setOnClickListener {
@@ -197,13 +201,13 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
         binding.btnNext.setOnClickListener {
             if (viewModel.isClear) {
                 sendMusic(
-                    ACTION_NEXT,
+                    MusicService.ACTION_NEXT,
                     viewModel.song.value,
                     viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
-                sendMusic(ACTION_NEXT)
+                sendMusic(MusicService.ACTION_NEXT)
             }
         }
         binding.rcyLyrics.adapter = playerAdapter

@@ -21,7 +21,7 @@ class SharePreferences @Inject constructor(private val context: Context) {
 
     fun setShuffle(isShuffle: Boolean) {
         editor.putBoolean(SHUFFLE, isShuffle)
-        editor.commit()
+        editor.apply()
     }
 
     fun isRepeat(): Boolean {
@@ -30,7 +30,7 @@ class SharePreferences @Inject constructor(private val context: Context) {
 
     fun setRepeat(isRepeat: Boolean) {
         editor.putBoolean(REPEAT, isRepeat)
-        editor.commit()
+        editor.apply()
     }
 
 }

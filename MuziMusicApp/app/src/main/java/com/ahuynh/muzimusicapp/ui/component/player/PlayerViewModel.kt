@@ -9,6 +9,7 @@ import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.SharePreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,27 +26,29 @@ class PlayerViewModel @Inject constructor(
     var sleepTime = MutableLiveData<String>()
     var sleepTimerState = MutableLiveData<SleepTimerState>()
     var currentSongTime  = MutableLiveData<Int>(0)
-    var isShuffle = MutableLiveData(false)
-    var isRepeat = MutableLiveData(false)
+    var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)
+    var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
 
     fun setShuffle(value: Boolean) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             sharePreferences.setShuffle(value)
             isShuffle.postValue(value)
             Constants.IS_SHUFFLE = value
+
 
         }
     }
 
     fun getShuffle() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             isShuffle.postValue(sharePreferences.isShuffle())
         }
+
     }
 
 
     fun setRepeat(value: Boolean) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             sharePreferences.setRepeat(value)
             isRepeat.postValue(value)
             Constants.IS_REPEAT = value
@@ -54,8 +57,9 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun getRepeat() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             isRepeat.postValue(sharePreferences.isRepeat())
         }
+
     }
 }

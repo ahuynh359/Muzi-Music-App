@@ -9,10 +9,10 @@ import com.ahuynh.muzimusicapp.adapter.ChartAdapter
 import com.ahuynh.muzimusicapp.adapter.OnSongChartClicked
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
+import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -54,7 +54,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(),
-            Constants.ACTION_PLAY,
+            MusicService.ACTION_PLAY,
             song, listSong
         )
 

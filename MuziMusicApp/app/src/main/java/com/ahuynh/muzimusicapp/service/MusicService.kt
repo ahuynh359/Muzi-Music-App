@@ -9,9 +9,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -26,12 +28,9 @@ import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_CLEAR
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_NEXT
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PLAY
-import com.ahuynh.muzimusicapp.utils.Constants.ACTION_PRE
 import com.ahuynh.muzimusicapp.utils.Constants.DATA
 import com.ahuynh.muzimusicapp.utils.Constants.INTENT_ACTION
 import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION_ID
@@ -57,6 +56,15 @@ class MusicService : Service() {
     private var songList: ArrayList<Song> = arrayListOf()
     private var currentSong: Song? = null
     private var currentSongIndex: Int = -1
+    companion object {
+        const val ACTION_PLAY = 12
+        const val ACTION_PRE = 13
+        const val ACTION_NEXT = 14
+        const val ACTION_CLEAR = 15
+        const val ACTION_DO_SOMETHING = 16
+        const val ACTION_ADD_SONG_NEXT = 17
+        const val ACTION_ADD_SONG_TAIL = 18
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -79,30 +87,36 @@ class MusicService : Service() {
         startForeground(NOTIFICATION_ID, notification)
     }
 
-    //Called with startService()
+    //Get music and list sent from PlayerActivity, handle event
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val action = intent.getIntExtra(ACTION, 0)
         val data = intent.getBundleExtra(DATA)
 
-        //Get music and list sent from PlayerActivity
+
         data?.let {
             val song: Song? = data.parcelable<Song>(SONG)
             val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
             song?.let {
-                songList = list!!
-
-                if (Constants.IS_SHUFFLE) {
-                    val shuffledSongList = ArrayList(songList).apply { shuffle() }
-                    songList = shuffledSongList
+                list?.let {
+                    songList = list
+                    Log.d("ABC Shuffle",Constants.IS_SHUFFLE.toString())
+                    if (Constants.IS_SHUFFLE) {
+                        val shuffledSongList = ArrayList(songList).apply { shuffle() }
+                        songList = shuffledSongList
+                    }
+                    currentSongIndex = songList.indexOf(song)
+                    listenToMusic(currentSongIndex)
                 }
-                currentSongIndex = songList.indexOf(song)
-                listenToMusic(currentSongIndex)
             }
-
         }
+        handleAction(action)
 
-        //What Action ?
+        return START_NOT_STICKY
+    }
+
+    private fun handleAction(action: Int) {
+
         when (action) {
             ACTION_PLAY -> {
                 playPauseMusic()
@@ -122,7 +136,6 @@ class MusicService : Service() {
             }
         }
 
-        return START_NOT_STICKY
     }
 
     private fun prev() {
@@ -135,6 +148,7 @@ class MusicService : Service() {
             currentSongIndex++;
             listenToMusic(currentSongIndex)
         } else {
+            Log.d("ABC Repeat",Constants.IS_REPEAT.toString())
             if (Constants.IS_REPEAT) {
                 currentSongIndex = 0
                 listenToMusic(currentSongIndex)

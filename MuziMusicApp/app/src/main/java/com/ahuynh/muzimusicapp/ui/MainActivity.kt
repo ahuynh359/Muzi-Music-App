@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -23,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding :  ActivityMainBinding
     private lateinit var navController: NavController
+    private val viewModel by viewModels<MainViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         requestPermission()
         setUpNavigationGraph()
+        viewModel.restoreState()
     }
 
     private fun requestPermission() {
