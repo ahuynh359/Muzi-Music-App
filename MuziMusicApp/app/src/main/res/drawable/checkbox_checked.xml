@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/green" />
+    <!-- You can define other properties like size, corner radius, etc. -->
+</shape>

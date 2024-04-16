@@ -12,7 +12,6 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST_DATA
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,10 +49,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             songAdapter.submitList(it)
             binding.rcySong.visibility = View.VISIBLE
             listSong = it as ArrayList<Song>
-            SONG_LIST_DATA = it
+
             hideShimmer()
 
         }
+
+
 
         viewModel.message.observe(viewLifecycleOwner) { response ->
             response?.let {

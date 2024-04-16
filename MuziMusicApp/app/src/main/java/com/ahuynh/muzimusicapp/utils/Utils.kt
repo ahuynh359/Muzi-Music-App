@@ -66,7 +66,19 @@ object Utils {
 
         return Lyric(timeMillis, substring(closeBracketIndex + 1).trim())
     }
-
+    fun subtractArrayList(list1: List<Song>?, list2: List<Song>?): Collection<Song> {
+        if (list1 == null) {
+            return emptyList()
+        }
+        if (list2 == null) {
+            return list1
+        }
+        return list1.subtract(list2)
+    }
+     fun getSongWithId(songIds: ArrayList<String>, songs: List<Song>): ArrayList<Song> {
+        val songIdSet = songIds.toSet()
+        return songs.filter { it.id in songIdSet } as ArrayList<Song>
+    }
     fun checkSinglePermissionAny(
         activity: Activity,
         permissionName: String,

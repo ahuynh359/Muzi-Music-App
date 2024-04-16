@@ -39,6 +39,9 @@
         <argument
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
+        <action
+            android:id="@+id/action_playlistDetailFragment_to_playlistDetailAddSongBottomSheet"
+            app:destination="@id/playlistDetailAddSongBottomSheet" />
     </fragment>
     <dialog
         android:id="@+id/playlistModelBottomSheet"
@@ -49,5 +52,13 @@
             android:defaultValue="@null"
             app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist"
             app:nullable="true" />
+    </dialog>
+    <dialog
+        android:id="@+id/playlistDetailAddSongBottomSheet"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistDetailAddSongBottomSheet"
+        android:label="PlaylistDetailAddSongBottomSheet" >
+        <argument
+            android:name="playlist"
+            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
     </dialog>
 </navigation>

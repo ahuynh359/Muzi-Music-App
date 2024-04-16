@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.checkSinglePermissionAny
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         requestPermission()
         setUpNavigationGraph()
         viewModel.restoreState()
+        viewModel.getAllSongs()
+        viewModel.songList.observe(this){
+            Constants.SONG_LIST_DATA = it
+        }
     }
 
     private fun requestPermission() {

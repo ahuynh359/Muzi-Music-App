@@ -13,7 +13,6 @@ import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
@@ -25,10 +24,10 @@ import androidx.media3.extractor.DefaultExtractorsFactory
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.ahuynh.muzimusicapp.MuziMusicApplication
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION
 import com.ahuynh.muzimusicapp.utils.Constants.DATA
@@ -80,9 +79,11 @@ class MusicService : Service() {
     private fun createNotification() {
         val notification = NotificationCompat.Builder(
             this@MusicService,
-            Constants.NOTIFICATION_CHANNEL_ID,
-        ).setVisibility(NotificationCompat.VISIBILITY_PUBLIC).setSmallIcon(R.drawable.note)
-            .setAutoCancel(false).build()
+            MuziMusicApplication.NOTIFICATION_CHANNEL_ID,
+        )
+            .setSmallIcon(R.drawable.note)
+            .setAutoCancel(false)
+            .build()
 
         startForeground(NOTIFICATION_ID, notification)
     }
@@ -148,7 +149,6 @@ class MusicService : Service() {
             currentSongIndex++;
             listenToMusic(currentSongIndex)
         } else {
-            Log.d("ABC Repeat",Constants.IS_REPEAT.toString())
             if (Constants.IS_REPEAT) {
                 currentSongIndex = 0
                 listenToMusic(currentSongIndex)
@@ -243,7 +243,7 @@ class MusicService : Service() {
                     )
                 }
             val notification =
-                NotificationCompat.Builder(this@MusicService, Constants.NOTIFICATION_CHANNEL_ID)
+                NotificationCompat.Builder(this@MusicService, MuziMusicApplication.NOTIFICATION_CHANNEL_ID)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setSmallIcon(R.drawable.note)
                     .setContentIntent(resultPendingIntent)

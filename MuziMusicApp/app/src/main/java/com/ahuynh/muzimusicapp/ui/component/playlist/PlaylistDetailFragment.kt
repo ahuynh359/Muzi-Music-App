@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.OnPlaylistSongClicked
 import com.ahuynh.muzimusicapp.adapter.PlaylistSongAdapter
@@ -15,6 +16,7 @@ import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants.SONG_LIST_DATA
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.getSongWithId
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,11 @@ class PlaylistDetailFragment :
     private fun handleUI() {
         val currentPlaylist = PlaylistDetailFragmentArgs.fromBundle(requireArguments()).playlist
 
+        binding.btnAddMoreItem.setOnClickListener {
+            val action = PlaylistDetailFragmentDirections.actionPlaylistDetailFragmentToPlaylistDetailAddSongBottomSheet(currentPlaylist)
+            findNavController().navigate(action)
+        }
+
         Glide
             .with(binding.imvPlaylist.context)
             .load(currentPlaylist.image)
@@ -62,15 +69,10 @@ class PlaylistDetailFragment :
             binding.rcySongs.visibility = View.VISIBLE
         }
 
-        binding.btnAddMoreItem.setOnClickListener {
-            
-        }
+
     }
 
-    private fun getSongWithId(songIds: List<String>, songs: List<Song>): ArrayList<Song> {
-        val songIdSet = songIds.toSet()
-        return songs.filter { it.id in songIdSet } as ArrayList<Song>
-    }
+
 
 
     override fun onPlaylistSongClicked(song: Song) {
