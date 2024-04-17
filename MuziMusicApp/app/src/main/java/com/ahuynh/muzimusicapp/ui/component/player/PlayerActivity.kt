@@ -8,8 +8,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.OnLyricsClicked
-import com.ahuynh.muzimusicapp.adapter.PlayerAdapter
+import com.ahuynh.muzimusicapp.adapter.LyricAdapter
+import com.ahuynh.muzimusicapp.adapter.LyricsClickListener
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
@@ -18,6 +18,7 @@ import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistAddDialog
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.convertStringToLyric
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.VersionHelper
@@ -26,6 +27,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -33,7 +39,7 @@ import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
-class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
+class PlayerActivity : AppCompatActivity(), LyricsClickListener {
     companion object {
         const val TAG = "PlayerActivityABC"
     }
@@ -47,13 +53,18 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     }
     private val viewModel by viewModels<PlayerViewModel>()
     private var isSliderPressed = false
-    private var playerAdapter: PlayerAdapter = PlayerAdapter(this)
+    private lateinit var playerAdapter: LyricAdapter
     private var songLyrics: ArrayList<Lyric> = arrayListOf()
+    private lateinit var centerLayoutManager: CenterLayoutManager
+    private var currentLine = -1
+    private var scrollJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        centerLayoutManager = CenterLayoutManager(this)
+        playerAdapter = LyricAdapter(songLyrics, this, this)
 
         handleUI()
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
@@ -97,7 +108,7 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
 
         viewModel.song.observe(this) { song ->
             Log.d(TAG, getSongLyrics(song.lyrics!!).toString())
-            playerAdapter.submitList(getSongLyrics(song.lyrics))
+            playerAdapter.setData(getSongLyrics(song.lyrics))
             songLyrics = getSongLyrics(song.lyrics)
 
         }
@@ -111,6 +122,9 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
         }
         viewModel.currentSongTime.observe(this) { time ->
             binding.rcyLyrics.post {
+                if (viewModel.isUserTouchSlider) {
+                    scrollLyrics(time)
+                } else
                 smartScrollLyrics(time)
             }
 
@@ -118,10 +132,42 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
 
     }
 
-    private fun smartScrollLyrics(time: Int) {
+    private fun scrollLyrics(time: Int) {
         val indexLine = indexLine(time, songLyrics)
+
+        if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
+            playerAdapter.currentLine(indexLine)
+
+            binding.rcyLyrics.smoothScrollToPosition(indexLine)
+            binding.tvLyrics.visibility = View.GONE
+            currentLine = indexLine
+            if (scrollJob?.isActive == true) scrollJob?.cancel()
+            scrollJob = MainScope().launch {
+                delay(1000)
+                viewModel.isUserTouchSlider = false
+                cancel()
+            }
+            scrollJob?.start()
+        }
     }
 
+    private fun smartScrollLyrics(time: Int) {
+        val indexLine = indexLine(time, songLyrics)
+
+        if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
+            playerAdapter.currentLine(indexLine)
+            if (indexLine < centerLayoutManager.findFirstVisibleItemPosition() || indexLine > centerLayoutManager.findLastVisibleItemPosition()) {
+                binding.tvLyrics.text = songLyrics[indexLine].text
+                binding.tvLyrics.visibility = View.VISIBLE
+            } else {
+                binding.rcyLyrics.smoothScrollToPosition(indexLine)
+                binding.tvLyrics.visibility = View.GONE
+            }
+            currentLine = indexLine
+        }
+    }
+
+    //Find position of right lyrics with currentTime
     private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
         var left = 0
         var right = lyrics.size - 1
@@ -161,6 +207,8 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
     }
 
     private fun handleUI() {
+        binding.rcyLyrics.adapter = playerAdapter
+        binding.rcyLyrics.layoutManager = centerLayoutManager
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)
@@ -210,7 +258,7 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
                 sendMusic(MusicService.ACTION_NEXT)
             }
         }
-        binding.rcyLyrics.adapter = playerAdapter
+
         binding.btnSleep.setOnClickListener {
             if (!sleepTimerDialog.isAdded) {
                 sleepTimerDialog.show(supportFragmentManager, PlaylistAddDialog.TAG)
@@ -352,13 +400,23 @@ class PlayerActivity : AppCompatActivity(), OnLyricsClicked {
                 EventBus.getDefault()
                     .post(EventBusModel.MusicTimeSeekEvent(binding.slider.value.toLong()))
                 isSliderPressed = false
+                viewModel.isUserTouchSlider = true
 
             }
 
         })
     }
 
-    override fun onLyricsClicked(lyric: Lyric) {
+
+    override fun onLineLyricsClick(line: Lyric) {
+        EventBus.getDefault().post(EventBusModel.MusicTimeSeekEvent(line.startTime.toLong()))
+        if (viewModel.isPlaying.value == false) {
+            Intent(this, MusicService::class.java).apply {
+                putExtra(Constants.ACTION, MusicService.ACTION_PLAY)
+            }.also {
+                Utils.startMusic(this, it)
+            }
+        }
     }
 
 

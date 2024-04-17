@@ -136,6 +136,10 @@ object Utils {
             putExtra(Constants.DATA, bundle)
         }
 
+        startMusic(context, intent)
+    }
+
+    fun startMusic(context: Context, intent: Intent) {
         if (VersionHelper.isO()) {
             context.startForegroundService(intent)
         } else {
