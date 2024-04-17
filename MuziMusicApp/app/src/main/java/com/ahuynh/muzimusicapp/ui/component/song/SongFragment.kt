@@ -3,7 +3,6 @@ package com.ahuynh.muzimusicapp.ui.component.song
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.OnSongClicked
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
@@ -29,6 +28,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         getData()
         handleUI()
         observe()
@@ -41,26 +41,23 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
     private fun handleUI() {
         binding.rcySong.adapter = songAdapter
+        binding.swipe.setOnRefreshListener {
+            getData()
+        }
 
     }
 
     private fun observe() {
         viewModel.songList.observe(viewLifecycleOwner) {
+            binding.swipe.isRefreshing = false
             songAdapter.submitList(it)
             binding.rcySong.visibility = View.VISIBLE
             listSong = it as ArrayList<Song>
-
             hideShimmer()
 
         }
 
 
-
-        viewModel.message.observe(viewLifecycleOwner) { response ->
-            response?.let {
-                Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
 
     }
 
@@ -72,12 +69,15 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     override fun onSongClicked(song: Song) {
         viewModel.updateSongListen(song)
         getData()
+
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(),
             MusicService.ACTION_PLAY,
             song, listSong
         )
+
+
 
     }
 

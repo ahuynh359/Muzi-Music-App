@@ -34,6 +34,9 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
     private var songLyrics: ArrayList<Lyric> = arrayListOf()
     private var currentLine = -1
     private var scrollJob: Job? = null
+    companion object{
+        const val TAG = "LyricsFragment"
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         playerAdapter = LyricAdapter(songLyrics, requireContext(), this)
@@ -54,8 +57,10 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
             playerAdapter.setData(getSongLyrics(song.lyrics))
             songLyrics = getSongLyrics(song.lyrics)
 
+
         }
-        viewModel.currentSongTime.observe(viewLifecycleOwner) { time ->
+        viewModel.currentSongTime.observe(requireActivity()) { time ->
+            Log.d(TAG,time.toString())
             binding.rcyLyrics.post {
                 if (viewModel.isUserTouchSlider) {
                     scrollLyrics(time)
@@ -88,6 +93,8 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun smartScrollLyrics(time: Int) {
         val indexLine = indexLine(time, songLyrics)
+        Log.d(TAG,time.toString())
+        Log.d(TAG,indexLine.toString())
 
         if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
             playerAdapter.currentLine(indexLine)
@@ -101,7 +108,6 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
             currentLine = indexLine
         }
     }
-    //Find position of right lyrics with currentTime
     private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
         var left = 0
         var right = lyrics.size - 1

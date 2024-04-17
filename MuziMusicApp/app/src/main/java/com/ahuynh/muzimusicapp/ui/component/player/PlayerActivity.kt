@@ -96,6 +96,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun handleUI() {
 
         setUpViewPager()
+
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)
@@ -154,6 +155,26 @@ class PlayerActivity : AppCompatActivity() {
         val fragmentList: ArrayList<Fragment> = arrayListOf(SongMainFragment(), LyricsFragment())
         binding.viewPager.adapter = ViewPagerAdapter(fragmentList, this)
         binding.viewPager.currentItem = 0
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                dotIndicator(position)
+            }
+        })
+    }
+
+    private fun dotIndicator(position: Int) {
+        when (position) {
+            0 -> {
+                binding.dot1.setImageResource(R.drawable.dot_selected)
+                binding.dot2.setImageResource(R.drawable.dot_default)
+            }
+
+            1 -> {
+                binding.dot2.setImageResource(R.drawable.dot_selected)
+                binding.dot1.setImageResource(R.drawable.dot_default)
+            }
+        }
     }
 
     fun sendMusic(
@@ -241,6 +262,7 @@ class PlayerActivity : AppCompatActivity() {
             if (!isSliderPressed) binding.slider.value = event.timeMillis.toFloat()
             binding.slider.valueTo = event.duration.toFloat()
             binding.tvStartTime.text = (event.timeMillis / 1000).toInt().toTimeFormat()
+            viewModel.currentSongTime.postValue(event.timeMillis.toInt())
         } else {
             binding.shimmerSlider.startShimmer()
             binding.tvEndTime.text = "N:/N"
@@ -254,7 +276,7 @@ class PlayerActivity : AppCompatActivity() {
         viewModel.isClear = true
         viewModel.isPlaying.postValue(false)
         binding.slider.value = 0f
-
+        viewModel.currentSongTime.postValue(0)
 
     }
     private fun setUpSeekbar() {
@@ -272,7 +294,7 @@ class PlayerActivity : AppCompatActivity() {
                     .post(EventBusModel.MusicTimeSeekEvent(binding.slider.value.toLong()))
                 isSliderPressed = false
                 viewModel.isUserTouchSlider = true
-
+                viewModel.currentSongTime.postValue(binding.slider.value.toInt())
             }
 
         })

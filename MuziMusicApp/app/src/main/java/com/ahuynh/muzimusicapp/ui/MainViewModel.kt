@@ -19,6 +19,9 @@ class MainViewModel @Inject constructor(private val appSharePreferences: SharePr
 
 ) : BaseViewModel() {
 
+    var song = MutableLiveData<Song>()
+    var isPlaying = MutableLiveData(false)
+
      fun restoreState(){
         viewModelScope.launch{
             Constants.IS_SHUFFLE = appSharePreferences.isShuffle()
