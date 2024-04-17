@@ -1,60 +1,150 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.ahuynh.muzimusicapp.R
+import androidx.fragment.app.viewModels
+import com.ahuynh.muzimusicapp.adapter.LyricAdapter
+import com.ahuynh.muzimusicapp.adapter.LyricsClickListener
+import com.ahuynh.muzimusicapp.data.model.Lyric
+import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
+import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.EventBusModel
+import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.convertStringToLyric
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding::inflate),
+    LyricsClickListener {
+    private val viewModel by viewModels<PlayerViewModel>({requireActivity()})
+    private lateinit var playerAdapter: LyricAdapter
+    private lateinit var centerLayoutManager: CenterLayoutManager
+    private var songLyrics: ArrayList<Lyric> = arrayListOf()
+    private var currentLine = -1
+    private var scrollJob: Job? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        playerAdapter = LyricAdapter(songLyrics, requireContext(), this)
+        centerLayoutManager = CenterLayoutManager(context)
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LyricsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class LyricsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+        handleUI()
+        observeData()
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private fun handleUI() {
+        binding.rcyLyrics.adapter = playerAdapter
+        binding.rcyLyrics.layoutManager = centerLayoutManager
+    }
+
+    private fun observeData() {
+        viewModel.song.observe(requireActivity()) { song ->
+            Log.d(PlayerActivity.TAG, getSongLyrics(song.lyrics!!).toString())
+            playerAdapter.setData(getSongLyrics(song.lyrics))
+            songLyrics = getSongLyrics(song.lyrics)
+
+        }
+        viewModel.currentSongTime.observe(viewLifecycleOwner) { time ->
+            binding.rcyLyrics.post {
+                if (viewModel.isUserTouchSlider) {
+                    scrollLyrics(time)
+                } else
+                    smartScrollLyrics(time)
+            }
+
+        }
+
+
+    }
+    private fun scrollLyrics(time: Int) {
+        val indexLine = indexLine(time, songLyrics)
+
+        if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
+            playerAdapter.currentLine(indexLine)
+
+            binding.rcyLyrics.smoothScrollToPosition(indexLine)
+            binding.tvLyric.visibility = View.GONE
+            currentLine = indexLine
+            if (scrollJob?.isActive == true) scrollJob?.cancel()
+            scrollJob = MainScope().launch {
+                delay(1000)
+                viewModel.isUserTouchSlider = false
+                cancel()
+            }
+            scrollJob?.start()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lyrics, container, false)
-    }
+    private fun smartScrollLyrics(time: Int) {
+        val indexLine = indexLine(time, songLyrics)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LyricsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LyricsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
+            playerAdapter.currentLine(indexLine)
+            if (indexLine < centerLayoutManager.findFirstVisibleItemPosition() || indexLine > centerLayoutManager.findLastVisibleItemPosition()) {
+                binding.tvLyric.text = songLyrics[indexLine].text
+                binding.tvLyric.visibility = View.VISIBLE
+            } else {
+                binding.rcyLyrics.smoothScrollToPosition(indexLine)
+                binding.tvLyric.visibility = View.GONE
+            }
+            currentLine = indexLine
+        }
+    }
+    //Find position of right lyrics with currentTime
+    private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
+        var left = 0
+        var right = lyrics.size - 1
+
+        while (left <= right) {
+            val middle = (left + right) / 2
+            if (time < lyrics[middle].startTime) {
+                right = middle - 1
+
+            } else {
+                if (middle < lyrics.size - 1) {
+                    if (time < lyrics[middle + 1].startTime) {
+                        return middle
+                    } else {
+                        left = middle + 1
+                    }
+                } else {
+                    return middle
                 }
             }
+        }
+        return -1
+    }
+
+    private fun getSongLyrics(text : String) : ArrayList<Lyric>{
+        val lyrics = arrayListOf<Lyric>()
+        if(text.isEmpty()){
+            lyrics.add(Lyric(0,"No lyrics"))
+        } else {
+            val list = text.split("\\n").map { it.trimEnd('\\') }
+            for (line in list) {
+                lyrics.add(line.convertStringToLyric())
+            }
+        }
+
+        return lyrics
+    }
+    override fun onLineLyricsClick(line: Lyric) {
+        EventBus.getDefault().post(EventBusModel.MusicTimeSeekEvent(line.startTime.toLong()))
+        if (viewModel.isPlaying.value == false) {
+            Intent(requireContext(), MusicService::class.java).apply {
+                putExtra(Constants.ACTION, MusicService.ACTION_PLAY)
+            }.also {
+                Utils.startMusic(requireContext(), it)
+            }
+        }
     }
 }
