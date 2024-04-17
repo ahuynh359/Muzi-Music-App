@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMainBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistAddDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,9 +44,10 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
 
     private fun handleUI() {
         binding.btnSleep.setOnClickListener {
-            // if (!sleepTimerDialog.isAdded) {
-            sleepTimerDialog.show(childFragmentManager, PlaylistAddDialog.TAG)
-            //}
+            if (!sleepTimerDialog.isAdded) {
+                sleepTimerDialog.show(childFragmentManager, "")
+                //}
+            }
         }
     }
 }

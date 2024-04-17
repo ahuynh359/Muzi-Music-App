@@ -4,14 +4,7 @@
         android:id="@+id/songFragment"
         android:icon="@drawable/ic_song"
         android:title="@string/song" />
-    <item
-        android:id="@+id/playlistFragment"
-        android:icon="@drawable/ic_playlist"
-        android:title="@string/playlist" />
-    <item
-        android:id="@+id/chartFragment"
-        android:icon="@drawable/ic_chart"
-        android:title="@string/chart" />
+
 
 
 </menu>

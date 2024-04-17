@@ -37,8 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         requestPermission()
         setUpNavigationGraph()
+
         viewModel.restoreState()
         viewModel.getAllSongs()
+
         viewModel.songList.observe(this){
             Constants.SONG_LIST_DATA = it
         }
