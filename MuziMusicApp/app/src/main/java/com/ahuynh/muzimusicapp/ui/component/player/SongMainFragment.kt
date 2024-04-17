@@ -11,9 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainBinding::inflate) {
-    private val sleepTimerDialog: SleepTimerDialog by lazy {
-        SleepTimerDialog()
-    }
+
     private val viewModel by viewModels<PlayerViewModel>({ requireActivity() })
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,9 +21,7 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
 
 
     private fun observeData() {
-        viewModel.sleepTime.observe(viewLifecycleOwner) {
-            binding.tvTimer.text = it
-        }
+
 
         viewModel.song.observe(viewLifecycleOwner) { song ->
 
@@ -43,11 +39,5 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
     }
 
     private fun handleUI() {
-        binding.btnSleep.setOnClickListener {
-            if (!sleepTimerDialog.isAdded) {
-                sleepTimerDialog.show(childFragmentManager, "")
-                //}
-            }
-        }
     }
 }

@@ -3,15 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.component.player.SongMainFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imv_song"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="30dp"
         android:src="@drawable/big_song"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,27 +38,6 @@
         app:layout_constraintTop_toBottomOf="@id/tv_song_name"
         tools:text="The Beatles" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/medium"
-        android:text="00:00"
-        android:textColor="#B3B3B3"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/btn_sleep"
-        app:layout_constraintEnd_toStartOf="@id/btn_sleep"
-        app:layout_constraintTop_toTopOf="@id/btn_sleep" />
 
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_sleep"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_sleep"
-        app:layout_constraintBottom_toBottomOf="@id/tv_singer"
-        app:layout_constraintEnd_toEndOf="@id/imv_song"
-        app:layout_constraintTop_toTopOf="@id/tv_singer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

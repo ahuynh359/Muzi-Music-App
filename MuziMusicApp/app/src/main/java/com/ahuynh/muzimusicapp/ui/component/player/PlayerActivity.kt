@@ -13,6 +13,7 @@ import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
@@ -24,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
@@ -85,14 +85,10 @@ class PlayerActivity : AppCompatActivity() {
                 else R.drawable.ic_pause
             )
         }
-
-
-        viewModel.sleepTime.observe(this){
-            if(it.equals("00:00:00")){
-                finishAffinity()
-                exitProcess(0)
-            }
+        viewModel.song.observe(this) {
+            binding.tvSong.text = it.name
         }
+
 
     }
 
@@ -250,10 +246,6 @@ class PlayerActivity : AppCompatActivity() {
             binding.tvEndTime.text = "N:/N"
             binding.tvStartTime.text = "00:00"
         }
-
-
-
-
 
     }
 

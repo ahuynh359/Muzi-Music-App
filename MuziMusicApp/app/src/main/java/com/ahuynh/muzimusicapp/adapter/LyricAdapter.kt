@@ -49,10 +49,8 @@ class LyricAdapter(
 
             if (current == position) {
                 tvLyric.setTextColor(ContextCompat.getColor(context, R.color.white))
-                tvLyric.typeface = Typeface.DEFAULT_BOLD
             } else {
                 tvLyric.setTextColor(ContextCompat.getColor(context, R.color.black))
-                tvLyric.typeface = Typeface.DEFAULT
             }
         }
 
