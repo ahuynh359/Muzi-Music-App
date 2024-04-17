@@ -28,6 +28,7 @@ class PlayerViewModel @Inject constructor(
     var currentSongTime  = MutableLiveData<Int>(0)
     var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)
     var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
+    var isUserTouchSlider = false
 
     fun setShuffle(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
