@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_song"
         android:layout_width="@dimen/_0dp"

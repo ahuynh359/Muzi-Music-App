@@ -229,7 +229,9 @@ class MainActivity : AppCompatActivity() {
             binding.slider.value = event.timeMillis.toFloat()
             binding.slider.valueTo = event.duration.toFloat()
         } else{
+            binding.slider.valueTo = 0f
             binding.slider.visibility = View.GONE
+            binding.slider.value = 0f
         }
 
 
