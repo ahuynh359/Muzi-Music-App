@@ -397,7 +397,6 @@ class MusicService : Service() {
         super.onDestroy()
         player?.playWhenReady = false
         player?.stop();
-        player?.seekTo(0)
 
         player?.release()
         player = null
