@@ -1,7 +1,8 @@
-package com.ahuynh.muzimusicapp.ui.component.player
+package com.ahuynh.muzimusicapp.ui.component.player.lyrics
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.LyricAdapter
@@ -10,6 +11,8 @@ import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -31,8 +34,7 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
     private var songLyrics: ArrayList<Lyric> = arrayListOf()
     private var currentLine = -1
     private var scrollJob: Job? = null
-
-    companion object {
+    companion object{
         const val TAG = "LyricsFragment"
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,23 +53,20 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun observeData() {
         viewModel.song.observe(requireActivity()) { song ->
-            playerAdapter.setData(getSongLyrics(song.lyrics!!))
+            Log.d(PlayerActivity.TAG, getSongLyrics(song.lyrics!!).toString())
+            playerAdapter.setData(getSongLyrics(song.lyrics))
             songLyrics = getSongLyrics(song.lyrics)
 
+
         }
-        viewModel.currentSongTime.observe(viewLifecycleOwner) { time ->
-            if(time == 0){
-                currentLine = -1
-                playerAdapter.resetCurrent()
-                smartScrollLyrics(0)
-            }
+        viewModel.currentSongTime.observe(requireActivity()) { time ->
+            Log.d(TAG,time.toString())
             binding.rcyLyrics.post {
                 if (viewModel.isUserTouchSlider) {
                     scrollLyrics(time)
                 } else
                     smartScrollLyrics(time)
             }
-
 
         }
 
@@ -94,6 +93,8 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun smartScrollLyrics(time: Int) {
         val indexLine = indexLine(time, songLyrics)
+        Log.d(TAG,time.toString())
+        Log.d(TAG,indexLine.toString())
 
         if (indexLine != currentLine && indexLine >= 0 && indexLine < songLyrics.size) {
             playerAdapter.currentLine(indexLine)
@@ -107,7 +108,6 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
             currentLine = indexLine
         }
     }
-    //Find position of right lyrics with currentTime
     private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
         var left = 0
         var right = lyrics.size - 1

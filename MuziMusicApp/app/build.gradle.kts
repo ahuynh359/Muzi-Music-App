@@ -46,11 +46,6 @@ android {
 
 dependencies {
 
-    //Data Store
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-
-    //Chart
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //Coil
     implementation(libs.coil)

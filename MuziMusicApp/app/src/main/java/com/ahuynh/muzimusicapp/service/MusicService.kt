@@ -89,9 +89,11 @@ class MusicService : Service() {
     }
 
     //Get music and list sent from PlayerActivity, handle event
+    @OptIn(UnstableApi::class)
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val action = intent.getIntExtra(ACTION, 0)
         val data = intent.getBundleExtra(DATA)
+
 
 
         data?.let {
@@ -108,6 +110,7 @@ class MusicService : Service() {
                     }
                     currentSongIndex = songList.indexOf(song)
                     listenToMusic(currentSongIndex)
+
                 }
             }
         }
@@ -128,6 +131,7 @@ class MusicService : Service() {
             }
 
             ACTION_NEXT -> {
+
                 next()
             }
 
@@ -140,8 +144,13 @@ class MusicService : Service() {
     }
 
     private fun prev() {
-        if (currentSongIndex > 0) currentSongIndex--;
+        if (currentSongIndex > 0) currentSongIndex--
+        if (Constants.IS_REPEAT) {
+            if (currentSongIndex > 0) currentSongIndex-- else
+                currentSongIndex = songList.size - 1
+        }
         listenToMusic(currentSongIndex)
+
     }
 
     private fun next() {
@@ -153,7 +162,10 @@ class MusicService : Service() {
                 currentSongIndex = 0
                 listenToMusic(currentSongIndex)
             } else {
-                player?.pause()
+                //Last song on list
+                player?.playWhenReady = false
+                player?.stop();
+                player?.seekTo(0)
                 EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(false))
                 sendNotification()
             }
@@ -161,10 +173,12 @@ class MusicService : Service() {
     }
 
     private fun listenToMusic(currentSongIndex: Int) {
+
         //If current music is playing then stop
         player?.let {
             if (it.isPlaying)
                 it.stop()
+
             it.release()
         }
 
@@ -189,21 +203,6 @@ class MusicService : Service() {
     }
 
 
-    private fun addSongNext(song: Song) {
-        val index = songList.indexOf(song)
-        if (index == -1) {
-            songList.add(currentSongIndex + 1, song)
-            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
-        }
-    }
-
-    private fun addSongTail(song: Song) {
-        val index = songList.indexOf(song)
-        if (index == -1) {
-            songList.add(song)
-            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
-        }
-    }
 
     //Use coil to load image from url convert to bitmap with coroutine
     private suspend fun getCurrentSongBitMap(): Bitmap {
@@ -322,6 +321,25 @@ class MusicService : Service() {
                     EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(isPlaying))
                 }
 
+                override fun onPlaybackStateChanged(playbackState: Int) {
+                    super.onPlaybackStateChanged(playbackState)
+                    when(playbackState) {
+                        Player.STATE_ENDED ->{
+                            next()
+                            Log.d("ABCDE","ENDed")
+                        }
+
+                        Player.STATE_BUFFERING -> {
+                        }
+
+                        Player.STATE_IDLE -> {
+                        }
+
+                        Player.STATE_READY -> {
+                        }
+                    }
+                }
+
 
             })
         } catch (e: Exception) {
@@ -377,6 +395,10 @@ class MusicService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        player?.playWhenReady = false
+        player?.stop();
+        player?.seekTo(0)
+
         player?.release()
         player = null
 

@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.utils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -10,6 +11,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ahuynh.muzimusicapp.data.model.Lyric
@@ -22,7 +24,6 @@ object Utils {
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
         SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
         else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
-        // If parcelableList is null, return null; otherwise, return a new ArrayList with the same elements
     }
 
     inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
@@ -66,19 +67,8 @@ object Utils {
 
         return Lyric(timeMillis, substring(closeBracketIndex + 1).trim())
     }
-    fun subtractArrayList(list1: List<Song>?, list2: List<Song>?): Collection<Song> {
-        if (list1 == null) {
-            return emptyList()
-        }
-        if (list2 == null) {
-            return list1
-        }
-        return list1.subtract(list2)
-    }
-     fun getSongWithId(songIds: ArrayList<String>, songs: List<Song>): ArrayList<Song> {
-        val songIdSet = songIds.toSet()
-        return songs.filter { it.id in songIdSet } as ArrayList<Song>
-    }
+
+
     fun checkSinglePermissionAny(
         activity: Activity,
         permissionName: String,
@@ -101,7 +91,23 @@ object Utils {
     }
 
 
-
+    fun showWarningDialog(activity: Activity){
+        warningPermissionDialog(activity) { _: DialogInterface?, which: Int ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    if (checkSinglePermissionAny(
+                            activity,
+                            Manifest.permission.POST_NOTIFICATIONS,
+                            Constants.PERMISSION_REQUEST_ID
+                        )
+                    ) {
+                        Toast.makeText(activity, "Granted", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+            }
+        }
+    }
     fun appSettingOpen(context: Context) {
         val settingIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         settingIntent.data = Uri.parse("package:${context.packageName}")

@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.SleepTimerState
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.PlayerRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
@@ -23,8 +22,6 @@ class PlayerViewModel @Inject constructor(
     var song =  MutableLiveData<Song>()
     var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
-    var sleepTime = MutableLiveData<String>()
-    var sleepTimerState = MutableLiveData<SleepTimerState>()
     var currentSongTime  = MutableLiveData<Int>(0)
     var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)
     var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
