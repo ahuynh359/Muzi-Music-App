@@ -17,6 +17,7 @@ import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.Utils.sendMusic
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.google.android.material.slider.Slider
@@ -50,13 +51,12 @@ class PlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        centerLayoutManager = CenterLayoutManager(this)
-        playerAdapter = LyricAdapter(songLyrics, this, this)
+
 
 
         handleUI()
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
-        setUpSeekbar()
+
         observe()
 
 

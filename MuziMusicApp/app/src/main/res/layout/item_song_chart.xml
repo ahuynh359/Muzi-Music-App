@@ -1,0 +1,55 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/_10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginStart="@dimen/_10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/green"
+        android:id="@+id/tv_index"
+        style="@style/TextBold"
+        tools:text="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imv_song"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:shapeAppearanceOverlay="@style/rounded_corner"
+        android:scaleType="centerCrop"
+        android:src="@drawable/note"
+        android:layout_marginStart="@dimen/_10dp"
+        app:layout_constraintStart_toEndOf="@id/tv_index"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toTopOf="@+id/tv_singer"
+        app:layout_constraintTop_toTopOf="@id/imv_song"
+        android:layout_marginStart="@dimen/_15dp"
+        android:id="@+id/tv_name_song"
+        style="@style/TextMedium"
+        tools:text="Lama Del Rey"
+        app:layout_constraintStart_toEndOf="@id/imv_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="@color/nobel"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_song"
+        android:id="@+id/tv_singer"
+        style="@style/TextMedium"
+        tools:text="Artist"
+        app:layout_constraintBottom_toBottomOf="@id/imv_song"
+        app:layout_constraintStart_toStartOf="@id/tv_name_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
