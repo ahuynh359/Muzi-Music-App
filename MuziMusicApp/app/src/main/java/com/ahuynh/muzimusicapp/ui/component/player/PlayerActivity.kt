@@ -120,6 +120,9 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         binding.btnPre.setOnClickListener {
+            binding.viewPager.currentItem = 0
+            viewModel.currentSongTime.postValue(0)
+            binding.slider.value = 0f
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_PRE,
@@ -136,6 +139,9 @@ class PlayerActivity : AppCompatActivity() {
          
         }
         binding.btnNext.setOnClickListener {
+            binding.viewPager.currentItem = 0
+            viewModel.currentSongTime.postValue(0)
+            binding.slider.value = 0f
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_NEXT,
@@ -265,6 +271,8 @@ class PlayerActivity : AppCompatActivity() {
             binding.tvStartTime.text = (event.timeMillis / 1000).toInt().toTimeFormat()
             viewModel.currentSongTime.postValue(event.timeMillis.toInt())
         } else {
+            binding.shimmerSlider.visibility = View.VISIBLE
+            binding.slider.visibility = View.INVISIBLE
             binding.shimmerSlider.startShimmer()
             binding.tvEndTime.text = "N:/N"
             binding.tvStartTime.text = "00:00"

@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -34,6 +33,9 @@ class LyricAdapter(
             notifyItemChanged(current)
         }
     }
+    fun resetCurrent(){
+        current = -1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LyricViewHolder {
         return LyricViewHolder(
@@ -52,6 +54,7 @@ class LyricAdapter(
             } else {
                 tvLyric.setTextColor(ContextCompat.getColor(context, R.color.black))
             }
+
         }
 
         holder.itemView.setOnClickListener {

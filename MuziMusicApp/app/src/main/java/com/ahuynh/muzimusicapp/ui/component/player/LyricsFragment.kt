@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.LyricAdapter
@@ -32,6 +31,10 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
     private var songLyrics: ArrayList<Lyric> = arrayListOf()
     private var currentLine = -1
     private var scrollJob: Job? = null
+
+    companion object {
+        const val TAG = "LyricsFragment"
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         playerAdapter = LyricAdapter(songLyrics, requireContext(), this)
@@ -48,18 +51,23 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun observeData() {
         viewModel.song.observe(requireActivity()) { song ->
-            Log.d(PlayerActivity.TAG, getSongLyrics(song.lyrics!!).toString())
-            playerAdapter.setData(getSongLyrics(song.lyrics))
+            playerAdapter.setData(getSongLyrics(song.lyrics!!))
             songLyrics = getSongLyrics(song.lyrics)
 
         }
         viewModel.currentSongTime.observe(viewLifecycleOwner) { time ->
+            if(time == 0){
+                currentLine = -1
+                playerAdapter.resetCurrent()
+                smartScrollLyrics(0)
+            }
             binding.rcyLyrics.post {
                 if (viewModel.isUserTouchSlider) {
                     scrollLyrics(time)
                 } else
                     smartScrollLyrics(time)
             }
+
 
         }
 
