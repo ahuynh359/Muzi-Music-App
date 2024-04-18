@@ -73,13 +73,14 @@
             android:layout_height="480dp"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_marginHorizontal="@dimen/_20dp"
             android:layout_marginTop="@dimen/_20dp"
             app:layout_constraintTop_toBottomOf="@id/view_pager"
             android:id="@+id/shimmer_slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/btn_more"
-            app:layout_constraintStart_toStartOf="@id/btn_down">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <include layout="@layout/item_slider_seekbar" />
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -87,15 +88,17 @@
 
 
     <com.google.android.material.slider.Slider
+        app:thumbRadius="5dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
         android:layout_marginTop="@dimen/_20dp"
-        android:visibility="invisible"
         android:id="@+id/slider"
+        android:visibility="invisible"
         style="@style/CustomSlider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/view_pager"
-        app:layout_constraintEnd_toEndOf="@id/btn_more"
-        app:layout_constraintStart_toStartOf="@id/btn_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:trackHeight="4dp" />
 
     <androidx.appcompat.widget.AppCompatTextView

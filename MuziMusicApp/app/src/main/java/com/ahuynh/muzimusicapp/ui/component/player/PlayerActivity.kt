@@ -133,6 +133,7 @@ class PlayerActivity : AppCompatActivity() {
         }
         binding.btnDown.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+         
         }
         binding.btnNext.setOnClickListener {
             if (viewModel.isClear) {

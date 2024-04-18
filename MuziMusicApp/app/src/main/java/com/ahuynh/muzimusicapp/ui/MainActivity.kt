@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         observe()
         handleUI()
 
+
+
     }
 
     private fun handleUI() {
@@ -218,6 +220,25 @@ class MainActivity : AppCompatActivity() {
     fun onMusicPlayingEvent(event: EventBusModel.MusicPlayingEvent) {
         viewModel.isPlaying.postValue(event.isPlaying)
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onMusicTimeEvent(event: EventBusModel.MusicTimeEvent) {
+        if (event.duration > 0) {
+            binding.slider.visibility = View.VISIBLE
+            binding.slider.value = event.timeMillis.toFloat()
+            binding.slider.valueTo = event.duration.toFloat()
+        } else{
+            binding.slider.visibility = View.GONE
+        }
+
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onClearMusic(event: EventBusModel.ClearMusic) {
+        viewModel.isPlaying.postValue(false)
+        binding.slider.value = 0f
     }
 
 }
