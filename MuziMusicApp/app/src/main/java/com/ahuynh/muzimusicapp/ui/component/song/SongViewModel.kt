@@ -15,6 +15,7 @@ import javax.inject.Inject
 class SongViewModel @Inject constructor(private val repository: SongRepository) : BaseViewModel() {
 
     var songList = MutableLiveData<List<Song>>()
+    var listenSongList = MutableLiveData<List<Song>>()
     var searchSongList = MutableLiveData<List<Song>>()
 
     fun getAllSongs() {
@@ -59,9 +60,9 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
     fun getAllSongByListen(){
         isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.getAllSong()
+            val response = repository.getAllSongByListen()
             if (response is Response.Success) {
-                searchSongList.postValue(response.data)
+                listenSongList.postValue(response.data)
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)
             }

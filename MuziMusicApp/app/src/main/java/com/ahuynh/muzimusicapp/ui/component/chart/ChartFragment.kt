@@ -38,7 +38,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     private fun handleUI() {
         binding.rcySong.adapter = chartAdapter
         viewModel.getAllSongByListen()
-        viewModel.songList.observe(viewLifecycleOwner) {
+        viewModel.listenSongList.observe(viewLifecycleOwner) {
             chartAdapter.setData(it)
             binding.rcySong.visibility = View.VISIBLE
             listSong = it as ArrayList<Song>

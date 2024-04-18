@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -65,5 +66,16 @@ class SongRepository @Inject constructor(
         }
     }
 
+    suspend fun getAllSongByListen(): Response<List<Song>> {
+        return withContext(dispatcher) {
+            try {
+                val songs = songCollRef.orderBy("listen",Query.Direction.DESCENDING).get().await()
+                    .toObjects(Song::class.java)
+                Response.Success(songs)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
 
 }

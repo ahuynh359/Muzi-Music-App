@@ -96,7 +96,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun handleUI() {
 
         setUpViewPager()
-
+        setUpSeekbar()
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)
@@ -304,6 +304,7 @@ class PlayerActivity : AppCompatActivity() {
                 isSliderPressed = false
                 viewModel.isUserTouchSlider = true
                 viewModel.currentSongTime.postValue(binding.slider.value.toInt())
+
             }
 
         })
