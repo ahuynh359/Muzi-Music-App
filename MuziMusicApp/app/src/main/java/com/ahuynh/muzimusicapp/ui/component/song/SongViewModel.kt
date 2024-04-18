@@ -56,6 +56,20 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
         registerEventParentJobFinish()
     }
 
+    fun getAllSongByListen(){
+        isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.getAllSong()
+            if (response is Response.Success) {
+                searchSongList.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
+
 
 
 

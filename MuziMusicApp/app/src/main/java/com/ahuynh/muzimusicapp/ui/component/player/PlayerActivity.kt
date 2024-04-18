@@ -17,17 +17,11 @@ import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
-import com.ahuynh.muzimusicapp.utils.Utils.sendMusic
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
 import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -160,9 +154,6 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnSleep.setOnClickListener {
-            if (!sleepTimerDialog.isAdded) {
-                sleepTimerDialog.show(supportFragmentManager, PlaylistAddDialog.TAG)
 
     }
 

@@ -20,6 +20,7 @@ class PlayerViewModel @Inject constructor(
     BaseViewModel() {
     var isPlaying=  MutableLiveData(false)
     var song =  MutableLiveData<Song>()
+    var sleepTime =  MutableLiveData<String>()
     var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
     var currentSongTime  = MutableLiveData<Int>(0)
