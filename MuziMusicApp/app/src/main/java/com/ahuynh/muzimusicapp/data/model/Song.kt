@@ -12,5 +12,6 @@ data class Song(
     val lyrics: String? = null,
     val singer: String? = null,
     val listen: Int? = 0,
+    var love : Boolean = false,
 ) : Parcelable
 

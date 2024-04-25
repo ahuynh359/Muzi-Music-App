@@ -247,29 +247,30 @@ class MusicService : Service() {
                     .setSmallIcon(R.drawable.note)
                     .setContentIntent(resultPendingIntent)
                     .addAction(
-                        R.drawable.ic_pre,
+                        R.drawable.ic_pre_small,
                         "Pre",
                         getPendingIntent(this@MusicService, ACTION_PRE)
                     )
                     .addAction(
-                        if (media.isPlaying) R.drawable.ic_play else R.drawable.ic_pause,
+                        if (media.isPlaying) R.drawable.ic_pause_small else R.drawable.ic_play_small,
                         "Play",
                         getPendingIntent(this@MusicService, ACTION_PLAY)
                     )
                     .addAction(
-                        R.drawable.ic_next,
+                        R.drawable.ic_next_small,
                         "Next",
                         getPendingIntent(this@MusicService, ACTION_NEXT)
-                    )
-                    .setStyle(
-                        androidx.media.app.NotificationCompat.MediaStyle()
-                            .setShowActionsInCompactView(0, 1, 2)
                     )
                     .setProgress(
                         media.duration.toInt(),
                         media.currentPosition.toInt(),
                         false
                     )
+                    .setStyle(
+                        androidx.media.app.NotificationCompat.MediaStyle()
+                            .setShowActionsInCompactView(0, 1, 2)
+                    )
+
 
                     .setContentTitle(song.name)
                     .setContentText(song.singer)

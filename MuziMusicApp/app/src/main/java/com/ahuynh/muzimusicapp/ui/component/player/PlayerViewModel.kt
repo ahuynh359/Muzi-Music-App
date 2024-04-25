@@ -3,7 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.player
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.repository.PlayerRepository
+import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.SharePreferences
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
-    private val playerRepository: PlayerRepository,
+    private val songRepository: SongRepository,
     private val sharePreferences: SharePreferences
 ) :
     BaseViewModel() {
@@ -60,5 +60,11 @@ class PlayerViewModel @Inject constructor(
             isRepeat.postValue(sharePreferences.isRepeat())
         }
 
+    }
+
+    fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
+        viewModelScope.launch(Dispatchers.IO){
+            songRepository.updateSongLoveStatus(id,newLoveStatus)
+        }
     }
 }

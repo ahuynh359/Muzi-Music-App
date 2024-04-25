@@ -38,6 +38,17 @@
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
+        <receiver
+            android:name=".service.MusicBroadcast"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.ahuynh.muzimusicapp" />
+            </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>

@@ -23,7 +23,6 @@ object Constants {
 
 
     const val SONG_LIST = "song list"
-    const val SONG_ID = "id"
     const val DATA = "data"
     const val ACTION = "action"
 
@@ -32,7 +31,6 @@ object Constants {
     var INTENT_ACTION = "intent_service"
 
     var SONG_LIST_DATA : List<Song> = listOf()
-    var SEEK_BAR_VALUE = 1
 
 
 

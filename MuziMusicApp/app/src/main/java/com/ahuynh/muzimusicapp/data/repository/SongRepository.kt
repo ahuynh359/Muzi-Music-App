@@ -78,4 +78,16 @@ class SongRepository @Inject constructor(
         }
     }
 
+    suspend fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
+        return withContext(dispatcher) {
+            try {
+                val songDocRef = songCollRef.document(id)
+                songDocRef.update("love", newLoveStatus).await()
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
 }

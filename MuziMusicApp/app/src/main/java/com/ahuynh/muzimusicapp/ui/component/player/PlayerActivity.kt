@@ -85,8 +85,14 @@ class PlayerActivity : AppCompatActivity() {
                 else R.drawable.ic_pause
             )
         }
-        viewModel.song.observe(this) {
-            binding.tvSong.text = it.name
+        viewModel.song.observe(this) { song ->
+            binding.tvSong.text = song.name
+
+            if (song.love) {
+                binding.btnHeart.setImageResource(R.drawable.ic_hearted)
+            } else
+                binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
+
         }
 
 
@@ -97,6 +103,15 @@ class PlayerActivity : AppCompatActivity() {
 
         setUpViewPager()
         setUpSeekbar()
+        binding.btnHeart.setOnClickListener {
+            viewModel.song.observe(this){song ->
+                val newLoveStatus = !song.love
+                song.love = newLoveStatus
+                viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
+                val heartResId = if (newLoveStatus) R.drawable.ic_hearted else R.drawable.ic_heart_small
+                binding.btnHeart.setImageResource(heartResId)
+            }
+        }
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)
@@ -153,6 +168,7 @@ class PlayerActivity : AppCompatActivity() {
                 sendMusic(MusicService.ACTION_NEXT)
             }
         }
+        
 
 
     }

@@ -15,7 +15,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
@@ -23,10 +22,10 @@ import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.appSettingOpen
 import com.ahuynh.muzimusicapp.utils.Utils.checkSinglePermissionAny
 import com.ahuynh.muzimusicapp.utils.Utils.showWarningDialog
-import com.ahuynh.muzimusicapp.utils.VersionHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +38,9 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : AppCompatActivity() {
     private lateinit var binding :  ActivityMainBinding
     private lateinit var navController: NavController
+
     private val viewModel by viewModels<MainViewModel>()
+
     private lateinit var snackbar: Snackbar
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
         NetworkConnectivityHelper(this)
@@ -67,39 +68,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,PlayerActivity::class.java))
         }
         binding.btnPlayPause.setOnClickListener {
-            sendMusic(MusicService.ACTION_PLAY)
+            Utils.sendMusic(applicationContext, MusicService.ACTION_PLAY)
         }
         binding.btnNext.setOnClickListener {
-            sendMusic(MusicService.ACTION_NEXT)
+            Utils.sendMusic(applicationContext, MusicService.ACTION_NEXT)
         }
         binding.btnPre.setOnClickListener {
-            sendMusic(MusicService.ACTION_PRE)
+            Utils.sendMusic(applicationContext, MusicService.ACTION_PRE)
         }
     }
 
-    fun sendMusic(
-        action: Int,
-        song: Song? = null,
-        songList: ArrayList<Song> = arrayListOf()
-    ) {
-
-        val bundle = Bundle().apply {
-            putParcelable(Constants.SONG, song)
-            putParcelableArrayList(Constants.SONG_LIST, songList)
-        }
-
-        val intent = Intent(applicationContext, MusicService::class.java).apply {
-            putExtra(Constants.ACTION, action)
-            putExtra(Constants.DATA, bundle)
-        }
-
-        if (VersionHelper.isO()) {
-            this.startForegroundService(intent)
-        } else {
-            this.startService(intent)
-        }
-
-    }
 
     override fun onStart() {
         super.onStart()
@@ -241,6 +219,7 @@ class MainActivity : AppCompatActivity() {
     fun onClearMusic(event: EventBusModel.ClearMusic) {
         viewModel.isPlaying.postValue(false)
         binding.slider.value = 0f
+        binding.slider.valueTo = 0f
     }
 
 }
