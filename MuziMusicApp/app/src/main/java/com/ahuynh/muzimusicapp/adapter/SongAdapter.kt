@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -32,6 +32,9 @@ class SongAdapter(private val listener: OnSongClicked) :
                 .into(binding.imvSong)
             binding.tvNameSong.text = song.name
             binding.tvSinger.text = song.singer
+            binding.btnMore.setOnClickListener {
+                listener.onSongClicked(song)
+            }
 
         }
 
@@ -67,4 +70,5 @@ class SongAdapter(private val listener: OnSongClicked) :
 
 interface OnSongClicked {
     fun onSongClicked(song: Song)
+    fun openMenu(song : Song)
 }

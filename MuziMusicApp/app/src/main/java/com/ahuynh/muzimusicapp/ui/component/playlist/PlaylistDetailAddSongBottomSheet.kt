@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,10 +66,18 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
 
 
         binding.rcySong.adapter = adapter
+        val listSongToAdd = mutableListOf<String>()
         binding.btnOk.setOnClickListener {
+            var indexSong = 0
             for(i in adapter.checkboxStates()){
-                Log.d(TAG,i.toString())
+                if(i){
+                    listSongToAdd.add(Constants.SONG_LIST_DATA.get(indexSong).id!!)
+                }
+                indexSong++
             }
+
+            viewModel.addSongsToPlaylist(listSongToAdd,currentPlaylist)
+            viewModel.getSongsOfPlaylist(currentPlaylist)
             dismiss()
         }
 

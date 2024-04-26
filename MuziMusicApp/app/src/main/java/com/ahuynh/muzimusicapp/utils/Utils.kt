@@ -169,7 +169,7 @@ object Utils {
 
     }
 
-    fun getSongWithId(id: ArrayList<String>, songs: List<Song>): ArrayList<Song> {
+    fun getSongWithId(id: List<String>, songs: List<Song>): ArrayList<Song> {
         val songId = id.toSet()
         return songs.filter { it.id in songId } as ArrayList<Song>
     }

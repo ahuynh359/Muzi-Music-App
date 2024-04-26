@@ -1,11 +1,12 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
+import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
@@ -93,6 +94,48 @@ class PlaylistRepository @Inject constructor(
                 )
                 playlistRef.update(updateData as Map<String, Any>).await()
                 Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    suspend fun listSongToAdd(listSongToAdd: MutableList<String>, currentPlaylist: Playlist): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+                //delete songs
+                val playlistRef = playlistCollRef.document(currentPlaylist.id!!)
+                var updates = hashMapOf<String, Any>(
+                    "songs" to FieldValue.delete()
+                )
+                playlistRef.update(updates).await()
+
+                updates = hashMapOf<String, Any>(
+                    "songs" to FieldValue.arrayUnion(*listSongToAdd.toTypedArray())
+                )
+                playlistRef.update(updates).await()
+
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    suspend fun getSongsOfPlaylist(currentPlaylist: Playlist): Response<List<String>> {
+        return withContext(dispatcher) {
+            try {
+                val songNames = mutableListOf<String>()
+
+                val playlistDocRef = playlistCollRef.document(currentPlaylist.id!!)
+                val playlistDocSnapshot = playlistDocRef.get().await()
+                if (playlistDocSnapshot.exists()) {
+                    val songs = playlistDocSnapshot.get("songs") as? List<String>
+                    songs?.let {
+                        songNames.addAll(it) // Add all song names to the list
+                    }
+                }
+                Response.Success(songNames)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
             }

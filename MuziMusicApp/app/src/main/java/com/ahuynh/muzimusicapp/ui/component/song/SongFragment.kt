@@ -89,4 +89,8 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
     }
 
+    override fun openMenu(song: Song) {
+        TODO("Not yet implemented")
+    }
+
 }
