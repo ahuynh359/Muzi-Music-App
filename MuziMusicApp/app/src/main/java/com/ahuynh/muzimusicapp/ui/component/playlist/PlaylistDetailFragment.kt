@@ -32,6 +32,7 @@ class PlaylistDetailFragment :
     private lateinit var songAdapter: PlaylistSongAdapter
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private lateinit var songListOfPlaylist : ArrayList<Song>
+    private var needReload = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

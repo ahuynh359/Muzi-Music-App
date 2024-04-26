@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
 import android.content.Intent
+import android.media.audiofx.AudioEffect
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -187,6 +188,16 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnHeadphone.setOnClickListener {
+            Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
+                putExtra(AudioEffect.EXTRA_AUDIO_SESSION,viewModel.audioSessionId.value)
+                putExtra(AudioEffect.EXTRA_PACKAGE_NAME,packageName)
+                putExtra(AudioEffect.EXTRA_CONTENT_TYPE,AudioEffect.EXTRA_CONTENT_TYPE)
+            }.also {
+                startActivityForResult(it,133)
+            }
+        }
+
 
     }
 
@@ -276,6 +287,7 @@ class PlayerActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onAudioSessionIdEvent(event: EventBusModel.AudioSessionIdEvent) {
+        viewModel.audioSessionId.postValue(event.sessionId)
     }
 
 

@@ -352,7 +352,7 @@ class MusicService : Service() {
     @OptIn(UnstableApi::class)
     private fun sendTime(player: ExoPlayer) {
         EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(true))
-
+        EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(player.audioSessionId))
         jobTime?.cancel()
 
         jobTime = GlobalScope.launch(Dispatchers.Main) {

@@ -109,7 +109,15 @@
         android:layout_width="30dp"
         android:layout_height="30dp"/>
 
-
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/btn_headphone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_timer"
+        app:layout_constraintStart_toEndOf="@id/btn_sleep"
+        app:layout_constraintTop_toTopOf="@id/tv_timer"
+        android:src="@drawable/ic_tune"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:background="@android:color/transparent"
