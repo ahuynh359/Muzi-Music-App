@@ -3,26 +3,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.component.chart.ChartFragment">
 
     <com.github.mikephil.charting.charts.LineChart
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/chart"
+        android:id="@+id/line_chart"
         android:layout_width="@dimen/_0dp"
-        android:layout_height="150dp"/>
+        android:layout_height="200dp"/>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/bar_chart"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="200dp" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:hint="Sort by"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        app:layout_constraintTop_toBottomOf="@id/line_chart"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/input"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content">
+        <AutoCompleteTextView
+            android:inputType="none"
+            android:id="@+id/select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/input"
+        app:layout_constraintTop_toTopOf="@id/input"
+        android:textColor="@color/black"
+        android:padding="2dp"
+        android:textAllCaps="false"
+        android:text="Export to csv"
+        android:background="@drawable/btn_round_green"
+        android:id="@+id/btn_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_song"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chart">
+        app:layout_constraintTop_toBottomOf="@id/input">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,13 +94,13 @@
         android:id="@+id/rcy_song"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_0dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="25dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chart"
+        app:layout_constraintTop_toBottomOf="@id/input"
         tools:listitem="@layout/item_song_chart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

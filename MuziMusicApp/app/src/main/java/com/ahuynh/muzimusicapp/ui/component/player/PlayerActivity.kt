@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
@@ -36,6 +37,9 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var binding : ActivityPlayerBinding
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
         NetworkConnectivityHelper(this)
+    }
+    private val sleepTimerDialog : SleepTimerDialog by lazy {
+        SleepTimerDialog()
     }
 
     private val viewModel by viewModels<PlayerViewModel>()
@@ -93,6 +97,14 @@ class PlayerActivity : AppCompatActivity() {
             } else
                 binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
 
+        }
+        viewModel.sleepTime.observe(this){
+            binding.tvTimer.text = it
+            if(it.equals("00:00:00")){
+                finishAffinity()
+                exitProcess(0)
+
+            }
         }
 
 
@@ -168,7 +180,12 @@ class PlayerActivity : AppCompatActivity() {
                 sendMusic(MusicService.ACTION_NEXT)
             }
         }
-        
+
+        binding.btnSleep.setOnClickListener {
+            if(!sleepTimerDialog.isAdded){
+                sleepTimerDialog.show(supportFragmentManager,null)
+            }
+        }
 
 
     }

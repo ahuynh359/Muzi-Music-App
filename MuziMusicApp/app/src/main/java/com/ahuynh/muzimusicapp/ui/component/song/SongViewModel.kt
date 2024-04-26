@@ -17,6 +17,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
     var songList = MutableLiveData<List<Song>>()
     var listenSongList = MutableLiveData<List<Song>>()
     var searchSongList = MutableLiveData<List<Song>>()
+    var sortIndex = MutableLiveData<Int>(-1)
 
     fun getAllSongs() {
         isLoading.postValue(true)
@@ -31,7 +32,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
         registerEventParentJobFinish()
     }
 
-    fun updateSongListen(song : Song){
+    fun updateSongListen(song: Song) {
         isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.updateSongListen(song)
@@ -39,6 +40,23 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
                 message.postValue("Ok")
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)
+            }
+
+
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun updateSongWithCurrentDate(song: Song, currentDate: String) {
+        isLoading.postValue(true)
+
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val response1 = repository.updateSongWithCurrentDate(song, currentDate)
+            if (response1 is Response.Success) {
+                message.postValue("Ok")
+            } else if (response1 is Response.Failure) {
+                message.postValue(response1.errorMessage)
             }
         }
         registerEventParentJobFinish()
@@ -56,6 +74,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
         }
         registerEventParentJobFinish()
     }
+
 
     fun getAllSongByListen(){
         isLoading.postValue(true)

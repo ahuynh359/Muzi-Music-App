@@ -1,8 +1,11 @@
 package com.ahuynh.muzimusicapp.ui.component.song
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.OnSongClicked
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
@@ -56,6 +59,9 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             hideShimmer()
 
         }
+        viewModel.message.observe(viewLifecycleOwner){
+            Log.d("ABC",it.toString())
+        }
 
 
 
@@ -66,8 +72,10 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
         binding.shimmerSong.visibility = View.GONE
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onSongClicked(song: Song) {
         viewModel.updateSongListen(song)
+        viewModel.updateSongWithCurrentDate(song, Utils.getCurrentDateAsString())
         getData()
 
         startActivity(Intent(requireContext(), PlayerActivity::class.java))

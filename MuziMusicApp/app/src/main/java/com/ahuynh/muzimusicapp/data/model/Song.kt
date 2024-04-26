@@ -13,5 +13,6 @@ data class Song(
     val singer: String? = null,
     val listen: Int? = 0,
     var love : Boolean = false,
+    val listens: Map<String, Int> = mapOf()
 ) : Parcelable
 

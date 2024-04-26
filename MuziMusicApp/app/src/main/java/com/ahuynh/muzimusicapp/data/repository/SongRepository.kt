@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import android.util.Log
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
@@ -34,24 +33,51 @@ class SongRepository @Inject constructor(
             }
         }
     }
+
     suspend fun updateSongListen(song: Song): Response<Boolean> {
         return withContext(dispatcher) {
             try {
 
+
                 val currentSong = songCollRef.document(song.id!!)
                 val listen = song.listen?.plus(1)
-                Log.d("SongRepository",song.listen.toString())
-                Log.d("SongRepository",listen.toString())
                 val updateData = hashMapOf(
                     "listen" to listen
                 )
                 currentSong.update(updateData as Map<String, Int?>).await()
+
+
+
+
                 Response.Success(true)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
             }
         }
     }
+
+    suspend fun updateSongWithCurrentDate(song: Song, currentDate: String): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+
+
+                val listenCountForCurrentDate =
+                    (song.listens[currentDate] ?: 0) + 1 // Increment listen count for current date
+                val data = hashMapOf(
+                    "listens.$currentDate" to listenCountForCurrentDate
+                )
+                songCollRef.document(song.id!!).update(data as Map<String, Any>).await()
+
+
+
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+
 
 
     suspend fun searchSong(name: String): Response<List<Song>> {

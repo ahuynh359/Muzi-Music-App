@@ -7,17 +7,22 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 object Utils {
 
@@ -108,6 +113,16 @@ object Utils {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getCurrentDateAsString(): String {
+        val currentDate = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        Log.d("ABC",currentDate.format(formatter))
+        return currentDate.format(formatter)
+    }
+
+
     fun appSettingOpen(context: Context) {
         val settingIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         settingIntent.data = Uri.parse("package:${context.packageName}")

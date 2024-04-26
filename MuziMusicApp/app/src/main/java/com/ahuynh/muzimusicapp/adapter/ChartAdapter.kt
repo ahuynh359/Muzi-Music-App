@@ -57,7 +57,14 @@ class ChartAdapter(
             tvSinger.text = song.singer
             tvIndex.text = (position + 1).toString()
 
-
+            if(position == 0){
+                tvIndex.setTextColor(android.graphics.Color.RED)
+            } else if(position == 1){
+                tvIndex.setTextColor(android.graphics.Color.GREEN)
+            } else if(position == 2){
+                tvIndex.setTextColor(android.graphics.Color.YELLOW)
+            } else
+                tvIndex.setTextColor(android.graphics.Color.WHITE)
 
         }
 

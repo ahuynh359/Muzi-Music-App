@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -39,7 +40,7 @@ class SleepTimerDialog : DialogFragment() {
 
 
     private fun handleUI() {
-        binding.tvMin.text = "$seekBarProgress min"
+        binding.tvMin.text = "$seekBarProgress sec"
         binding.btnStart.setOnClickListener {
 
             Toast.makeText(context, "$seekBarProgress is set", Toast.LENGTH_SHORT).show()
@@ -54,7 +55,7 @@ class SleepTimerDialog : DialogFragment() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
 
                 seekBarProgress = progress.toLong()
-                binding.tvMin.text = "$seekBarProgress min"
+                binding.tvMin.text = "$seekBarProgress sec"
 
             }
 
@@ -69,10 +70,14 @@ class SleepTimerDialog : DialogFragment() {
 
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+    }
+
 
     private fun startTimer() {
         if (!isTimerRunning) {
-            var time = seekBarProgress * 1000 * 60;
+            var time = seekBarProgress * 1000 ;
 
             timer = object : CountDownTimer(time, 1000) { // 10 seconds countdown
                 override fun onTick(millisUntilFinished: Long) {
