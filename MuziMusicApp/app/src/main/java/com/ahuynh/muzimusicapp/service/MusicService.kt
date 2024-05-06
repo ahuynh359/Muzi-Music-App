@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -103,7 +102,6 @@ class MusicService : Service() {
             song?.let {
                 list?.let {
                     songList = list
-                    Log.d("ABC Shuffle",Constants.IS_SHUFFLE.toString())
                     if (Constants.IS_SHUFFLE) {
                         val shuffledSongList = ArrayList(songList).apply { shuffle() }
                         songList = shuffledSongList
@@ -192,11 +190,12 @@ class MusicService : Service() {
     }
 
     //Update button play pause
-    private fun playPauseMusic() {
+    @OptIn(UnstableApi::class) private fun playPauseMusic() {
         player?.let {
             if (it.isPlaying) it.pause()
             else it.play()
             EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(it.isPlaying))
+            EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(it.audioSessionId))
         }
         sendNotification()
 
@@ -224,6 +223,7 @@ class MusicService : Service() {
 
     @kotlin.OptIn(DelicateCoroutinesApi::class)
     private fun sendNotification() {
+
         GlobalScope.launch(Dispatchers.Main) {
 
             val bitmap = getCurrentSongBitMap()
@@ -327,7 +327,6 @@ class MusicService : Service() {
                     when(playbackState) {
                         Player.STATE_ENDED ->{
                             next()
-                            Log.d("ABCDE","ENDed")
                         }
 
                         Player.STATE_BUFFERING -> {
@@ -352,7 +351,7 @@ class MusicService : Service() {
     @OptIn(UnstableApi::class)
     private fun sendTime(player: ExoPlayer) {
         EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(true))
-        EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(player.audioSessionId))
+
         jobTime?.cancel()
 
         jobTime = GlobalScope.launch(Dispatchers.Main) {
@@ -371,6 +370,7 @@ class MusicService : Service() {
 
         jobTime?.start()
         sendNotification()
+        EventBus.getDefault().postSticky(EventBusModel.AudioSessionIdEvent(player.audioSessionId))
     }
 
     // Seekbar seek time

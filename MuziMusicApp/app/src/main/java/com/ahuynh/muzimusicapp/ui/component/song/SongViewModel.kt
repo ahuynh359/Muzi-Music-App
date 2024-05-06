@@ -19,6 +19,12 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
     var searchSongList = MutableLiveData<List<Song>>()
     var sortIndex = MutableLiveData<Int>(-1)
 
+    init {
+        getAllSongs()
+        getAllSongByListen()
+    }
+
+
     fun getAllSongs() {
         isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {

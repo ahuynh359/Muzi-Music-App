@@ -14,6 +14,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
+        jcenter()
         google()
         mavenCentral()
         maven { url = uri("https://www.jitpack.io" ) }

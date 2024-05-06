@@ -73,9 +73,7 @@ class PlaylistDetailFragment :
             viewModel.getSongsOfPlaylist(currentPlaylist)
             viewModel.songs.observe(viewLifecycleOwner) {
 
-                Log.d("ABC", it.toString())
                 songListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_LIST_DATA)
-                Log.d("ABC", songListOfPlaylist.toString())
 
                 songAdapter = PlaylistSongAdapter(this, songListOfPlaylist)
                 binding.rcySongs.adapter = songAdapter

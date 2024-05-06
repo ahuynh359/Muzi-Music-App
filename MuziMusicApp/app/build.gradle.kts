@@ -46,6 +46,9 @@ android {
 
 dependencies {
 
+    //Visualizer
+    implementation("io.github.gautamchibde:audiovisualizer:2.2.5")
+
     //Chart
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     //Coil
@@ -72,6 +75,9 @@ dependencies {
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    //implementation(libs.firebase.messaging.ktx)
+    implementation ("com.google.firebase:firebase-messaging-ktx:23.0.2")
+
 
     //Glide
     implementation (libs.glide)
@@ -82,8 +88,6 @@ dependencies {
 
     //Dagger Hilt
     implementation(libs.hilt.android)
-    implementation(libs.firebase.storage.ktx)
-    implementation(libs.firebase.database.ktx)
     kapt(libs.hilt.android.compiler)
 
     //Splash Screen

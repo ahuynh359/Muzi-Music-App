@@ -3,7 +3,6 @@ package com.ahuynh.muzimusicapp.ui.component.song
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
@@ -59,9 +58,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             hideShimmer()
 
         }
-        viewModel.message.observe(viewLifecycleOwner){
-            Log.d("ABC",it.toString())
-        }
+
 
 
 

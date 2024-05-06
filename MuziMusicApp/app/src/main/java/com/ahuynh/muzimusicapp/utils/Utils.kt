@@ -12,7 +12,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
 import android.provider.Settings
-import android.util.Log
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -25,6 +25,13 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 object Utils {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private var permissions = arrayListOf(
+        Manifest.permission.RECORD_AUDIO,
+        Manifest.permission.POST_NOTIFICATIONS,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS
+    )
+    private val listOfPermissionsDenied = arrayListOf<String>()
 
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
         SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
@@ -114,11 +121,18 @@ object Utils {
         }
     }
 
+    fun convertDpToPixel(dp: Float, context: Context): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            context.resources.displayMetrics
+        ).toInt()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getCurrentDateAsString(): String {
         val currentDate = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        Log.d("ABC",currentDate.format(formatter))
         return currentDate.format(formatter)
     }
 

@@ -18,6 +18,7 @@ class PlayerViewModel @Inject constructor(
     private val sharePreferences: SharePreferences
 ) :
     BaseViewModel() {
+    var currentRotate = 0f
     var isPlaying=  MutableLiveData(false)
     var song =  MutableLiveData<Song>()
     var sleepTime =  MutableLiveData<String>()

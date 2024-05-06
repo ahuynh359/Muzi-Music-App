@@ -4,9 +4,11 @@ import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.R
@@ -52,7 +54,6 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         handleUI()
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
 
@@ -64,39 +65,45 @@ class PlayerActivity : AppCompatActivity() {
     private fun observe() {
         viewModel.getShuffle()
         viewModel.getRepeat()
+        viewModel.audioSessionId.observe(this) {
+            if (it != 0) {
+                binding.visualizer.setColor(ContextCompat.getColor(this, R.color.white))
+                binding.visualizer.setPlayer(it)
+            }
+        }
 
 
         viewModel.isShuffle.observe(this) {
             if (it) {
-                binding.btnShuffle.setImageResource(R.drawable.ic_shuffle_selected)
+                binding.btnShuffle.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_shuffle_selected)
             } else{
-                binding.btnShuffle.setImageResource(R.drawable.ic_shuffle)
+                binding.btnShuffle.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_shuffle)
             }
 
         }
 
         viewModel.isRepeat.observe(this) {
             if (it) {
-                binding.btnRepeat.setImageResource(R.drawable.ic_repeat_selected)
+                binding.btnRepeat.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_repeat_selected)
             } else{
-                binding.btnRepeat.setImageResource(R.drawable.ic_repeat)
+                binding.btnRepeat.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_repeat)
             }
 
         }
 
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
-                if (it) R.drawable.ic_play
-                else R.drawable.ic_pause
+                if (it) com.ahuynh.muzimusicapp.R.drawable.ic_play
+                else com.ahuynh.muzimusicapp.R.drawable.ic_pause
             )
         }
         viewModel.song.observe(this) { song ->
             binding.tvSong.text = song.name
 
             if (song.love) {
-                binding.btnHeart.setImageResource(R.drawable.ic_hearted)
+                binding.btnHeart.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_hearted)
             } else
-                binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
+                binding.btnHeart.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_heart_small)
 
         }
         viewModel.sleepTime.observe(this){
@@ -121,7 +128,7 @@ class PlayerActivity : AppCompatActivity() {
                 val newLoveStatus = !song.love
                 song.love = newLoveStatus
                 viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
-                val heartResId = if (newLoveStatus) R.drawable.ic_hearted else R.drawable.ic_heart_small
+                val heartResId = if (newLoveStatus) com.ahuynh.muzimusicapp.R.drawable.ic_hearted else com.ahuynh.muzimusicapp.R.drawable.ic_heart_small
                 binding.btnHeart.setImageResource(heartResId)
             }
         }
@@ -217,13 +224,13 @@ class PlayerActivity : AppCompatActivity() {
     private fun dotIndicator(position: Int) {
         when (position) {
             0 -> {
-                binding.dot1.setImageResource(R.drawable.dot_selected)
-                binding.dot2.setImageResource(R.drawable.dot_default)
+                binding.dot1.setImageResource(com.ahuynh.muzimusicapp.R.drawable.dot_selected)
+                binding.dot2.setImageResource(com.ahuynh.muzimusicapp.R.drawable.dot_default)
             }
 
             1 -> {
-                binding.dot2.setImageResource(R.drawable.dot_selected)
-                binding.dot1.setImageResource(R.drawable.dot_default)
+                binding.dot2.setImageResource(com.ahuynh.muzimusicapp.R.drawable.dot_selected)
+                binding.dot1.setImageResource(com.ahuynh.muzimusicapp.R.drawable.dot_default)
             }
         }
     }
@@ -287,7 +294,10 @@ class PlayerActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onAudioSessionIdEvent(event: EventBusModel.AudioSessionIdEvent) {
+        Log.d("ABC", event.sessionId.toString())
         viewModel.audioSessionId.postValue(event.sessionId)
+
+
     }
 
 
