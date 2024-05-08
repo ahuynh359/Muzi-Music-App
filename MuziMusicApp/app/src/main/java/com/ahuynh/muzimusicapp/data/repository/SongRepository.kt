@@ -2,6 +2,7 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import android.net.Uri
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Response
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -43,24 +45,28 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun addSong(newSong: Song) = try {
-        val id = songCollRef.document().id
-        val song = Song(
-            id = id,
-            name = newSong.name,
-            file = newSong.file,
-            image = newSong.image,
-            lyrics = newSong.lyrics,
-            singer = newSong.singer,
-            listen = 0,
-            love = false,
-            listens = mutableMapOf()
+    suspend fun addSong(newSong: SongPost): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+                val id = UUID.randomUUID().toString()
+                val song = Song(
+                    id = id,
+                    name = newSong.name,
+                    file = newSong.file,
+                    image = newSong.image,
+                    lyrics = newSong.lyrics,
+                    singer = newSong.singer,
+                    listen = 0,
+                    love = false,
+                    listens = mutableMapOf()
 
-        )
-        songCollRef.document(id).set(song).await()
-        Response.Success(true)
-    } catch (e: Exception) {
-        Response.Failure(e.message ?: "Unknown error")
+                )
+                songCollRef.document(id).set(song).await()
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
     }
 
 
@@ -162,20 +168,33 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun addImageToFirebaseStorage(image: File): Response<Boolean> {
+    suspend fun addImageToFirebaseStorage(image: File): Response<String> {
         return withContext(dispatcher) {
             try {
                 val imageUri = Uri.fromFile(image)
-                val downloadUrl = storage.reference.child("app")
-                    .putFile(imageUri).await()
-                    .storage.downloadUrl.await()
-                Response.Success(true)
+                val storage = storage.reference.child("/app").child(image.name)
+                storage.putFile(imageUri).await().storage.downloadUrl.await()
+                val downloadUrl = storage.downloadUrl.await().toString()
+                Response.Success(downloadUrl)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
             }
         }
     }
 
+    suspend fun addFileToFirebaseStorage(file: File): Response<String> {
+        return withContext(dispatcher) {
+            try {
+                val imageUri = Uri.fromFile(file)
+                val storage = storage.reference.child("/app").child(file.name)
+                storage.putFile(imageUri).await().storage.downloadUrl.await()
+                val downloadUrl = storage.downloadUrl.await().toString()
+                Response.Success(downloadUrl)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
 
 
 }

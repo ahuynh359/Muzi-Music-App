@@ -16,9 +16,11 @@ class Step5Fragment : BaseFragment<FragmentStep5Binding>(FragmentStep5Binding::i
         super.onViewCreated(view, savedInstanceState)
         binding.edtLyrics.addTextChangedListener {
             if(it == null || it.toString().trim().isEmpty()){
+
                 binding.tvLeaveEmpty.visibility = View.VISIBLE
             } else {
-                binding.tvLeaveEmpty.visibility = View.GONE
+                viewModel.lyrics = binding.edtLyrics.text.toString().trim()
+                    binding.tvLeaveEmpty.visibility = View.GONE
             }
         }
     }

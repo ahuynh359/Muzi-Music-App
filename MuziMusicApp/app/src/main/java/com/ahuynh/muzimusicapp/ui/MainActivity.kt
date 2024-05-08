@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleUI() {
+
         binding.player.setOnClickListener {
             startActivity(Intent(this,PlayerActivity::class.java))
         }
@@ -143,6 +144,7 @@ class MainActivity : AppCompatActivity() {
                 else R.drawable.ic_play_small
             )
         }
+
     }
 
 

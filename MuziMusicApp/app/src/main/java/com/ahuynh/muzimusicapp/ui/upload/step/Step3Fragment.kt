@@ -20,6 +20,7 @@ class Step3Fragment : BaseFragment<FragmentStep3Binding>(FragmentStep3Binding::i
                 binding.tvLeaveEmpty.visibility = View.VISIBLE
             } else {
                 binding.tvLeaveEmpty.visibility = View.GONE
+                viewModel.singerName = binding.edtSinger.text.toString().trim()
             }
         }
     }

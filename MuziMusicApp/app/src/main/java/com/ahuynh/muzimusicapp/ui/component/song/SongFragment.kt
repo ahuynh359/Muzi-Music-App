@@ -14,6 +14,7 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.itextpdf.io.codec.brotli.dec.Dictionary.getData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,25 +32,24 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getData()
+
         handleUI()
         observe()
 
     }
 
-    private fun getData() {
-        viewModel.getAllSongs()
-    }
+
 
     private fun handleUI() {
         binding.rcySong.adapter = songAdapter
         binding.swipe.setOnRefreshListener {
-            getData()
+            observe()
         }
 
     }
 
     private fun observe() {
+        viewModel.getAllSongs()
         viewModel.songList.observe(viewLifecycleOwner) {
             binding.swipe.isRefreshing = false
             songAdapter.submitList(it)

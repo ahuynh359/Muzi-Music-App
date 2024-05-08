@@ -92,6 +92,5 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:listitem="@layout/item_song" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

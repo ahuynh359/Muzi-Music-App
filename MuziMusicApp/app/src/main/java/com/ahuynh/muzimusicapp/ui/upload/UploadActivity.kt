@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.databinding.ActivityUploadBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +18,7 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
     private lateinit var binding: ActivityUploadBinding
     private lateinit var navController: NavController
     private val viewModel by viewModels<UploadViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
@@ -24,13 +26,46 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
 
         setUpNavigationGraph()
         setupStepper()
-        handleUI()
+        observe()
 
     }
 
-    private fun handleUI() {
+
+    private fun observe() {
+        viewModel.isLoading.observe(this) {
+            if (it) {
+                binding.fabPrevious.visibility = View.GONE
+                binding.fabDone.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+                binding.progressBar.show()
+            } else {
+                binding.progressBar.visibility = View.GONE
+                binding.progressBar.hide()
+
+            }
+        }
+        viewModel.addImage.observe(this) { it1 ->
+            if (it1 != null) {
+                Toast.makeText(this, "Upload Image ${it1}", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+        viewModel.addFileMp3.observe(this) { it2 ->
+            if (it2 != null) {
+                Toast.makeText(this, "Upload File Mp3 ${it2}", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
+        viewModel.addSongStatus.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
 
     }
+
 
     override fun onCompleted() {
         TODO("Not yet implemented")
@@ -97,8 +132,18 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
        val errorIndex = checkError()
         if(errorIndex != 5){
             while(binding.stepper.currentStep != errorIndex) binding.stepper.goToPreviousStep()
-        } else
-            viewModel.addSong()
+        } else {
+            viewModel.addImageAndFile()
+            viewModel.addFileMp3.observe(this) { it1 ->
+                if (it1 != null) {
+                    viewModel.addImage.observe(this) { it2 ->
+                        val song = SongPost(viewModel.songName,viewModel.singerName,it2.toString(),viewModel.lyrics,it1.toString())
+                        viewModel.addSong(song)
+                    }
+                }
+            }
+
+        }
 
     }
 
