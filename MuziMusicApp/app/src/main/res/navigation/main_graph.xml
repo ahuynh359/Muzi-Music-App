@@ -61,4 +61,9 @@
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
     </dialog>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

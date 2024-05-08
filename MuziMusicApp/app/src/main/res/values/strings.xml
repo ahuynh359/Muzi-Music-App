@@ -46,4 +46,5 @@
     <string name="start">START</string>
     <string name="all_songs">All Songs</string>
     <string name="setting">Setting</string>
+    <string name="type_the_name_song">Type The Name Song</string>
 </resources>

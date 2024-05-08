@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upload_song_graph"
+    app:startDestination="@id/step1Fragment">
+
+    <fragment
+        android:id="@+id/step1Fragment"
+        android:name="com.ahuynh.muzimusicapp.ui.upload.step.Step1Fragment"
+        android:label="Step1Fragment" />
+    <fragment
+        android:id="@+id/step2Fragment"
+        android:name="com.ahuynh.muzimusicapp.ui.upload.step.Step2Fragment"
+        android:label="fragment_step2"
+        tools:layout="@layout/fragment_step2" />
+    <fragment
+        android:id="@+id/step3Fragment"
+        android:name="com.ahuynh.muzimusicapp.ui.upload.step.Step3Fragment"
+        android:label="fragment_step3"
+        tools:layout="@layout/fragment_step3" />
+    <fragment
+        android:id="@+id/step4Fragment"
+        android:name="com.ahuynh.muzimusicapp.ui.upload.step.Step4Fragment"
+        android:label="fragment_step4"
+        tools:layout="@layout/fragment_step4" />
+    <fragment
+        android:id="@+id/step5Fragment"
+        android:name="com.ahuynh.muzimusicapp.ui.upload.step.Step5Fragment"
+        android:label="fragment_step5"
+        tools:layout="@layout/fragment_step5" />
+</navigation>

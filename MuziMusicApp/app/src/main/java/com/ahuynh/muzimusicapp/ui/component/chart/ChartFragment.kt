@@ -4,8 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -33,9 +31,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
 
 @AndroidEntryPoint
 class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::inflate),
@@ -46,7 +41,6 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
         const val TAG = "ChartFragment"
     }
 
-    private val REQUEST_CODE = 1
 
     private var listSong: ArrayList<Song> = arrayListOf()
     private val chartAdapter = ChartAdapter(this)
@@ -77,136 +71,12 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
             }
 
         }
-        binding.btnExport.setOnClickListener {
-            // Check and request permission to write to external storage if needed
 
-            if (viewModel.sortIndex.value == 0) {
-
-                exportToCSVByDay()
-
-            } else if (viewModel.sortIndex.value == 1) {
-                exportCsvByMonth()
-
-            } else if (viewModel.sortIndex.value == 2) {
-
-            }
-        }
 
 
     }
 
 
-    private fun createMuziMusicDirectory() {
-        val folderName = "MuziMusic"
-
-        // Get the DCIM directory
-        val dcimDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-
-        // Create the MuziMusic directory inside DCIM
-        val muziMusicDirectory = File(dcimDirectory, folderName)
-
-        // Check if the directory exists
-        if (!muziMusicDirectory.exists()) {
-            // Create the directory if it doesn't exist
-            if (muziMusicDirectory.mkdirs()) {
-                Log.d(TAG, "MuziMusic directory created successfully")
-            } else {
-                Log.e(TAG, "Failed to create MuziMusic directory")
-            }
-        } else {
-            Log.d(TAG, "MuziMusic directory already exists")
-        }
-    }
-
-    private fun exportToCSVByDay() {
-        val data = mutableListOf<List<String>>()
-
-        listSong.forEach { song ->
-            data.add(listOf(song.name, song.listen,"\n") as List<String>)
-
-        }
-
-        val folderName = "MuziMusic"
-        val fileName = "data_by_day.csv"
-
-        val dcimDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-        val muziMusicDirectory = File(dcimDirectory, folderName)
-
-        if (!muziMusicDirectory.exists()) {
-            if (!muziMusicDirectory.mkdirs()) {
-                Log.e(TAG, "Failed to create MuziMusic directory")
-                return
-            }
-        }
-
-        val csvFile = File(muziMusicDirectory, fileName)
-
-        try {
-            val fileOutputStream = FileOutputStream(csvFile)
-
-            val outputStreamWriter = OutputStreamWriter(fileOutputStream)
-
-            outputStreamWriter.write(data.toString())
-            outputStreamWriter.close()
-            fileOutputStream.close()
-
-            Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error saving CSV file: ${e.message}")
-        }
-    }
-
-    private fun exportCsvByMonth() {
-        val data = mutableListOf<List<String>>()
-
-        listSong.forEach { song ->
-            for (i in song.listens)
-                data.add(
-                    listOf(
-                        song.name,
-                        song.listen,
-                        i.key,
-                        i.value,
-                        "\n"
-                    ) as List<String>
-                )
-
-        }
-
-        val folderName = "MuziMusic"
-        val fileName = "data_by_month.csv"
-
-        val dcimDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-        val muziMusicDirectory = File(dcimDirectory, folderName)
-
-        if (!muziMusicDirectory.exists()) {
-            if (!muziMusicDirectory.mkdirs()) {
-                Log.e(TAG, "Failed to create MuziMusic directory")
-                return
-            }
-        }
-
-        val csvFile = File(muziMusicDirectory, fileName)
-
-        try {
-            val fileOutputStream = FileOutputStream(csvFile)
-
-            val outputStreamWriter = OutputStreamWriter(fileOutputStream)
-
-            outputStreamWriter.write(data.toString())
-            outputStreamWriter.close()
-            fileOutputStream.close()
-
-            Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error saving CSV file: ${e.message}")
-        }
-    }
 
     override fun onResume() {
         super.onResume()

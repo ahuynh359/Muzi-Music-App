@@ -45,6 +45,10 @@ android {
 }
 
 dependencies {
+    //Stepper
+    implementation("com.github.acefalobi:android-stepper:0.3.0")
+    //Pdf Reader
+    implementation (libs.itext7.core)
 
     //Visualizer
     implementation("io.github.gautamchibde:audiovisualizer:2.2.5")

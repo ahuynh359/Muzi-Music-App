@@ -27,6 +27,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
         android:hint="Sort by"
         style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
@@ -37,25 +38,14 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content">
         <AutoCompleteTextView
+
             android:inputType="none"
             android:id="@+id/select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/input"
-        app:layout_constraintTop_toTopOf="@id/input"
-        android:textColor="@color/black"
-        android:padding="2dp"
-        android:textAllCaps="false"
-        android:text="Export to csv"
-        android:background="@drawable/btn_round_green"
-        android:id="@+id/btn_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_song"
