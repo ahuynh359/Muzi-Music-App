@@ -16,7 +16,7 @@
 
 
     <TextView
-        android:id="@+id/btnChooseMusic"
+        android:id="@+id/btnChooseImage"
         style="@style/CustomTextMedium"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -40,4 +40,11 @@
         android:fontFamily="@font/medium"
         android:textColor="@color/red"
         />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_gravity="center"
+        android:id="@+id/imv"
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"/>
 </LinearLayout>

@@ -1,16 +1,19 @@
 package com.ahuynh.muzimusicapp.data.repository
 
+import android.net.Uri
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.ahuynh.muzimusicapp.utils.Response
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
@@ -20,6 +23,7 @@ import javax.inject.Singleton
 class SongRepository @Inject constructor(
     @Named(SONG)
     private val songCollRef: CollectionReference,
+    private val storage: FirebaseStorage,
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher
 ) {
@@ -151,6 +155,20 @@ class SongRepository @Inject constructor(
             try {
                 val songDocRef = songCollRef.document(id)
                 songDocRef.update("love", newLoveStatus).await()
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    suspend fun addImageToFirebaseStorage(image: File): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+                val imageUri = Uri.fromFile(image)
+                val downloadUrl = storage.reference.child("app")
+                    .putFile(imageUri).await()
+                    .storage.downloadUrl.await()
                 Response.Success(true)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")

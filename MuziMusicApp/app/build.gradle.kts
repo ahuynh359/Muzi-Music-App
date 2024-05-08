@@ -79,9 +79,8 @@ dependencies {
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
-    //implementation(libs.firebase.messaging.ktx)
-    implementation ("com.google.firebase:firebase-messaging-ktx:23.0.2")
-
+    implementation(libs.firebase.storage)
+//    implementation(libs.firebase.messaging)
 
     //Glide
     implementation (libs.glide)
@@ -92,6 +91,10 @@ dependencies {
 
     //Dagger Hilt
     implementation(libs.hilt.android)
+
+
+
+
     kapt(libs.hilt.android.compiler)
 
     //Splash Screen

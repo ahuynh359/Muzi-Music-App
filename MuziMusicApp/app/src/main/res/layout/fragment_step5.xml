@@ -29,7 +29,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
 
-            android:id="@+id/edt_song_name"
+            android:id="@+id/edt_lyrics"
             style="@style/CustomEdittextLight"
             android:background="@drawable/bg_edt_type" />
     </com.google.android.material.textfield.TextInputLayout>

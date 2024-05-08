@@ -4,6 +4,7 @@ import com.ahuynh.muzimusicapp.utils.Constants.PLAYLIST
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,13 @@ class FirebaseModule {
     fun provideFireStoreInstance(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
+    }
+
 
 
     @Named(SONG)
