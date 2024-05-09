@@ -294,7 +294,6 @@ class PlayerActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onAudioSessionIdEvent(event: EventBusModel.AudioSessionIdEvent) {
-        Log.d("ABC", event.sessionId.toString())
         viewModel.audioSessionId.postValue(event.sessionId)
 
 

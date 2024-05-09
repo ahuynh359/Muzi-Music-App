@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val appSharePreferences: SharePreferences,
-    private val songRes : SongRepository
+                                        private val songRes: SongRepository,
+
 
 ) : BaseViewModel() {
 
@@ -30,6 +31,8 @@ class MainViewModel @Inject constructor(private val appSharePreferences: SharePr
     }
 
      var songList = MutableLiveData<List<Song>>()
+
+
 
     fun getAllSongs() {
         isLoading.postValue(true)

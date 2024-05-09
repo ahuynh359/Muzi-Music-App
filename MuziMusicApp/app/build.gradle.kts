@@ -99,6 +99,10 @@ dependencies {
     implementation(libs.hilt.android)
 
 
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
 
 
     kapt(libs.hilt.android.compiler)

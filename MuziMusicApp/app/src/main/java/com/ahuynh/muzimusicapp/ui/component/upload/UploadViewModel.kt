@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.upload
+package com.ahuynh.muzimusicapp.ui.component.upload
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

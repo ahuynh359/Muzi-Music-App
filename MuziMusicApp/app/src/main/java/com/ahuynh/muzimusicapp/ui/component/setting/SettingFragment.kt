@@ -12,7 +12,7 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment
 import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
-import com.ahuynh.muzimusicapp.ui.upload.UploadActivity
+import com.ahuynh.muzimusicapp.ui.component.upload.UploadActivity
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Paragraph

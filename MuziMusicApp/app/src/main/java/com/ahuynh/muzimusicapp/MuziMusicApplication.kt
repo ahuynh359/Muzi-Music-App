@@ -31,7 +31,7 @@ class MuziMusicApplication : Application(){
             val channel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
                 getString(R.string.notifications),
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             channel.description = getString(R.string.descriptionText)
 

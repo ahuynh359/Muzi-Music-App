@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.upload.step
+package com.ahuynh.muzimusicapp.ui.component.upload.step
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentStep1Binding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.upload.UploadViewModel
+import com.ahuynh.muzimusicapp.ui.component.upload.UploadViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

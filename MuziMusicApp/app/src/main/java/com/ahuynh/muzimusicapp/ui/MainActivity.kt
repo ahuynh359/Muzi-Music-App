@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -15,11 +16,15 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.data.model.NotificationData
+import com.ahuynh.muzimusicapp.data.model.PushNotification
+import com.ahuynh.muzimusicapp.data.retrofit.RetrofitInstance
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
+import com.ahuynh.muzimusicapp.utils.Constants.TOPIC
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -29,7 +34,12 @@ import com.ahuynh.muzimusicapp.utils.Utils.showWarningDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -44,6 +54,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var snackbar: Snackbar
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
         NetworkConnectivityHelper(this)
+    }
+
+    companion object {
+        const val TAG = "ABC"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -60,10 +74,37 @@ class MainActivity : AppCompatActivity() {
         handleUI()
 
 
-
+    }
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful) {
+                Log.d(TAG, "Response: ${Gson().toJson(response)}")
+            } else {
+                Log.e(TAG, response.errorBody().toString())
+            }
+        } catch(e: Exception) {
+            Log.e(TAG, e.toString())
+        }
     }
 
     private fun handleUI() {
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+
+        binding.btnSend.setOnClickListener {
+            val title = "ABC"
+            val message = "ABC"
+            if(title.isNotEmpty() && message.isNotEmpty() ) {
+                PushNotification(
+                    NotificationData(title, message),
+                    TOPIC
+                ).also {
+                    sendNotification(it)
+                }
+            }
+        }
+
 
         binding.player.setOnClickListener {
             startActivity(Intent(this,PlayerActivity::class.java))
@@ -144,6 +185,7 @@ class MainActivity : AppCompatActivity() {
                 else R.drawable.ic_play_small
             )
         }
+
 
     }
 

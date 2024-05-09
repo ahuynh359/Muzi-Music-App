@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.upload.step
+package com.ahuynh.muzimusicapp.ui.component.upload.step
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentStep2Binding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.upload.UploadViewModel
+import com.ahuynh.muzimusicapp.ui.component.upload.UploadViewModel
 import com.ahuynh.muzimusicapp.utils.FileUtils
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File

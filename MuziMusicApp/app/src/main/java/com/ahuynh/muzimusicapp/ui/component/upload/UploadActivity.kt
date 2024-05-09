@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.upload
+package com.ahuynh.muzimusicapp.ui.component.upload
 
 import android.os.Bundle
 import android.view.View
@@ -18,6 +18,10 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
     private lateinit var binding: ActivityUploadBinding
     private lateinit var navController: NavController
     private val viewModel by viewModels<UploadViewModel>()
+    companion object{
+        const val TAG = "UploadActivity"
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,14 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         setUpNavigationGraph()
         setupStepper()
         observe()
+        handleUI()
+
+
+
+    }
+
+    private fun handleUI() {
+
 
     }
 
@@ -61,10 +73,13 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
             if (it != null) {
                 Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
                 onBackPressedDispatcher.onBackPressed()
+
             }
         }
 
     }
+
+
 
 
     override fun onCompleted() {
