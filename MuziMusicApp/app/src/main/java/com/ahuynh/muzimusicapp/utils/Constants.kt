@@ -36,7 +36,7 @@ object Constants {
     const val SERVER_KEY =
         "AAAAckRVZ2U:APA91bEgDSDnglbcJbHO5Kok0KTgGGjlrocBtdSdhRwkEteU2zWcz6PU7zBbRZ6iFZG8hLetLPnr5UDhKYvIKMq_8QBqmq2WEs4S36dTrOGskCKXgamXtxaDdVsFYH4U9LCfrN8AYRLm"
     const val CONTENT_TYPE="application/json"
-    const val TOPIC = "NewSong"
+    const val TOPIC = "myTopic"
     var FCM_KEY = ""
 
 

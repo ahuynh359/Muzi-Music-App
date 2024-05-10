@@ -2,79 +2,87 @@ package com.ahuynh.muzimusicapp.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.ahuynh.muzimusicapp.MuziMusicApplication
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.ui.MainActivity
-import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Constants.FCM_KEY
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class NotificationService : FirebaseMessagingService() {
 
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "From: ${remoteMessage.from}")
 
-    override fun onMessageReceived(message: RemoteMessage) {
-        super.onMessageReceived(message)
-        Log.d("ABC","OnMessageReceived")
+        if (remoteMessage.data.isNotEmpty()) {
+            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+
+        }
+
+        remoteMessage.notification?.let {
+            Log.d(TAG, "Message Notification Body: ${it.body}")
+            sendNotification(it.body!!)
+        }
+
+
+    }
+
+
+    override fun onNewToken(token: String) {
+        Log.d(TAG, "Refreshed token: $token")
+
+
+    }
+
+
+    private fun sendNotification(messageBody: String) {
         val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val requestCode = 0
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE,
+        )
+
+        val channelId = "fcm_default_channel"
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("FCM Message")
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
+
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(notificationManager)
+            val channel = NotificationChannel(
+                channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+            notificationManager.createNotificationChannel(channel)
         }
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent,
-            FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-        )
-        val notification =
-            NotificationCompat.Builder(this, MuziMusicApplication.NOTIFICATION_CHANNEL_ID)
-                .setContentTitle(message.data["title"])
-                .setContentText(message.data["message"])
-                .setSmallIcon(R.drawable.note)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .build()
-
-        notificationManager.notify(Constants.NOTIFICATION_ID, notification)
+        val notificationId = 0
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val channelName = "channelName"
-        val channel = NotificationChannel(
-            MuziMusicApplication.NOTIFICATION_CHANNEL_ID,
-            channelName,
-            IMPORTANCE_HIGH
-        ).apply {
-            description = "My channel description"
-            enableLights(true)
-            lightColor = Color.GREEN
-        }
-        notificationManager.createNotificationChannel(channel)
+    companion object {
+        private const val TAG = "MyFirebaseMsgService"
     }
 
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        FCM_KEY = token
-    }
 
 }
-
-
-
 
 
 

@@ -11,7 +11,11 @@ import com.aceinteract.android.stepper.StepperNavListener
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.databinding.ActivityUploadBinding
+import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import fcm.androidtoandroid.FirebasePush
+import fcm.androidtoandroid.model.Notification
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class UploadActivity : AppCompatActivity(), StepperNavListener {
@@ -31,16 +35,25 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         setUpNavigationGraph()
         setupStepper()
         observe()
-        handleUI()
 
 
-
-    }
-
-    private fun handleUI() {
 
 
     }
+
+    private fun send(s : String) {
+        val notification = Notification("FCM-AndroidToOtherDevice", "New song $s")
+
+        val yourExtraData = JSONObject().put("abc", "dasdasdd")
+
+        val firebasePush = FirebasePush.build(Constants.SERVER_KEY)
+            .setNotification(notification)
+            .setData(yourExtraData)
+
+        firebasePush.sendToTopic(Constants.TOPIC)
+    }
+
+
 
 
     private fun observe() {
@@ -72,6 +85,7 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         viewModel.addSongStatus.observe(this) {
             if (it != null) {
                 Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
+                send(viewModel.songName)
                 onBackPressedDispatcher.onBackPressed()
 
             }

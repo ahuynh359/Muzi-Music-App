@@ -98,10 +98,17 @@ dependencies {
     //Dagger Hilt
     implementation(libs.hilt.android)
 
+    //Messaging
+    implementation ("com.github.DavidBarbaran:FCM-AndroidToOtherDevice:1.1.2")
+
+
 
     //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+    implementation (libs.gson)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(libs.androidx.work.runtime.ktx)
+
 
 
 
