@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.di
 
+import com.ahuynh.muzimusicapp.utils.Constants.NOTIFICATION
 import com.ahuynh.muzimusicapp.utils.Constants.PLAYLIST
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
 import com.google.firebase.Firebase
@@ -43,6 +44,12 @@ class FirebaseModule {
     @Provides
     fun providePlaylistColRef(db: FirebaseFirestore): CollectionReference {
         return db.collection(PLAYLIST)
+    }
+
+    @Named(NOTIFICATION)
+    @Provides
+    fun provideNotificationColRef(db: FirebaseFirestore): CollectionReference {
+        return db.collection(NOTIFICATION)
     }
 
     @Provides

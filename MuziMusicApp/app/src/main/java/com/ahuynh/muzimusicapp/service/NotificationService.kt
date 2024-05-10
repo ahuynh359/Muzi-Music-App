@@ -11,10 +11,12 @@ import androidx.core.app.NotificationCompat
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.ui.MainActivity
 import com.ahuynh.muzimusicapp.utils.Constants.FCM_KEY
+import com.ahuynh.muzimusicapp.utils.Constants.updateNoti
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class NotificationService : FirebaseMessagingService() {
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
 
@@ -26,6 +28,7 @@ class NotificationService : FirebaseMessagingService() {
         remoteMessage.notification?.let {
             Log.d(TAG, "Message Notification Body: ${it.body}")
             sendNotification(it.body!!)
+            updateNoti.postValue(true)
         }
 
 

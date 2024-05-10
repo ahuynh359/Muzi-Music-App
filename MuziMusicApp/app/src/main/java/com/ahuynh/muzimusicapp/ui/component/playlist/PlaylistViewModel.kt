@@ -2,6 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
@@ -13,12 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository) :
+class PlaylistViewModel @Inject constructor(private val playlistRepository: PlaylistRepository,
+    ) :
     BaseViewModel() {
 
     var playlists = MutableLiveData<List<Playlist>>()
     var addPlaylistStatus = MutableLiveData<Boolean>()
     var deletePlaylistStatus = MutableLiveData<Boolean>()
+    var deleteSongFromPlaylist = MutableLiveData<Boolean>()
     var updatePlaylistStatus = MutableLiveData<Boolean>()
     var addSongToPlaylistStatus = MutableLiveData<Boolean>()
     var songs = MutableLiveData<List<String>>()
@@ -90,6 +93,19 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
             val response = playlistRepository.getSongsOfPlaylist(currentPlaylist)
             if (response is Response.Success) {
                 songs.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun deleteSongFromPlaylist(playlist: Playlist, song: Song) {
+        isLoading.postValue(true)
+        viewModelScope.launch {
+            val response = playlistRepository.deleteSongFromPlaylist(playlist, song)
+            if (response is Response.Success) {
+                deleteSongFromPlaylist.postValue(response.data)
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)
             }

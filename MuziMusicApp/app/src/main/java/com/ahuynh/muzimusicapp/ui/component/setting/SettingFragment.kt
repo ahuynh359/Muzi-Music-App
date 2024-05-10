@@ -11,6 +11,7 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment
 import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
+import com.ahuynh.muzimusicapp.utils.Constants.updateNoti
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Paragraph
@@ -28,18 +29,35 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
 
         handleUI()
         observe()
+        getData()
 
 
+    }
+
+    private fun getData() {
+        viewModel.getUnreadNoti()
     }
 
     private fun observe() {
         viewModel.listenSongList.observe(viewLifecycleOwner) {
             listSong = it as ArrayList<Song>
         }
-        viewModel.unreadNoti.observe(viewLifecycleOwner) {
+        updateNoti.observe(viewLifecycleOwner) {
+            Log.d("ABC","reload gan du lieu")
+            viewModel.getUnreadNoti()
+            viewModel.getNotification.observe(viewLifecycleOwner) {
+                binding.tvNoti.text = it.toString()
+            }
+        }
+        viewModel.getNotification.observe(viewLifecycleOwner) {
             Log.d("ABC","gan du lieu")
             binding.tvNoti.text = it.toString()
         }
+//        viewModel.getNotification.observe(viewLifecycleOwner) {
+//            Log.d("ABC","gan du lieu")
+//            binding.tvNoti.text = it.count.toString()
+//        }
+
 
       
 

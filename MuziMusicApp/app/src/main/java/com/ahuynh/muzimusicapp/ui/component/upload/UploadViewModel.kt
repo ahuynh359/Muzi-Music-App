@@ -2,7 +2,9 @@ package com.ahuynh.muzimusicapp.ui.component.upload
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ahuynh.muzimusicapp.data.model.Notification
 import com.ahuynh.muzimusicapp.data.model.SongPost
+import com.ahuynh.muzimusicapp.data.repository.NotificationRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UploadViewModel @Inject constructor(
     private val repository: SongRepository,
+    private val notificationRepository: NotificationRepository,
     private val sharePreferencesHelper: SharePreferencesHelper
 ) : BaseViewModel() {
     var songName = ""
@@ -26,6 +29,7 @@ class UploadViewModel @Inject constructor(
     var addImage = MutableLiveData<String>()
     var addFileMp3 = MutableLiveData<String>()
     var addSongStatus = MutableLiveData<Boolean>()
+    var setNotification = MutableLiveData<Boolean>()
     lateinit var song: SongPost
 
     fun addImageAndFile() {
@@ -57,6 +61,12 @@ class UploadViewModel @Inject constructor(
 
     }
 
+    fun setUnread() {
+        viewModelScope.launch {
+            sharePreferencesHelper.setUnreadNoti(sharePreferencesHelper.getUnreadNoti() + 1)
+        }
+    }
+
     fun addSong(song: SongPost) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
@@ -68,6 +78,20 @@ class UploadViewModel @Inject constructor(
             }
 
 
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun setUnreadNoti(newNotification: Notification, doc: String) {
+
+        isLoading.postValue(true)
+        viewModelScope.launch {
+            val response = notificationRepository.updateNotification(newNotification, doc)
+            if (response is Response.Success) {
+                setNotification.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
         }
         registerEventParentJobFinish()
     }

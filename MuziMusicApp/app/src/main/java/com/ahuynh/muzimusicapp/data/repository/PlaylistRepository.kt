@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.data.repository
 
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.di.IoDispatcher
@@ -140,5 +141,29 @@ class PlaylistRepository @Inject constructor(
                 Response.Failure(e.message ?: "Unknown error")
             }
         }
+    }
+    suspend fun deleteSongFromPlaylist(currentPlaylist: Playlist, song: Song): Response<Boolean> {
+        return withContext(dispatcher) {
+            try {
+
+                val playlistRef = playlistCollRef.document(currentPlaylist.id!!)
+                val playlistSnapshot = playlistRef.get().await()
+                if (playlistSnapshot.exists()) {
+                    val songs = playlistSnapshot.get("songs") as? MutableList<String>
+                    songs?.let {
+                        val songIndex = songs.indexOfFirst { it == song.id }
+                        if (songIndex != -1) {
+                            songs.removeAt(songIndex) // Remove the song from the list
+                            playlistRef.update("songs", songs).await() // Update Firestore document
+                        }
+                    }
+                }
+
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
+
     }
 }

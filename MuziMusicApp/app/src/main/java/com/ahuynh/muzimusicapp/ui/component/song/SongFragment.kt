@@ -7,7 +7,6 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.adapter.OnSongClicked
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
@@ -20,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
-    OnSongClicked {
+    SongAdapter.OnSongClicked {
 
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
 

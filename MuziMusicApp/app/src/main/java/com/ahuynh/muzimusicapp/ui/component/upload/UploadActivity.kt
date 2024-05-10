@@ -94,6 +94,7 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
 
                 Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
                 send(viewModel.songName, viewModel.singerName)
+                viewModel.setUnread()
                 onBackPressedDispatcher.onBackPressed()
 
             }

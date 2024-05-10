@@ -3,6 +3,9 @@ package com.ahuynh.muzimusicapp.ui.component.song
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.repository.NotificationRepository
+import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
@@ -14,37 +17,61 @@ import javax.inject.Inject
 @HiltViewModel
 class SongViewModel @Inject constructor(
     private val repository: SongRepository,
-    private val sharePreferencesHelper: SharePreferencesHelper
+    private val sharePreferencesHelper: SharePreferencesHelper,
+    private val playlistRepository: PlaylistRepository,
+    private val notificationRepository: NotificationRepository
 ) : BaseViewModel() {
 
     var songList = MutableLiveData<List<Song>>()
+    var deleteSongFromPlaylist = MutableLiveData<Boolean>()
     var listenSongList = MutableLiveData<List<Song>>()
     var searchSongList = MutableLiveData<List<Song>>()
     var deleteSong = MutableLiveData<Boolean>()
     var loveSong = MutableLiveData<Boolean>()
-    var unreadNoti = MutableLiveData<Int>()
+
     var sortIndex = MutableLiveData<Int>(-1)
+    var getNotification = MutableLiveData<Int>()
+
+
 
 
     init {
         getAllSongs()
         getAllSongByListen()
-        getUnreadNoti()
+
     }
 
     fun getUnreadNoti() {
+//        isLoading.postValue(true)
+//        viewModelScope.launch {
+//            val response = notificationRepository.getNotification()
+//            if (response is Response.Success) {
+//                getNotification.postValue(response.data)
+//                CURRENT_NOTI = response.data
+//            } else if (response is Response.Failure) {
+//                message.postValue(response.errorMessage)
+//            }
+//        }
+//        registerEventParentJobFinish()
         viewModelScope.launch {
-            unreadNoti.postValue(sharePreferencesHelper.getUnreadNoti())
+            getNotification.postValue(sharePreferencesHelper.getUnreadNoti())
+
         }
 
     }
 
-    fun setUnreadNoti(value: Int) {
-        viewModelScope.launch {
-            sharePreferencesHelper.setUnreadNoti(value)
-            unreadNoti.postValue(value)
-        }
 
+    fun deleteSongFromPlaylist(playlist: Playlist, song: Song) {
+        isLoading.postValue(true)
+        viewModelScope.launch {
+            val response = playlistRepository.deleteSongFromPlaylist(playlist, song)
+            if (response is Response.Success) {
+                deleteSongFromPlaylist.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
     }
 
 

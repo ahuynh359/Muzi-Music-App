@@ -65,11 +65,10 @@ class SongAdapter(private val listener: OnSongClicked) :
         return currentList.size
     }
 
+    interface OnSongClicked {
+        fun onSongClicked(song: Song)
+        fun openMenu(song : Song)
+    }
 
 }
 
-
-interface OnSongClicked {
-    fun onSongClicked(song: Song)
-    fun openMenu(song : Song)
-}

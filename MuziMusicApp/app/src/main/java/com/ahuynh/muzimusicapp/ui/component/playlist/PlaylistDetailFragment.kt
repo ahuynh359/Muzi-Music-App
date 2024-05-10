@@ -3,12 +3,10 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.OnPlaylistSongClicked
-import com.ahuynh.muzimusicapp.adapter.PlaylistSongAdapter
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistDetailBinding
@@ -24,12 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PlaylistDetailFragment :
     BaseFragment<FragmentPlaylistDetailBinding>(FragmentPlaylistDetailBinding::inflate),
-    OnPlaylistSongClicked {
+    SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "PlaylistDetailFragment"
     }
-    private lateinit var songAdapter: PlaylistSongAdapter
+
+    private lateinit var songAdapter: SongAdapter
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private lateinit var songListOfPlaylist : ArrayList<Song>
     private lateinit var currentPlaylist: Playlist
@@ -37,6 +36,9 @@ class PlaylistDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentPlaylist = PlaylistDetailFragmentArgs.fromBundle(requireArguments()).playlist
+        songAdapter = SongAdapter(this)
+        binding.rcySongs.adapter = songAdapter
+
         handleUI()
         observe()
         getData()
@@ -57,11 +59,12 @@ class PlaylistDetailFragment :
         }
 
         viewModel.songs.observe(viewLifecycleOwner) {
+
             songListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_LIST_DATA)
+            songAdapter.submitList(songListOfPlaylist)
 
-            songAdapter = PlaylistSongAdapter(this, songListOfPlaylist)
 
-            binding.rcySongs.adapter = songAdapter
+
             binding.rcySongs.visibility = View.VISIBLE
             if (it.isEmpty()) {
                 binding.btnPlay.visibility = View.INVISIBLE
@@ -69,6 +72,8 @@ class PlaylistDetailFragment :
                 binding.btnPlay.visibility = View.VISIBLE
             }
         }
+
+
     }
 
     private fun handleUI() {
@@ -95,7 +100,7 @@ class PlaylistDetailFragment :
         binding.btnPlay.setOnClickListener {
             startActivity(Intent(requireContext(), PlayerActivity::class.java))
             Utils.sendMusic(
-                requireContext(),
+                requireActivity(),
                 MusicService.ACTION_PLAY,
                 songListOfPlaylist[0], songListOfPlaylist
             )
@@ -104,19 +109,19 @@ class PlaylistDetailFragment :
 
     }
 
-
-
-
-    override fun onPlaylistSongClicked(song: Song) {
-        Toast.makeText(context, song.id.toString(), Toast.LENGTH_SHORT).show()
+    override fun onSongClicked(song: Song) {
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
-            requireContext(),
+            requireActivity(),
             MusicService.ACTION_PLAY,
             song, songListOfPlaylist
         )
     }
 
+    override fun openMenu(song: Song) {
+        val action = PlaylistDetailFragmentDirections.actionPlaylistDetailFragmentToSongMenuBottom(song,currentPlaylist)
+        findNavController().navigate(action)
+    }
 
 
 }
