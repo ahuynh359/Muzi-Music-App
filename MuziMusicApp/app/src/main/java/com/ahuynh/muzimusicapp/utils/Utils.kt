@@ -6,21 +6,21 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
-import android.provider.Settings
 import android.util.TypedValue
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ahuynh.muzimusicapp.utils.PermissionHelper.warningPermissionDialog
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -137,20 +137,6 @@ object Utils {
     }
 
 
-    fun appSettingOpen(context: Context) {
-        val settingIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        settingIntent.data = Uri.parse("package:${context.packageName}")
-        context.startActivity(settingIntent)
-    }
-
-    fun warningPermissionDialog(context: Context, listener: DialogInterface.OnClickListener) {
-        MaterialAlertDialogBuilder(context)
-            .setMessage("All Permissions Are Required For This App")
-            .setCancelable(false)
-            .setPositiveButton("Ok", listener)
-            .create()
-            .show()
-    }
 
 
 
@@ -187,4 +173,11 @@ object Utils {
         val songId = id.toSet()
         return songs.filter { it.id in songId } as ArrayList<Song>
     }
+
+    fun getDominantColor(bitmap: Bitmap): Int {
+        val palette = Palette.from(bitmap).generate()
+        val dominantSwatch = palette.dominantSwatch
+        return dominantSwatch?.rgb ?: 0
+    }
+
 }

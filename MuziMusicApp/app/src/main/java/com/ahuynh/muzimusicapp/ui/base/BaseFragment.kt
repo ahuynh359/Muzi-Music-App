@@ -23,9 +23,6 @@ open class BaseFragment<VB : ViewBinding>(
     }
 
 
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

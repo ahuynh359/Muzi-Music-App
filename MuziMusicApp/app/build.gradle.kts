@@ -108,6 +108,7 @@ dependencies {
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.palette.ktx)
 
 
 

@@ -41,8 +41,9 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
 
     }
 
-    private fun send(s : String) {
-        val notification = Notification("FCM-AndroidToOtherDevice", "New song $s")
+    private fun send(nameSong: String, singer: String) {
+        val notification =
+            Notification("Notification New Song", "Name : $nameSong Singer : $singer")
 
         val yourExtraData = JSONObject().put("abc", "dasdasdd")
 
@@ -85,7 +86,7 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         viewModel.addSongStatus.observe(this) {
             if (it != null) {
                 Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
-                send(viewModel.songName)
+                send(viewModel.songName, viewModel.singerName)
                 onBackPressedDispatcher.onBackPressed()
 
             }

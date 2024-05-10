@@ -33,6 +33,7 @@ media3Common = "1.3.0"
 firebaseStorage = "21.0.0"
 firebaseMessaging = "24.0.0"
 workRuntimeKtx = "2.9.0"
+paletteKtx = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +73,7 @@ androidx-media3-common = { group = "androidx.media3", name = "media3-common", ve
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "paletteKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -1,33 +1,35 @@
 package com.ahuynh.muzimusicapp.ui
 
-import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.base.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.PermissionHelper.appSettingOpen
+import com.ahuynh.muzimusicapp.utils.PermissionHelper.checkMultiplePermission
+import com.ahuynh.muzimusicapp.utils.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.appSettingOpen
-import com.ahuynh.muzimusicapp.utils.Utils.checkSinglePermissionAny
-import com.ahuynh.muzimusicapp.utils.Utils.showWarningDialog
+import com.ahuynh.muzimusicapp.utils.Utils.warningPermissionDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -35,26 +37,18 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding :  ActivityMainBinding
-    private lateinit var navController: NavController
-
-    private val viewModel by viewModels<MainViewModel>()
-
-    private lateinit var snackbar: Snackbar
-    private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
-        NetworkConnectivityHelper(this)
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     companion object {
-        const val TAG = "ABC"
+        const val TAG = "MainActivity"
     }
+
+    private lateinit var navController: NavController
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         requestPermission()
         setUpNavigationGraph()
@@ -62,19 +56,17 @@ class MainActivity : AppCompatActivity() {
         getData()
         observe()
         handleUI()
+    }
+    private fun getData() {
+        viewModel.restoreState()
+        viewModel.getAllSongs()
 
-
+        viewModel.songList.observe(this) {
+            Constants.SONG_LIST_DATA = it
+        }
     }
 
-
-
-
-
     private fun handleUI() {
-
-
-
-
         binding.player.setOnClickListener {
             startActivity(Intent(this,PlayerActivity::class.java))
         }
@@ -93,27 +85,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
-        snackbar = Snackbar.make(
-            binding.main,
-            "No Internet Connection",
-            Snackbar.LENGTH_INDEFINITE
-        ).setAction("Wifi") {
-            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-        }
-        networkConnectivityObserver.observe(this) {
-            when (it) {
-                true -> {
-                    if (snackbar.isShown) {
-                        snackbar.dismiss()
-                    }
-                }
 
-                else -> {
-                    snackbar.show()
-                }
-            }
+    }
 
-        }
+    override fun getSnackbarView(): View {
+        return binding.main
     }
 
     override fun onStop() {
@@ -121,14 +97,6 @@ class MainActivity : AppCompatActivity() {
         EventBus.getDefault().unregister(this)
     }
 
-    private fun getData() {
-        viewModel.restoreState()
-        viewModel.getAllSongs()
-
-        viewModel.songList.observe(this) {
-            Constants.SONG_LIST_DATA = it
-        }
-    }
 
     private fun observe() {
         viewModel.song.observe(this) {
@@ -143,15 +111,15 @@ class MainActivity : AppCompatActivity() {
                     .load(it.image)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(com.ahuynh.muzimusicapp.R.drawable.note)
+                    .placeholder(R.drawable.note)
                     .into(binding.imvSong)
             }
         }
 
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
-                if (it) com.ahuynh.muzimusicapp.R.drawable.ic_pause_small
-                else com.ahuynh.muzimusicapp.R.drawable.ic_play_small
+                if (it) R.drawable.ic_pause_small
+                else R.drawable.ic_play_small
             )
         }
 
@@ -159,37 +127,82 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermission() {
-        if (checkSinglePermissionAny(
-                this, Manifest.permission.POST_NOTIFICATIONS,
-                PERMISSION_REQUEST_ID
-            )
-        ) {
-            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_LONG).show()
+//        if (checkSinglePermissionAny(
+//                this, Manifest.permission.POST_NOTIFICATIONS,
+//                PERMISSION_REQUEST_ID
+//            )
+//        ) {
+//            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_LONG).show()
+//        }
+
+        if (checkMultiplePermission(this, PERMISSION_REQUEST_ID)) {
+            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT).show()
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (!(requestCode == PERMISSION_REQUEST_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
-            ) {
-                appSettingOpen(this)
-            } else {
-                showWarningDialog(this)
-            }
-        }
+//        if (!(requestCode == PERMISSION_REQUEST_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+//            if (!ActivityCompat.shouldShowRequestPermissionRationale(
+//                    this,
+//                    Manifest.permission.POST_NOTIFICATIONS
+//                )
+//            ) {
+//                appSettingOpen(this)
+//            } else {
+//                showWarningDialog(this)
+//            }
+//        }
 
+        if (requestCode == PERMISSION_REQUEST_ID) {
+            if (grantResults.isNotEmpty()) {
+                var isGrant = true
+                for (element in grantResults) {
+                    if (element == PackageManager.PERMISSION_DENIED) {
+                        isGrant = false
+                    }
+                }
+                if (isGrant) {
+                    Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    var someDenied = false
+                    for (permission in permissions) {
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                permission
+                            )
+                        ) {
+                            if (ActivityCompat.checkSelfPermission(
+                                    this,
+                                    permission
+                                ) == PackageManager.PERMISSION_DENIED
+                            ) {
+                                someDenied = true
+                            }
+                        }
+                    }
+                    if (someDenied) {
+                        appSettingOpen(this)
+                    } else {
+                        warningPermissionDialog(this) { _: DialogInterface, which: Int ->
+                            when (which) {
+                                DialogInterface.BUTTON_POSITIVE ->
+                                    checkMultiplePermission(this, PERMISSION_REQUEST_ID)
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
 
