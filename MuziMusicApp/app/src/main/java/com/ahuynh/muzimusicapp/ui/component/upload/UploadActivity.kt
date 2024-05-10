@@ -12,10 +12,12 @@ import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.databinding.ActivityUploadBinding
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.Constants.TOKEN_13
+import com.ahuynh.muzimusicapp.utils.Constants.TOKEN_14
 import dagger.hilt.android.AndroidEntryPoint
 import fcm.androidtoandroid.FirebasePush
 import fcm.androidtoandroid.model.Notification
-import org.json.JSONObject
+import org.json.JSONArray
 
 @AndroidEntryPoint
 class UploadActivity : AppCompatActivity(), StepperNavListener {
@@ -45,13 +47,15 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         val notification =
             Notification("Notification New Song", "Name : $nameSong Singer : $singer")
 
-        val yourExtraData = JSONObject().put("abc", "dasdasdd")
 
         val firebasePush = FirebasePush.build(Constants.SERVER_KEY)
             .setNotification(notification)
-            .setData(yourExtraData)
 
-        firebasePush.sendToTopic(Constants.TOPIC)
+        val jsonArray = JSONArray();
+        jsonArray.put(TOKEN_13)
+        jsonArray.put(TOKEN_14)
+        firebasePush.sendToGroup(jsonArray)
+
     }
 
 

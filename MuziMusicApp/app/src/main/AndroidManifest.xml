@@ -57,14 +57,13 @@
             android:foregroundServiceType="mediaPlayback" />
 
         <service android:name=".service.NotificationService"
-            android:exported="false"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
 
+            </intent-filter>
         </service>
+
         <receiver
             android:name=".service.MusicBroadcast"
             android:enabled="true"

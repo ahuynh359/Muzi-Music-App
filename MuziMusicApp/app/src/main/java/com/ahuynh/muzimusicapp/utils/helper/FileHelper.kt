@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.utils
+package com.ahuynh.muzimusicapp.utils.helper
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 
-object FileUtils {
+object FileHelper {
 
     private val EOF = -1
     private val DEFAULT_BUFFER_SIZE = 1024 * 4

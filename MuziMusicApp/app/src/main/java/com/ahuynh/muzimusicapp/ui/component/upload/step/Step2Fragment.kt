@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentStep2Binding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.upload.UploadViewModel
-import com.ahuynh.muzimusicapp.utils.FileUtils
+import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -21,7 +21,7 @@ class Step2Fragment : BaseFragment<FragmentStep2Binding>(FragmentStep2Binding::i
         ActivityResultContracts.GetContent()
     ) { uri ->
         uri?.let { ur ->
-            val file: File? = FileUtils.from(requireContext(), uri)
+            val file: File? = FileHelper.from(requireContext(), uri)
             file?.let {
                 viewModel.songFile = it
                 showSongFileInfo(it)

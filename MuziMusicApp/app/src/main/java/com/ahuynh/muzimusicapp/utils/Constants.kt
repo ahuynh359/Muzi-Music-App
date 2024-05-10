@@ -32,12 +32,12 @@ object Constants {
 
     var SONG_LIST_DATA : List<Song> = listOf()
 
-    const val BASE_URL = "https://fcm.googleapis.com"
     const val SERVER_KEY =
-        "AAAAckRVZ2U:APA91bEgDSDnglbcJbHO5Kok0KTgGGjlrocBtdSdhRwkEteU2zWcz6PU7zBbRZ6iFZG8hLetLPnr5UDhKYvIKMq_8QBqmq2WEs4S36dTrOGskCKXgamXtxaDdVsFYH4U9LCfrN8AYRLm"
-    const val CONTENT_TYPE="application/json"
-    const val TOPIC = "myTopic"
+        "AAAAckRVZ2U:APA91bF8V7ubgXC3LbRs7nZhCDx_cZwhLwiWr4yu73bhHMyUxqe5t8imATGR1loHTUAJ5WcxMpnLniO-Y3WUrG-VzN1nS2CCnDp55v8siIxby3deZgmHi6NVkHWC5bgZ5xgdicKvuaEW"
+    const val TOPIC = "music"
     var FCM_KEY = ""
+    var TOKEN_13 = "diBIkAYPSnSS_SEbQqNgun:APA91bH_BjpNpVLHO62bhYCquB4m_xaoT7URuLLNEq_8FEcrFJJqXL_t1Bz9qC1aWaV_MQjtVdOA-NOEaVmCGOwty8E_envmRjaNvdcGUH5I25pFqpg-NQA506gwOBlOd9W6R_EkvAFM"
+    var TOKEN_14 = "chFH3YaxRzOFKqvnq4Wp8N:APA91bGSQakR8PEqrWm-sPZ_8QT9q-XWcNhGXHPqJhz9X9lVXXXWpnsT-z3JgiBeEQnmkBCkFrrHPYoC4V9uJbOxx_t3kNWwG3FbuXoLQ_-aDRKuzHVo1FGAF44NyjLgX4ffE5qHv9s5"
 
 
 }

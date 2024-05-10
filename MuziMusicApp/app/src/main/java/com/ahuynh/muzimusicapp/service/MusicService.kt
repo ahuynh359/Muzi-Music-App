@@ -51,17 +51,18 @@ class MusicService : Service() {
 
     private var player: ExoPlayer? = null
     private var jobTime: Job? = null
+
     private var songList: ArrayList<Song> = arrayListOf()
+
     private var currentSong: Song? = null
     private var currentSongIndex: Int = -1
+
     companion object {
         const val ACTION_PLAY = 12
         const val ACTION_PRE = 13
         const val ACTION_NEXT = 14
         const val ACTION_CLEAR = 15
-        const val ACTION_DO_SOMETHING = 16
-        const val ACTION_ADD_SONG_NEXT = 17
-        const val ACTION_ADD_SONG_TAIL = 18
+
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -92,8 +93,6 @@ class MusicService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val action = intent.getIntExtra(ACTION, 0)
         val data = intent.getBundleExtra(DATA)
-
-
 
         data?.let {
             val song: Song? = data.parcelable<Song>(SONG)

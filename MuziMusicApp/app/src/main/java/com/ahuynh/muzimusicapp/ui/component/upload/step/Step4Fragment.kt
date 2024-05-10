@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentStep4Binding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.upload.UploadViewModel
-import com.ahuynh.muzimusicapp.utils.FileUtils
+import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ class Step4Fragment : BaseFragment<FragmentStep4Binding>(FragmentStep4Binding::i
         ActivityResultContracts.GetContent()
     ) { uri ->
         uri?.let { ur ->
-            val file: File? = FileUtils.from(requireContext(), uri)
+            val file: File? = FileHelper.from(requireContext(), uri)
             file?.let {
                 viewModel.imageFile = it
                 showImageFileInfo(it)
