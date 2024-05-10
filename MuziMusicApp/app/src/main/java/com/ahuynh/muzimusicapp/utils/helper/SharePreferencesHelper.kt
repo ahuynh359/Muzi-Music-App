@@ -1,11 +1,11 @@
-package com.ahuynh.muzimusicapp.utils
+package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.Context
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SharePreferences @Inject constructor(private val context: Context) {
+class SharePreferencesHelper @Inject constructor(context: Context) {
     companion object {
         const val SHUFFLE = "shuffle"
         const val REPEAT = "repeat"

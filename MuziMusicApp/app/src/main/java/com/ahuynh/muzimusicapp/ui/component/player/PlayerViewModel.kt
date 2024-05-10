@@ -6,7 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.SharePreferences
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     private val songRepository: SongRepository,
-    private val sharePreferences: SharePreferences
+    private val sharePreferencesHelper: SharePreferencesHelper
 ) :
     BaseViewModel() {
     var currentRotate = 0f
@@ -32,7 +32,7 @@ class PlayerViewModel @Inject constructor(
 
     fun setShuffle(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            sharePreferences.setShuffle(value)
+            sharePreferencesHelper.setShuffle(value)
             isShuffle.postValue(value)
             Constants.IS_SHUFFLE = value
 
@@ -42,7 +42,7 @@ class PlayerViewModel @Inject constructor(
 
     fun getShuffle() {
         viewModelScope.launch(Dispatchers.IO) {
-            isShuffle.postValue(sharePreferences.isShuffle())
+            isShuffle.postValue(sharePreferencesHelper.isShuffle())
         }
 
     }
@@ -50,7 +50,7 @@ class PlayerViewModel @Inject constructor(
 
     fun setRepeat(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            sharePreferences.setRepeat(value)
+            sharePreferencesHelper.setRepeat(value)
             isRepeat.postValue(value)
             Constants.IS_REPEAT = value
 
@@ -59,7 +59,7 @@ class PlayerViewModel @Inject constructor(
 
     fun getRepeat() {
         viewModelScope.launch(Dispatchers.IO){
-            isRepeat.postValue(sharePreferences.isRepeat())
+            isRepeat.postValue(sharePreferencesHelper.isRepeat())
         }
 
     }

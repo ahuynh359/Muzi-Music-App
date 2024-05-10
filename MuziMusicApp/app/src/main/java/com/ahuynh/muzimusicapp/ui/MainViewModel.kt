@@ -7,36 +7,33 @@ import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
-import com.ahuynh.muzimusicapp.utils.SharePreferences
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val appSharePreferences: SharePreferences,
+class MainViewModel @Inject constructor(private val appSharePreferencesHelper: SharePreferencesHelper,
                                         private val songRes: SongRepository,
 
 
-) : BaseViewModel() {
+                                        ) : BaseViewModel() {
 
     var song = MutableLiveData<Song>()
     var isPlaying = MutableLiveData(false)
+    var songList = MutableLiveData<List<Song>>()
 
      fun restoreState(){
         viewModelScope.launch{
-            Constants.IS_SHUFFLE = appSharePreferences.isShuffle()
-            Constants.IS_REPEAT = appSharePreferences.isRepeat()
+            Constants.IS_SHUFFLE = appSharePreferencesHelper.isShuffle()
+            Constants.IS_REPEAT = appSharePreferencesHelper.isRepeat()
         }
     }
-
-     var songList = MutableLiveData<List<Song>>()
-
 
 
     fun getAllSongs() {
         isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val response = songRes.getAllSong()
             if (response is Response.Success) {
                 songList.postValue(response.data)

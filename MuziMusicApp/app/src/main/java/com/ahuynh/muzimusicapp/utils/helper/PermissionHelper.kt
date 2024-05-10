@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.utils
+package com.ahuynh.muzimusicapp.utils.helper
 
 import android.app.Activity
 import android.content.Context

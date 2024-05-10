@@ -4,7 +4,6 @@ import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +18,9 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
-import com.ahuynh.muzimusicapp.utils.VersionHelper
+import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

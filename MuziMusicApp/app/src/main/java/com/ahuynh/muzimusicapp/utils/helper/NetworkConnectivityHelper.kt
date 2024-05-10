@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.utils
+package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.Context
 import android.net.ConnectivityManager

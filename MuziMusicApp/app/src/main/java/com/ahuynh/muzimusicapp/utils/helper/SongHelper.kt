@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.utils
+package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.ContentUris
 import android.content.Context
@@ -7,7 +7,6 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.ahuynh.muzimusicapp.data.model.LocalSong
-import com.ahuynh.muzimusicapp.data.model.Song
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

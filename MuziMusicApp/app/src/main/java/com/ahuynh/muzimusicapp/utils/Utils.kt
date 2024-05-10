@@ -20,7 +20,8 @@ import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.utils.PermissionHelper.warningPermissionDialog
+import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
+import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

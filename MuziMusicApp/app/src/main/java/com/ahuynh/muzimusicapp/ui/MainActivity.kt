@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -22,12 +21,11 @@ import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.PermissionHelper.appSettingOpen
-import com.ahuynh.muzimusicapp.utils.PermissionHelper.checkMultiplePermission
-import com.ahuynh.muzimusicapp.utils.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.Utils
-import com.ahuynh.muzimusicapp.utils.Utils.appSettingOpen
-import com.ahuynh.muzimusicapp.utils.Utils.warningPermissionDialog
+import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.appSettingOpen
+import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.checkMultiplePermission
+import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
+import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeToastPermissionGranted
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private lateinit var navController: NavController
     private val viewModel by viewModels<MainViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -129,16 +128,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermission() {
-//        if (checkSinglePermissionAny(
-//                this, Manifest.permission.POST_NOTIFICATIONS,
-//                PERMISSION_REQUEST_ID
-//            )
-//        ) {
-//            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_LONG).show()
-//        }
-
         if (checkMultiplePermission(this, PERMISSION_REQUEST_ID)) {
-            Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT).show()
+            makeToastPermissionGranted(this)
         }
     }
 
@@ -149,18 +140,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (!(requestCode == PERMISSION_REQUEST_ID && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-//            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-//                    this,
-//                    Manifest.permission.POST_NOTIFICATIONS
-//                )
-//            ) {
-//                appSettingOpen(this)
-//            } else {
-//                showWarningDialog(this)
-//            }
-//        }
-
         if (requestCode == PERMISSION_REQUEST_ID) {
             if (grantResults.isNotEmpty()) {
                 var isGrant = true
@@ -170,8 +149,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                 }
                 if (isGrant) {
-                    Toast.makeText(this@MainActivity, "Permission Granted", Toast.LENGTH_SHORT)
-                        .show()
+                    makeToastPermissionGranted(this)
                 } else {
                     var someDenied = false
                     for (permission in permissions) {

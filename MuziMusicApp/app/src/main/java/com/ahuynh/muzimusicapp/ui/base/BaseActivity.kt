@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.utils.NetworkConnectivityHelper
+import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater) -> B) :

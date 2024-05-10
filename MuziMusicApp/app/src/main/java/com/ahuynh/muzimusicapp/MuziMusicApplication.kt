@@ -3,7 +3,7 @@ package com.ahuynh.muzimusicapp
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import com.ahuynh.muzimusicapp.utils.VersionHelper
+import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
