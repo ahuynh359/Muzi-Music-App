@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -11,6 +10,7 @@ import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.OnPlaylistSongClicked
 import com.ahuynh.muzimusicapp.adapter.PlaylistSongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistDetailBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -32,25 +32,46 @@ class PlaylistDetailFragment :
     private lateinit var songAdapter: PlaylistSongAdapter
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private lateinit var songListOfPlaylist : ArrayList<Song>
-    private var needReload = false
+    private lateinit var currentPlaylist: Playlist
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        currentPlaylist = PlaylistDetailFragmentArgs.fromBundle(requireArguments()).playlist
         handleUI()
+        observe()
+        getData()
 
     }
 
-    private fun handleUI() {
-        val currentPlaylist = PlaylistDetailFragmentArgs.fromBundle(requireArguments()).playlist
+    private fun getData() {
+        if (currentPlaylist.songs != null) {
+            viewModel.getSongsOfPlaylist(currentPlaylist)
+        }
+    }
 
-        binding.btnAddMoreItem.setOnClickListener {
-            val action = PlaylistDetailFragmentDirections.actionPlaylistDetailFragmentToPlaylistDetailAddSongBottomSheet(currentPlaylist)
-            findNavController().navigate(action)
-
+    private fun observe() {
+        viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner) {
+            if (it) {
+                getData()
+            }
         }
 
+        viewModel.songs.observe(viewLifecycleOwner) {
+            songListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_LIST_DATA)
 
+            songAdapter = PlaylistSongAdapter(this, songListOfPlaylist)
+
+            binding.rcySongs.adapter = songAdapter
+            binding.rcySongs.visibility = View.VISIBLE
+            if (it.isEmpty()) {
+                binding.btnPlay.visibility = View.INVISIBLE
+            } else {
+                binding.btnPlay.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun handleUI() {
         Glide
             .with(binding.imvPlaylist.context)
             .load(currentPlaylist.image)
@@ -59,34 +80,18 @@ class PlaylistDetailFragment :
             .placeholder(R.drawable.note)
             .into(binding.imvPlaylist)
         binding.tvPlaylistName.text = currentPlaylist.name
-        binding.btnPlay.setOnClickListener {
+
+        binding.btnAddMoreItem.setOnClickListener {
+            val action = PlaylistDetailFragmentDirections.actionPlaylistDetailFragmentToPlaylistDetailAddSongBottomSheet(currentPlaylist)
+            findNavController().navigate(action)
 
         }
+
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
 
-        if (currentPlaylist.songs != null) {
-            val idSongs = currentPlaylist.songs!!
-
-            viewModel.getSongsOfPlaylist(currentPlaylist)
-            viewModel.songs.observe(viewLifecycleOwner) {
-
-                songListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_LIST_DATA)
-
-                songAdapter = PlaylistSongAdapter(this, songListOfPlaylist)
-                binding.rcySongs.adapter = songAdapter
-                binding.rcySongs.visibility = View.VISIBLE
-                if (it.isEmpty()) {
-                    binding.btnPlay.visibility = View.INVISIBLE
-                } else {
-                    binding.btnPlay.visibility = View.VISIBLE
-                }
-            }
-
-
-        }
         binding.btnPlay.setOnClickListener {
             startActivity(Intent(requireContext(), PlayerActivity::class.java))
             Utils.sendMusic(

@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ class PlayerViewModel @Inject constructor(
     var currentRotate = 0f
     var isPlaying=  MutableLiveData(false)
     var song =  MutableLiveData<Song>()
+    var loveSong =  MutableLiveData<Boolean>()
     var sleepTime =  MutableLiveData<String>()
     var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
@@ -65,8 +67,15 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
-        viewModelScope.launch(Dispatchers.IO){
-            songRepository.updateSongLoveStatus(id,newLoveStatus)
+        isLoading.postValue(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = songRepository.updateSongLoveStatus(id,newLoveStatus)
+            if (response is Response.Success) {
+                loveSong.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
         }
+        registerEventParentJobFinish()
     }
 }

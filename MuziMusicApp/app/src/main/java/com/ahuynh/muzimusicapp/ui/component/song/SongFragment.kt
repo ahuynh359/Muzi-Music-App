@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.OnSongClicked
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -13,15 +14,15 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.upload.UploadActivity
 import com.ahuynh.muzimusicapp.utils.Utils
-import com.itextpdf.io.codec.brotli.dec.Dictionary.getData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
     OnSongClicked {
 
-    private val viewModel by viewModels<SongViewModel>()
+    private val viewModel by viewModels<SongViewModel>({ requireActivity() })
 
     companion object {
         const val TAG = "SongFragment"
@@ -35,6 +36,13 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
         handleUI()
         observe()
+        getData()
+
+    }
+
+    private fun getData() {
+        viewModel.getAllSongs()
+        viewModel.getUnreadNoti()
 
     }
 
@@ -43,13 +51,18 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     private fun handleUI() {
         binding.rcySong.adapter = songAdapter
         binding.swipe.setOnRefreshListener {
-            observe()
+            getData()
         }
+
+        binding.btnUpload.setOnClickListener {
+            startActivity(Intent(requireContext(), UploadActivity::class.java))
+        }
+
 
     }
 
     private fun observe() {
-        viewModel.getAllSongs()
+
         viewModel.songList.observe(viewLifecycleOwner) {
             binding.swipe.isRefreshing = false
             songAdapter.submitList(it)
@@ -57,7 +70,24 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
             listSong = it as ArrayList<Song>
             hideShimmer()
 
+
         }
+
+        viewModel.deleteSong.observe(viewLifecycleOwner) {
+            getData()
+        }
+
+        viewModel.loveSong.observe(viewLifecycleOwner) {
+            getData()
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -73,7 +103,6 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     override fun onSongClicked(song: Song) {
         viewModel.updateSongListen(song)
         viewModel.updateSongWithCurrentDate(song, Utils.getCurrentDateAsString())
-        getData()
 
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
@@ -87,7 +116,9 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     override fun openMenu(song: Song) {
-        TODO("Not yet implemented")
+        val action = SongFragmentDirections.actionSongFragmentToSongMenuBottom(song)
+        findNavController().navigate(action)
+
     }
 
 }

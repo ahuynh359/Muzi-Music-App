@@ -6,6 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.component.setting.SettingFragment">
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_noti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_notification"
+        android:layout_marginEnd="@dimen/_15dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_setting" />
+    <androidx.appcompat.widget.AppCompatTextView
+
+        android:id="@+id/tv_noti"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="10sp"
+        android:background="@drawable/custom_bg_noti"
+        app:layout_constraintEnd_toEndOf="@id/btn_noti"
+        app:layout_constraintTop_toTopOf="@id/btn_noti"
+        android:layout_width="@dimen/_15dp"
+        android:layout_height="@dimen/_15dp"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,28 +40,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_upload"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:textAllCaps="false"
-        android:text="Upload Music"
-        android:background="@drawable/btn_round_transparent"
-        app:layout_constraintTop_toBottomOf="@id/tv_setting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginHorizontal="20dp"
         android:id="@+id/btn_csv"
         android:layout_marginTop="10dp"
         android:textAllCaps="false"
         android:text="Export to CSV"
         android:background="@drawable/btn_round_transparent"
-        app:layout_constraintTop_toBottomOf="@id/btn_upload"
-        app:layout_constraintEnd_toEndOf="@id/btn_upload"
-        app:layout_constraintStart_toStartOf="@id/btn_upload"
+        app:layout_constraintTop_toBottomOf="@id/tv_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 
@@ -50,8 +62,8 @@
         android:text="Export to PDF"
         android:background="@drawable/btn_round_transparent"
         app:layout_constraintTop_toBottomOf="@id/btn_csv"
-        app:layout_constraintEnd_toEndOf="@id/btn_upload"
-        app:layout_constraintStart_toStartOf="@id/btn_upload"
+        app:layout_constraintEnd_toEndOf="@id/btn_csv"
+        app:layout_constraintStart_toStartOf="@id/btn_csv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
 

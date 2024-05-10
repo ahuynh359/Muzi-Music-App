@@ -9,7 +9,11 @@
         android:id="@+id/songFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.song.SongFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_song" />
+        tools:layout="@layout/fragment_song" >
+        <action
+            android:id="@+id/action_songFragment_to_songMenuBottom"
+            app:destination="@id/songMenuBottom" />
+    </fragment>
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment"
@@ -66,4 +70,12 @@
         android:name="com.ahuynh.muzimusicapp.ui.component.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <dialog
+        android:id="@+id/songMenuBottom"
+        android:name="com.ahuynh.muzimusicapp.ui.component.song.SongMenuBottom"
+        android:label="SongMenuBottom" >
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+    </dialog>
 </navigation>

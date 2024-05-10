@@ -25,25 +25,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_noti"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_notification"
-            app:layout_constraintBottom_toBottomOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_title" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:gravity="center"
-        android:text="1"
-        android:textSize="10sp"
-        android:background="@drawable/custom_bg_noti"
-        app:layout_constraintEnd_toEndOf="@id/btn_noti"
-        app:layout_constraintTop_toTopOf="@id/btn_noti"
-        android:layout_width="@dimen/_15dp"
-        android:layout_height="@dimen/_15dp"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_upload"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            />
+
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_song"
         android:layout_width="@dimen/_0dp"

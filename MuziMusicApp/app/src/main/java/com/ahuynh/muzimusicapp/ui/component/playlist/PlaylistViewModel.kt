@@ -20,6 +20,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
     var addPlaylistStatus = MutableLiveData<Boolean>()
     var deletePlaylistStatus = MutableLiveData<Boolean>()
     var updatePlaylistStatus = MutableLiveData<Boolean>()
+    var addSongToPlaylistStatus = MutableLiveData<Boolean>()
     var songs = MutableLiveData<List<String>>()
 
 
@@ -76,7 +77,7 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         parentJob = viewModelScope.launch {
             val response = playlistRepository.listSongToAdd(listSongToAdd, currentPlaylist)
             if (response is Response.Success) {
-                updatePlaylistStatus.postValue(response.data)
+                addSongToPlaylistStatus.postValue(response.data)
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)
             }

@@ -1,17 +1,18 @@
 package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.OnPlaylistClicked
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
-import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -64,6 +65,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             viewModel.getAllPlaylist(Constants.SortingOrder.DESCENDING)
         }
 
+
     }
 
     private fun observe() {
@@ -74,20 +76,18 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             hideShimmer()
         }
         viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
-            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+            getData()
         }
         viewModel.updatePlaylistStatus.observe(viewLifecycleOwner) {
-            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+           getData()
         }
 
         viewModel.deletePlaylistStatus.observe(viewLifecycleOwner) {
-            viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+           getData()
         }
-
-        viewModel.message.observe(viewLifecycleOwner) { response ->
-            if(response != null){
-                Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-                viewModel.message.postValue(null)
+        viewModel.message.observe(viewLifecycleOwner) {
+            if (it != null) {
+                makeErrorToast(requireContext(), it)
             }
 
         }
@@ -109,10 +109,9 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
     override fun onMoreItemClicked(playlist: Playlist) {
-        val bundle = bundleOf("playlist" to playlist)
-        val dialogFragment = PlaylistModelBottomSheet()
-        dialogFragment.arguments = bundle
-        dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistModelBottomSheet(playlist)
+        findNavController().navigate(action)
     }
 
 

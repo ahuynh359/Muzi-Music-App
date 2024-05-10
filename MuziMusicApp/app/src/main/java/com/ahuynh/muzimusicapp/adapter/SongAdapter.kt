@@ -18,8 +18,11 @@ class SongAdapter(private val listener: OnSongClicked) :
     inner class ViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.main.setOnClickListener {
                 listener.onSongClicked(currentList[layoutPosition])
+            }
+            binding.btnMore.setOnClickListener {
+                listener.openMenu(currentList[layoutPosition])
             }
         }
         fun bind(song: Song) {
@@ -32,9 +35,7 @@ class SongAdapter(private val listener: OnSongClicked) :
                 .into(binding.imvSong)
             binding.tvNameSong.text = song.name
             binding.tvSinger.text = song.singer
-            binding.btnMore.setOnClickListener {
-                listener.onSongClicked(song)
-            }
+
 
         }
 

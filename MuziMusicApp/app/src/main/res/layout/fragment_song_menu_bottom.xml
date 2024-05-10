@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_bg_playlist_add"
+    android:orientation="vertical"
+    android:paddingVertical="16dp">
+
+    <LinearLayout
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:id="@+id/remove"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_delete" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="Delete Song" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_love"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ic_heart"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_heart_small" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_love"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="Love Song" />
+    </LinearLayout>
+
+</LinearLayout>

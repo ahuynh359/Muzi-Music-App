@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.ui.component.upload
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -88,7 +89,9 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
         }
 
         viewModel.addSongStatus.observe(this) {
+            Log.d("ABC Upload",it.toString())
             if (it != null) {
+
                 Toast.makeText(this, "Upload Song Successfully ", Toast.LENGTH_SHORT).show()
                 send(viewModel.songName, viewModel.singerName)
                 onBackPressedDispatcher.onBackPressed()

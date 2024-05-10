@@ -45,6 +45,8 @@ class SongRepository @Inject constructor(
         }
     }
 
+
+
     suspend fun addSong(newSong: SongPost): Response<Boolean> {
         return withContext(dispatcher) {
             try {
@@ -83,11 +85,15 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteSong(songId: String) = try {
-        songCollRef.document(songId).delete().await()
-        Response.Success(true)
-    } catch (e: Exception) {
-        Response.Failure(e.message ?: "Unknown error")
+    suspend fun deleteSong(songId: String) : Response<Boolean> {
+        return withContext(dispatcher){
+            try {
+                songCollRef.document(songId).delete().await()
+                Response.Success(true)
+            } catch (e: Exception) {
+                Response.Failure(e.message ?: "Unknown error")
+            }
+        }
     }
 
     suspend fun updateSongListen(song: Song): Response<Boolean> {
@@ -156,7 +162,7 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
+    suspend fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) : Response<Boolean>{
         return withContext(dispatcher) {
             try {
                 val songDocRef = songCollRef.document(id)

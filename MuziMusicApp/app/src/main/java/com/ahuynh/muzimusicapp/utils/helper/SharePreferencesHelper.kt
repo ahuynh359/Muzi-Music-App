@@ -9,6 +9,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
     companion object {
         const val SHUFFLE = "shuffle"
         const val REPEAT = "repeat"
+        const val UNREAD_NOTI = "unread_noti"
         const val APP_SHARE_KEY = "com.ahuynh.muzimusicapp"
     }
 
@@ -30,6 +31,14 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
 
     fun setRepeat(isRepeat: Boolean) {
         editor.putBoolean(REPEAT, isRepeat)
+        editor.apply()
+    }
+    fun getUnreadNoti(): Int {
+        return pref.getInt(UNREAD_NOTI, 0)
+    }
+
+    fun setUnreadNoti(unread: Int) {
+        editor.putInt(UNREAD_NOTI, unread)
         editor.apply()
     }
 

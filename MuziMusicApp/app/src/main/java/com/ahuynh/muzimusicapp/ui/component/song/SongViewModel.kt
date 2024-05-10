@@ -6,28 +6,52 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SongViewModel @Inject constructor(private val repository: SongRepository) : BaseViewModel() {
+class SongViewModel @Inject constructor(
+    private val repository: SongRepository,
+    private val sharePreferencesHelper: SharePreferencesHelper
+) : BaseViewModel() {
 
     var songList = MutableLiveData<List<Song>>()
     var listenSongList = MutableLiveData<List<Song>>()
     var searchSongList = MutableLiveData<List<Song>>()
+    var deleteSong = MutableLiveData<Boolean>()
+    var loveSong = MutableLiveData<Boolean>()
+    var unreadNoti = MutableLiveData<Int>()
     var sortIndex = MutableLiveData<Int>(-1)
+
 
     init {
         getAllSongs()
         getAllSongByListen()
+        getUnreadNoti()
     }
+
+    fun getUnreadNoti() {
+        viewModelScope.launch {
+            unreadNoti.postValue(sharePreferencesHelper.getUnreadNoti())
+        }
+
+    }
+
+    fun setUnreadNoti(value: Int) {
+        viewModelScope.launch {
+            sharePreferencesHelper.setUnreadNoti(value)
+            unreadNoti.postValue(value)
+        }
+
+    }
+
 
 
     fun getAllSongs() {
         isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val response = repository.getAllSong()
             if (response is Response.Success) {
                 songList.postValue(response.data)
@@ -40,7 +64,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
 
     fun updateSongListen(song: Song) {
         isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             val response = repository.updateSongListen(song)
             if (response is Response.Success) {
                 message.postValue("Ok")
@@ -56,7 +80,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
     fun updateSongWithCurrentDate(song: Song, currentDate: String) {
         isLoading.postValue(true)
 
-        viewModelScope.launch(Dispatchers.IO)
+        viewModelScope.launch()
         {
             val response1 = repository.updateSongWithCurrentDate(song, currentDate)
             if (response1 is Response.Success) {
@@ -70,7 +94,7 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
 
     fun searchSong(name : String ){
         isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             val response = repository.searchSong(name)
             if (response is Response.Success) {
                 searchSongList.postValue(response.data)
@@ -81,13 +105,39 @@ class SongViewModel @Inject constructor(private val repository: SongRepository) 
         registerEventParentJobFinish()
     }
 
+    fun deleteSong(song: Song) {
+        isLoading.postValue(true)
+        viewModelScope.launch() {
+            val response = repository.deleteSong(song.id!!)
+            if (response is Response.Success) {
+                deleteSong.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
 
     fun getAllSongByListen(){
         isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             val response = repository.getAllSongByListen()
             if (response is Response.Success) {
                 listenSongList.postValue(response.data)
+            } else if (response is Response.Failure) {
+                message.postValue(response.errorMessage)
+            }
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
+        isLoading.postValue(true)
+        viewModelScope.launch() {
+            val response = repository.updateSongLoveStatus(id, newLoveStatus)
+            if (response is Response.Success) {
+                loveSong.postValue(response.data)
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)
             }

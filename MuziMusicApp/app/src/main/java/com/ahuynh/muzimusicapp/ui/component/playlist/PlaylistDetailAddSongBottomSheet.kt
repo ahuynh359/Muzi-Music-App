@@ -11,6 +11,7 @@ import com.ahuynh.muzimusicapp.adapter.OnSongAddAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAddAdapter
 import com.ahuynh.muzimusicapp.databinding.DialogModelBottomSheetAddSongBinding
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -58,27 +59,28 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
     private fun handleUI() {
         val currentPlaylist =
             PlaylistDetailAddSongBottomSheetArgs.fromBundle(requireArguments()).playlist
-        val idSongs = currentPlaylist.songs
+
         adapter = SongAddAdapter(currentPlaylist,this)
-
         adapter.setData(Constants.SONG_LIST_DATA)
-
 
 
         binding.rcySong.adapter = adapter
         val listSongToAdd = mutableListOf<String>()
         binding.btnOk.setOnClickListener {
-            var indexSong = 0
-            for(i in adapter.checkboxStates()){
+            for((indexSong, i) in adapter.checkboxStates().withIndex()){
                 if(i){
                     listSongToAdd.add(Constants.SONG_LIST_DATA.get(indexSong).id!!)
                 }
-                indexSong++
             }
 
             viewModel.addSongsToPlaylist(listSongToAdd,currentPlaylist)
-            viewModel.getSongsOfPlaylist(currentPlaylist)
-            dismiss()
+            viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner){
+                if(it){
+                    dismiss()
+                } else
+                    makeErrorToast(requireContext(),"Cannot add song to playlist")
+            }
+
         }
 
     }

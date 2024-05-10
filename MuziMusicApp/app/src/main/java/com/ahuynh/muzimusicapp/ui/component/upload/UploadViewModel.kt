@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -14,18 +15,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadViewModel @Inject constructor(
-    private val songRepository: SongRepository
-
-) : BaseViewModel(){
-    var addSongStatus = MutableLiveData<Boolean>()
+    private val repository: SongRepository,
+    private val sharePreferencesHelper: SharePreferencesHelper
+) : BaseViewModel() {
+    var songName = ""
+    var singerName = ""
+    var lyrics = ""
+    var songFile: File? = null
+    var imageFile: File? = null
     var addImage = MutableLiveData<String>()
     var addFileMp3 = MutableLiveData<String>()
+    var addSongStatus = MutableLiveData<Boolean>()
     lateinit var song: SongPost
+
     fun addImageAndFile() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val imageDeferred = async { songRepository.addImageToFirebaseStorage(imageFile!!) }
-            val fileDeferred = async { songRepository.addFileToFirebaseStorage(songFile!!) }
+            val imageDeferred = async { repository.addImageToFirebaseStorage(imageFile!!) }
+            val fileDeferred = async { repository.addFileToFirebaseStorage(songFile!!) }
 
             val imageResponse = imageDeferred.await()
             val fileResponse = fileDeferred.await()
@@ -53,7 +60,7 @@ class UploadViewModel @Inject constructor(
     fun addSong(song: SongPost) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val response = songRepository.addSong(song)
+            val response = repository.addSong(song)
             if (response is Response.Success) {
                 addSongStatus.postValue(response.data)
             } else if (response is Response.Failure) {
@@ -65,11 +72,5 @@ class UploadViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-
-    var songName = ""
-    var singerName = ""
-    var lyrics = ""
-    var songFile: File? = null
-    var imageFile: File? = null
 
 }

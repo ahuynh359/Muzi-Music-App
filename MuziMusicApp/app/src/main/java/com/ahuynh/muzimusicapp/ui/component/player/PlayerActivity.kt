@@ -18,8 +18,8 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
-import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
+import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
@@ -92,17 +92,17 @@ class PlayerActivity : AppCompatActivity() {
 
         viewModel.isPlaying.observe(this) {
             binding.btnPlayPause.setImageResource(
-                if (it) com.ahuynh.muzimusicapp.R.drawable.ic_play
-                else com.ahuynh.muzimusicapp.R.drawable.ic_pause
+                if (it) R.drawable.ic_play
+                else R.drawable.ic_pause
             )
         }
         viewModel.song.observe(this) { song ->
             binding.tvSong.text = song.name
 
             if (song.love) {
-                binding.btnHeart.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_hearted)
+                binding.btnHeart.setImageResource(R.drawable.ic_hearted)
             } else
-                binding.btnHeart.setImageResource(com.ahuynh.muzimusicapp.R.drawable.ic_heart_small)
+                binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
 
         }
         viewModel.sleepTime.observe(this){

@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.setting
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -12,7 +11,6 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment
 import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
-import com.ahuynh.muzimusicapp.ui.component.upload.UploadActivity
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Paragraph
@@ -28,9 +26,27 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleUI()
+        observe()
+
+
+    }
+
+    private fun observe() {
         viewModel.listenSongList.observe(viewLifecycleOwner) {
             listSong = it as ArrayList<Song>
         }
+        viewModel.unreadNoti.observe(viewLifecycleOwner) {
+            Log.d("ABC","gan du lieu")
+            binding.tvNoti.text = it.toString()
+        }
+
+      
+
+
+    }
+
+    private fun handleUI() {
         binding.btnCsv.setOnClickListener {
             exportToCSVByDay()
             exportCsvByMonth()
@@ -41,11 +57,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             exportToPDFByDay()
             exportToPDFByMonth()
         }
-
-        binding.btnUpload.setOnClickListener {
-            startActivity(Intent(requireContext(), UploadActivity::class.java))
-        }
-
     }
 
 
