@@ -54,8 +54,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Xử lý tìm kiếm khi người dùng thay đổi văn bản
-                // Có thể thực hiện tìm kiếm trong danh sách tại đây
+                if (!newText.isNullOrEmpty()) {
+                    performSearch(newText)
+                }
                 return true
             }
         })
@@ -74,6 +75,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
         if (songList.isEmpty()) {
             makeErrorToast(requireContext(), "Don't have this song")
+            adapter.submitList(arrayListOf())
         } else {
             adapter.submitList(songList)
         }
