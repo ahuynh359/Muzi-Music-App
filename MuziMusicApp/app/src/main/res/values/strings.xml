@@ -48,4 +48,5 @@
     <string name="setting">Setting</string>
     <string name="type_the_name_song">Type The Name Song</string>
     <string name="no_internet">No Internet Connection</string>
+    <string name="search_songs_playlist">Search songs, playlist</string>
 </resources>

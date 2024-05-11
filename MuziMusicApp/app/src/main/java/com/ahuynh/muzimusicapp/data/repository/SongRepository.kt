@@ -26,8 +26,7 @@ class SongRepository @Inject constructor(
     @Named(SONG)
     private val songCollRef: CollectionReference,
     private val storage: FirebaseStorage,
-    @IoDispatcher
-    private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
     fun getSongs() = callbackFlow {
@@ -136,13 +135,11 @@ class SongRepository @Inject constructor(
     }
 
 
-
-
-    suspend fun searchSong(name: String): Response<List<Song>> {
+    suspend fun searchSongs(name: String): Response<List<Song>> {
         return withContext(dispatcher) {
             try {
-                val songs = songCollRef.whereEqualTo("name", name).get().await()
-                    .toObjects(Song::class.java)
+                val productsQuery = songCollRef.startAt(name).endAt("$name\uf8ff").get().await()
+                val songs = productsQuery.toObjects(Song::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")

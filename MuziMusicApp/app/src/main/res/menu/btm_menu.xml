@@ -8,6 +8,10 @@
         android:id="@+id/playlistFragment"
         android:icon="@drawable/ic_playlist"
         android:title="Playlist" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:title="Search" />
 
     <item
         android:id="@+id/chartFragment"

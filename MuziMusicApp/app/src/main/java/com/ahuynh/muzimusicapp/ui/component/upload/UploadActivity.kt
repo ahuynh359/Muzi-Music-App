@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.databinding.ActivityUploadBinding
+import com.ahuynh.muzimusicapp.ui.base.BaseActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.TOKEN_13
 import com.ahuynh.muzimusicapp.utils.Constants.TOKEN_14
@@ -21,8 +21,9 @@ import fcm.androidtoandroid.model.Notification
 import org.json.JSONArray
 
 @AndroidEntryPoint
-class UploadActivity : AppCompatActivity(), StepperNavListener {
-    private lateinit var binding: ActivityUploadBinding
+class UploadActivity : BaseActivity<ActivityUploadBinding>(ActivityUploadBinding::inflate),
+    StepperNavListener {
+
     private lateinit var navController: NavController
     private val viewModel by viewModels<UploadViewModel>()
     companion object{
@@ -32,8 +33,6 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUploadBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setUpNavigationGraph()
         setupStepper()
@@ -42,6 +41,10 @@ class UploadActivity : AppCompatActivity(), StepperNavListener {
 
 
 
+    }
+
+    override fun getSnackbarView(): View {
+        return binding.main
     }
 
     private fun send(nameSong: String, singer: String) {

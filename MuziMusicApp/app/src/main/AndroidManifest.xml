@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -10,8 +11,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <application
         android:name=".MuziMusicApplication"
         android:allowBackup="true"
@@ -23,6 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.MuziMusicApp"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.component.search.SearchFragment"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -30,13 +34,11 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/green" />
+
         <activity
-            android:windowSoftInputMode="adjustResize"
             android:name=".ui.component.upload.UploadActivity"
-            android:exported="false">
-
-        </activity>
-
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".ui.component.player.PlayerActivity"
             android:exported="false" />
@@ -55,12 +57,11 @@
             android:name=".service.MusicService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
-
-        <service android:name=".service.NotificationService"
+        <service
+            android:name=".service.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-
             </intent-filter>
         </service>
 

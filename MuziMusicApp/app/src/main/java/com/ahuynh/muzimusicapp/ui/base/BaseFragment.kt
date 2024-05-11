@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
@@ -17,10 +16,6 @@ open class BaseFragment<VB : ViewBinding>(
 
     private var _binding: VB? = null
     val binding get() = _binding!!
-    private lateinit var connectivityObserver: NetworkConnectivityHelper
-    val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
-        NetworkConnectivityHelper(requireContext())
-    }
 
 
     override fun onCreateView(

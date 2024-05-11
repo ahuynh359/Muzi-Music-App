@@ -227,7 +227,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
 
         binding.lineChart.xAxis.textColor = Color.WHITE
         binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        val days = listOf("24-04", "25-04", "26-04", "27-04")
+        val days = listOf("24-04", "25-04", "26-04", "27-04","28-04","29-04")
         binding.barChart.xAxis.labelRotationAngle = 45f
         binding.lineChart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -240,7 +240,10 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
                 } else if (value == 3f) {
                     return days[3]
                 }
-                return "";
+                else if (value == 4f) {
+                    return days[4]
+                }
+                return "...";
             }
         }
         // Animate the chart
