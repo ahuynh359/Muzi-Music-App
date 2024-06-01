@@ -24,6 +24,7 @@ import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDi
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.regex.Pattern
 
 object Utils {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -179,6 +180,10 @@ object Utils {
         val palette = Palette.from(bitmap).generate()
         val dominantSwatch = palette.dominantSwatch
         return dominantSwatch?.rgb ?: 0
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
 }

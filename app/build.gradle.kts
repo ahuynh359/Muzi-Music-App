@@ -45,6 +45,13 @@ android {
 }
 
 dependencies {
+    //Retrofit
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.moshi)
+    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.2")
+    implementation(libs.moshi.kotlin)
+
     //Stepper
     implementation("com.github.acefalobi:android-stepper:0.3.0")
     //Pdf Reader

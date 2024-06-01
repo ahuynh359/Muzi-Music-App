@@ -43,4 +43,8 @@ object Constants {
     var TOKEN_14 = "chFH3YaxRzOFKqvnq4Wp8N:APA91bGSQakR8PEqrWm-sPZ_8QT9q-XWcNhGXHPqJhz9X9lVXXXWpnsT-z3JgiBeEQnmkBCkFrrHPYoC4V9uJbOxx_t3kNWwG3FbuXoLQ_-aDRKuzHVo1FGAF44NyjLgX4ffE5qHv9s5"
     var updateNoti = MutableLiveData<Boolean>(false)
 
+    var ACCESS_TOKEN = ""
+    const val BASE_URL = "http://192.168.239.210:8080"
+    const val API_VERSION = "/api/v1"
+
 }
