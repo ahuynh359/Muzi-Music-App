@@ -18,4 +18,8 @@ class UserService @Inject constructor(
     suspend fun login(loginRequest: LoginRequest): Response<ApiResponse> {
         return callApi { authAPI.login(loginRequest) }
     }
+
+    suspend fun verifyEmail(token: String): Response<ApiResponse> {
+        return callApi { authAPI.verifyEmail(token) }
+    }
 }

@@ -1,8 +1,9 @@
-package com.ahuynh.muzimusicapp.ui.component.activity.auth.login
+package com.ahuynh.muzimusicapp.ui.component.activity.auth.otp
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data_api.model.request.LoginRequest
+import com.ahuynh.muzimusicapp.data_api.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data_api.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -13,27 +14,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class OtpViewModel @Inject constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
     private val userRepository: UserRepository
 ) : BaseViewModel() {
-    var mess: String? = null
+
+
+    var mess: String? = ""
     var status = MutableLiveData<Boolean?>(null)
 
-
-
-    fun login(loginRequest: LoginRequest) {
+    fun verifyEmail(otp: String) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.login(loginRequest)
+            val result = userRepository.verifyEmail(otp)
             if (result is Response.Success) {
                 mess = result.data.status
-//                sharePreferencesHelper.saveLoggedIn(
-//                    loginRequest.userNameOrEmail,
-//                    loginRequest.password
-//                )
-                sharePreferencesHelper.saveToken(result.data.message)
-                Constants.ACCESS_TOKEN = result.data.message
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

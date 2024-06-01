@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.data_api.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentLoginBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -34,7 +35,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
                 activity?.finish()
             } else
-                Toast.makeText(requireContext(), "Password not match", Toast.LENGTH_LONG).show()
+                if(viewModel.mess != null)
+                    Toast.makeText(requireContext(), "Password not match", Toast.LENGTH_LONG).show()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner){
@@ -56,6 +58,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 viewModel.login(loginRequest)
 
             }
+        }
+
+        binding.tvSignUp.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+            findNavController().navigate(action)
         }
 
     }

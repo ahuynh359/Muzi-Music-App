@@ -29,4 +29,10 @@ class UserRepository @Inject constructor(
             userService.login(loginRequest)
         }
     }
+
+    suspend fun verifyEmail(token: String): Response<ApiResponse> {
+        return withContext(dispatcher) {
+            userService.verifyEmail(token)
+        }
+    }
 }
