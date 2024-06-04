@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
+import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data_api.model.User
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -15,22 +17,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
-    private val songRepository: SongRepository,
+    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository,
     private val sharePreferencesHelper: SharePreferencesHelper
 ) :
     BaseViewModel() {
     var currentRotate = 0f
     var isPlaying=  MutableLiveData(false)
-    var songOld =  MutableLiveData<SongOld>()
+    var song =  MutableLiveData<Song>()
     var loveSong =  MutableLiveData<Boolean>()
     var sleepTime =  MutableLiveData<String>()
-    var songOldList =  MutableLiveData<ArrayList<SongOld>>(arrayListOf())
+    var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
     var currentSongTime  = MutableLiveData<Int>(0)
     var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)
     var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
     var isUserTouchSlider = false
     var audioSessionId = MutableLiveData(0)
+    var singers =  MutableLiveData<List<User>>()
 
     fun setShuffle(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,6 +43,14 @@ class PlayerViewModel @Inject constructor(
 
 
         }
+    }
+
+     fun getSingerOfSong(id : Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            singers.postValue(songRepository.getSingerFromSongById(id))
+        }
+        registerEventParentJobFinish()
     }
 
     fun getShuffle() {
@@ -66,16 +77,5 @@ class PlayerViewModel @Inject constructor(
 
     }
 
-    fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
-        isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = songRepository.updateSongLoveStatus(id,newLoveStatus)
-            if (response is Response.Success) {
-                loveSong.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
+
 }

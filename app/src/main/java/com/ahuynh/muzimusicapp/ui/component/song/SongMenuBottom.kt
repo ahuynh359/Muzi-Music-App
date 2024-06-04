@@ -38,47 +38,47 @@ class SongMenuBottom : BottomSheetDialogFragment() {
     }
 
     private fun handleUI() {
-        val currentSong = SongMenuBottomArgs.fromBundle(requireArguments()).song
-        val playlist = SongMenuBottomArgs.fromBundle(requireArguments()).playlist
-
-        binding.btnDelete.setOnClickListener {
-            //Delete song from system
-            if (playlist == null) {
-                showDialogConfirm(
-                    "Confirm delete song",
-                    "Do you want to delete song ${currentSong.name}",
-                    currentSong
-                )
-            }
-            //Delete song from playlist
-            else {
-                showDialogConfirm(
-                    "Confirm delete song",
-                    "Do you want to delete song ${currentSong.name} from ${playlist.name}",
-                    currentSong,
-                    playlist
-                )
-            }
-        }
-
-        if (currentSong.love == true) {
-            binding.tvLove.text = "Unlove"
-            binding.icHeart.setImageResource(R.drawable.ic_heart_small)
-        } else {
-            binding.tvLove.text = "Love"
-            binding.icHeart.setImageResource(R.drawable.ic_hearted)
-        }
-        binding.btnLove.setOnClickListener {
-            //viewModel.updateSongLoveStatus(currentSong.id!!, !currentSong.love)
-            viewModel.loveSong.observe(viewLifecycleOwner) {
-                if (it) {
-                    dismiss()
-                } else {
-                    makeErrorToast(requireContext(),"Error when love song")
-                }
-            }
-
-        }
+//        val currentSong = SongMenuBottomArgs.fromBundle(requireArguments()).song
+//        val playlist = SongMenuBottomArgs.fromBundle(requireArguments()).playlist
+//
+//        binding.btnDelete.setOnClickListener {
+//            //Delete song from system
+//            if (playlist == null) {
+//                showDialogConfirm(
+//                    "Confirm delete song",
+//                    "Do you want to delete song ${currentSong.name}",
+//                    currentSong
+//                )
+//            }
+//            //Delete song from playlist
+//            else {
+//                showDialogConfirm(
+//                    "Confirm delete song",
+//                    "Do you want to delete song ${currentSong.name} from ${playlist.name}",
+//                    currentSong,
+//                    playlist
+//                )
+//            }
+//        }
+//
+//        if (currentSong.love == true) {
+//            binding.tvLove.text = "Unlove"
+//            binding.icHeart.setImageResource(R.drawable.ic_heart_small)
+//        } else {
+//            binding.tvLove.text = "Love"
+//            binding.icHeart.setImageResource(R.drawable.ic_hearted)
+//        }
+//        binding.btnLove.setOnClickListener {
+//            //viewModel.updateSongLoveStatus(currentSong.id!!, !currentSong.love)
+//            viewModel.loveSong.observe(viewLifecycleOwner) {
+//                if (it) {
+//                    dismiss()
+//                } else {
+//                    makeErrorToast(requireContext(),"Error when love song")
+//                }
+//            }
+//
+//        }
     }
 
     private fun showDialogConfirm(

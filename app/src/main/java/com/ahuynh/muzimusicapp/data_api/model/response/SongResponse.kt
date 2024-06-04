@@ -4,7 +4,7 @@ import com.ahuynh.muzimusicapp.data_api.model.Song
 
 
 data class SongResponse(
-    val id: String,
+    val id: Long,
     val name: String,
     val avatar: String,
     val file: String,

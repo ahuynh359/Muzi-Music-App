@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Song(
-    val id: String,
+    val id: Long,
     val name: String,
     val avatar: String,
     val file: String,

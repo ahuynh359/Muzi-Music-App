@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -19,7 +20,7 @@ class MainViewModel @Inject constructor(private val appSharePreferencesHelper: S
 
                                         ) : BaseViewModel() {
 
-    var songOld = MutableLiveData<SongOld>()
+    var song = MutableLiveData<Song>()
     var isPlaying = MutableLiveData(false)
     var songOldList = MutableLiveData<List<SongOld>>()
 

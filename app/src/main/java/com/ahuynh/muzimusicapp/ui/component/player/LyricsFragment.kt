@@ -50,7 +50,7 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
     }
 
     private fun observeData() {
-        viewModel.songOld.observe(requireActivity()) { song ->
+        viewModel.song.observe(requireActivity()) { song ->
             playerAdapter.setData(getSongLyrics(song.lyrics!!))
             songLyrics = getSongLyrics(song.lyrics)
 

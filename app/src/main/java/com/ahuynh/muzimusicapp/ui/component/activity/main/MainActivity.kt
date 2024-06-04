@@ -96,16 +96,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
 
     private fun observe() {
-        viewModel.songOld.observe(this) {
+        viewModel.song.observe(this) {
             if (it == null) {
                 binding.player.visibility = View.GONE
             } else {
                 binding.player.visibility = View.VISIBLE
                 binding.tvSong.text = it.name
-                binding.tvSinger.text = it.singer
+                binding.tvSinger.text = "abc"
                 Glide
                     .with(binding.imvSong.context)
-                    .load(it.image)
+                    .load(it.avatar)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(R.drawable.note)
@@ -193,7 +193,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
         event.songOld?.let {
-            viewModel.songOld.postValue(it)
+            viewModel.song.postValue(it)
         }
     }
 

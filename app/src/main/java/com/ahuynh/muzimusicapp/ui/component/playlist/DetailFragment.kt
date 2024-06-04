@@ -6,9 +6,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.databinding.DetailFragmentBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -22,13 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailFragment :
     BaseFragment<DetailFragmentBinding>(DetailFragmentBinding::inflate),
-    SongAdapter.OnSongClicked {
+    NewSongAdapter.OnNewSongClicked {
 
     companion object {
         const val TAG = "DetailFragment"
     }
 
-    private lateinit var songAdapter: SongAdapter
+    private lateinit var songAdapter: NewSongAdapter
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private lateinit var songOldListOfPlaylist : ArrayList<SongOld>
     private lateinit var currentPlaylist: Playlist
@@ -36,7 +38,7 @@ class DetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentPlaylist = DetailFragmentArgs.fromBundle(requireArguments()).playlist
-        songAdapter = SongAdapter(this)
+        songAdapter = NewSongAdapter(this)
         binding.rcySongs.adapter = songAdapter
 
         handleUI()
@@ -52,27 +54,27 @@ class DetailFragment :
     }
 
     private fun observe() {
-        viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner) {
-            if (it) {
-                getData()
-            }
-        }
-
-        viewModel.songs.observe(viewLifecycleOwner) {
-
-            songOldListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_Old_LIST_DATA)
-            songAdapter.submitList(songOldListOfPlaylist)
-
-
-
-            binding.rcySongs.visibility = View.VISIBLE
-            if (it.isEmpty()) {
-                binding.btnPlay.visibility = View.INVISIBLE
-            } else {
-                binding.btnPlay.visibility = View.VISIBLE
-            }
-        }
-
+//        viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner) {
+//            if (it) {
+//                getData()
+//            }
+//        }
+//
+//        viewModel.songs.observe(viewLifecycleOwner) {
+//
+//            songOldListOfPlaylist = Utils.getSongWithId(it, Constants.SONG_Old_LIST_DATA)
+//            songAdapter.submitList(songOldListOfPlaylist)
+//
+//
+//
+//            binding.rcySongs.visibility = View.VISIBLE
+//            if (it.isEmpty()) {
+//                binding.btnPlay.visibility = View.INVISIBLE
+//            } else {
+//                binding.btnPlay.visibility = View.VISIBLE
+//            }
+//        }
+//
 
     }
 
@@ -109,19 +111,27 @@ class DetailFragment :
 
     }
 
-    override fun onSongClicked(songOld: SongOld) {
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
-        Utils.sendMusic(
-            requireActivity(),
-            MusicService.ACTION_PLAY,
-            songOld, songOldListOfPlaylist
-        )
+    override fun onSongClicked(song: Song) {
+        TODO("Not yet implemented")
     }
 
-    override fun openMenu(songOld: SongOld) {
-        val action = DetailFragmentDirections.actionDetailFragmentToSongMenuBottom(songOld,currentPlaylist)
-        findNavController().navigate(action)
+    override fun openMenu(song: Song) {
+        TODO("Not yet implemented")
     }
+
+//    override fun onSongClicked(songOld: SongOld) {
+//        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+//        Utils.sendMusic(
+//            requireActivity(),
+//            MusicService.ACTION_PLAY,
+//            songOld, songOldListOfPlaylist
+//        )
+//    }
+//
+//    override fun openMenu(song: SongOld) {
+//        val action = DetailFragmentDirections.actionDetailFragmentToSongMenuBottom(songOld,currentPlaylist)
+//        findNavController().navigate(action)
+//    }
 
 
 }

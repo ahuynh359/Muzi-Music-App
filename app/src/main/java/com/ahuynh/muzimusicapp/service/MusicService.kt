@@ -25,7 +25,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.MuziMusicApplication
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.SongOld
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION
@@ -52,9 +52,9 @@ class MusicService : Service() {
     private var player: ExoPlayer? = null
     private var jobTime: Job? = null
 
-    private var songOldList: ArrayList<SongOld> = arrayListOf()
+    private var songList: ArrayList<Song> = arrayListOf()
 
-    private var currentSongOld: SongOld? = null
+    private var currentSong: Song? = null
     private var currentSongIndex: Int = -1
 
     companion object {
@@ -95,17 +95,17 @@ class MusicService : Service() {
         val data = intent.getBundleExtra(DATA)
 
         data?.let {
-            val songOld: SongOld? = data.parcelable<SongOld>(SONG)
-            val list: ArrayList<SongOld>? = data.parcelableArrayList<SongOld>(SONG_LIST)
+            val Song: Song? = data.parcelable<Song>(SONG)
+            val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
-            songOld?.let {
+            Song?.let {
                 list?.let {
-                    songOldList = list
+                    songList = list
                     if (Constants.IS_SHUFFLE) {
-                        val shuffledSongList = ArrayList(songOldList).apply { shuffle() }
-                        songOldList = shuffledSongList
+                        val shuffledSongList = ArrayList(songList).apply { shuffle() }
+                        songList = shuffledSongList
                     }
-                    currentSongIndex = songOldList.indexOf(songOld)
+                    currentSongIndex = songList.indexOf(Song)
                     listenToMusic(currentSongIndex)
 
                 }
@@ -144,14 +144,14 @@ class MusicService : Service() {
         if (currentSongIndex > 0) currentSongIndex--
         if (Constants.IS_REPEAT) {
             if (currentSongIndex > 0) currentSongIndex-- else
-                currentSongIndex = songOldList.size - 1
+                currentSongIndex = songList.size - 1
         }
         listenToMusic(currentSongIndex)
 
     }
 
     private fun next() {
-        if (currentSongIndex + 1 < songOldList.size) {
+        if (currentSongIndex + 1 < songList.size) {
             currentSongIndex++;
             listenToMusic(currentSongIndex)
         } else {
@@ -179,8 +179,8 @@ class MusicService : Service() {
             it.release()
         }
 
-        val song = songOldList[currentSongIndex]
-        currentSongOld = song
+        val song = songList[currentSongIndex]
+        currentSong = song
 
         //Send current song info back to UI
         EventBus.getDefault().postSticky(EventBusModel.SongInfoEvent(song))
@@ -207,7 +207,7 @@ class MusicService : Service() {
         val loader = ImageLoader(this@MusicService)
         val request =
             ImageRequest.Builder(this@MusicService)
-                .data(songOldList[currentSongIndex].image)
+                .data(songList[currentSongIndex].avatar)
                 .allowHardware(false)
                 .build()
 
@@ -228,7 +228,7 @@ class MusicService : Service() {
             val bitmap = getCurrentSongBitMap()
 
         player?.let { media ->
-            val song = songOldList[currentSongIndex]
+            val song = songList[currentSongIndex]
 
             //Handle when click on notification
             val resultIntent = Intent(this@MusicService, PlayerActivity::class.java)
@@ -272,7 +272,7 @@ class MusicService : Service() {
 
 
                     .setContentTitle(song.name)
-                    .setContentText(song.singer)
+                    .setContentText("abc")
                     .setLargeIcon(bitmap)
                     .setAutoCancel(false)
                     .setOngoing(true)
@@ -297,12 +297,12 @@ class MusicService : Service() {
     }
 
     @OptIn(UnstableApi::class)
-    private fun preparePlay(songOld: SongOld) {
+    private fun preparePlay(Song: Song) {
         try {
             player = ExoPlayer.Builder(this)
                 .setMediaSourceFactory(DefaultMediaSourceFactory(this@MusicService))
                 .build().also {
-                    val mediaItem = MediaItem.fromUri(songOld.file!!)
+                    val mediaItem = MediaItem.fromUri(Song.file!!)
                     val dataSourceFactory = DefaultDataSource.Factory(this)
                     val extractorsFactory =
                         DefaultExtractorsFactory().setConstantBitrateSeekingEnabled(true)
@@ -381,10 +381,10 @@ class MusicService : Service() {
     //Return Song info
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRequestSongEvent(event: EventBusModel.RequestSongEvent) {
-        if (currentSongIndex > -1 && currentSongIndex < songOldList.size) {
+        if (currentSongIndex > -1 && currentSongIndex < songList.size) {
             EventBus.getDefault()
-                .postSticky(EventBusModel.SongInfoEvent(songOldList[currentSongIndex]))
-            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songOldList))
+                .postSticky(EventBusModel.SongInfoEvent(songList[currentSongIndex]))
+            EventBus.getDefault().postSticky(EventBusModel.SongListEvent(songList))
 
             player?.let {
                 EventBus.getDefault().postSticky(EventBusModel.MusicPlayingEvent(it.isPlaying))

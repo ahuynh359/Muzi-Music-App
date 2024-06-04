@@ -11,8 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.SongOld
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -26,9 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
-    SongAdapter.OnSongClicked {
+    NewSongAdapter.OnNewSongClicked {
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
-    private lateinit var adapter: SongAdapter
+    private lateinit var adapter: NewSongAdapter
 
     companion object {
         const val TAG = "SearchFragment"
@@ -36,7 +38,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = SongAdapter(this)
+        adapter = NewSongAdapter(this)
         binding.rcySong.adapter = adapter
         observe()
         handleUI()
@@ -67,18 +69,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun performSearch(query: String) {
-        val songOldList = mutableListOf<SongOld>()
-        for (s in Constants.SONG_Old_LIST_DATA) {
-            if ((s.name?.lowercase()?.contains(query.lowercase()) == true) || (s.singer?.lowercase()?.contains(query.lowercase()) == true) ) {
-                songOldList.add(s)
-            }
-        }
-        if (songOldList.isEmpty()) {
-            makeErrorToast(requireContext(), "Don't have this song")
-            adapter.submitList(arrayListOf())
-        } else {
-            adapter.submitList(songOldList)
-        }
+//        val songOldList = mutableListOf<SongOld>()
+//        for (s in Constants.SONG_Old_LIST_DATA) {
+//            if ((s.name?.lowercase()?.contains(query.lowercase()) == true) || (s.singer?.lowercase()?.contains(query.lowercase()) == true) ) {
+//                songOldList.add(s)
+//            }
+//        }
+//        if (songOldList.isEmpty()) {
+//            makeErrorToast(requireContext(), "Don't have this song")
+//            adapter.submitList(arrayListOf())
+//        } else {
+//            adapter.submitList(songOldList)
+//        }
     }
 
 
@@ -92,24 +94,32 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         imm.hideSoftInputFromWindow(this.windowToken, 0)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onSongClicked(songOld: SongOld) {
-//        viewModel.updateSongListen(songOld)
-//        viewModel.updateSongWithCurrentDate(songOld, Utils.getCurrentDateAsString())
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    override fun onSongClicked(songOld: SongOld) {
+////        viewModel.updateSongListen(songOld)
+////        viewModel.updateSongWithCurrentDate(songOld, Utils.getCurrentDateAsString())
+//
+//        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+//        Utils.sendMusic(
+//            requireContext(),
+//            MusicService.ACTION_PLAY,
+//            songOld, arrayListOf()
+//        )
+//
+//
+//    }
+//
+//    override fun openMenu(songOld: SongOld) {
+//        val action = SongFragmentDirections.actionSongFragmentToSongMenuBottom(songOld)
+//        findNavController().navigate(action)
+//
+//    }
 
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
-        Utils.sendMusic(
-            requireContext(),
-            MusicService.ACTION_PLAY,
-            songOld, arrayListOf()
-        )
-
-
+    override fun onSongClicked(song: Song) {
+        TODO("Not yet implemented")
     }
 
-    override fun openMenu(songOld: SongOld) {
-        val action = SongFragmentDirections.actionSongFragmentToSongMenuBottom(songOld)
-        findNavController().navigate(action)
-
+    override fun openMenu(song: Song) {
+        TODO("Not yet implemented")
     }
 }

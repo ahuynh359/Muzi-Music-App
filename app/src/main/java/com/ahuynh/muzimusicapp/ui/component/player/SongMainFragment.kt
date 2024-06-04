@@ -32,14 +32,25 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
         }
 
 
-        viewModel.songOld.observe(viewLifecycleOwner) { song ->
+
+
+        viewModel.song.observe(viewLifecycleOwner) { song ->
+
+            viewModel.getSingerOfSong(song.id)
+            viewModel.singers.observe(viewLifecycleOwner) {
+               var str = ""
+                for(user in it){
+                    str += user.username + ", "
+                }
+                binding.tvSinger.text = str
+            }
 
             binding.tvSongName.text = song.name
-            binding.tvSinger.text = song.singer
+
 
             Glide
                 .with(binding.imvSong.context)
-                .load(song.image)
+                .load(song.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(com.ahuynh.muzimusicapp.R.drawable.big_song)

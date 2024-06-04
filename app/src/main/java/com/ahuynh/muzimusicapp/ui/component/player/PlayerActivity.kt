@@ -3,26 +3,23 @@ package com.ahuynh.muzimusicapp.ui.component.player
 import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
-import com.ahuynh.muzimusicapp.data.model.SongOld
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.base.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
-import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.google.android.material.slider.Slider
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,14 +28,9 @@ import kotlin.system.exitProcess
 
 
 @AndroidEntryPoint
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding::inflate) {
     companion object {
         const val TAG = "PlayerActivityABC"
-    }
-    private lateinit var snackbar: Snackbar
-    private lateinit var binding : ActivityPlayerBinding
-    private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
-        NetworkConnectivityHelper(this)
     }
     private val sleepTimerDialog : SleepTimerDialog by lazy {
         SleepTimerDialog()
@@ -96,15 +88,16 @@ class PlayerActivity : AppCompatActivity() {
                 else R.drawable.ic_pause
             )
         }
-        viewModel.songOld.observe(this) { song ->
+        viewModel.song.observe(this) { song ->
             binding.tvSong.text = song.name
 
-            if (song.love) {
-                binding.btnHeart.setImageResource(R.drawable.ic_hearted)
-            } else
-                binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
 
         }
+//        if (song.) {
+//            binding.btnHeart.setImageResource(R.drawable.ic_hearted)
+//        } else
+//            binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
+
         viewModel.sleepTime.observe(this){
             binding.tvTimer.text = it
             if(it.equals("00:00:00")){
@@ -123,12 +116,12 @@ class PlayerActivity : AppCompatActivity() {
         setUpViewPager()
         setUpSeekbar()
         binding.btnHeart.setOnClickListener {
-            viewModel.songOld.observe(this){ song ->
-                val newLoveStatus = !song.love
-                song.love = newLoveStatus
-                viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
-                val heartResId = if (newLoveStatus) com.ahuynh.muzimusicapp.R.drawable.ic_hearted else com.ahuynh.muzimusicapp.R.drawable.ic_heart_small
-                binding.btnHeart.setImageResource(heartResId)
+            viewModel.song.observe(this){ song ->
+//                val newLoveStatus = !song.love
+//                song.love = newLoveStatus
+//                viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
+//                val heartResId = if (newLoveStatus) com.ahuynh.muzimusicapp.R.drawable.ic_hearted else com.ahuynh.muzimusicapp.R.drawable.ic_heart_small
+//                binding.btnHeart.setImageResource(heartResId)
             }
         }
         binding.btnShuffle.setOnClickListener {
@@ -145,8 +138,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_PLAY,
-                    viewModel.songOld.value,
-                    viewModel.songOldList.value!!
+                    viewModel.song.value,
+                    viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -160,8 +153,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_PRE,
-                    viewModel.songOld.value,
-                    viewModel.songOldList.value!!
+                    viewModel.song.value,
+                    viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -179,8 +172,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_NEXT,
-                    viewModel.songOld.value,
-                    viewModel.songOldList.value!!
+                    viewModel.song.value,
+                    viewModel.songList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -234,15 +227,20 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
     fun sendMusic(
         action: Int,
-        songOld: SongOld? = null,
-        songOldList: ArrayList<SongOld> = arrayListOf()
+        song: Song? = null,
+        songList: ArrayList<Song> = arrayListOf()
     ) {
 
         val bundle = Bundle().apply {
-            putParcelable(Constants.SONG, songOld)
-            putParcelableArrayList(Constants.SONG_LIST, songOldList)
+            putParcelable(Constants.SONG, song)
+            putParcelableArrayList(Constants.SONG_LIST, songList)
         }
 
         val intent = Intent(applicationContext, MusicService::class.java).apply {
@@ -258,32 +256,9 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
 
-        snackbar = Snackbar.make(
-            binding.main,
-            "No Internet Connection",
-            Snackbar.LENGTH_INDEFINITE
-        ).setAction("Wifi") {
-            startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-        }
-        networkConnectivityObserver.observe(this) {
-            when (it) {
-                true -> {
-                    if (snackbar.isShown) {
-                        snackbar.dismiss()
-                    }
-                }
-
-                else -> {
-                    snackbar.show()
-                }
-            }
-
-        }
-
+    override fun getSnackbarView(): View {
+        return binding.main
     }
 
     override fun onStop() {
@@ -302,7 +277,7 @@ class PlayerActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
         event.songOld?.let {
-            viewModel.songOld.postValue(it)
+            viewModel.song.postValue(it)
         }
     }
 

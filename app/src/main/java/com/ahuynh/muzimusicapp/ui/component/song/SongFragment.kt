@@ -129,7 +129,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     override fun onMoreItemClicked(album: Album) {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(), "AHIHI", Toast.LENGTH_LONG).show()
     }
 
     override fun onSongClicked(song: Song) {
@@ -143,7 +143,8 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
     }
 
     override fun openMenu(song: Song) {
-        TODO("Not yet implemented")
+        val action = SongFragmentDirections.actionSongFragmentToSongMenuBottom(song)
+        findNavController().navigate(action)
     }
 
 }
