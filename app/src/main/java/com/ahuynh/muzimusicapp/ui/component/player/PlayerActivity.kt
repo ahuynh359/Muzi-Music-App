@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
@@ -96,7 +96,7 @@ class PlayerActivity : AppCompatActivity() {
                 else R.drawable.ic_pause
             )
         }
-        viewModel.song.observe(this) { song ->
+        viewModel.songOld.observe(this) { song ->
             binding.tvSong.text = song.name
 
             if (song.love) {
@@ -123,7 +123,7 @@ class PlayerActivity : AppCompatActivity() {
         setUpViewPager()
         setUpSeekbar()
         binding.btnHeart.setOnClickListener {
-            viewModel.song.observe(this){song ->
+            viewModel.songOld.observe(this){ song ->
                 val newLoveStatus = !song.love
                 song.love = newLoveStatus
                 viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
@@ -145,8 +145,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_PLAY,
-                    viewModel.song.value,
-                    viewModel.songList.value!!
+                    viewModel.songOld.value,
+                    viewModel.songOldList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -160,8 +160,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_PRE,
-                    viewModel.song.value,
-                    viewModel.songList.value!!
+                    viewModel.songOld.value,
+                    viewModel.songOldList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -179,8 +179,8 @@ class PlayerActivity : AppCompatActivity() {
             if (viewModel.isClear) {
                 sendMusic(
                     MusicService.ACTION_NEXT,
-                    viewModel.song.value,
-                    viewModel.songList.value!!
+                    viewModel.songOld.value,
+                    viewModel.songOldList.value!!
                 )
                 viewModel.isClear = false
             } else {
@@ -236,13 +236,13 @@ class PlayerActivity : AppCompatActivity() {
 
     fun sendMusic(
         action: Int,
-        song: Song? = null,
-        songList: ArrayList<Song> = arrayListOf()
+        songOld: SongOld? = null,
+        songOldList: ArrayList<SongOld> = arrayListOf()
     ) {
 
         val bundle = Bundle().apply {
-            putParcelable(Constants.SONG, song)
-            putParcelableArrayList(Constants.SONG_LIST, songList)
+            putParcelable(Constants.SONG, songOld)
+            putParcelableArrayList(Constants.SONG_LIST, songOldList)
         }
 
         val intent = Intent(applicationContext, MusicService::class.java).apply {
@@ -301,8 +301,8 @@ class PlayerActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
-        event.song?.let {
-            viewModel.song.postValue(it)
+        event.songOld?.let {
+            viewModel.songOld.postValue(it)
         }
     }
 

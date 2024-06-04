@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.databinding.ItemSongChartBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -15,18 +15,18 @@ class ChartAdapter(
 ) : RecyclerView.Adapter<ChartAdapter.SongViewHolder>() {
 
 
-    private var songs: List<Song> = arrayListOf()
+    private var songOlds: List<SongOld> = arrayListOf()
 
     class SongViewHolder(val itemBinding: ItemSongChartBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: List<Song>) {
-        songs = data
+    fun setData(data: List<SongOld>) {
+        songOlds = data
         notifyDataSetChanged()
     }
 
-    fun getSongs(): List<Song> = songs
+    fun getSongs(): List<SongOld> = songOlds
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         return SongViewHolder(
@@ -35,14 +35,14 @@ class ChartAdapter(
     }
 
     override fun getItemCount(): Int {
-        return songs.size
+        return songOlds.size
     }
 
     override fun onBindViewHolder(
         holder: SongViewHolder,
         @SuppressLint("RecyclerView") position: Int
     ) {
-        val song = songs[position]
+        val song = songOlds[position]
 
         holder.itemBinding.apply {
 
@@ -77,5 +77,5 @@ class ChartAdapter(
 }
 
 interface OnSongChartClicked {
-    fun onSongClicked(song: Song)
+    fun onSongClicked(songOld: SongOld)
 }

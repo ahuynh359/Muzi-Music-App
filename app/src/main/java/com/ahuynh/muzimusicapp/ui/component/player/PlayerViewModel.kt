@@ -2,7 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -21,10 +21,10 @@ class PlayerViewModel @Inject constructor(
     BaseViewModel() {
     var currentRotate = 0f
     var isPlaying=  MutableLiveData(false)
-    var song =  MutableLiveData<Song>()
+    var songOld =  MutableLiveData<SongOld>()
     var loveSong =  MutableLiveData<Boolean>()
     var sleepTime =  MutableLiveData<String>()
-    var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
+    var songOldList =  MutableLiveData<ArrayList<SongOld>>(arrayListOf())
     var isClear: Boolean = false
     var currentSongTime  = MutableLiveData<Int>(0)
     var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)

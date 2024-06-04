@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment
@@ -23,7 +23,7 @@ import java.io.OutputStreamWriter
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
-    private var listSong: ArrayList<Song> = arrayListOf()
+    private var listSongOld: ArrayList<SongOld> = arrayListOf()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,8 +39,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     }
 
     private fun observe() {
-        viewModel.listenSongList.observe(viewLifecycleOwner) {
-            listSong = it as ArrayList<Song>
+        viewModel.listenSongListOld.observe(viewLifecycleOwner) {
+            listSongOld = it as ArrayList<SongOld>
         }
         updateNoti.observe(viewLifecycleOwner) {
             Log.d("ABC","reload gan du lieu")
@@ -116,7 +116,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun exportToCSVByDay() {
         val data = mutableListOf<List<String>>()
 
-        listSong.forEach { song ->
+        listSongOld.forEach { song ->
             data.add(listOf(song.name, song.listen) as List<String>)
         }
 
@@ -126,7 +126,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun exportCsvByMonth() {
         val data = mutableListOf<List<String>>()
 
-        listSong.forEach { song ->
+        listSongOld.forEach { song ->
             for (i in song.listens)
                 data.add(
                     listOf(
@@ -179,7 +179,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun exportToPDFByDay() {
         val data = mutableListOf<List<String>>()
 
-        listSong.forEach { song ->
+        listSongOld.forEach { song ->
             data.add(listOf(song.name, song.listen) as List<String>)
         }
 
@@ -189,7 +189,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private fun exportToPDFByMonth() {
         val data = mutableListOf<List<String>>()
 
-        listSong.forEach { song ->
+        listSongOld.forEach { song ->
             for (i in song.listens)
                 data.add(listOf(song.name, song.listen, i.key, i.value) as List<String>)
         }

@@ -8,7 +8,7 @@ import com.ahuynh.muzimusicapp.data_api.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import javax.inject.Inject
 
-class UserService @Inject constructor(
+class AuthService @Inject constructor(
     private val authAPI: AuthAPI
 ) : BaseRemoteService() {
     suspend fun signup(signUpRequest: SignUpRequest): Response<ApiResponse> {

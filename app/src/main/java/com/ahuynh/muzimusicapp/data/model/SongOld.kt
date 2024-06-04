@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Song(
+data class SongOld(
     val name: String ? = null,
     val id: String? = null,
     val file: String ? = null,

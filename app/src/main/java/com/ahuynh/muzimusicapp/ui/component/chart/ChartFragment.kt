@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ChartAdapter
 import com.ahuynh.muzimusicapp.adapter.OnSongChartClicked
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -42,7 +42,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     }
 
 
-    private var listSong: ArrayList<Song> = arrayListOf()
+    private var listSongOld: ArrayList<SongOld> = arrayListOf()
     private val chartAdapter = ChartAdapter(this)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,11 +52,11 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
 
     private fun handleUI() {
         binding.rcySong.adapter = chartAdapter
-        viewModel.getAllSongByListen()
-        viewModel.listenSongList.observe(viewLifecycleOwner) {
+        //viewModel.getAllSongByListen()
+        viewModel.listenSongListOld.observe(viewLifecycleOwner) {
             chartAdapter.setData(it)
             binding.rcySong.visibility = View.VISIBLE
-            listSong = it as ArrayList<Song>
+            listSongOld = it as ArrayList<SongOld>
             hideShimmer()
 
             if (viewModel.sortIndex.value == 0) {
@@ -90,7 +90,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
                 viewModel.sortIndex.value = i
                 val itemSelect = adapterView.getItemAtPosition(i)
                 Toast.makeText(requireContext(), itemSelect.toString(), Toast.LENGTH_SHORT).show()
-                viewModel.listenSongList.observe(viewLifecycleOwner) {
+                viewModel.listenSongListOld.observe(viewLifecycleOwner) {
                     if (viewModel.sortIndex.value == 0) {
                         disableChart()
                         setUpChartByDay()
@@ -107,16 +107,16 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onSongClicked(song: Song) {
+    override fun onSongClicked(songOld: SongOld) {
 
-        viewModel.updateSongListen(song)
-        viewModel.updateSongWithCurrentDate(song, getCurrentDateAsString())
-        viewModel.getAllSongByListen()
+//        viewModel.updateSongListen(songOld)
+//        viewModel.updateSongWithCurrentDate(songOld, getCurrentDateAsString())
+//        viewModel.getAllSongByListen()
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(),
             MusicService.ACTION_PLAY,
-            song, listSong
+            songOld, listSongOld
         )
 
     }
@@ -128,7 +128,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
 
     private fun setUpChartByDay() {
         binding.barChart.visibility = View.VISIBLE
-        val list = listSong.subList(0, 3)
+        val list = listSongOld.subList(0, 3)
 
         val barEntries = ArrayList<BarEntry>()
         val colors = mutableListOf<Int>(
@@ -172,7 +172,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
 
 
     private fun setUpChartByMonth() {
-        val list = listSong.subList(0, 3)
+        val list = listSongOld.subList(0, 3)
 
 
         binding.lineChart.visibility = View.VISIBLE

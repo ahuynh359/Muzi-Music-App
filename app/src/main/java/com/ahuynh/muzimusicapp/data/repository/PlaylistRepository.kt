@@ -1,6 +1,6 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.di.IoDispatcher
@@ -142,7 +142,7 @@ class PlaylistRepository @Inject constructor(
             }
         }
     }
-    suspend fun deleteSongFromPlaylist(currentPlaylist: Playlist, song: Song): Response<Boolean> {
+    suspend fun deleteSongFromPlaylist(currentPlaylist: Playlist, songOld: SongOld): Response<Boolean> {
         return withContext(dispatcher) {
             try {
 
@@ -151,7 +151,7 @@ class PlaylistRepository @Inject constructor(
                 if (playlistSnapshot.exists()) {
                     val songs = playlistSnapshot.get("songs") as? MutableList<String>
                     songs?.let {
-                        val songIndex = songs.indexOfFirst { it == song.id }
+                        val songIndex = songs.indexOfFirst { it == songOld.id }
                         if (songIndex != -1) {
                             songs.removeAt(songIndex) // Remove the song from the list
                             playlistRef.update("songs", songs).await() // Update Firestore document

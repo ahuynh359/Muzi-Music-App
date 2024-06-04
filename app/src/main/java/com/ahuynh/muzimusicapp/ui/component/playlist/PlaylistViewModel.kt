@@ -2,7 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.model.playlist.PlaylistModel
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
@@ -100,10 +100,10 @@ class PlaylistViewModel @Inject constructor(private val playlistRepository: Play
         registerEventParentJobFinish()
     }
 
-    fun deleteSongFromPlaylist(playlist: Playlist, song: Song) {
+    fun deleteSongFromPlaylist(playlist: Playlist, songOld: SongOld) {
         isLoading.postValue(true)
         viewModelScope.launch {
-            val response = playlistRepository.deleteSongFromPlaylist(playlist, song)
+            val response = playlistRepository.deleteSongFromPlaylist(playlist, songOld)
             if (response is Response.Success) {
                 deleteSongFromPlaylist.postValue(response.data)
             } else if (response is Response.Failure) {

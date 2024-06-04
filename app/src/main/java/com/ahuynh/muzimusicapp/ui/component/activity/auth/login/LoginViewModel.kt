@@ -3,7 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.activity.auth.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data_api.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data_api.repository.UserRepository
+import com.ahuynh.muzimusicapp.data_api.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : BaseViewModel() {
     var mess: String? = null
     var status = MutableLiveData<Boolean?>(null)
@@ -25,13 +25,13 @@ class LoginViewModel @Inject constructor(
     fun login(loginRequest: LoginRequest) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.login(loginRequest)
+            val result = authRepository.login(loginRequest)
             if (result is Response.Success) {
-                mess = result.data.status
-//                sharePreferencesHelper.saveLoggedIn(
-//                    loginRequest.userNameOrEmail,
-//                    loginRequest.password
-//                )
+                mess = result.data.message
+                sharePreferencesHelper.saveLoggedIn(
+                    loginRequest.userNameOrEmail,
+                    loginRequest.password
+                )
                 sharePreferencesHelper.saveToken(result.data.message)
                 Constants.ACCESS_TOKEN = result.data.message
             } else if (result is Response.Failure) {

@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.SongOld
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 
-class SongAdapter(private val listener: OnSongClicked) :
-    ListAdapter<SongOld, SongAdapter.ViewHolder>(DiffCallback()) {
+class NewSongAdapter(private val listener: OnNewSongClicked) :
+    ListAdapter<Song, NewSongAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -25,28 +26,28 @@ class SongAdapter(private val listener: OnSongClicked) :
                 listener.openMenu(currentList[layoutPosition])
             }
         }
-        fun bind(songOld: SongOld) {
+        fun bind(song: Song) {
             Glide
                 .with(binding.imvSong.context)
-                .load(songOld.image)
+                .load(song.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.note)
                 .into(binding.imvSong)
-            binding.tvNameSong.text = songOld.name
-            binding.tvSinger.text = songOld.singer
+            binding.tvNameSong.text = song.name
+            //binding.tvSinger.text = song.singer
 
 
         }
 
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<SongOld>() {
-        override fun areItemsTheSame(oldItem: SongOld, newItem: SongOld): Boolean {
+    private class DiffCallback : DiffUtil.ItemCallback<Song>() {
+        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: SongOld, newItem: SongOld): Boolean {
+        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
             return oldItem == newItem
         }
 
@@ -65,9 +66,9 @@ class SongAdapter(private val listener: OnSongClicked) :
         return currentList.size
     }
 
-    interface OnSongClicked {
-        fun onSongClicked(songOld: SongOld)
-        fun openMenu(songOld : SongOld)
+    interface OnNewSongClicked {
+        fun onSongClicked(song: Song)
+        fun openMenu(song : Song)
     }
 
 }

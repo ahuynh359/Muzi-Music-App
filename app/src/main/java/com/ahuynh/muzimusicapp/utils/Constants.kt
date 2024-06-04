@@ -2,7 +2,7 @@ package com.ahuynh.muzimusicapp.utils
 
 import androidx.lifecycle.MutableLiveData
 import com.ahuynh.muzimusicapp.data.model.Notification
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 
 object Constants {
     enum class SortingOrder {
@@ -33,7 +33,7 @@ object Constants {
     var IS_REPEAT = false
     var INTENT_ACTION = "intent_service"
 
-    var SONG_LIST_DATA : List<Song> = listOf()
+    var SONG_Old_LIST_DATA : List<SongOld> = listOf()
      var CURRENT_NOTI : Notification ?= null
     const val SERVER_KEY =
         "AAAAckRVZ2U:APA91bF8V7ubgXC3LbRs7nZhCDx_cZwhLwiWr4yu73bhHMyUxqe5t8imATGR1loHTUAJ5WcxMpnLniO-Y3WUrG-VzN1nS2CCnDp55v8siIxby3deZgmHi6NVkHWC5bgZ5xgdicKvuaEW"
@@ -43,7 +43,7 @@ object Constants {
     var TOKEN_14 = "chFH3YaxRzOFKqvnq4Wp8N:APA91bGSQakR8PEqrWm-sPZ_8QT9q-XWcNhGXHPqJhz9X9lVXXXWpnsT-z3JgiBeEQnmkBCkFrrHPYoC4V9uJbOxx_t3kNWwG3FbuXoLQ_-aDRKuzHVo1FGAF44NyjLgX4ffE5qHv9s5"
     var updateNoti = MutableLiveData<Boolean>(false)
 
-    var ACCESS_TOKEN = ""
+    var ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzE3NTEzNzE3LCJleHAiOjE3MTc1NDk3MTd9.0Iir8EHnprQRYJnXE1AFlNG78u6ELPTaLnVZ_wK-Y74"
     const val BASE_URL = "http://192.168.239.210:8080"
     const val API_VERSION = "/api/v1"
 

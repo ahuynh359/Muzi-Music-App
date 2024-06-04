@@ -32,7 +32,7 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
         }
 
 
-        viewModel.song.observe(viewLifecycleOwner) { song ->
+        viewModel.songOld.observe(viewLifecycleOwner) { song ->
 
             binding.tvSongName.text = song.name
             binding.tvSinger.text = song.singer

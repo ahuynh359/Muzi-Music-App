@@ -2,11 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.activity.auth.otp
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data_api.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data_api.model.request.SignUpRequest
-import com.ahuynh.muzimusicapp.data_api.repository.UserRepository
+import com.ahuynh.muzimusicapp.data_api.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OtpViewModel @Inject constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository
+    private val authRepository: AuthRepository
 ) : BaseViewModel() {
 
 
@@ -26,9 +23,9 @@ class OtpViewModel @Inject constructor(
     fun verifyEmail(otp: String) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.verifyEmail(otp)
+            val result = authRepository.verifyEmail(otp)
             if (result is Response.Success) {
-                mess = result.data.status
+                mess = result.data.message
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

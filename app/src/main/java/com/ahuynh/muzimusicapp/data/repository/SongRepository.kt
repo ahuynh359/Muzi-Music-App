@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.data.repository
 
 import android.net.Uri
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.SongPost
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Constants.SONG
@@ -32,7 +32,7 @@ class SongRepository @Inject constructor(
     fun getSongs() = callbackFlow {
         val snapshotListener = songCollRef.orderBy("name").addSnapshotListener { snapshot, e ->
             val songsResponse = if (snapshot != null) {
-                val songs = snapshot.toObjects(Song::class.java)
+                val songs = snapshot.toObjects(SongOld::class.java)
                 Response.Success(songs)
             } else {
                 Response.Failure(e?.message ?: "Unknown error")
@@ -50,7 +50,7 @@ class SongRepository @Inject constructor(
         return withContext(dispatcher) {
             try {
                 val id = UUID.randomUUID().toString()
-                val song = Song(
+                val songOld = SongOld(
                     id = id,
                     name = newSong.name,
                     file = newSong.file,
@@ -62,7 +62,7 @@ class SongRepository @Inject constructor(
                     listens = mutableMapOf()
 
                 )
-                songCollRef.document(id).set(song).await()
+                songCollRef.document(id).set(songOld).await()
                 Response.Success(true)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
@@ -72,11 +72,11 @@ class SongRepository @Inject constructor(
 
 
 
-    suspend fun getAllSong(): Response<List<Song>> {
+    suspend fun getAllSong(): Response<List<SongOld>> {
         return withContext(dispatcher) {
             try {
                 val songs = songCollRef.get().await()
-                    .toObjects(Song::class.java)
+                    .toObjects(SongOld::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
@@ -95,12 +95,12 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun updateSongListen(song: Song): Response<Boolean> {
+    suspend fun updateSongListen(songOld: SongOld): Response<Boolean> {
         return withContext(dispatcher) {
             try {
 
-                val currentSong = songCollRef.document(song.id!!)
-                val listen = song.listen?.plus(1)
+                val currentSong = songCollRef.document(songOld.id!!)
+                val listen = songOld.listen?.plus(1)
                 val updateData = hashMapOf(
                     "listen" to listen
                 )
@@ -113,17 +113,17 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun updateSongWithCurrentDate(song: Song, currentDate: String): Response<Boolean> {
+    suspend fun updateSongWithCurrentDate(songOld: SongOld, currentDate: String): Response<Boolean> {
         return withContext(dispatcher) {
             try {
 
 
                 val listenCountForCurrentDate =
-                    (song.listens[currentDate] ?: 0) + 1 // Increment listen count for current date
+                    (songOld.listens[currentDate] ?: 0) + 1 // Increment listen count for current date
                 val data = hashMapOf(
                     "listens.$currentDate" to listenCountForCurrentDate
                 )
-                songCollRef.document(song.id!!).update(data as Map<String, Any>).await()
+                songCollRef.document(songOld.id!!).update(data as Map<String, Any>).await()
 
 
 
@@ -135,11 +135,11 @@ class SongRepository @Inject constructor(
     }
 
 
-    suspend fun searchSongs(name: String): Response<List<Song>> {
+    suspend fun searchSongs(name: String): Response<List<SongOld>> {
         return withContext(dispatcher) {
             try {
                 val productsQuery = songCollRef.startAt(name).endAt("$name\uf8ff").get().await()
-                val songs = productsQuery.toObjects(Song::class.java)
+                val songs = productsQuery.toObjects(SongOld::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")
@@ -147,11 +147,11 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun getAllSongByListen(): Response<List<Song>> {
+    suspend fun getAllSongByListen(): Response<List<SongOld>> {
         return withContext(dispatcher) {
             try {
                 val songs = songCollRef.orderBy("listen",Query.Direction.DESCENDING).get().await()
-                    .toObjects(Song::class.java)
+                    .toObjects(SongOld::class.java)
                 Response.Success(songs)
             } catch (e: Exception) {
                 Response.Failure(e.message ?: "Unknown error")

@@ -18,13 +18,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
+import com.ahuynh.muzimusicapp.data_api.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.regex.Pattern
 
 object Utils {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -140,9 +140,7 @@ object Utils {
 
 
 
-
-
-    fun sendMusic(
+    fun sendNewMusic(
         context: Context,
         action: Int,
         song: Song? = null,
@@ -162,6 +160,26 @@ object Utils {
         startMusic(context, intent)
     }
 
+    fun sendMusic(
+        context: Context,
+        action: Int,
+        songOld: SongOld? = null,
+        songOldList: ArrayList<SongOld> = arrayListOf()
+    ) {
+
+        val bundle = Bundle().apply {
+            putParcelable(Constants.SONG, songOld)
+            putParcelableArrayList(Constants.SONG_LIST, songOldList)
+        }
+
+        val intent = Intent(context , MusicService::class.java).apply {
+            putExtra(Constants.ACTION,action)
+            putExtra(Constants.DATA, bundle)
+        }
+
+        startMusic(context, intent)
+    }
+
     fun startMusic(context: Context, intent: Intent) {
         if (VersionHelper.isO()) {
             context.startForegroundService(intent)
@@ -171,9 +189,9 @@ object Utils {
 
     }
 
-    fun getSongWithId(id: List<String>, songs: List<Song>): ArrayList<Song> {
+    fun getSongWithId(id: List<String>, songOlds: List<SongOld>): ArrayList<SongOld> {
         val songId = id.toSet()
-        return songs.filter { it.id in songId } as ArrayList<Song>
+        return songOlds.filter { it.id in songId } as ArrayList<SongOld>
     }
 
     fun getDominantColor(bitmap: Bitmap): Int {

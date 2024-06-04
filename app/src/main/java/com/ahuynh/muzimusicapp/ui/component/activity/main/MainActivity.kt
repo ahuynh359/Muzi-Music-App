@@ -9,7 +9,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -59,8 +58,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         viewModel.restoreState()
         viewModel.getAllSongs()
 
-        viewModel.songList.observe(this) {
-            Constants.SONG_LIST_DATA = it
+        viewModel.songOldList.observe(this) {
+            Constants.SONG_Old_LIST_DATA = it
         }
     }
 
@@ -97,7 +96,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
 
     private fun observe() {
-        viewModel.song.observe(this) {
+        viewModel.songOld.observe(this) {
             if (it == null) {
                 binding.player.visibility = View.GONE
             } else {
@@ -193,8 +192,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
-        event.song?.let {
-            viewModel.song.postValue(it)
+        event.songOld?.let {
+            viewModel.songOld.postValue(it)
         }
     }
 

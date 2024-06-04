@@ -61,7 +61,7 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
             PlaylistDetailAddSongBottomSheetArgs.fromBundle(requireArguments()).playlist
 
         adapter = SongAddAdapter(currentPlaylist,this)
-        adapter.setData(Constants.SONG_LIST_DATA)
+        adapter.setData(Constants.SONG_Old_LIST_DATA)
 
 
         binding.rcySong.adapter = adapter
@@ -69,7 +69,7 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
         binding.btnOk.setOnClickListener {
             for((indexSong, i) in adapter.checkboxStates().withIndex()){
                 if(i){
-                    listSongToAdd.add(Constants.SONG_LIST_DATA.get(indexSong).id!!)
+                    listSongToAdd.add(Constants.SONG_Old_LIST_DATA.get(indexSong).id!!)
                 }
             }
 

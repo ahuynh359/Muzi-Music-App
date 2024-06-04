@@ -2,10 +2,13 @@ package com.ahuynh.muzimusicapp.ui.component.song
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
+import com.ahuynh.muzimusicapp.data_api.model.Album
+import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data_api.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
@@ -15,14 +18,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SongViewModel @Inject constructor(
-    private val repository: SongRepository,
     private val sharePreferencesHelper: SharePreferencesHelper,
     private val playlistRepository: PlaylistRepository,
+    private val albumRepository: AlbumRepository,
+    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository
 ) : BaseViewModel() {
 
+    var albumList = MutableLiveData<List<Album>>()
     var songList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
-    var listenSongList = MutableLiveData<List<Song>>()
+    var listenSongListOld = MutableLiveData<List<SongOld>>()
+
+    var songOfAlbum = MutableLiveData<List<Song>>()
 
     var deleteSong = MutableLiveData<Boolean>()
     var loveSong = MutableLiveData<Boolean>()
@@ -31,13 +38,12 @@ class SongViewModel @Inject constructor(
     var getNotification = MutableLiveData<Int>()
 
 
-    var searchSongList =   MutableLiveData<List<Song>>()
 
 
 
     init {
         getAllSongs()
-        getAllSongByListen()
+        getAllAlbum()
 
     }
 
@@ -51,10 +57,10 @@ class SongViewModel @Inject constructor(
     }
 
 
-    fun deleteSongFromPlaylist(playlist: Playlist, song: Song) {
+    fun deleteSongFromPlaylist(playlist: Playlist, songOld: SongOld) {
         isLoading.postValue(true)
         viewModelScope.launch {
-            val response = playlistRepository.deleteSongFromPlaylist(playlist, song)
+            val response = playlistRepository.deleteSongFromPlaylist(playlist, songOld)
             if (response is Response.Success) {
                 deleteSongFromPlaylist.postValue(response.data)
             } else if (response is Response.Failure) {
@@ -68,99 +74,35 @@ class SongViewModel @Inject constructor(
 
     fun getAllSongs() {
         isLoading.postValue(true)
-        viewModelScope.launch {
-            val response = repository.getAllSong()
-            if (response is Response.Success) {
-                songList.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
+        parentJob = viewModelScope.launch {
+            songList.postValue(songRepository.getAllSong())
         }
         registerEventParentJobFinish()
     }
 
-    fun updateSongListen(song: Song) {
+    fun getSongOfAlbum(id: Long) {
         isLoading.postValue(true)
-        viewModelScope.launch() {
-            val response = repository.updateSongListen(song)
-            if (response is Response.Success) {
-                message.postValue("Ok")
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-
-
+        parentJob = viewModelScope.launch {
+            songOfAlbum.postValue(albumRepository.getSongsFromAlbum(id))
         }
         registerEventParentJobFinish()
     }
 
-    fun updateSongWithCurrentDate(song: Song, currentDate: String) {
+
+    fun getAllAlbum() {
         isLoading.postValue(true)
-
-        viewModelScope.launch()
-        {
-            val response1 = repository.updateSongWithCurrentDate(song, currentDate)
-            if (response1 is Response.Success) {
-                message.postValue("Ok")
-            } else if (response1 is Response.Failure) {
-                message.postValue(response1.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
-
-    fun searchSong(name : String ){
-        isLoading.postValue(true)
-        viewModelScope.launch {
-            val response = repository.searchSongs(name)
-            if (response is Response.Success) {
-                searchSongList.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
-
-    fun deleteSong(song: Song) {
-        isLoading.postValue(true)
-        viewModelScope.launch() {
-            val response = repository.deleteSong(song.id!!)
-            if (response is Response.Success) {
-                deleteSong.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
+        parentJob = viewModelScope.launch {
+            albumList.postValue(albumRepository.getAllAlbum())
         }
         registerEventParentJobFinish()
     }
 
 
-    fun getAllSongByListen(){
-        isLoading.postValue(true)
-        viewModelScope.launch() {
-            val response = repository.getAllSongByListen()
-            if (response is Response.Success) {
-                listenSongList.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
 
-    fun updateSongLoveStatus(id: String, newLoveStatus: Boolean) {
-        isLoading.postValue(true)
-        viewModelScope.launch() {
-            val response = repository.updateSongLoveStatus(id, newLoveStatus)
-            if (response is Response.Success) {
-                loveSong.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
+
+
+
+
 
 
 

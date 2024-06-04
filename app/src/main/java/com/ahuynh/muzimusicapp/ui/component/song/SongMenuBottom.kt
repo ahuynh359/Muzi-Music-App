@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMenuBottomBinding
 import com.ahuynh.muzimusicapp.ui.dialog.ConfirmDialog
@@ -69,7 +69,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
             binding.icHeart.setImageResource(R.drawable.ic_hearted)
         }
         binding.btnLove.setOnClickListener {
-            viewModel.updateSongLoveStatus(currentSong.id!!, !currentSong.love)
+            //viewModel.updateSongLoveStatus(currentSong.id!!, !currentSong.love)
             viewModel.loveSong.observe(viewLifecycleOwner) {
                 if (it) {
                     dismiss()
@@ -84,7 +84,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
     private fun showDialogConfirm(
         title: String,
         message: String,
-        currentSong: Song? = null,
+        currentSongOld: SongOld? = null,
         currentPlaylist: Playlist? = null
     ) {
         ConfirmDialog(
@@ -99,8 +99,8 @@ class SongMenuBottom : BottomSheetDialogFragment() {
                 }
 
                 override fun positiveAction() {
-                    if (currentPlaylist == null && currentSong != null) {
-                        viewModel.deleteSong(currentSong!!)
+                    if (currentPlaylist == null && currentSongOld != null) {
+                        //viewModel.deleteSong(currentSongOld!!)
                         viewModel.deleteSong.observe(viewLifecycleOwner) {
                             if (it) {
                                 dismiss()
@@ -109,7 +109,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
                             }
                         }
                     }  else if(currentPlaylist != null){
-                        viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSong!!)
+                        viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSongOld!!)
                         viewModel.deleteSongFromPlaylist.observe(viewLifecycleOwner) {
                             if (it) {
                                 dismiss()

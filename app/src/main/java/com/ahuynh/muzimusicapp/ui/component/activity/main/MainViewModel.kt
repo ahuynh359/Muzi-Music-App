@@ -2,7 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.activity.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -19,9 +19,9 @@ class MainViewModel @Inject constructor(private val appSharePreferencesHelper: S
 
                                         ) : BaseViewModel() {
 
-    var song = MutableLiveData<Song>()
+    var songOld = MutableLiveData<SongOld>()
     var isPlaying = MutableLiveData(false)
-    var songList = MutableLiveData<List<Song>>()
+    var songOldList = MutableLiveData<List<SongOld>>()
 
      fun restoreState(){
         viewModelScope.launch{
@@ -36,7 +36,7 @@ class MainViewModel @Inject constructor(private val appSharePreferencesHelper: S
         viewModelScope.launch {
             val response = songRes.getAllSong()
             if (response is Response.Success) {
-                songList.postValue(response.data)
+                songOldList.postValue(response.data)
 
             } else if (response is Response.Failure) {
                 message.postValue(response.errorMessage)

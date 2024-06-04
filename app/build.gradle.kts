@@ -45,6 +45,13 @@ android {
 }
 
 dependencies {
+
+
+    //Chip
+
+    implementation (libs.androidx.core.ktx)
+
+
     //Retrofit
     implementation (libs.retrofit.v290)
     implementation (libs.converter.moshi)
@@ -97,6 +104,7 @@ dependencies {
 
     //Glide
     implementation (libs.glide)
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
     //Navigation Graph
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -127,9 +135,7 @@ dependencies {
 
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.ui.android)
-    implementation (libs.androidx.core.ktx)
     implementation (libs.androidx.media)
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
