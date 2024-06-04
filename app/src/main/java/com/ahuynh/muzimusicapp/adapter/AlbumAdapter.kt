@@ -22,7 +22,7 @@ class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
                 listener.onAlbumClicked(currentList[layoutPosition])
             }
             binding.btnMore.setOnClickListener {
-                listener.onMoreItemClicked(currentList[layoutPosition])
+                listener.onMoreItemAlbumClicked(currentList[layoutPosition])
             }
 
         }
@@ -73,6 +73,6 @@ class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
 
 interface OnAlbumAdapterClicked {
     fun onAlbumClicked(album: Album)
-    fun onMoreItemClicked(album: Album)
+    fun onMoreItemAlbumClicked(album: Album)
 
 }

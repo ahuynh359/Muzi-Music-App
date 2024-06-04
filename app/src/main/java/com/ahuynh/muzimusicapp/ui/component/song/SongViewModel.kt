@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.SongOld
 import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data_api.model.Album
 import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data_api.model.Type
 import com.ahuynh.muzimusicapp.data_api.repository.AlbumRepository
+import com.ahuynh.muzimusicapp.data_api.repository.TypeRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
@@ -21,10 +22,12 @@ class SongViewModel @Inject constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
     private val playlistRepository: PlaylistRepository,
     private val albumRepository: AlbumRepository,
-    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository
+    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository,
+    private val typeRepository: TypeRepository
 ) : BaseViewModel() {
 
     var albumList = MutableLiveData<List<Album>>()
+    var typeList = MutableLiveData<List<Type>>()
     var songList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
     var listenSongListOld = MutableLiveData<List<SongOld>>()
@@ -38,12 +41,10 @@ class SongViewModel @Inject constructor(
     var getNotification = MutableLiveData<Int>()
 
 
-
-
-
     init {
         getAllSongs()
         getAllAlbum()
+        getAllType()
 
     }
 
@@ -71,11 +72,18 @@ class SongViewModel @Inject constructor(
     }
 
 
-
     fun getAllSongs() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             songList.postValue(songRepository.getAllSong())
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun getAllType() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            typeList.postValue(typeRepository.getAllType())
         }
         registerEventParentJobFinish()
     }
@@ -96,17 +104,16 @@ class SongViewModel @Inject constructor(
         }
         registerEventParentJobFinish()
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+

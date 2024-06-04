@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.di
 import com.ahuynh.muzimusicapp.data_api.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data_api.api.AuthAPI
 import com.ahuynh.muzimusicapp.data_api.api.SongAPI
+import com.ahuynh.muzimusicapp.data_api.api.TypeAPI
 import com.ahuynh.muzimusicapp.utils.Constants.ACCESS_TOKEN
 import com.ahuynh.muzimusicapp.utils.Constants.BASE_URL
 import com.squareup.moshi.Moshi
@@ -93,6 +94,11 @@ class NetworkModule {
     @Provides
     fun provideSongAPI(retrofit: Retrofit): SongAPI {
         return retrofit.create(SongAPI::class.java)
+    }
+
+    @Provides
+    fun provideTypeAPI(retrofit: Retrofit): TypeAPI {
+        return retrofit.create(TypeAPI::class.java)
     }
 
 }
