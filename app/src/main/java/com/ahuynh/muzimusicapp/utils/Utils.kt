@@ -26,13 +26,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 object Utils {
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private var permissions = arrayListOf(
-        Manifest.permission.RECORD_AUDIO,
-        Manifest.permission.POST_NOTIFICATIONS,
-            Manifest.permission.MODIFY_AUDIO_SETTINGS
-    )
-    private val listOfPermissionsDenied = arrayListOf<String>()
 
     inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
         SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
@@ -82,27 +75,6 @@ object Utils {
     }
 
 
-    fun checkSinglePermissionAny(
-        activity: Activity,
-        permissionName: String,
-        permissionCode: Int
-    ): Boolean {
-        if (ContextCompat.checkSelfPermission(
-                activity,
-                permissionName
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(permissionName),
-                permissionCode
-            )
-        } else {
-            return true
-        }
-        return false
-    }
-
 
 
     fun convertDpToPixel(dp: Float, context: Context): Int {
@@ -112,8 +84,6 @@ object Utils {
             context.resources.displayMetrics
         ).toInt()
     }
-
-
 
 
 

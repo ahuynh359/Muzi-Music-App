@@ -1,5 +1,7 @@
 package com.ahuynh.muzimusicapp.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
@@ -8,6 +10,8 @@ import com.ahuynh.muzimusicapp.data.api.TypeAPI
 import com.ahuynh.muzimusicapp.data.api.UserAPI
 import com.ahuynh.muzimusicapp.utils.Constants.ACCESS_TOKEN
 import com.ahuynh.muzimusicapp.utils.Constants.BASE_URL
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper.Companion.TOKEN
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -26,15 +30,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
+
     @Provides
     @Singleton
-    fun provideAuthInterceptor(): Interceptor {
+    fun provideAuthInterceptor(pref : SharePreferencesHelper): Interceptor {
         return Interceptor { chain ->
+
             val request = chain.request().newBuilder()
                 .header("Accept", "application/json")
-                .header("Authorization", "Bearer $ACCESS_TOKEN")
+                .header("Authorization", "Bearer ${pref.getToken()}")
                 .build()
-            Log.d("ABCDE", ACCESS_TOKEN)
+            Log.d("ABCDE",pref.getToken())
             chain.proceed(request)
         }
     }

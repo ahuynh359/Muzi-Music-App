@@ -19,7 +19,7 @@ object FileHelper {
     private val DEFAULT_BUFFER_SIZE = 1024 * 4
 
     //Create file by uri
-    public fun from(context: Context, uri: Uri): File? {
+     fun from(context: Context, uri: Uri): File? {
         return try {
             val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
             val fileName = getFileName(context, uri)

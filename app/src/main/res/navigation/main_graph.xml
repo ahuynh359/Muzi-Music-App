@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/songFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.song.SongFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_song" >
         <action
@@ -17,77 +17,19 @@
             android:id="@+id/action_songFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/chartFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.chart.ChartFragment"
-        android:label="Chart"
-        tools:layout="@layout/fragment_chart" />
 
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
-        android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" >
-        <argument
-            android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
-        <action
-            android:id="@+id/action_playlistFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/action_playlistFragment_to_playlistModelBottomSheet"
-            app:destination="@id/playlistModelBottomSheet" />
-    </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistDeatailFragment"
-        android:label="fragment_playlist_detail"
-        tools:layout="@layout/detail_fragment" >
-        <argument
-            android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
-        <action
-            android:id="@+id/action_detailFragment_to_playlistDetailAddSongBottomSheet"
-            app:destination="@id/playlistDetailAddSongBottomSheet" />
-        <action
-            android:id="@+id/action_detailFragment_to_songMenuBottom"
-            app:destination="@id/songMenuBottom" />
-    </fragment>
-    <dialog
-        android:id="@+id/playlistModelBottomSheet"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistModelBottomSheet"
-        android:label="PlaylistModelBottomSheet">
-        <argument
-            android:name="playlist"
-            android:defaultValue="@null"
-            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist"
-            app:nullable="true" />
-    </dialog>
-    <dialog
-        android:id="@+id/playlistDetailAddSongBottomSheet"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistDetailAddSongBottomSheet"
-        android:label="PlaylistDetailAddSongBottomSheet" >
-        <argument
-            android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.data.model.playlist.Playlist" />
-    </dialog>
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.setting.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+
+
+
     <dialog
         android:id="@+id/songMenuBottom"
-        android:name="com.ahuynh.muzimusicapp.ui.component.song.SongMenuBottom"
+        android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeMenuBottom"
         android:label="SongMenuBottom" >
         <argument
             android:name="song"
             app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
     </dialog>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.search.SearchFragment"
-        android:label="SearchFragment" />
+
     <fragment
         android:id="@+id/detailAlbumFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.album.DetailAlbumFragment"

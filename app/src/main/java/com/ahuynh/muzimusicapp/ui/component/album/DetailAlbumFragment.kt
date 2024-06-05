@@ -14,7 +14,7 @@ import com.ahuynh.muzimusicapp.databinding.FragmentDetailAlbumBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
+import com.ahuynh.muzimusicapp.ui.component.home.HomeViewModel
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -30,7 +30,7 @@ class DetailAlbumFragment :
     }
 
     private lateinit var songAdapter: SongAdapter
-    private val viewModel by viewModels<SongViewModel>({ requireActivity() })
+    private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
     private lateinit var songOfAlbum: ArrayList<Song>
     private lateinit var currentAlbum: Album
 

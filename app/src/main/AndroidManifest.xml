@@ -38,9 +38,7 @@
         <activity
             android:name=".ui.component.activity.auth.AuthActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.component.search.SearchFragment"
-            android:exported="false" />
+
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -49,10 +47,6 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/green" />
 
-        <activity
-            android:name=".ui.component.upload.UploadActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.component.player.PlayerActivity"
             android:exported="false" />

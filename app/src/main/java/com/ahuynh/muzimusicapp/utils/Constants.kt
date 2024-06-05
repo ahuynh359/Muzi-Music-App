@@ -1,17 +1,9 @@
 package com.ahuynh.muzimusicapp.utils
 
-import androidx.lifecycle.MutableLiveData
 
 object Constants {
-    enum class SortingOrder {
-        ASCENDING,
-        DESCENDING
-    }
-
-
 
     const val NOTIFICATION_ID = 101
-
     const val PERMISSION_REQUEST_ID = 1
 
     const val SONG ="song"
