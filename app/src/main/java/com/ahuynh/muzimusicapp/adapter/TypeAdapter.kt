@@ -5,13 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data_api.model.Song
-import com.ahuynh.muzimusicapp.data_api.model.Type
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
+import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.ItemTypeBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class TypeAdapter(private val listener: OnTypeClicked) :
     ListAdapter<Type, TypeAdapter.ViewHolder>(DiffCallback()) {

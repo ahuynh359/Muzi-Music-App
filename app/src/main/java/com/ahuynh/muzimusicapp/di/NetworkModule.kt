@@ -1,9 +1,11 @@
 package com.ahuynh.muzimusicapp.di
 
-import com.ahuynh.muzimusicapp.data_api.api.AlbumAPI
-import com.ahuynh.muzimusicapp.data_api.api.AuthAPI
-import com.ahuynh.muzimusicapp.data_api.api.SongAPI
-import com.ahuynh.muzimusicapp.data_api.api.TypeAPI
+import android.util.Log
+import com.ahuynh.muzimusicapp.data.api.AlbumAPI
+import com.ahuynh.muzimusicapp.data.api.AuthAPI
+import com.ahuynh.muzimusicapp.data.api.SongAPI
+import com.ahuynh.muzimusicapp.data.api.TypeAPI
+import com.ahuynh.muzimusicapp.data.api.UserAPI
 import com.ahuynh.muzimusicapp.utils.Constants.ACCESS_TOKEN
 import com.ahuynh.muzimusicapp.utils.Constants.BASE_URL
 import com.squareup.moshi.Moshi
@@ -32,6 +34,7 @@ class NetworkModule {
                 .header("Accept", "application/json")
                 .header("Authorization", "Bearer $ACCESS_TOKEN")
                 .build()
+            Log.d("ABCDE", ACCESS_TOKEN)
             chain.proceed(request)
         }
     }
@@ -81,11 +84,9 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideUserAPI(retrofit: Retrofit): AuthAPI {
+    fun provideAuthAPI(retrofit: Retrofit): AuthAPI {
         return retrofit.create(AuthAPI::class.java)
     }
-
-
     @Provides
     fun provideAlbumAPI(retrofit: Retrofit): AlbumAPI {
         return retrofit.create(AlbumAPI::class.java)
@@ -101,4 +102,9 @@ class NetworkModule {
         return retrofit.create(TypeAPI::class.java)
     }
 
+    @Provides
+    fun provideUserAPI(retrofit: Retrofit): UserAPI {
+        return retrofit.create(UserAPI::class.java)
+
+    }
 }

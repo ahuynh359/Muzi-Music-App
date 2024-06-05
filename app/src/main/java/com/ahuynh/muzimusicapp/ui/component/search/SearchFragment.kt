@@ -1,36 +1,24 @@
 package com.ahuynh.muzimusicapp.ui.component.search
 
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.data.model.SongOld
-import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
-import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.ui.component.song.SongFragmentDirections
 import com.ahuynh.muzimusicapp.ui.component.song.SongViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Utils
-import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
-    NewSongAdapter.OnNewSongClicked {
+    SongAdapter.OnNewSongClicked {
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
-    private lateinit var adapter: NewSongAdapter
+    private lateinit var adapter: SongAdapter
 
     companion object {
         const val TAG = "SearchFragment"
@@ -38,7 +26,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = NewSongAdapter(this)
+        adapter = SongAdapter(this)
         binding.rcySong.adapter = adapter
         observe()
         handleUI()

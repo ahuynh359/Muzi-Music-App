@@ -2,8 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.activity.auth.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data_api.model.request.SignUpRequest
-import com.ahuynh.muzimusicapp.data_api.repository.AuthRepository
+import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
+import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val sharePreferencesHelper: SharePreferencesHelper,
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
     var mess: String? = null

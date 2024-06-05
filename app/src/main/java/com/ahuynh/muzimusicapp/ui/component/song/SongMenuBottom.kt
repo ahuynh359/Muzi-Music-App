@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.SongOld
-import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
+import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMenuBottomBinding
 import com.ahuynh.muzimusicapp.ui.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
@@ -84,7 +83,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
     private fun showDialogConfirm(
         title: String,
         message: String,
-        currentSongOld: SongOld? = null,
+        oldSong: Song? = null,
         currentPlaylist: Playlist? = null
     ) {
         ConfirmDialog(
@@ -99,7 +98,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
                 }
 
                 override fun positiveAction() {
-                    if (currentPlaylist == null && currentSongOld != null) {
+                    if (currentPlaylist == null && oldSong != null) {
                         //viewModel.deleteSong(currentSongOld!!)
                         viewModel.deleteSong.observe(viewLifecycleOwner) {
                             if (it) {
@@ -109,7 +108,7 @@ class SongMenuBottom : BottomSheetDialogFragment() {
                             }
                         }
                     }  else if(currentPlaylist != null){
-                        viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSongOld!!)
+                        //viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSongOld!!)
                         viewModel.deleteSongFromPlaylist.observe(viewLifecycleOwner) {
                             if (it) {
                                 dismiss()

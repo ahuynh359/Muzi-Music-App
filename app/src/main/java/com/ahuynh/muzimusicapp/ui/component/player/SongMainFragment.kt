@@ -36,16 +36,9 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
 
         viewModel.song.observe(viewLifecycleOwner) { song ->
 
-            viewModel.getSingerOfSong(song.id)
-            viewModel.singers.observe(viewLifecycleOwner) {
-               var str = ""
-                for(user in it){
-                    str += user.username + ", "
-                }
-                binding.tvSinger.text = str
-            }
 
             binding.tvSongName.text = song.name
+            binding.tvSinger.text = song.singer
 
 
             Glide

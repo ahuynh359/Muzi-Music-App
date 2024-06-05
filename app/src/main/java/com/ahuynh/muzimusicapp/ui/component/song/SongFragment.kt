@@ -2,17 +2,19 @@ package com.ahuynh.muzimusicapp.ui.component.song
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
-import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.OnAlbumAdapterClicked
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
-import com.ahuynh.muzimusicapp.data_api.model.Album
-import com.ahuynh.muzimusicapp.data_api.model.Song
-import com.ahuynh.muzimusicapp.data_api.model.Type
+import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -23,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
-    NewSongAdapter.OnNewSongClicked, OnAlbumAdapterClicked, TypeAdapter.OnTypeClicked {
+    SongAdapter.OnNewSongClicked, OnAlbumAdapterClicked, TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
 
@@ -31,7 +33,7 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
         const val TAG = "SongFragment"
     }
 
-    private val songAdapter = NewSongAdapter(this)
+    private val songAdapter = SongAdapter(this)
     private val albumAdapter = AlbumAdapter(this)
     private val typeAdapter = TypeAdapter(this)
     private var listSong: ArrayList<Song> = arrayListOf()
@@ -40,75 +42,114 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        viewModel.accessToken.observe(viewLifecycleOwner){
+            Log.d("ABCD",it)
+        }
         handleUI()
-        observe()
-        getData()
+        //observe()
+        //getData()
 
     }
 
     private fun getData() {
         viewModel.getAllSongs()
+        viewModel.getAllAlbum()
+        viewModel.getAllType()
         viewModel.getUnreadNoti()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rcyAlbum.visibility = View.GONE
+        binding.rcyType.visibility = View.GONE
+        viewModel.songList.observe(viewLifecycleOwner) {
+            binding.swipe.isRefreshing = false
+            binding.rcySong.visibility = View.VISIBLE
+            if (it != null) {
+                listSong = it as ArrayList<Song>
+                songAdapter.submitList(it)
+            }
+            hideShimmer()
+
+
+        }
+        val defaultChipId = binding.chipGroup.getChildAt(0)?.id
+        if (defaultChipId != null) {
+            binding.chipGroup.check(defaultChipId)
+        }
+    }
 
 
     private fun handleUI() {
+
+
         binding.rcySong.adapter = songAdapter
         binding.rcyAlbum.adapter = albumAdapter
         binding.rcyType.adapter = typeAdapter
-        binding.swipe.setOnRefreshListener {
 
-            getData()
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            val selectedChip = group.checkedChipId
+
+            when (selectedChip) {
+                R.id.song -> {
+                    binding.swipe.setOnRefreshListener {
+
+                        viewModel.getAllSongs()
+                    }
+
+                    binding.rcyAlbum.visibility = View.GONE
+                    binding.rcyType.visibility = View.GONE
+                    viewModel.songList.observe(viewLifecycleOwner) {
+                        binding.swipe.isRefreshing = false
+                        binding.rcySong.visibility = View.VISIBLE
+                        if (it != null) {
+                            listSong = it as ArrayList<Song>
+                            songAdapter.submitList(it)
+                        }
+                        hideShimmer()
+
+
+                    }
+                }
+
+                R.id.album -> {
+                    binding.swipe.setOnRefreshListener {
+
+                        viewModel.getAllAlbum()
+                    }
+                    binding.rcySong.visibility = View.GONE
+                    binding.rcyType.visibility = View.GONE
+                    viewModel.albumList.observe(viewLifecycleOwner) {
+                        binding.swipe.isRefreshing = false
+                        albumAdapter.submitList(it)
+
+                        binding.rcyAlbum.visibility = View.VISIBLE
+                        listAlbum = it as ArrayList<Album>
+                        hideShimmer()
+
+                    }
+
+                }
+
+                R.id.type -> {
+                    binding.swipe.setOnRefreshListener {
+
+                        viewModel.getAllType()
+                    }
+                    binding.rcySong.visibility = View.GONE
+                    binding.rcyAlbum.visibility = View.GONE
+                    viewModel.typeList.observe(viewLifecycleOwner) {
+                        binding.swipe.isRefreshing = false
+                        typeAdapter.submitList(it)
+                        binding.rcyType.visibility = View.VISIBLE
+                        typeList = it as ArrayList<Type>
+                        hideShimmer()
+
+                    }
+                }
+            }
         }
-        binding.song.setOnClickListener(View.OnClickListener { view ->
-            Toast.makeText(requireContext(), "0", Toast.LENGTH_LONG).show()
-            binding.rcyAlbum.visibility = View.GONE
-            binding.rcyType.visibility = View.GONE
-            viewModel.songList.observe(viewLifecycleOwner) {
-                binding.swipe.isRefreshing = false
-                songAdapter.submitList(it)
-                binding.rcySong.visibility = View.VISIBLE
-                listSong = it as ArrayList<Song>
-                hideShimmer()
-
-
-            }
-
-        })
-
-        binding.album.setOnClickListener(View.OnClickListener { view ->
-            Toast.makeText(requireContext(), "1", Toast.LENGTH_LONG).show()
-            binding.rcySong.visibility = View.GONE
-            binding.rcyType.visibility = View.GONE
-            viewModel.albumList.observe(viewLifecycleOwner) {
-                binding.swipe.isRefreshing = false
-                albumAdapter.submitList(it)
-                binding.rcyAlbum.visibility = View.VISIBLE
-                listAlbum = it as ArrayList<Album>
-                hideShimmer()
-
-            }
-
-        })
-
-        binding.type.setOnClickListener(View.OnClickListener { view ->
-            Toast.makeText(requireContext(), "2", Toast.LENGTH_LONG).show()
-            binding.rcySong.visibility = View.GONE
-            binding.rcyAlbum.visibility = View.GONE
-            viewModel.typeList.observe(viewLifecycleOwner) {
-                binding.swipe.isRefreshing = false
-                typeAdapter.submitList(it)
-                binding.rcyType.visibility = View.VISIBLE
-                typeList = it as ArrayList<Type>
-                hideShimmer()
-
-            }
-
-        })
 
 
 
@@ -119,9 +160,12 @@ class SongFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::infl
 
         viewModel.songList.observe(viewLifecycleOwner) {
             binding.swipe.isRefreshing = false
-            songAdapter.submitList(it)
+
             binding.rcySong.visibility = View.VISIBLE
-            listSong = it as ArrayList<Song>
+            if (it != null) {
+                listSong = it as ArrayList<Song>
+                songAdapter.submitList(it)
+            }
             hideShimmer()
 
 

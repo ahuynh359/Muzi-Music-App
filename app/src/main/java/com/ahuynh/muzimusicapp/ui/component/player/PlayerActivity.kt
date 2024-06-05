@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
-import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseActivity
@@ -276,7 +276,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
-        event.songOld?.let {
+        event.song?.let {
             viewModel.song.postValue(it)
         }
     }

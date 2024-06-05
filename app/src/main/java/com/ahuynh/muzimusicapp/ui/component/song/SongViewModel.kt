@@ -2,15 +2,15 @@ package com.ahuynh.muzimusicapp.ui.component.song
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.SongOld
-import com.ahuynh.muzimusicapp.data.model.playlist.Playlist
-import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
-import com.ahuynh.muzimusicapp.data_api.model.Album
-import com.ahuynh.muzimusicapp.data_api.model.Song
-import com.ahuynh.muzimusicapp.data_api.model.Type
-import com.ahuynh.muzimusicapp.data_api.repository.AlbumRepository
-import com.ahuynh.muzimusicapp.data_api.repository.TypeRepository
+import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.Type
+import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
+import com.ahuynh.muzimusicapp.data.repository.SongRepository
+import com.ahuynh.muzimusicapp.data.repository.TypeRepository
+import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,22 +20,21 @@ import javax.inject.Inject
 @HiltViewModel
 class SongViewModel @Inject constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
-    private val playlistRepository: PlaylistRepository,
     private val albumRepository: AlbumRepository,
-    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository,
-    private val typeRepository: TypeRepository
+    private val songRepository: SongRepository,
+    private val typeRepository: TypeRepository,
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     var albumList = MutableLiveData<List<Album>>()
     var typeList = MutableLiveData<List<Type>>()
     var songList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
-    var listenSongListOld = MutableLiveData<List<SongOld>>()
+    var accessToken = MutableLiveData<String>()
 
     var songOfAlbum = MutableLiveData<List<Song>>()
 
     var deleteSong = MutableLiveData<Boolean>()
-    var loveSong = MutableLiveData<Boolean>()
 
     var sortIndex = MutableLiveData<Int>(-1)
     var getNotification = MutableLiveData<Int>()
@@ -45,8 +44,20 @@ class SongViewModel @Inject constructor(
         getAllSongs()
         getAllAlbum()
         getAllType()
+        getAccessToken()
 
     }
+
+    fun getAccessToken() {
+
+        viewModelScope.launch {
+            accessToken.postValue(sharePreferencesHelper.getToken())
+            Constants.ACCESS_TOKEN = accessToken.value.toString()
+
+        }
+
+    }
+
 
     fun getUnreadNoti() {
 
@@ -58,18 +69,6 @@ class SongViewModel @Inject constructor(
     }
 
 
-    fun deleteSongFromPlaylist(playlist: Playlist, songOld: SongOld) {
-        isLoading.postValue(true)
-        viewModelScope.launch {
-            val response = playlistRepository.deleteSongFromPlaylist(playlist, songOld)
-            if (response is Response.Success) {
-                deleteSongFromPlaylist.postValue(response.data)
-            } else if (response is Response.Failure) {
-                message.postValue(response.errorMessage)
-            }
-        }
-        registerEventParentJobFinish()
-    }
 
 
     fun getAllSongs() {

@@ -10,8 +10,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.ui.component.activity.main.MainActivity
-import com.ahuynh.muzimusicapp.utils.Constants.FCM_KEY
-import com.ahuynh.muzimusicapp.utils.Constants.updateNoti
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -28,7 +26,7 @@ class NotificationService : FirebaseMessagingService() {
         remoteMessage.notification?.let {
             Log.d(TAG, "Message Notification Body: ${it.body}")
             sendNotification(it.body!!)
-            updateNoti.postValue(true)
+
         }
 
 
@@ -38,7 +36,6 @@ class NotificationService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
 
-        FCM_KEY = token
 
     }
 

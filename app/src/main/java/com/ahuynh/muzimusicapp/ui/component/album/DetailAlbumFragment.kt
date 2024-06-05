@@ -7,9 +7,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
-import com.ahuynh.muzimusicapp.data_api.model.Album
-import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
+import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailAlbumBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -23,13 +23,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailAlbumFragment :
     BaseFragment<FragmentDetailAlbumBinding>(FragmentDetailAlbumBinding::inflate),
-    NewSongAdapter.OnNewSongClicked {
+    SongAdapter.OnNewSongClicked {
 
     companion object {
         const val TAG = "DetailAlbumFragment"
     }
 
-    private lateinit var songAdapter: NewSongAdapter
+    private lateinit var songAdapter: SongAdapter
     private val viewModel by viewModels<SongViewModel>({ requireActivity() })
     private lateinit var songOfAlbum: ArrayList<Song>
     private lateinit var currentAlbum: Album
@@ -37,7 +37,7 @@ class DetailAlbumFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentAlbum = DetailAlbumFragmentArgs.fromBundle(requireArguments()).album
-        songAdapter = NewSongAdapter(this)
+        songAdapter = SongAdapter(this)
         binding.rcySongs.adapter = songAdapter
 
         handleUI()

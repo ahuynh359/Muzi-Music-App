@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.DetailFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistDeatailFragment"
         android:label="fragment_playlist_detail"
         tools:layout="@layout/detail_fragment" >
         <argument
@@ -82,7 +82,7 @@
         android:label="SongMenuBottom" >
         <argument
             android:name="song"
-            app:argType="com.ahuynh.muzimusicapp.data_api.model.Song" />
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
     </dialog>
     <fragment
         android:id="@+id/searchFragment"
@@ -95,6 +95,6 @@
         tools:layout="@layout/fragment_detail_album" >
         <argument
             android:name="album"
-            app:argType="com.ahuynh.muzimusicapp.data_api.model.Album" />
+            app:argType="com.ahuynh.muzimusicapp.data.model.Album" />
     </fragment>
 </navigation>

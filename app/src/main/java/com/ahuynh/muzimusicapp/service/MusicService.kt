@@ -25,7 +25,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.MuziMusicApplication
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.ACTION

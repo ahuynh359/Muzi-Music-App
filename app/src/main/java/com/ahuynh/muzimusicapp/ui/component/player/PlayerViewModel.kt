@@ -2,13 +2,10 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.SongOld
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
-import com.ahuynh.muzimusicapp.data_api.model.Song
-import com.ahuynh.muzimusicapp.data_api.model.User
+import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
-    private val songRepository: com.ahuynh.muzimusicapp.data_api.repository.SongRepository,
+    private val userRepository: UserRepository,
     private val sharePreferencesHelper: SharePreferencesHelper
 ) :
     BaseViewModel() {
@@ -33,7 +30,12 @@ class PlayerViewModel @Inject constructor(
     var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
     var isUserTouchSlider = false
     var audioSessionId = MutableLiveData(0)
-    var singers =  MutableLiveData<List<User>>()
+    var id = MutableLiveData<String>()
+    var username = MutableLiveData<String>()
+
+    init{
+
+    }
 
     fun setShuffle(value: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,16 +47,17 @@ class PlayerViewModel @Inject constructor(
         }
     }
 
-     fun getSingerOfSong(id : Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            singers.postValue(songRepository.getSingerFromSongById(id))
-        }
-        registerEventParentJobFinish()
-    }
+
 
     fun getShuffle() {
         viewModelScope.launch(Dispatchers.IO) {
+            isShuffle.postValue(sharePreferencesHelper.isShuffle())
+        }
+
+    }
+
+    fun getUserName() {
+        viewModelScope.launch() {
             isShuffle.postValue(sharePreferencesHelper.isShuffle())
         }
 
@@ -71,6 +74,14 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun getRepeat() {
+        viewModelScope.launch(Dispatchers.IO){
+            isRepeat.postValue(sharePreferencesHelper.isRepeat())
+        }
+
+    }
+
+
+    fun getUserLogin() {
         viewModelScope.launch(Dispatchers.IO){
             isRepeat.postValue(sharePreferencesHelper.isRepeat())
         }

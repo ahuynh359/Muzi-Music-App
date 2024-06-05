@@ -18,8 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
-import com.ahuynh.muzimusicapp.data.model.SongOld
-import com.ahuynh.muzimusicapp.data_api.model.Song
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
@@ -105,23 +104,6 @@ object Utils {
     }
 
 
-    fun showWarningDialog(activity: Activity){
-        warningPermissionDialog(activity) { _: DialogInterface?, which: Int ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    if (checkSinglePermissionAny(
-                            activity,
-                            Manifest.permission.POST_NOTIFICATIONS,
-                            Constants.PERMISSION_REQUEST_ID
-                        )
-                    ) {
-                        Toast.makeText(activity, "Granted", Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-            }
-        }
-    }
 
     fun convertDpToPixel(dp: Float, context: Context): Int {
         return TypedValue.applyDimension(
@@ -131,12 +113,7 @@ object Utils {
         ).toInt()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getCurrentDateAsString(): String {
-        val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        return currentDate.format(formatter)
-    }
+
 
 
 
@@ -163,13 +140,13 @@ object Utils {
     fun sendMusic(
         context: Context,
         action: Int,
-        songOld: SongOld? = null,
-        songOldList: ArrayList<SongOld> = arrayListOf()
+        song: Song? = null,
+        songList: ArrayList<Song> = arrayListOf()
     ) {
 
         val bundle = Bundle().apply {
-            putParcelable(Constants.SONG, songOld)
-            putParcelableArrayList(Constants.SONG_LIST, songOldList)
+            putParcelable(Constants.SONG, song)
+            putParcelableArrayList(Constants.SONG_LIST, songList)
         }
 
         val intent = Intent(context , MusicService::class.java).apply {
@@ -189,16 +166,7 @@ object Utils {
 
     }
 
-    fun getSongWithId(id: List<String>, songOlds: List<SongOld>): ArrayList<SongOld> {
-        val songId = id.toSet()
-        return songOlds.filter { it.id in songId } as ArrayList<SongOld>
-    }
 
-    fun getDominantColor(bitmap: Bitmap): Int {
-        val palette = Palette.from(bitmap).generate()
-        val dominantSwatch = palette.dominantSwatch
-        return dominantSwatch?.rgb ?: 0
-    }
 
     fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();

@@ -1,9 +1,10 @@
 package com.ahuynh.muzimusicapp.ui.component.activity.auth.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data_api.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data_api.repository.AuthRepository
+import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
+import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
@@ -32,8 +33,10 @@ class LoginViewModel @Inject constructor(
                     loginRequest.userNameOrEmail,
                     loginRequest.password
                 )
-                sharePreferencesHelper.saveToken(result.data.message)
-                Constants.ACCESS_TOKEN = result.data.message
+                val token = result.data.data as String
+                Log.d("ABC",token)
+                sharePreferencesHelper.saveToken(token)
+                Constants.ACCESS_TOKEN = token
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

@@ -6,23 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.adapter.OnSongAddAdapter
-import com.ahuynh.muzimusicapp.adapter.SongAddAdapter
 import com.ahuynh.muzimusicapp.databinding.DialogModelBottomSheetAddSongBinding
-import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddAdapter {
+class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "PlaylistDetailAddSongBottomSheet"
     }
 
-    private lateinit var adapter: SongAddAdapter
+    //private lateinit var adapter: SongAddAdapter
     private lateinit var binding: DialogModelBottomSheetAddSongBinding
-    private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
+
+    //private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +29,7 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
             false
         )
 
-        handleUI()
+        //handleUI()
         return binding.root
     }
 
@@ -56,37 +52,34 @@ class PlaylistDetailAddSongBottomSheet : BottomSheetDialogFragment(), OnSongAddA
         return dialog
     }
 
-    private fun handleUI() {
-        val currentPlaylist =
-            PlaylistDetailAddSongBottomSheetArgs.fromBundle(requireArguments()).playlist
-
-        adapter = SongAddAdapter(currentPlaylist,this)
-        adapter.setData(Constants.SONG_Old_LIST_DATA)
-
-
-        binding.rcySong.adapter = adapter
-        val listSongToAdd = mutableListOf<String>()
-        binding.btnOk.setOnClickListener {
-            for((indexSong, i) in adapter.checkboxStates().withIndex()){
-                if(i){
-                    listSongToAdd.add(Constants.SONG_Old_LIST_DATA.get(indexSong).id!!)
-                }
-            }
-
-            viewModel.addSongsToPlaylist(listSongToAdd,currentPlaylist)
-            viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner){
-                if(it){
-                    dismiss()
-                } else
-                    makeErrorToast(requireContext(),"Cannot add song to playlist")
-            }
-
-        }
-
-    }
-
-
-
-
-
 }
+
+//        adapter = SongAddAdapter(currentPlaylist,this)
+//        adapter.setData(Constants.SONG_Old_LIST_DATA)
+
+
+//        binding.rcySong.adapter = adapter
+//        val listSongToAdd = mutableListOf<String>()
+//        binding.btnOk.setOnClickListener {
+//            for((indexSong, i) in adapter.checkboxStates().withIndex()){
+//                if(i){
+//                    listSongToAdd.add(Constants.SONG_Old_LIST_DATA.get(indexSong).id!!)
+//                }
+//            }
+//
+//            viewModel.addSongsToPlaylist(listSongToAdd,currentPlaylist)
+//            viewModel.addSongToPlaylistStatus.observe(viewLifecycleOwner){
+//                if(it){
+//                    dismiss()
+//                } else
+//                    makeErrorToast(requireContext(),"Cannot add song to playlist")
+//            }
+//
+//        }
+//
+//    }
+
+
+
+
+

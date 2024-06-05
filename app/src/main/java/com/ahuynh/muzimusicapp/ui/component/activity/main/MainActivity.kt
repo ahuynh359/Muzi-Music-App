@@ -56,11 +56,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
     private fun getData() {
         viewModel.restoreState()
-        viewModel.getAllSongs()
-
-        viewModel.songOldList.observe(this) {
-            Constants.SONG_Old_LIST_DATA = it
-        }
     }
 
     private fun handleUI() {
@@ -102,7 +97,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             } else {
                 binding.player.visibility = View.VISIBLE
                 binding.tvSong.text = it.name
-                binding.tvSinger.text = "abc"
+                binding.tvSinger.text = it.singer
                 Glide
                     .with(binding.imvSong.context)
                     .load(it.avatar)
@@ -184,7 +179,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setUpNavigationGraph() {
         val navHostFragment =
-            supportFragmentManager.findFragmentById(com.ahuynh.muzimusicapp.R.id.fragment_container) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.btmNavigation,navController)
     }
@@ -192,7 +187,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
-        event.songOld?.let {
+        event.song?.let {
             viewModel.song.postValue(it)
         }
     }
