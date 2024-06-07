@@ -1,7 +1,6 @@
 package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.Context
-import android.provider.Telephony.Carriers.PASSWORD
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -58,6 +57,11 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.putString(PASSWORD, password)
         editor.putBoolean(IS_LOGGED_IN, true)
         editor.apply()
+
+    }
+
+    fun getEmail() : String {
+        return pref.getString(EMAIL, "") ?: ""
 
     }
 

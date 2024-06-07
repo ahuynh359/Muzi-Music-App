@@ -13,5 +13,6 @@ data class Song(
     val album: Album,
     val listen: Long,
     val singer: String,
+    val types : List<Type>
 
 ) : Parcelable

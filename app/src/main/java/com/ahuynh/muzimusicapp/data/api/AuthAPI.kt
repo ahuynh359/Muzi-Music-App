@@ -1,6 +1,6 @@
 package com.ahuynh.muzimusicapp.data.api
 
-import com.ahuynh.muzimusicapp.data.model.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.utils.Constants.API_VERSION

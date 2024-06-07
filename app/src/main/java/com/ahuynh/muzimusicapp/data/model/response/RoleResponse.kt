@@ -20,7 +20,7 @@ data class ListRoleResponse(
     val data: List<AlbumResponse>
 )
 
-fun List<RoleResponse>.toRole(): List<Role> {
+fun List<RoleResponse>.toRoleList(): List<Role> {
     return map { it.toRole() }
 }
 

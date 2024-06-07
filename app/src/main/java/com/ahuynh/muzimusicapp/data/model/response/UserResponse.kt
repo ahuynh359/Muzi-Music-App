@@ -1,6 +1,10 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
+import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.data.model.Role
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import java.time.Instant
 
 data class UserResponse(
     val id: Long,
@@ -9,6 +13,8 @@ data class UserResponse(
     val avatar: String,
     val enabled: Boolean,
     val role: List<RoleResponse>,
+    val createdAt: Instant,
+
 
 
     ) {
@@ -19,7 +25,8 @@ data class UserResponse(
             username = this.username,
             avatar = this.avatar,
             enabled = this.enabled,
-            role = this.role.toRole()
+            role = this.role.toRoleList(),
+            createdAt = this.createdAt
         )
     }
 }

@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.data.service
 
 import com.ahuynh.muzimusicapp.data.api.UserAPI
-import com.ahuynh.muzimusicapp.data.model.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import javax.inject.Inject

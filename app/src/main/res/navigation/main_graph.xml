@@ -9,7 +9,7 @@
         android:id="@+id/songFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_song" >
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_songFragment_to_songMenuBottom"
             app:destination="@id/songMenuBottom" />
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.album.DetailAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.home.DetailAlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument

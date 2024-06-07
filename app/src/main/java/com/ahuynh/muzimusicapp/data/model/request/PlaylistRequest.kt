@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 
-data class LoginRequest(val userNameOrEmail: String, val password : String)
+data class PlaylistRequest(val name: String, val userId : Long)

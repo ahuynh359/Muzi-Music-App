@@ -12,6 +12,7 @@ import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -33,10 +34,9 @@ class LoginViewModel @Inject constructor(
                     loginRequest.userNameOrEmail,
                     loginRequest.password
                 )
+                
                 val token = result.data.data as String
-                Log.d("ABC",token)
                 sharePreferencesHelper.saveToken(token)
-                Constants.ACCESS_TOKEN = token
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

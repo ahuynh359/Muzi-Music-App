@@ -2,6 +2,7 @@ package com.ahuynh.muzimusicapp.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.Instant
 
 @Parcelize
 data class User(
@@ -11,4 +12,5 @@ data class User(
     val avatar: String,
     val enabled: Boolean,
     val role: List<Role>,
+    val createdAt: Instant,
 ) : Parcelable

@@ -1,4 +1,15 @@
 package com.ahuynh.muzimusicapp.data.model
 
-class Playlist {
-}
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.time.Instant
+
+@Parcelize
+data class Playlist(
+    val id: Long,
+    val name: String,
+    val user: User,
+    val songs: List<Song>,
+    val createdAt: Instant
+) :
+    Parcelable

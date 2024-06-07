@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.data.model.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.service.UserService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
@@ -17,6 +18,11 @@ class UserRepository @Inject constructor(
         return withContext(dispatcher) {
             userService.isUserLoveSong(id, songId)
         }
+    }
+
+    fun getUserByEmail(value: String?): User? {
+
+
     }
 
 

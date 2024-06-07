@@ -15,7 +15,7 @@ import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
+import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentSongBinding>(FragmentSongBinding::inflate),
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     SongAdapter.OnNewSongClicked, OnAlbumAdapterClicked, TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })

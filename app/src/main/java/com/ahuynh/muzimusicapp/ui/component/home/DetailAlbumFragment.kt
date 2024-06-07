@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.album
+package com.ahuynh.muzimusicapp.ui.component.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.ahuynh.muzimusicapp.databinding.FragmentDetailAlbumBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.ui.component.home.HomeViewModel
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

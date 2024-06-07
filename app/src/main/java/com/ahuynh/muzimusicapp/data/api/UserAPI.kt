@@ -1,6 +1,6 @@
 package com.ahuynh.muzimusicapp.data.api
 
-import com.ahuynh.muzimusicapp.data.model.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
