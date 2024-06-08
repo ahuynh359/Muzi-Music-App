@@ -31,4 +31,8 @@ class PlaylistService @Inject constructor(
         return callApi { playlistAPI.addPlaylist(playlistRequest) }
     }
 
+    suspend fun deletePlaylist(id: Long) : Response<ApiResponse>{
+        return callApi { playlistAPI.deletePlaylist(id) }
+    }
+
 }

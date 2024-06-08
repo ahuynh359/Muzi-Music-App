@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
@@ -71,11 +72,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
             hideShimmer()
         }
 
-        viewModel.mess.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
-        }
+
 //        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
 //            getData()
 //        }
@@ -110,9 +107,9 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
     override fun onMoreItemClicked(playlist: Playlist) {
-//        val action =
-//            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistModelBottomSheet(playlist)
-//        findNavController().navigate(action)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistModelBottomSheet(playlist)
+        findNavController().navigate(action)
     }
 
 

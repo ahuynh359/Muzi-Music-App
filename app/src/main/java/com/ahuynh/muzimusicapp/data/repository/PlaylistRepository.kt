@@ -30,5 +30,11 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
+    suspend fun deletePlaylist(id: Long): Response<ApiResponse> {
+        return withContext(dispatcher) {
+            playlistService.deletePlaylist(id)
+        }
+    }
+
 
 }

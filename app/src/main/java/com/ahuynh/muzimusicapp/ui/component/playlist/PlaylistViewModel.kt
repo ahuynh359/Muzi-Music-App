@@ -24,7 +24,7 @@ constructor(private val playlistRepository: PlaylistRepository,
     var playlists = MutableLiveData<List<Playlist>>()
     var email = MutableLiveData<String>()
     var status = MutableLiveData<Boolean>(false)
-    var mess = MutableLiveData<String>()
+    var mess: String? = null
 
     fun getAllPlaylist() {
         isLoading.postValue(true)
@@ -42,13 +42,31 @@ constructor(private val playlistRepository: PlaylistRepository,
             val playlistRequest = PlaylistRequest(playlist, id)
             val result = playlistRepository.addPlaylist(playlistRequest)
             if (result is Response.Success) {
-                mess.postValue(result.data.message)
+                mess = result.data.message
                 getAllPlaylist()
-                status.postValue(true)
-            } else if (result is Response.Failure) {
-                mess.postValue(result.errorMessage)
-            }
 
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            status.postValue(true)
+        }
+
+        registerEventParentJobFinish()
+    }
+
+    fun deletePlaylist(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+
+            val result = playlistRepository.deletePlaylist(id)
+            if (result is Response.Success) {
+                mess = result.data.message
+                getAllPlaylist()
+
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            status.postValue(true)
         }
 
         registerEventParentJobFinish()

@@ -43,5 +43,17 @@
         android:id="@+id/playlistFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
         android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" />
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_playlistFragment_to_playlistModelBottomSheet"
+            app:destination="@id/playlistModelBottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/playlistModelBottomSheet"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.detail.PlaylistModelBottomSheet"
+        android:label="PlaylistModelBottomSheet" >
+        <argument
+            android:name="playlist"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
+    </dialog>
 </navigation>

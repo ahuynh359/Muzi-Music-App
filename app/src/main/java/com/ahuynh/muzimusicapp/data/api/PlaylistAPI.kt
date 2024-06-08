@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.response.ListPlaylistResponse
 import com.ahuynh.muzimusicapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -19,6 +20,9 @@ interface PlaylistAPI {
 
     @POST("${Constants.API_VERSION}/playlist")
     suspend fun addPlaylist(@Body playlistRequest: PlaylistRequest): Response<ApiResponse>
+
+    @DELETE("${Constants.API_VERSION}/playlist/{id}")
+    suspend fun deletePlaylist(@Path("id") id: Long): Response<ApiResponse>
 
 
 }
