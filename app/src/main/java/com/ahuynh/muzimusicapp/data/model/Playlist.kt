@@ -8,7 +8,7 @@ import java.time.Instant
 data class Playlist(
     val id: Long,
     val name: String,
-    val user: User,
+    val users: User,
     val songs: List<Song>,
     val createdAt: String
 ) :

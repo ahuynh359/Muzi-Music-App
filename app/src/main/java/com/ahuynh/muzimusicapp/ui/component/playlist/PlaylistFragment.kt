@@ -2,13 +2,14 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
+import com.ahuynh.muzimusicapp.ui.component.playlist.detail.PlaylistAddDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
 
     private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
     private val playlistAdapter = PlaylistAdapter(this)
-    private var sortingAsc = true
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,22 +33,20 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
     private fun getData() {
-        //viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        viewModel.getAllPlaylist()
     }
 
     private fun handleUI() {
-//        binding.rcyPlaylist.adapter = playlistAdapter
-//        binding.btnAZ.setOnClickListener {
-//            toggleSort()
-//        }
-//        binding.btnAdd.setOnClickListener {
-//            val bundle = bundleOf("playlist" to null)
-//            val dialogFragment = PlaylistAddDialog()
-//            dialogFragment.arguments = bundle
-//            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
-//
-//
-//        }
+        binding.rcyPlaylist.adapter = playlistAdapter
+
+        binding.btnAdd.setOnClickListener {
+            val bundle = bundleOf("playlist" to null)
+            val dialogFragment = PlaylistAddDialog()
+            dialogFragment.arguments = bundle
+            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
+
+
+        }
 
     }
 
@@ -66,11 +65,17 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
 
     private fun observe() {
 
-//        viewModel.playlists.observe(viewLifecycleOwner) { response ->
-//            playlistAdapter.submitList(response)
-//            binding.rcyPlaylist.visibility = View.VISIBLE
-//            hideShimmer()
-//        }
+        viewModel.playlists.observe(viewLifecycleOwner) { response ->
+            playlistAdapter.submitList(response)
+            binding.rcyPlaylist.visibility = View.VISIBLE
+            hideShimmer()
+        }
+
+        viewModel.mess.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
 //        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
 //            getData()
 //        }

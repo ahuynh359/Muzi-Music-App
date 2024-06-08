@@ -3,11 +3,11 @@ package com.ahuynh.muzimusicapp.ui.component.playlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,26 +23,34 @@ constructor(private val playlistRepository: PlaylistRepository,
 
     var playlists = MutableLiveData<List<Playlist>>()
     var email = MutableLiveData<String>()
-    var user = MutableLiveData<User>()
-    init{
-        getUserEmailOrPassword()
-    }
-    fun getUserEmailOrPassword(){
-        viewModelScope.launch {
-            //email.postValue(sharePreferencesHelper.getEmail())
-            //user.postValue(userRepository.getUserByEmail(email.value))
-        }
-    }
+    var status = MutableLiveData<Boolean>(false)
+    var mess = MutableLiveData<String>()
 
-
-
-
-
-    fun getAllPlaylist(playlistRequest: PlaylistRequest) {
+    fun getAllPlaylist() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            playlists.postValue(playlistRepository.getAllPlaylist(playlistRequest))
+            playlists.postValue(playlistRepository.getAllPlaylist(sharePreferencesHelper.getId()))
         }
+        registerEventParentJobFinish()
+    }
+
+    fun addNewPlaylist(playlist: String) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+
+            val id = sharePreferencesHelper.getId()
+            val playlistRequest = PlaylistRequest(playlist, id)
+            val result = playlistRepository.addPlaylist(playlistRequest)
+            if (result is Response.Success) {
+                mess.postValue(result.data.message)
+                getAllPlaylist()
+                status.postValue(true)
+            } else if (result is Response.Failure) {
+                mess.postValue(result.errorMessage)
+            }
+
+        }
+
         registerEventParentJobFinish()
     }
 

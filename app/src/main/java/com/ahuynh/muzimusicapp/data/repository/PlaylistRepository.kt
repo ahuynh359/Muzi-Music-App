@@ -2,8 +2,10 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
+import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.service.PlaylistService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,12 +18,17 @@ class PlaylistRepository @Inject constructor(
 
 ) {
 
-    suspend fun getAllPlaylist(playlistRequest: PlaylistRequest): List<Playlist> {
+    suspend fun getAllPlaylist(id : Long): List<Playlist> {
         return withContext(dispatcher) {
-            playlistService.getAllPlaylist(playlistRequest)
+            playlistService.getAllPlaylist(id)
         }
     }
 
+    suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<ApiResponse>{
+        return withContext(dispatcher) {
+            playlistService.addPlaylist(playlistRequest)
+        }
+    }
 
 
 }

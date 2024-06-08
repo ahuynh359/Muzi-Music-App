@@ -1,13 +1,13 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import java.time.Instant
+import com.squareup.moshi.Json
 
 data class PlaylistResponse(
     val id: Long,
     val name: String,
-    val user: UserResponse,
-    val song: List<SongResponse>,
+     val users: UserResponse,
+    val songs: List<SongResponse>,
     val createdAt: String
 
 
@@ -16,8 +16,8 @@ data class PlaylistResponse(
         return Playlist(
             id = this.id,
             name = this.name,
-            user = this.user.toUser(),
-            songs = this.song.toListSong(),
+            users = this.users.toUser(),
+            songs = this.songs.toListSong(),
             createdAt = this.createdAt,
         )
     }

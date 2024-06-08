@@ -68,8 +68,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="275" />
-                            <option name="y" value="785" />
+                            <option name="x" value="691" />
+                            <option name="y" value="845" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="playlistFragment2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="908" />
+                            <option name="y" value="1056" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -106,8 +118,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="978" />
-                            <option name="y" value="985" />
+                            <option name="x" value="693" />
+                            <option name="y" value="1164" />
                           </Point>
                         </option>
                       </LayoutPositions>

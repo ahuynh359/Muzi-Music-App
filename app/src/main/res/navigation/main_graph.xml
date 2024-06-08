@@ -39,4 +39,9 @@
             android:name="album"
             app:argType="com.ahuynh.muzimusicapp.data.model.Album" />
     </fragment>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" />
 </navigation>
