@@ -29,8 +29,8 @@ constructor(private val playlistRepository: PlaylistRepository,
     }
     fun getUserEmailOrPassword(){
         viewModelScope.launch {
-            email.postValue(sharePreferencesHelper.getEmail())
-            user.postValue(userRepository.getUserByEmail(email.value))
+            //email.postValue(sharePreferencesHelper.getEmail())
+            //user.postValue(userRepository.getUserByEmail(email.value))
         }
     }
 

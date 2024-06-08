@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.response.SearchJson
+import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.service.SongService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,7 +17,7 @@ class SongRepository @Inject constructor(
 
 
 ) {
-
+    //ok
     suspend fun getAllSong(): List<Song> {
         return withContext(dispatcher) {
             songService.getAllSong()
@@ -34,7 +36,11 @@ class SongRepository @Inject constructor(
         }
     }
 
-
+    suspend fun searchSong(str: String): SearchJson? {
+        return withContext(dispatcher) {
+            songService.searchSong(str)
+        }
+    }
 
 
 }

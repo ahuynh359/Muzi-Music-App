@@ -1,12 +1,15 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-data class LoginResponse(
+data class Response(
     val id: Long,
     val username: String,
     val email: String,
     val jwt: String,
 
     )
+
+data class LoginResponse(
+    val success: Boolean,
+    val message: String,
+    val data: Response
+)

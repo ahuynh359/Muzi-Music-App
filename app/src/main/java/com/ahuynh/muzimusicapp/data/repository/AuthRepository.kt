@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.data.repository
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
+import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.service.AuthService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
@@ -24,7 +25,7 @@ class AuthRepository @Inject constructor(
     }
 
 
-    suspend fun login(loginRequest: LoginRequest): Response<ApiResponse> {
+    suspend fun login(loginRequest: LoginRequest): Response<LoginResponse> {
         return withContext(dispatcher) {
             authService.login(loginRequest)
         }

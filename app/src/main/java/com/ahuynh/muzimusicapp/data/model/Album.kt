@@ -10,6 +10,6 @@ data class Album(
     val name: String,
     val description: String,
     val avatar: String,
-    val createdAt: Instant
+    val createdAt: String
 ) :
     Parcelable

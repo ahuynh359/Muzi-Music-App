@@ -44,12 +44,16 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        getData()
         handleUI()
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
 
         observe()
 
+
+    }
+
+    private fun getData() {
 
     }
 
@@ -88,15 +92,22 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
                 else R.drawable.ic_pause
             )
         }
+
         viewModel.song.observe(this) { song ->
             binding.tvSong.text = song.name
 
+            viewModel.isUserLoveSong(song.id)
+            binding.btnHeart.setOnClickListener {
+                viewModel.loveOrUnlove(song.id)
 
+            }
         }
-//        if (song.) {
-//            binding.btnHeart.setImageResource(R.drawable.ic_hearted)
-//        } else
-//            binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
+        viewModel.loveSong.observe(this) {
+            if (it) {
+                binding.btnHeart.setImageResource(R.drawable.ic_hearted)
+            } else binding.btnHeart.setImageResource(R.drawable.ic_heart_small)
+        }
+
 
         viewModel.sleepTime.observe(this){
             binding.tvTimer.text = it
@@ -115,15 +126,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
 
         setUpViewPager()
         setUpSeekbar()
-        binding.btnHeart.setOnClickListener {
-            viewModel.song.observe(this){ song ->
-//                val newLoveStatus = !song.love
-//                song.love = newLoveStatus
-//                viewModel.updateSongLoveStatus(song.id!!, newLoveStatus)
-//                val heartResId = if (newLoveStatus) com.ahuynh.muzimusicapp.R.drawable.ic_hearted else com.ahuynh.muzimusicapp.R.drawable.ic_heart_small
-//                binding.btnHeart.setImageResource(heartResId)
-            }
-        }
+
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)

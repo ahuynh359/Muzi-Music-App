@@ -15,8 +15,8 @@ object Constants {
     var IS_REPEAT = false
     var INTENT_ACTION = "intent_service"
 
-    var ACCESS_TOKEN = ""
-    const val BASE_URL = "http://192.168.239.65:8080"
+    var USER_ID: Long = 0
+    const val BASE_URL = "http://192.168.0.105:8080"
     const val API_VERSION = "/api/v1"
 
 

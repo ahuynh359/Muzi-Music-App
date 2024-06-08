@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.adapter.OnAlbumAdapterClicked
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -25,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    SongAdapter.OnNewSongClicked, OnAlbumAdapterClicked, TypeAdapter.OnTypeClicked {
+    SongAdapter.OnNewSongClicked, AlbumAdapter.OnAlbumAdapterClicked, TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
@@ -34,17 +33,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private val songAdapter = SongAdapter(this)
+    private val loveAdapter = SongAdapter(this)
     private val albumAdapter = AlbumAdapter(this)
     private val typeAdapter = TypeAdapter(this)
     private var listSong: ArrayList<Song> = arrayListOf()
     private var listAlbum: ArrayList<Album> = arrayListOf()
     private var typeList: ArrayList<Type> = arrayListOf()
+    private var loveList: ArrayList<Song> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.accessToken.observe(viewLifecycleOwner){
-            Log.d("ABCD",it)
-        }
+       
         handleUI()
         //observe()
         //getData()
@@ -63,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onResume()
         binding.rcyAlbum.visibility = View.GONE
         binding.rcyType.visibility = View.GONE
+        binding.rcyLove.visibility = View.GONE
         viewModel.songList.observe(viewLifecycleOwner) {
             binding.swipe.isRefreshing = false
             binding.rcySong.visibility = View.VISIBLE
@@ -87,6 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.rcySong.adapter = songAdapter
         binding.rcyAlbum.adapter = albumAdapter
         binding.rcyType.adapter = typeAdapter
+        binding.rcyLove.adapter = loveAdapter
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             val selectedChip = group.checkedChipId
@@ -100,6 +101,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
                     binding.rcyAlbum.visibility = View.GONE
                     binding.rcyType.visibility = View.GONE
+                    binding.rcyLove.visibility = View.GONE
                     viewModel.songList.observe(viewLifecycleOwner) {
                         binding.swipe.isRefreshing = false
                         binding.rcySong.visibility = View.VISIBLE
@@ -120,6 +122,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     }
                     binding.rcySong.visibility = View.GONE
                     binding.rcyType.visibility = View.GONE
+                    binding.rcyLove.visibility = View.GONE
                     viewModel.albumList.observe(viewLifecycleOwner) {
                         binding.swipe.isRefreshing = false
                         albumAdapter.submitList(it)
@@ -139,11 +142,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     }
                     binding.rcySong.visibility = View.GONE
                     binding.rcyAlbum.visibility = View.GONE
+                    binding.rcyLove.visibility = View.GONE
                     viewModel.typeList.observe(viewLifecycleOwner) {
                         binding.swipe.isRefreshing = false
                         typeAdapter.submitList(it)
                         binding.rcyType.visibility = View.VISIBLE
                         typeList = it as ArrayList<Type>
+                        hideShimmer()
+
+                    }
+                }
+
+                R.id.love -> {
+                    binding.swipe.setOnRefreshListener {
+
+                        viewModel.getAllLoveSong()
+                    }
+                    binding.rcySong.visibility = View.GONE
+                    binding.rcyAlbum.visibility = View.GONE
+                    binding.rcyType.visibility = View.GONE
+                    viewModel.loveSongList.observe(viewLifecycleOwner) {
+                        binding.swipe.isRefreshing = false
+                        loveAdapter.submitList(it)
+                        binding.rcyLove.visibility = View.VISIBLE
+                        loveList = it as ArrayList<Song>
                         hideShimmer()
 
                     }

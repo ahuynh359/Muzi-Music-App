@@ -9,7 +9,7 @@ import retrofit2.http.GET
 interface TypeAPI {
 
 
-    @GET("${Constants.API_VERSION}/type")
+    @GET("${Constants.API_VERSION}/type/get-all")
     suspend fun getAllType(): Response<ListTypeResponse>
 
 

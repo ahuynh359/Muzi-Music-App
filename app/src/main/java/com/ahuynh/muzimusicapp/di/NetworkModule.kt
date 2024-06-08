@@ -1,17 +1,14 @@
 package com.ahuynh.muzimusicapp.di
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
+import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
 import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.api.TypeAPI
 import com.ahuynh.muzimusicapp.data.api.UserAPI
-import com.ahuynh.muzimusicapp.utils.Constants.ACCESS_TOKEN
 import com.ahuynh.muzimusicapp.utils.Constants.BASE_URL
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper.Companion.TOKEN
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -40,7 +37,6 @@ class NetworkModule {
                 .header("Accept", "application/json")
                 .header("Authorization", "Bearer ${pref.getToken()}")
                 .build()
-            Log.d("ABCDE",pref.getToken())
             chain.proceed(request)
         }
     }
@@ -112,5 +108,10 @@ class NetworkModule {
     fun provideUserAPI(retrofit: Retrofit): UserAPI {
         return retrofit.create(UserAPI::class.java)
 
+    }
+
+    @Provides
+    fun providePlaylistAPI(retrofit: Retrofit): PlaylistAPI {
+        return retrofit.create(PlaylistAPI::class.java)
     }
 }

@@ -272,7 +272,7 @@ class MusicService : Service() {
 
 
                     .setContentTitle(song.name)
-                    .setContentText("abc")
+                    .setContentText(song.singer)
                     .setLargeIcon(bitmap)
                     .setAutoCancel(false)
                     .setOngoing(true)

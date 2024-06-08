@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.component.activity.main.MainActivity">
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/item_toolbar"/>
 
 
     <androidx.fragment.app.FragmentContainerView
@@ -18,7 +20,7 @@
         app:layout_constraintBottom_toTopOf="@id/btm_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:navGraph="@navigation/main_graph">
 

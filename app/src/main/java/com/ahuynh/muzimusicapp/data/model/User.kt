@@ -12,5 +12,5 @@ data class User(
     val avatar: String,
     val enabled: Boolean,
     val role: List<Role>,
-    val createdAt: Instant,
+    val createdAt: String,
 ) : Parcelable

@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 activity?.finish()
             } else
                 if(viewModel.mess != null)
-                    Toast.makeText(requireContext(), "Password not match", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner){

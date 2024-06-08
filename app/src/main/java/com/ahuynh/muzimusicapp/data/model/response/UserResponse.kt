@@ -13,7 +13,7 @@ data class UserResponse(
     val avatar: String,
     val enabled: Boolean,
     val role: List<RoleResponse>,
-    val createdAt: Instant,
+    val createdAt: String,
 
 
 

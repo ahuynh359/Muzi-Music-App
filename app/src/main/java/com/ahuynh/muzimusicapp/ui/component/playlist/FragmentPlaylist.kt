@@ -32,7 +32,7 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
     }
 
     private fun getData() {
-        viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
+        //viewModel.getAllPlaylist(Constants.SortingOrder.ASCENDING)
     }
 
     private fun handleUI() {

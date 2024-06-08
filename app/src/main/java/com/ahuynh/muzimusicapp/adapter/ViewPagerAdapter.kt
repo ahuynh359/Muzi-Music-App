@@ -2,9 +2,12 @@ package com.ahuynh.muzimusicapp.adapter
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 
-class ViewPagerAdapter(private val items: ArrayList<Fragment>, activity: AppCompatActivity) :
+class ViewPagerAdapter(private val items:
+                       ArrayList<Fragment>, activity: AppCompatActivity) :
     FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
         return items.size

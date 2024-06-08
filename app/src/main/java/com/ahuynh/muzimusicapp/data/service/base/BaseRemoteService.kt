@@ -24,7 +24,15 @@ open class BaseRemoteService {
                 com.ahuynh.muzimusicapp.utils.Response.Failure("Server Error " + response.code())
             } else {
                 val errorBody = response.errorBody()?.string() ?: ""
-                com.ahuynh.muzimusicapp.utils.Response.Failure(errorBody)
+                val messagePrefix = ","
+                val messageIndex = errorBody.indexOf(messagePrefix)
+                val messagePostIndex = errorBody.lastIndexOf(messagePrefix)
+                val message = if (messageIndex != -1) {
+                    errorBody.substring(messageIndex + 12, messagePostIndex - 1).trim()
+                } else {
+                    ""
+                }
+                com.ahuynh.muzimusicapp.utils.Response.Failure(message)
             }
         }
     }

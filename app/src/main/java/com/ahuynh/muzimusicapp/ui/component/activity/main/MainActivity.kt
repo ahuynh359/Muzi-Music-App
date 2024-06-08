@@ -16,8 +16,8 @@ import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseActivity
+import com.ahuynh.muzimusicapp.ui.component.activity.search.SearchActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -70,6 +70,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
         binding.btnPre.setOnClickListener {
             Utils.sendMusic(applicationContext, MusicService.ACTION_PRE)
+        }
+        binding.toolbar.btnSearch.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
         }
     }
 

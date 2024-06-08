@@ -8,7 +8,7 @@ data class PlaylistResponse(
     val name: String,
     val user: UserResponse,
     val song: List<SongResponse>,
-    val createdAt: Instant
+    val createdAt: String
 
 
 ) {

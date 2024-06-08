@@ -10,6 +10,6 @@ data class Playlist(
     val name: String,
     val user: User,
     val songs: List<Song>,
-    val createdAt: Instant
+    val createdAt: String
 ) :
     Parcelable

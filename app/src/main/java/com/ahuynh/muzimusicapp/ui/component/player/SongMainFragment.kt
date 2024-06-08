@@ -36,10 +36,8 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
 
         viewModel.song.observe(viewLifecycleOwner) { song ->
 
-
             binding.tvSongName.text = song.name
             binding.tvSinger.text = song.singer
-
 
             Glide
                 .with(binding.imvSong.context)

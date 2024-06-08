@@ -10,7 +10,6 @@ import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,6 +27,7 @@ class HomeViewModel @Inject constructor(
     var albumList = MutableLiveData<List<Album>>()
     var typeList = MutableLiveData<List<Type>>()
     var songList = MutableLiveData<List<Song>>()
+    var loveSongList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
     var accessToken = MutableLiveData<String>()
 
@@ -44,14 +44,22 @@ class HomeViewModel @Inject constructor(
         getAllAlbum()
         getAllType()
         getAccessToken()
+        getAllLoveSong()
 
+    }
+
+     fun getAllLoveSong() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            loveSongList.postValue(userRepository.getLoveSong(sharePreferencesHelper.getId()))
+        }
+        registerEventParentJobFinish()
     }
 
     fun getAccessToken() {
 
         viewModelScope.launch {
             accessToken.postValue(sharePreferencesHelper.getToken())
-            Constants.ACCESS_TOKEN = accessToken.value.toString()
 
         }
 

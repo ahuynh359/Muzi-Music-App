@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.data.service
 import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.response.SearchJson
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toListUser
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
@@ -12,12 +13,13 @@ import javax.inject.Inject
 class SongService @Inject constructor(
     private val songAPI: SongAPI
 ) : BaseRemoteService() {
+    //ok
     suspend fun getAllSong(): List<Song> {
         val result = callApi { songAPI.getAllSong() }
         return if (result is Response.Success) {
             result.data.data.toListSong()
         } else {
-            emptyList()
+            arrayListOf()
         }
     }
 
@@ -34,7 +36,16 @@ class SongService @Inject constructor(
         return if (result is Response.Success) {
             result.data.data.toListUser()
         } else {
-            emptyList()
+            arrayListOf()
+        }
+    }
+
+    suspend fun searchSong(str: String): SearchJson? {
+        val result = callApi { songAPI.searchSong(str) }
+        return if (result is Response.Success) {
+            result.data.data
+        } else {
+            null
         }
     }
 

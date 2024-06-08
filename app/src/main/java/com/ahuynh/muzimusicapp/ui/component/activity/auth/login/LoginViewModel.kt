@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
+import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -12,7 +13,6 @@ import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -30,12 +30,16 @@ class LoginViewModel @Inject constructor(
             val result = authRepository.login(loginRequest)
             if (result is Response.Success) {
                 mess = result.data.message
+                Constants.USER_ID = result.data.data.id
                 sharePreferencesHelper.saveLoggedIn(
                     loginRequest.userNameOrEmail,
                     loginRequest.password
                 )
-                
-                val token = result.data.data as String
+                sharePreferencesHelper.saveId(
+                    result.data.data.id
+                )
+
+                val token = result.data.data.jwt
                 sharePreferencesHelper.saveToken(token)
             } else if (result is Response.Failure) {
                 mess = result.errorMessage

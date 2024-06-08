@@ -20,6 +20,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -41,6 +44,13 @@ android {
 
     buildFeatures{
         viewBinding = true
+
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -50,7 +60,8 @@ dependencies {
     //Chip
 
     implementation (libs.androidx.core.ktx)
-
+    //Gson
+    implementation ("com.google.code.gson:gson:2.8.8")
 
     //Retrofit
     implementation (libs.retrofit.v290)
@@ -104,6 +115,11 @@ dependencies {
 
     //Glide
     implementation (libs.glide)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+
+
+
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
     //Navigation Graph
@@ -134,7 +150,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.media3.common)
-    implementation(libs.androidx.ui.android)
     implementation (libs.androidx.media)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

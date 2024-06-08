@@ -66,13 +66,12 @@ class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
     override fun getItemCount(): Int {
         return currentList.size
     }
+    interface OnAlbumAdapterClicked {
+        fun onAlbumClicked(album: Album)
+        fun onMoreItemAlbumClicked(album: Album)
 
-
-}
-
-
-interface OnAlbumAdapterClicked {
-    fun onAlbumClicked(album: Album)
-    fun onMoreItemAlbumClicked(album: Album)
+    }
 
 }
+
+

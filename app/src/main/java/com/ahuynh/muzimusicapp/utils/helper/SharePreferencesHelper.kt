@@ -15,6 +15,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val APP_SHARE_KEY = "com.ahuynh.muzimusicapp"
         const val EMAIL = "email"
         const val PASSWORD = "password"
+        const val ID = "id"
     }
 
     private var pref = context.getSharedPreferences(APP_SHARE_KEY, Context.MODE_PRIVATE)
@@ -72,6 +73,16 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
 
     fun getToken(): String {
         return pref.getString(TOKEN, null) ?: ""
+    }
+
+    fun saveId(id: Long) {
+        editor.putLong(ID, id)
+        editor.apply()
+    }
+
+
+    fun getId(): Long {
+        return pref.getLong(ID, 1) ?: 1
     }
 
 }
