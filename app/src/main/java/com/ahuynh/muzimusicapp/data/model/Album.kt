@@ -8,8 +8,6 @@ import java.time.Instant
 data class Album(
     val id: Long,
     val name: String,
-    val description: String,
     val avatar: String,
-    val createdAt: String
 ) :
     Parcelable

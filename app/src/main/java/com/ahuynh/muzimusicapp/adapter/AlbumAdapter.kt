@@ -35,8 +35,8 @@ class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.note)
                 .into(binding.imvAlbum)
-            binding.tvAlbum.text = album.name
-            binding.tvAlbumName.text = album.description
+            binding.tvAlbumName.text = album.name
+            //binding.tvAlbumName.text = album.description
 
         }
 

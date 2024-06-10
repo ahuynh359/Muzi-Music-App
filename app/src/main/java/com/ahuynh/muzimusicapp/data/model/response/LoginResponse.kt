@@ -2,14 +2,13 @@ package com.ahuynh.muzimusicapp.data.model.response
 
 data class Response(
     val id: Long,
-    val username: String,
     val email: String,
-    val jwt: String,
+    val username: String,
+    val enabled: Boolean,
 
     )
 
 data class LoginResponse(
-    val success: Boolean,
     val message: String,
     val data: Response
 )

@@ -12,7 +12,7 @@ import retrofit2.http.Query
 
 interface SongAPI {
     //ok
-    @GET("${Constants.API_VERSION}/song/get-all")
+    @GET("${Constants.API_VERSION}/core-service/song/all")
     suspend fun getAllSong(): Response<ListSongResponse>
 
     @GET("${Constants.API_VERSION}/song/{id}")

@@ -38,7 +38,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
 
         viewModel.status.observe(viewLifecycleOwner) {
             if (it == true) {
-                val action = SignupFragmentDirections.actionSignupFragmentToOtpFragment()
+                val action = SignupFragmentDirections.actionSignupFragmentToLoginFragment()
                 findNavController().navigate(action)
                 Toast.makeText(requireContext(), "Create account successfully ", Toast.LENGTH_LONG)
                     .show()

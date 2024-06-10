@@ -23,10 +23,10 @@ interface AlbumAPI {
     @GET("${Constants.API_VERSION}/album/get-by-id/{id}")
     suspend fun getAlbumById(@Path("id") id: Long): Response<AlbumResponse>
 
-    @GET("${Constants.API_VERSION}/album/get-all")
+    @GET("${Constants.API_VERSION}/core-service/album/all")
     suspend fun getAllAlbum(): Response<ListAlbumResponse>
 
-    @GET("${Constants.API_VERSION}/album/get-song-from-album/{id}")
+    @GET("${Constants.API_VERSION}/core-service/album/{id}/songs")
     suspend fun getSongsFromAlbum(@Path("id") id: Long): Response<ListSongResponse>
 
 

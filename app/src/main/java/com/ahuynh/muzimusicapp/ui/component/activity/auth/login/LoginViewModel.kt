@@ -39,8 +39,7 @@ class LoginViewModel @Inject constructor(
                     result.data.data.id
                 )
 
-                val token = result.data.data.jwt
-                sharePreferencesHelper.saveToken(token)
+
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

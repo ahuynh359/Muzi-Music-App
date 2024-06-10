@@ -5,6 +5,7 @@ import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
+import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import javax.inject.Inject
 class AuthService @Inject constructor(
     private val authAPI: AuthAPI
 ) : BaseRemoteService() {
-    suspend fun signup(signUpRequest: SignUpRequest): Response<ApiResponse> {
+    suspend fun signup(signUpRequest: SignUpRequest): Response<MessageResponse> {
         return callApi { authAPI.signup(signUpRequest) }
     }
 
