@@ -12,8 +12,7 @@ data class UserResponse(
     val username: String,
     val avatar: String,
     val enabled: Boolean,
-    val role: List<RoleResponse>,
-    val createdAt: String,
+    val role: List<String>,
 
 
 
@@ -25,8 +24,7 @@ data class UserResponse(
             username = this.username,
             avatar = this.avatar,
             enabled = this.enabled,
-            role = this.role.toRoleList(),
-            createdAt = this.createdAt
+            role = this.role,
         )
     }
 }

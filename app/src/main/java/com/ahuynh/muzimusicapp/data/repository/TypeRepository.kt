@@ -1,11 +1,17 @@
 package com.ahuynh.muzimusicapp.data.repository
 
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
+import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
 import com.ahuynh.muzimusicapp.data.service.TypeService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.utils.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
 import javax.inject.Inject
 
 class TypeRepository @Inject constructor(
@@ -20,6 +26,13 @@ class TypeRepository @Inject constructor(
             typeService.getAllType()
         }
     }
+
+    suspend fun getSongFromType(id : Long): List<Song> {
+        return withContext(dispatcher) {
+            typeService.getSongFromType(id)
+        }
+    }
+
 
 
 }

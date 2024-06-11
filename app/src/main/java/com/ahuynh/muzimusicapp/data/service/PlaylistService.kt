@@ -1,14 +1,11 @@
 package com.ahuynh.muzimusicapp.data.service
 
-import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
-import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
-import com.ahuynh.muzimusicapp.data.model.response.AlbumResponse
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
-import com.ahuynh.muzimusicapp.data.model.response.toListAlbum
+import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toPlaylistResponse
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
@@ -30,8 +27,17 @@ class PlaylistService @Inject constructor(
     suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<ApiResponse>{
         return callApi { playlistAPI.addPlaylist(playlistRequest) }
     }
+    suspend fun getAllSongFromPlaylist(id: Long): List<Song> {
+        val result = callApi { playlistAPI.getAllSongFromPlaylist(id) }
+        return if (result is Response.Success) {
+            result.data.data.toListSong()
+        } else {
+            arrayListOf()
+        }
+    }
 
-    suspend fun deletePlaylist(id: Long) : Response<ApiResponse>{
+
+    suspend fun deletePlaylist(id: Long) : Response<MessageResponse>{
         return callApi { playlistAPI.deletePlaylist(id) }
     }
 

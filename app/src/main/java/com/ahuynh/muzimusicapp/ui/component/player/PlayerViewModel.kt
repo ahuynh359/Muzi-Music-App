@@ -61,17 +61,17 @@ class PlayerViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun loveOrUnlove(songId: Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val result = userRepository.loveOrUnlove(sharePreferencesHelper.getId(), songId)
-            if (result is Response.Success) {
-                loveOrUnlove.postValue(result.data.success)
-                isUserLoveSong(songId)
-            }
-        }
-        registerEventParentJobFinish()
-    }
+//    fun loveOrUnlove(songId: Long) {
+//        isLoading.postValue(true)
+//        parentJob = viewModelScope.launch {
+//            val result = userRepository.loveOrUnlove(sharePreferencesHelper.getId(), songId)
+//            if (result is Response.Success) {
+//                loveOrUnlove.postValue(result.data.success)
+//                isUserLoveSong(songId)
+//            }
+//        }
+//        registerEventParentJobFinish()
+//    }
 
 
 

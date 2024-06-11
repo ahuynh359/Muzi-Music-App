@@ -101,9 +101,9 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
 
 
     override fun onPlaylistClicked(playlist: Playlist) {
-//        val action =
-//            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistDetailFragment(playlist)
-//        findNavController().navigate(action)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToDetailPlaylistFragment(playlist)
+        findNavController().navigate(action)
     }
 
     override fun onMoreItemClicked(playlist: Playlist) {

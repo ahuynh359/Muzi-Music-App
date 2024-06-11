@@ -12,7 +12,7 @@ data class SongResponse(
     val album: AlbumResponse,
     val listen: Long,
     val singer: String,
-    val types: List<TypeResponse>
+    val types: List<String>
 
 
 ) {
@@ -26,7 +26,7 @@ data class SongResponse(
             album = this.album.toAlbum(),
             listen = this.listen,
             singer = this.singer,
-            types = this.types.toListType()
+            types = this.types
         )
     }
 }

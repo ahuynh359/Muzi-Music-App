@@ -32,9 +32,9 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun verifyEmail(token: String): Response<ApiResponse> {
+    suspend fun resendOtp(email: String): Response<MessageResponse> {
         return withContext(dispatcher) {
-            authService.verifyEmail(token)
+            authService.resendOtp(email)
         }
     }
 }

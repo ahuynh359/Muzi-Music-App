@@ -233,7 +233,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onTypeClicked(type: Type) {
-        Toast.makeText(requireContext(), "AHIHI", Toast.LENGTH_LONG).show()
+        val action = HomeFragmentDirections.actionSongFragmentToDetailTypeFragment(type)
+        findNavController().navigate(action)
     }
 
 }

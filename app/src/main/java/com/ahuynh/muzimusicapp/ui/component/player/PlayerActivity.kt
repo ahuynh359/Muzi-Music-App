@@ -94,11 +94,19 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
         }
 
         viewModel.song.observe(this) { song ->
-            binding.tvSong.text = song.name
+            if(song.types.isNotEmpty()){
+                var str = ""
+                for (i in song.types) {
+                    str += "$i, "
+                }
+                str = str.substring(0, str.length - 2)
+                binding.tvType.text = str
+            }
+
 
             viewModel.isUserLoveSong(song.id)
             binding.btnHeart.setOnClickListener {
-                viewModel.loveOrUnlove(song.id)
+                //viewModel.loveOrUnlove(song.id)
 
             }
         }

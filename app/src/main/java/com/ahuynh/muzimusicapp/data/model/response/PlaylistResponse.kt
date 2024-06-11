@@ -6,9 +6,8 @@ import com.squareup.moshi.Json
 data class PlaylistResponse(
     val id: Long,
     val name: String,
-     val users: UserResponse,
-    val songs: List<SongResponse>,
-    val createdAt: String
+     val userId: Long,
+    val avatar : String
 
 
 ) {
@@ -16,9 +15,8 @@ data class PlaylistResponse(
         return Playlist(
             id = this.id,
             name = this.name,
-            users = this.users.toUser(),
-            songs = this.songs.toListSong(),
-            createdAt = this.createdAt,
+            userId = this.userId,
+            avatar = this.avatar
         )
     }
 }

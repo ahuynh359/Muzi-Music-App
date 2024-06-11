@@ -24,7 +24,7 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/singer/{id}")
     suspend fun getSingerFromSongById(@Path("id") id: Long): Response<ListUserResponse>
 
-    @GET("${Constants.API_VERSION}/song/search")
+    @GET("${Constants.API_VERSION}/core-service/song/search")
     suspend fun searchSong(@Query("str") str: String): Response<SearchResponse>
 
 

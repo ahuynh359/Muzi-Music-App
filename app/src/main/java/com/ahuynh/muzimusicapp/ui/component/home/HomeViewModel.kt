@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
+import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
@@ -21,7 +22,8 @@ class HomeViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val songRepository: SongRepository,
     private val typeRepository: TypeRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val playlistRepository: PlaylistRepository
 ) : BaseViewModel() {
 
     var albumList = MutableLiveData<List<Album>>()
@@ -32,6 +34,8 @@ class HomeViewModel @Inject constructor(
     var accessToken = MutableLiveData<String>()
 
     var songOfAlbum = MutableLiveData<List<Song>>()
+    var songOfType = MutableLiveData<List<Song>>()
+    var songOfPlaylist = MutableLiveData<List<Song>>()
 
     var deleteSong = MutableLiveData<Boolean>()
 
@@ -109,6 +113,23 @@ class HomeViewModel @Inject constructor(
             albumList.postValue(albumRepository.getAllAlbum())
         }
         registerEventParentJobFinish()
+    }
+
+    fun getSongOfType(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            songOfType.postValue(typeRepository.getSongFromType(id))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun getSongOfPlaylist(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            songOfPlaylist.postValue(playlistRepository.getAllSongFromPlaylist(id))
+        }
+        registerEventParentJobFinish()
+
     }
 }
 

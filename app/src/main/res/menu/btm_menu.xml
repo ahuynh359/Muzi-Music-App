@@ -8,7 +8,10 @@
         android:id="@+id/playlistFragment"
         android:icon="@drawable/ic_playlist"
         android:title="Playlist" />
-
+    <item
+        android:id="@+id/settingFragment"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
 
 
 

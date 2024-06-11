@@ -5,6 +5,9 @@ data class Response(
     val email: String,
     val username: String,
     val enabled: Boolean,
+    val avatar: String,
+    val deviceToken : String,
+    val role : List<String>
 
     )
 

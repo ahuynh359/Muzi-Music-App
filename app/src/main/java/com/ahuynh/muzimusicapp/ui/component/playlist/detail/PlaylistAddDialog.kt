@@ -46,14 +46,7 @@ class PlaylistAddDialog : DialogFragment() {
             val playlist = getCurrentPlaylist()
             playlist?.let {
                 viewModel.addNewPlaylist(playlist)
-                viewModel.status.observe(viewLifecycleOwner) {
-                    if (it) {
-                        if (viewModel.mess != null) {
-                            Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
-                        }
-                        this.dismiss()
-                    }
-                }
+
 
             }
         }

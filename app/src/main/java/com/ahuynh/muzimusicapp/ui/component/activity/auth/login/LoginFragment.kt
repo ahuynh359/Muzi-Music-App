@@ -65,6 +65,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             findNavController().navigate(action)
         }
 
+        binding.tvForgotPassword.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment()
+            findNavController().navigate(action)
+        }
+
     }
 
     private fun checkError(): Boolean {

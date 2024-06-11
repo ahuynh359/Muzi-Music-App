@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.Context
+import org.bouncycastle.cms.RecipientId.password
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -77,6 +78,13 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
 
     fun saveId(id: Long) {
         editor.putLong(ID, id)
+        editor.apply()
+    }
+
+    fun logout(){
+        editor.putString(EMAIL, "")
+        editor.putString(PASSWORD, "")
+        editor.putBoolean(IS_LOGGED_IN, false)
         editor.apply()
     }
 

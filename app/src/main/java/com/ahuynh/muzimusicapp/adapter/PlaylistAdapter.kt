@@ -27,7 +27,13 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
         }
 
         fun bind(playlist: Playlist) {
-
+            Glide
+                .with(binding.imvPlaylist.context)
+                .load(playlist.avatar)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.note)
+                .into(binding.imvPlaylist)
             binding.tvPlaylistName.text = playlist.name
 
         }

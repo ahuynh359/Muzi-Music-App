@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_songFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
+        <action
+            android:id="@+id/action_songFragment_to_detailTypeFragment"
+            app:destination="@id/detailTypeFragment" />
     </fragment>
 
 
@@ -47,6 +50,9 @@
         <action
             android:id="@+id/action_playlistFragment_to_playlistModelBottomSheet"
             app:destination="@id/playlistModelBottomSheet" />
+        <action
+            android:id="@+id/action_playlistFragment_to_detailPlaylistFragment"
+            app:destination="@id/detailPlaylistFragment" />
     </fragment>
     <dialog
         android:id="@+id/playlistModelBottomSheet"
@@ -56,4 +62,27 @@
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
     </dialog>
+    <fragment
+        android:id="@+id/detailTypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.home.DetailTypeFragment"
+        android:label="fragment_detail_type"
+        tools:layout="@layout/fragment_detail_type" >
+        <argument
+            android:name="type"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Type" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPlaylistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.detail.DetailPlaylistFragment"
+        android:label="fragment_detail_playlist"
+        tools:layout="@layout/fragment_detail_playlist" >
+        <argument
+            android:name="playlist"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

@@ -25,7 +25,8 @@ class AuthService @Inject constructor(
     }
 
 
-    suspend fun verifyEmail(token: String): Response<ApiResponse> {
-        return callApi { authAPI.verifyEmail(token) }
+    suspend fun resendOtp(email: String): Response<MessageResponse> {
+        return callApi { authAPI.resendOtp(email) }
     }
+
 }
