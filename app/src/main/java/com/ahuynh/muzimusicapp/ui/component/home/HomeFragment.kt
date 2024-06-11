@@ -45,8 +45,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onViewCreated(view, savedInstanceState)
        
         handleUI()
-        //observe()
-        //getData()
+        observe()
+
 
     }
 
@@ -54,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getAllSongs()
         viewModel.getAllAlbum()
         viewModel.getAllType()
-        viewModel.getUnreadNoti()
+
 
     }
 
@@ -83,6 +83,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun handleUI() {
 
+        binding.swipe.setOnRefreshListener {
+            getData()
+        }
 
         binding.rcySong.adapter = songAdapter
         binding.rcyAlbum.adapter = albumAdapter

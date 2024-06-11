@@ -3,7 +3,10 @@ package com.ahuynh.muzimusicapp.data.api
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.CheckLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
+import com.ahuynh.muzimusicapp.data.model.response.UserResponse
+import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.utils.Constants
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -29,6 +32,18 @@ interface UserAPI {
     suspend fun getLoveSong(
         @Path("id") id: Long,
     ): Response<ListSongResponse>
+
+    @GET("${Constants.API_VERSION}/user-service/information/{id}")
+    suspend fun getUserById(
+        @Path("id") id: Long,
+    ): Response<UserResponseData>
+
+    @Multipart
+    @PUT("${Constants.API_VERSION}/user-service/change/avatar/{id}")
+    suspend fun changeAvatar(
+        @Path("id") id: Long,
+        @Part avatar : MultipartBody.Part
+    ): Response<UserResponseData>
 
 
 }

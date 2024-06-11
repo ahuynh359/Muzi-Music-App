@@ -47,8 +47,14 @@ class PlaylistAddDialog : DialogFragment() {
             playlist?.let {
                 viewModel.addNewPlaylist(playlist)
 
+                dismiss()
 
             }
+            if(viewModel.mess != null){
+                Toast.makeText(requireContext(),viewModel.mess,Toast.LENGTH_LONG).show()
+            }
+
+
         }
 
 

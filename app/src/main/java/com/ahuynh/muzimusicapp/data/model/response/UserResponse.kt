@@ -29,6 +29,11 @@ data class UserResponse(
     }
 }
 
+data class UserResponseData(
+    val message : String,
+    val data : UserResponse
+)
+
 data class ListUserResponse(
     val success: Boolean,
     val message: String,

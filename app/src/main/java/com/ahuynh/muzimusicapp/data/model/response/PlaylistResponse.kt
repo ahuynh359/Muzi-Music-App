@@ -1,7 +1,6 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import com.squareup.moshi.Json
 
 data class PlaylistResponse(
     val id: Long,
@@ -20,6 +19,11 @@ data class PlaylistResponse(
         )
     }
 }
+
+data class PlaylistResponseData(
+    val message: String,
+    val data: PlaylistResponse
+)
 
 data class ListPlaylistResponse(
     val data: List<PlaylistResponse>
