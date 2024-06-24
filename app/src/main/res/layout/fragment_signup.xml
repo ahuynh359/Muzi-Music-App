@@ -10,133 +10,154 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="@dimen/_32dp"
+        android:layout_height="@dimen/_32dp"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_34dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imv_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="82dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_spotify_a" />
+        app:srcCompat="@drawable/ic_back" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_21dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/bold"
-        android:text="Sign Up"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="@id/imv_icon"
-        app:layout_constraintStart_toStartOf="@id/imv_icon"
-        app:layout_constraintTop_toBottomOf="@id/imv_icon" />
+        android:text="@string/email"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_email"
-        android:layout_width="@dimen/_0dp"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/_16sp"
+        android:fontFamily="@font/regular"
+        android:id="@+id/edt_email"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="40dp"
-        android:hint="@string/email"
-        app:boxCornerRadiusBottomEnd="@dimen/_10dp"
-        app:boxCornerRadiusBottomStart="@dimen/_10dp"
-        app:boxCornerRadiusTopEnd="@dimen/_10dp"
-        app:boxCornerRadiusTopStart="@dimen/_10dp"
-        app:hintTextColor="@color/silver"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/_12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title">
+        app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_email"
-            style="@style/CustomEdittextLight"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/til_password"
-        android:layout_width="@dimen/_0dp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_password"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="@string/password"
-        app:boxCornerRadiusBottomEnd="@dimen/_10dp"
-        app:boxCornerRadiusBottomStart="@dimen/_10dp"
-        app:boxCornerRadiusTopEnd="@dimen/_10dp"
-        app:boxCornerRadiusTopStart="@dimen/_10dp"
-        app:hintTextColor="@color/silver"
-        app:layout_constraintEnd_toEndOf="@id/til_email"
-        app:layout_constraintStart_toStartOf="@id/til_email"
-        app:layout_constraintTop_toBottomOf="@id/til_email"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/silver">
+        android:fontFamily="@font/bold"
+        android:text="@string/password"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@id/edt_email" />
 
-        <com.google.android.material.textfield.TextInputEditText
 
-            android:id="@+id/edt_password"
-            style="@style/CustomEdittextLight"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:fontFamily="@font/regular"
+        android:textSize="16sp"
+        android:id="@+id/edt_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/_12dp"
+        android:textColorHint="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_password" />
 
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/til_user_name"
-        android:layout_width="@dimen/_0dp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_confirm_password"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Username"
-        app:boxCornerRadiusBottomEnd="@dimen/_10dp"
-        app:boxCornerRadiusBottomStart="@dimen/_10dp"
-        app:boxCornerRadiusTopEnd="@dimen/_10dp"
-        app:boxCornerRadiusTopStart="@dimen/_10dp"
-        app:hintTextColor="@color/silver"
-        app:layout_constraintEnd_toEndOf="@id/til_email"
-        app:layout_constraintStart_toStartOf="@id/til_email"
-        app:layout_constraintTop_toBottomOf="@id/til_password"
-      >
+        android:fontFamily="@font/bold"
+        android:text="@string/confirm_password"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
-        <com.google.android.material.textfield.TextInputEditText
 
-            android:id="@+id/edt_user_name"
-            style="@style/CustomEdittextLight"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:fontFamily="@font/regular"
+        android:textSize="16sp"
+        android:id="@+id/edt_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/_12dp"
+        android:textColorHint="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_confirm_password" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/user"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@id/edt_confirm_password" />
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:textColor="@color/white"
+        android:fontFamily="@font/regular"
+        android:textSize="16sp"
+        android:id="@+id/edt_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:padding="@dimen/_12dp"
+        android:textColorHint="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_user" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_up"
-        android:layout_width="@dimen/_0dp"
+        android:layout_width="@dimen/_100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_54dp"
-        android:background="@drawable/btn_round_green"
+        android:background="@drawable/btn_disable"
         android:fontFamily="@font/bold"
-        android:text="Sign up"
-        app:layout_constraintEnd_toEndOf="@id/til_email"
-        app:layout_constraintStart_toStartOf="@id/til_email"
-        app:layout_constraintTop_toBottomOf="@id/til_user_name" />
-
-
+        android:text="@string/sign_up"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/edt_email"
+        app:layout_constraintStart_toStartOf="@id/edt_email"
+        app:layout_constraintTop_toBottomOf="@id/edt_user" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/pbLoading"
+        app:layout_constraintBottom_toBottomOf="@id/btn_sign_up"
+        android:id="@+id/pb_loading"
+        style="@style/Widget.Material3.CircularProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10dp"
         android:indeterminate="true"
+        android:visibility="invisible"
         app:indicatorColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/btn_sign_up"
-        app:layout_constraintEnd_toEndOf="@id/btn_sign_up"
-        app:layout_constraintTop_toTopOf="@id/btn_sign_up" />
-
-
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintStart_toEndOf="@id/btn_sign_up"
+       app:layout_constraintTop_toTopOf="@id/btn_sign_up" />
 </androidx.constraintlayout.widget.ConstraintLayout>

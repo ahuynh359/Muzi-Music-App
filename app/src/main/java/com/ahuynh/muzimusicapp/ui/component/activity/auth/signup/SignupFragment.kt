@@ -1,10 +1,13 @@
 package com.ahuynh.muzimusicapp.ui.component.activity.auth.signup
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentSignupBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
@@ -14,6 +17,28 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate) {
     private val viewModel by viewModels<SignupViewModel>()
+    private var isSignUpEnable = false
+    private val loginTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            val emailInput = binding.edtEmail.text.toString().trim()
+            val passwordInput = binding.edtPassword.text.toString().trim()
+            val confirmPasswordInput = binding.edtConfirmPassword.text.toString().trim()
+            val usernameInput = binding.edtUser.text.toString().trim()
+            isSignUpEnable =
+                emailInput.isNotEmpty() && passwordInput.isNotEmpty() && confirmPasswordInput.isNotEmpty() && usernameInput.isNotEmpty()
+            if (isSignUpEnable) {
+                binding.btnSignUp.setBackgroundResource(R.drawable.btn_enable)
+            } else
+                binding.btnSignUp.setBackgroundResource(R.drawable.btn_disable)
+        }
+
+    }
 
     companion object {
         const val TAG = "SignupFragment"
@@ -38,8 +63,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
 
         viewModel.status.observe(viewLifecycleOwner) {
             if (it == true) {
-                val action = SignupFragmentDirections.actionSignupFragmentToLoginFragment()
-                findNavController().navigate(action)
+                findNavController().popBackStack()
                 Toast.makeText(requireContext(), "Create account successfully ", Toast.LENGTH_LONG)
                     .show()
             } else
@@ -50,53 +74,25 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
 
     private fun handleUI() {
 
+        binding.edtUser.addTextChangedListener(loginTextWatcher)
+        binding.edtEmail.addTextChangedListener(loginTextWatcher)
+        binding.edtConfirmPassword.addTextChangedListener(loginTextWatcher)
+        binding.edtPassword.addTextChangedListener(loginTextWatcher)
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
         binding.btnSignUp.setOnClickListener {
-            if (checkError()) {
+            if (isSignUpEnable) {
                 val signUpRequest = SignUpRequest(
                     binding.edtEmail.text.toString(),
                     binding.edtPassword.text.toString(),
-                    binding.edtUserName.text.toString()
+                    binding.edtConfirmPassword.text.toString(),
+                    binding.edtUser.text.toString()
                 )
                 viewModel.signup(signUpRequest)
             }
         }
-
-    }
-
-    private fun checkError(): Boolean {
-        if (binding.edtEmail.text.toString().isEmpty()) {
-            binding.tilEmail.error = "Do not leave empty"
-            return false
-        }
-        if (!isValidEmail(binding.edtEmail.text.toString())) {
-            binding.tilEmail.error = "Email not in form"
-            return false
-        }
-        binding.tilEmail.error = ""
-        if (binding.edtPassword.text.toString().isEmpty()) {
-            binding.tilPassword.error = "Do not leave empty"
-            return false
-        }
-
-        if (binding.edtPassword.text.toString().length < 6) {
-            binding.tilPassword.error = "Password > 6 character"
-            return false
-        }
-
-
-        binding.tilPassword.error = ""
-
-        if (binding.edtUserName.text.toString().isEmpty()) {
-            binding.tilUserName.error = "Do not leave empty"
-            return false
-        }
-        binding.tilUserName.error = ""
-
-        return true
 
     }
 

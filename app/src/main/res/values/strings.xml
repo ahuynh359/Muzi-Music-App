@@ -66,4 +66,6 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="ok">Ok</string>
+    <string name="user">User</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

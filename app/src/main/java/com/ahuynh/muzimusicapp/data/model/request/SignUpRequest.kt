@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 
-data class SignUpRequest(val email: String, val password: String, val username: String)
+data class SignUpRequest(val email: String, val password: String,val confirmPassword: String, val username: String)
