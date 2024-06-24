@@ -1,7 +1,9 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
@@ -32,9 +34,23 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun resendOtp(email: String): Response<MessageResponse> {
+    suspend fun forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Response<MessageResponse> {
         return withContext(dispatcher) {
-            authService.resendOtp(email)
+            authService.forgotPassword(forgotPasswordRequest)
         }
     }
+
+    suspend fun changePassword(resetPasswordRequest: ResetPasswordRequest): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            authService.changePassword(resetPasswordRequest)
+        }
+    }
+
+    suspend fun resendOtp(resendOtpRequest : ResendOtpRequest): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            authService.resendOtp(resendOtpRequest)
+        }
+    }
+
+
 }

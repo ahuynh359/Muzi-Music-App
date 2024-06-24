@@ -26,13 +26,12 @@ class SplashActivity : AppCompatActivity() {
     private val viewModel by viewModels<SplashViewModel>()
     private lateinit var binding: ActivitySplashBinding
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         checkIfUserIsAuthenticated()
 
     }

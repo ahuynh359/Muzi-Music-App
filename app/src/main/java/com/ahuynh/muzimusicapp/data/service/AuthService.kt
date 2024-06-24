@@ -1,8 +1,10 @@
 package com.ahuynh.muzimusicapp.data.service
 
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
@@ -17,16 +19,22 @@ class AuthService @Inject constructor(
         return callApi { authAPI.signup(signUpRequest) }
     }
 
-
-
-
     suspend fun login(loginRequest: LoginRequest): Response<LoginResponse> {
         return callApi { authAPI.login(loginRequest) }
     }
 
+    suspend fun forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Response<MessageResponse> {
+        return callApi { authAPI.forgotPassword(forgotPasswordRequest) }
+    }
 
-    suspend fun resendOtp(email: String): Response<MessageResponse> {
-        return callApi { authAPI.resendOtp(email) }
+    suspend fun changePassword(resetPasswordRequest: ResetPasswordRequest): Response<MessageResponse> {
+        return callApi { authAPI.changePassword(resetPasswordRequest) }
+    }
+
+
+
+    suspend fun resendOtp(resendOtpRequest: ResendOtpRequest): Response<MessageResponse> {
+        return callApi { authAPI.resendOtp(resendOtpRequest) }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.data.service.base
 
+import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import retrofit2.Response
 
 open class BaseRemoteService {
@@ -24,9 +25,8 @@ open class BaseRemoteService {
                 com.ahuynh.muzimusicapp.utils.Response.Failure("Server Error " + response.code())
             } else {
                 val errorBody = response.errorBody()?.string() ?: ""
-                val mess = errorBody.lastIndexOf(":")
-                val str = errorBody.substring(mess + 1)
-                com.ahuynh.muzimusicapp.utils.Response.Failure(str)
+
+                com.ahuynh.muzimusicapp.utils.Response.Failure(errorBody)
             }
         }
     }

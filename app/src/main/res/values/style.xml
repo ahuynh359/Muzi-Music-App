@@ -96,4 +96,9 @@
         <item name="android:textColor">@color/silver</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+
+    </style>
+
 </resources>

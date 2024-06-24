@@ -1,32 +1,26 @@
-package com.ahuynh.muzimusicapp.ui.component.activity.auth.forgotpassword
+package com.ahuynh.muzimusicapp.ui.component.activity.auth.changepassword
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
-import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor(
+class ResetPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
     var mess: String? = null
     var status = MutableLiveData<Boolean?>(null)
 
-
-
-    fun forgotPassword(forgotPasswordRequest: ForgotPasswordRequest) {
+    fun changePassword(resetPasswordRequest: ResetPasswordRequest){
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = authRepository.forgotPassword(forgotPasswordRequest)
+            val result = authRepository.changePassword(resetPasswordRequest)
             if (result is Response.Success) {
                 mess = result.data.message
             } else if (result is Response.Failure) {
@@ -35,7 +29,6 @@ class ForgotPasswordViewModel @Inject constructor(
             status.postValue(result is Response.Success)
         }
         registerEventParentJobFinish()
+
     }
-
-
 }

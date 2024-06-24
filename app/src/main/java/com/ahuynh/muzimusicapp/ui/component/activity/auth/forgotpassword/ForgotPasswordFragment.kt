@@ -2,10 +2,15 @@ package com.ahuynh.muzimusicapp.ui.component.activity.auth.forgotpassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
+import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentForgotPasswordBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.activity.main.MainActivity
@@ -16,6 +21,24 @@ import dagger.hilt.android.AndroidEntryPoint
 class ForgotPasswordFragment :
     BaseFragment<FragmentForgotPasswordBinding>(FragmentForgotPasswordBinding::inflate) {
     private val viewModel by viewModels<ForgotPasswordViewModel>()
+    private var isSendEnable = false
+    private val sendTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            val emailInput = binding.edtEmail.text.toString().trim()
+            isSendEnable = emailInput.isNotEmpty()
+            if (isSendEnable) {
+                binding.btnSend.setBackgroundResource(R.drawable.btn_enable)
+            } else binding.btnSend.setBackgroundResource(R.drawable.btn_disable)
+        }
+
+    }
+
 
     companion object {
         const val TAG = "ForgotPasswordFragment"
@@ -27,56 +50,43 @@ class ForgotPasswordFragment :
         handleUI()
         observeData()
 
+
     }
 
     private fun observeData() {
         viewModel.status.observe(viewLifecycleOwner) {
             if (it == true) {
-                findNavController().popBackStack()
-            } else
-                if(viewModel.mess != null)
-                    Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()
+                val action = ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment()
+                findNavController().navigate(action)
+            } else if (viewModel.mess != null) Toast.makeText(
+                requireContext(),
+                viewModel.mess,
+                Toast.LENGTH_LONG
+            ).show()
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner){
-            binding.btnSend.isEnabled = !it
-            if(it == true){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it == true) {
                 binding.pbLoading.show()
-            } else
-                binding.pbLoading.hide()
+            } else binding.pbLoading.hide()
         }
     }
 
     private fun handleUI() {
+        binding.edtEmail.addTextChangedListener(sendTextWatcher)
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
         binding.btnSend.setOnClickListener {
-            if (checkError()) {
-                Toast.makeText(requireContext(),binding.edtEmail.text.toString(),Toast.LENGTH_LONG).show()
-                viewModel.resendOtp(binding.edtEmail.text.toString())
+            if (isSendEnable) {
+                viewModel.forgotPassword(ForgotPasswordRequest(binding.edtEmail.text.toString()))
             }
         }
 
 
     }
 
-    private fun checkError(): Boolean {
-        if (binding.edtEmail.text.toString().isEmpty()) {
-            binding.tilEmail.error = "Do not leave empty"
-            return false
-        }
-        if (!Utils.isValidEmail(binding.edtEmail.text.toString())) {
-            binding.tilEmail.error = "Email not in form"
-            return false
-        }
-        binding.tilEmail.error = ""
-
-
-        return true
-
-    }
 
 }
 

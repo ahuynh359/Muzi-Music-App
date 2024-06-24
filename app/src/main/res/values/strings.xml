@@ -55,4 +55,15 @@
     <string name="search_song_playlist_account">Search song, playlist, account</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="search_history">Search History</string>
+    <string name="millions_of_songs_free_on_spotify">Millions of Songs.\nFree on Spotify.</string>
+    <string name="sign_up_free">Sign up free</string>
+    <string name="log_in">Log in</string>
+    <string name="login">Login</string>
+    <string name="login_account">Login Account</string>
+    <string name="email_or_username">Email or username</string>
+    <string name="send">Send</string>
+    <string name="otp">Otp</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="ok">Ok</string>
 </resources>
