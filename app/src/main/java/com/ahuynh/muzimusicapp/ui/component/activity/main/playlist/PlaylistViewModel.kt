@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist
+package com.ahuynh.muzimusicapp.ui.component.activity.main.playlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

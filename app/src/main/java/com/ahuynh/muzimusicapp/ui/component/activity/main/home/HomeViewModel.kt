@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.home
+package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -26,9 +26,9 @@ class HomeViewModel @Inject constructor(
     private val playlistRepository: PlaylistRepository
 ) : BaseViewModel() {
 
-    var albumList = MutableLiveData<List<Album>>()
+    var newAlbumList = MutableLiveData<List<Album>>()
     var typeList = MutableLiveData<List<Type>>()
-    var songList = MutableLiveData<List<Song>>()
+    var newSongList = MutableLiveData<List<Song>>()
     var loveSongList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
     var accessToken = MutableLiveData<String>()
@@ -44,15 +44,16 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getAllSongs()
-        getAllAlbum()
-        getAllType()
-        getAccessToken()
-        getAllLoveSong()
+        getAllTypes()
+        getNewSongs()
+        getNewAlbums()
+//        getAllAlbum()
+//        getAccessToken()
+
 
     }
 
-     fun getAllLoveSong() {
+    fun getAllLoveSong() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             loveSongList.postValue(userRepository.getLoveSong(sharePreferencesHelper.getId()))
@@ -80,17 +81,15 @@ class HomeViewModel @Inject constructor(
     }
 
 
-
-
-    fun getAllSongs() {
+    fun getNewSongs() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            songList.postValue(songRepository.getAllSong())
+            newSongList.postValue(songRepository.getNewSongs())
         }
         registerEventParentJobFinish()
     }
 
-    fun getAllType() {
+    fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             typeList.postValue(typeRepository.getAllType())
@@ -107,10 +106,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getAllAlbum() {
+    fun getNewAlbums() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            albumList.postValue(albumRepository.getAllAlbum())
+            newAlbumList.postValue(albumRepository.getNewAlbums())
         }
         registerEventParentJobFinish()
     }

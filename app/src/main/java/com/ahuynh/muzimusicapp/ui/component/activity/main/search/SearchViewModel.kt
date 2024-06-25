@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.activity.search
+package com.ahuynh.muzimusicapp.ui.component.activity.main.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

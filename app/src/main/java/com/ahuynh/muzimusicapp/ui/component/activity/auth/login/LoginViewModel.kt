@@ -30,13 +30,15 @@ class LoginViewModel @Inject constructor(
             val result = authRepository.login(loginRequest)
             if (result is Response.Success) {
                 mess = result.data.message
-                Constants.USER_ID = result.data.data.id
                 sharePreferencesHelper.saveLoggedIn(
                     loginRequest.userNameOrEmail,
                     loginRequest.password
                 )
                 sharePreferencesHelper.saveId(
                     result.data.data.id
+                )
+                sharePreferencesHelper.saveToken(
+                    result.data.data.jwt
                 )
 
 

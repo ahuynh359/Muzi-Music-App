@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.component.playlist.detail.PlaylistAddDialog">
+    tools:context=".ui.component.activity.main.playlist.detail.PlaylistAddDialog">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

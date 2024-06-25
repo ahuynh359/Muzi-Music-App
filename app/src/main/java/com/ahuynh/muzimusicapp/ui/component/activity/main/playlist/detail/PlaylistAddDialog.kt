@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist.detail
+package com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.databinding.DialogPlaylistAddBinding
-import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistViewModel
+import com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.PlaylistViewModel
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
 import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import dagger.hilt.android.AndroidEntryPoint

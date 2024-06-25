@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist
+package com.ahuynh.muzimusicapp.ui.component.activity.main.playlist
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,7 @@ import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.playlist.detail.PlaylistAddDialog
+import com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.detail.PlaylistAddDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

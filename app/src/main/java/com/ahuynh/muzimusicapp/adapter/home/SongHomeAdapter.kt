@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.adapter
+package com.ahuynh.muzimusicapp.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,37 +6,33 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
-import com.ahuynh.muzimusicapp.ui.component.activity.main.home.HomeFragment
+import com.ahuynh.muzimusicapp.databinding.ItemCircleRecentlyBinding
+import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
+class SongHomeAdapter(private val listener: OnSongHomeClicked) :
+    ListAdapter<Song, SongHomeAdapter.ViewHolder>(DiffCallback()) {
 
-class SongAdapter(private val listener: OnNewSongClicked) :
-    ListAdapter<Song, SongAdapter.ViewHolder>(DiffCallback()) {
-
-    inner class ViewHolder(private val binding: ItemSongBinding) :
+    inner class ViewHolder(private val binding: ItemRoundRecentlyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.main.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener.onSongClicked(currentList[layoutPosition])
             }
-            binding.btnMore.setOnClickListener {
-                listener.openMenu(currentList[layoutPosition])
-            }
+
         }
+
         fun bind(song: Song) {
             Glide
-                .with(binding.imvSong.context)
+                .with(binding.imv.context)
                 .load(song.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.note)
-                .into(binding.imvSong)
-            binding.tvNameSong.text = song.name
-            //binding.tvSinger.text = song.singer
+                .into(binding.imv)
+            binding.tvName.text = song.name
 
 
         }
@@ -55,7 +51,8 @@ class SongAdapter(private val listener: OnNewSongClicked) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRoundRecentlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -67,9 +64,8 @@ class SongAdapter(private val listener: OnNewSongClicked) :
         return currentList.size
     }
 
-    interface OnNewSongClicked {
+    interface OnSongHomeClicked {
         fun onSongClicked(song: Song)
-        fun openMenu(song : Song)
     }
 
 }

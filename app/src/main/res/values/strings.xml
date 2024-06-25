@@ -68,4 +68,8 @@
     <string name="ok">Ok</string>
     <string name="user">User</string>
     <string name="sign_up">Sign Up</string>
+    <string name="new_song">New Song</string>
+    <string name="new_singer">New Singer</string>
+    <string name="new_album">New Album</string>
+    <string name="type">Type</string>
 </resources>

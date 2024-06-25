@@ -20,7 +20,7 @@ class TypeAdapter(private val listener: OnTypeClicked) :
 
         }
         fun bind(type: Type) {
-            binding.tv.text = type.name
+            binding.tvType.text = type.name
 
 
         }

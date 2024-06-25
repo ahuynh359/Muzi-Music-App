@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.home
+package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

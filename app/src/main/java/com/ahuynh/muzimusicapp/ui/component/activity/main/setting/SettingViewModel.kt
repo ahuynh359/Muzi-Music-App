@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.setting
+package com.ahuynh.muzimusicapp.ui.component.activity.main.setting
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

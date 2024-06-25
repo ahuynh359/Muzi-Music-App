@@ -33,13 +33,13 @@ interface UserAPI {
         @Path("id") id: Long,
     ): Response<ListSongResponse>
 
-    @GET("${Constants.API_VERSION}/user-service/information/{id}")
+    @GET("${Constants.API_VERSION}/user/information/{id}")
     suspend fun getUserById(
         @Path("id") id: Long,
     ): Response<UserResponseData>
 
     @Multipart
-    @PUT("${Constants.API_VERSION}/user-service/change/avatar/{id}")
+    @PUT("${Constants.API_VERSION}/user/change/avatar/{id}")
     suspend fun changeAvatar(
         @Path("id") id: Long,
         @Part avatar : MultipartBody.Part

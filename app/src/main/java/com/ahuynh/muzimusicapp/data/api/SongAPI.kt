@@ -11,9 +11,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SongAPI {
-    //ok
-    @GET("${Constants.API_VERSION}/core-service/song/all")
-    suspend fun getAllSong(): Response<ListSongResponse>
+
+    @GET("${Constants.API_VERSION}/song/new")
+    suspend fun getNewSongs(): Response<ListSongResponse>
 
     @GET("${Constants.API_VERSION}/song/{id}")
     suspend fun getSongById(@Path("id") id: Long): Response<SongResponse>
@@ -24,7 +24,7 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/singer/{id}")
     suspend fun getSingerFromSongById(@Path("id") id: Long): Response<ListUserResponse>
 
-    @GET("${Constants.API_VERSION}/core-service/song/search")
+    @GET("${Constants.API_VERSION}/song/search")
     suspend fun searchSong(@Query("str") str: String): Response<SearchResponse>
 
 

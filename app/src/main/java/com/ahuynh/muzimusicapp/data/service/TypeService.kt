@@ -18,7 +18,7 @@ class TypeService @Inject constructor(
         return if (result is Response.Success) {
             result.data.data.toListType()
         } else {
-            emptyList()
+            arrayListOf()
         }
     }
     suspend fun getSongFromType(id : Long): List<Song> {

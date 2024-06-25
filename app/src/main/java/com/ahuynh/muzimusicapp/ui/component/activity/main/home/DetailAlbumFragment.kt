@@ -1,26 +1,18 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist.detail
+package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
-import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailAlbumBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentDetailPlaylistBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.home.DetailAlbumFragmentArgs
-import com.ahuynh.muzimusicapp.ui.component.home.DetailTypeFragmentArgs
-import com.ahuynh.muzimusicapp.ui.component.home.HomeViewModel
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
@@ -28,22 +20,22 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailPlaylistFragment :
-    BaseFragment<FragmentDetailPlaylistBinding>(FragmentDetailPlaylistBinding::inflate),
+class DetailAlbumFragment :
+    BaseFragment<FragmentDetailAlbumBinding>(FragmentDetailAlbumBinding::inflate),
     SongAdapter.OnNewSongClicked {
 
     companion object {
-        const val TAG = "DetailPlaylistFragment"
+        const val TAG = "DetailAlbumFragment"
     }
 
     private lateinit var songAdapter: SongAdapter
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
-    private lateinit var songOfPlaylist: ArrayList<Song>
-    private lateinit var currentPlaylist: Playlist
+    private lateinit var songOfAlbum: ArrayList<Song>
+    private lateinit var currentAlbum: Album
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currentPlaylist = DetailPlaylistFragmentArgs.fromBundle(requireArguments()).playlist
+        currentAlbum = DetailAlbumFragmentArgs.fromBundle(requireArguments()).album
         songAdapter = SongAdapter(this)
         binding.rcySongs.adapter = songAdapter
 
@@ -54,16 +46,16 @@ class DetailPlaylistFragment :
     }
 
     private fun getData() {
-        viewModel.getSongOfPlaylist(currentPlaylist.id)
+        viewModel.getSongOfAlbum(currentAlbum.id)
     }
 
     private fun observe() {
 
 
-        viewModel.songOfPlaylist.observe(viewLifecycleOwner) {
+        viewModel.songOfAlbum.observe(viewLifecycleOwner) {
 
             songAdapter.submitList(it)
-            songOfPlaylist = it as ArrayList<Song>
+            songOfAlbum = it as ArrayList<Song>
             binding.rcySongs.visibility = View.VISIBLE
             if (it.isEmpty()) {
                 binding.btnPlay.visibility = View.INVISIBLE
@@ -78,12 +70,12 @@ class DetailPlaylistFragment :
     private fun handleUI() {
         Glide
             .with(binding.imvPlaylist.context)
-            .load(currentPlaylist.avatar)
+            .load(currentAlbum.avatar)
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
             .placeholder(R.drawable.note)
             .into(binding.imvPlaylist)
-        binding.tvPlaylistName.text = currentPlaylist.name
+        binding.tvAlbumName.text = currentAlbum.name
 
         binding.btnMore.setOnClickListener {
 
@@ -100,7 +92,7 @@ class DetailPlaylistFragment :
             Utils.sendNewMusic(
                 requireActivity(),
                 MusicService.ACTION_PLAY,
-                songOfPlaylist[0], songOfPlaylist
+                songOfAlbum[0], songOfAlbum
             )
         }
 
@@ -112,7 +104,7 @@ class DetailPlaylistFragment :
         Utils.sendNewMusic(
             requireActivity(),
             MusicService.ACTION_PLAY,
-            song, songOfPlaylist
+            song, songOfAlbum
         )
     }
 

@@ -18,9 +18,9 @@ class SongRepository @Inject constructor(
 
 ) {
     //ok
-    suspend fun getAllSong(): List<Song> {
+    suspend fun getNewSongs(): List<Song> {
         return withContext(dispatcher) {
-            songService.getAllSong()
+            songService.getNewSongs()
         }
     }
 

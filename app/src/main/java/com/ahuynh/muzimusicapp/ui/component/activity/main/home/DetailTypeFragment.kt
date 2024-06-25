@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.home
+package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,19 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.databinding.FragmentDetailAlbumBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

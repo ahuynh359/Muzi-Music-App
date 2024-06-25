@@ -17,19 +17,19 @@ import retrofit2.http.Path
 interface PlaylistAPI {
 
 
-    @GET("${Constants.API_VERSION}/core-service/playlist/all/{id}")
+    @GET("${Constants.API_VERSION}/playlist/all/{id}")
     suspend fun getAllPlaylist(@Path("id") id: Long):
             Response<ListPlaylistResponse>
 
 
-    @GET("${Constants.API_VERSION}/core-service/playlist/{id}/get/song")
+    @GET("${Constants.API_VERSION}/playlist/{id}/get/song")
     suspend fun getAllSongFromPlaylist(@Path("id") id: Long):
             Response<ListSongResponse>
 
-    @POST("${Constants.API_VERSION}/core-service/playlist/create")
+    @POST("${Constants.API_VERSION}/playlist/create")
     suspend fun addPlaylist(@Body playlistRequest: PlaylistRequest): Response<PlaylistResponseData>
 
-    @DELETE("${Constants.API_VERSION}/core-service/playlist/{id}")
+    @DELETE("${Constants.API_VERSION}/playlist/{id}")
     suspend fun deletePlaylist(@Path("id") id: Long): Response<MessageResponse>
 
 

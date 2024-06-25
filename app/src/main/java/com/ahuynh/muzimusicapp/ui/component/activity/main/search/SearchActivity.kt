@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.activity.search
+package com.ahuynh.muzimusicapp.ui.component.activity.main.search
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
 import com.ahuynh.muzimusicapp.databinding.ActivitySearchBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseActivity
-import com.ahuynh.muzimusicapp.ui.component.activity.search.album.AlbumSearchFragment
-import com.ahuynh.muzimusicapp.ui.component.activity.search.song.SongSearchFragment
-import com.ahuynh.muzimusicapp.ui.component.activity.search.user.UserSearchFragment
+import com.ahuynh.muzimusicapp.ui.component.activity.main.search.album.AlbumSearchFragment
+import com.ahuynh.muzimusicapp.ui.component.activity.main.search.song.SongSearchFragment
+import com.ahuynh.muzimusicapp.ui.component.activity.main.search.user.UserSearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 

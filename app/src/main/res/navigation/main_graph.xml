@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/songFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -26,7 +26,7 @@
 
     <dialog
         android:id="@+id/songMenuBottom"
-        android:name="com.ahuynh.muzimusicapp.ui.component.home.HomeMenuBottom"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.HomeMenuBottom"
         android:label="SongMenuBottom" >
         <argument
             android:name="song"
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.home.DetailAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.DetailAlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/playlistFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.PlaylistFragment"
         android:label="fragment_playlist"
         tools:layout="@layout/fragment_playlist" >
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <dialog
         android:id="@+id/playlistModelBottomSheet"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.detail.PlaylistModelBottomSheet"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.detail.PlaylistModelBottomSheet"
         android:label="PlaylistModelBottomSheet" >
         <argument
             android:name="playlist"
@@ -64,7 +64,7 @@
     </dialog>
     <fragment
         android:id="@+id/detailTypeFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.home.DetailTypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.DetailTypeFragment"
         android:label="fragment_detail_type"
         tools:layout="@layout/fragment_detail_type" >
         <argument
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailPlaylistFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.playlist.detail.DetailPlaylistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.detail.DetailPlaylistFragment"
         android:label="fragment_detail_playlist"
         tools:layout="@layout/fragment_detail_playlist" >
         <argument
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.setting.SettingFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.setting.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

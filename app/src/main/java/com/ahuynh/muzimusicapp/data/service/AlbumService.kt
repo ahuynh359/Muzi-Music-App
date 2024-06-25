@@ -13,8 +13,8 @@ import javax.inject.Inject
 class AlbumService @Inject constructor(
     private val albumAPI: AlbumAPI
 ) : BaseRemoteService() {
-    suspend fun getAllAlbum(): List<Album> {
-        val result = callApi { albumAPI.getAllAlbum() }
+    suspend fun getNewAlbums(): List<Album> {
+        val result = callApi { albumAPI.getNewAlbums() }
         return if (result is Response.Success) {
             result.data.data.toListAlbum()
         } else {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingVertical="20dp"
+    android:paddingHorizontal="10dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        app:shapeAppearanceOverlay="@style/rounded_corner"
+        android:src="@color/white"
+        android:id="@+id/imv"
+        android:layout_width="@dimen/_153dp"
+        android:layout_height="@dimen/_153dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sp"
+        android:fontFamily="@font/demi"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/imv"
+        app:layout_constraintStart_toStartOf="@id/imv"
+        app:layout_constraintTop_toBottomOf="@id/imv"
+        tools:text="Album 1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

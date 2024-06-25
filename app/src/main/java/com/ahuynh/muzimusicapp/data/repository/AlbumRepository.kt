@@ -18,9 +18,9 @@ class AlbumRepository @Inject constructor(
 
 ) {
 
-    suspend fun getAllAlbum(): List<Album> {
+    suspend fun getNewAlbums(): List<Album> {
         return withContext(dispatcher) {
-            albumService.getAllAlbum()
+            albumService.getNewAlbums()
         }
     }
 

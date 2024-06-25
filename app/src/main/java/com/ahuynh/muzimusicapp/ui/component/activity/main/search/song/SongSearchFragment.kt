@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.activity.search.song
+package com.ahuynh.muzimusicapp.ui.component.activity.main.search.song
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongSearchBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.component.activity.search.SearchViewModel
+import com.ahuynh.muzimusicapp.ui.component.activity.main.search.SearchViewModel
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint

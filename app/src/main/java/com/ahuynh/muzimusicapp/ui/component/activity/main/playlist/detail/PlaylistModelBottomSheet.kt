@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.playlist.detail
+package com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.DialogModelBottomSheetPlaylistBinding
-import com.ahuynh.muzimusicapp.ui.component.playlist.PlaylistViewModel
+import com.ahuynh.muzimusicapp.ui.component.activity.main.playlist.PlaylistViewModel
 import com.ahuynh.muzimusicapp.ui.dialog.ConfirmDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

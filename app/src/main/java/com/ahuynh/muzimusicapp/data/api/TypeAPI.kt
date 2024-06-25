@@ -12,10 +12,10 @@ import retrofit2.http.Path
 interface TypeAPI {
 
 
-    @GET("${Constants.API_VERSION}/core-service/type/all")
+    @GET("${Constants.API_VERSION}/type/all")
     suspend fun getAllType(): Response<ListTypeResponse>
 
-    @GET("${Constants.API_VERSION}/core-service/type/{id}/songs")
+    @GET("${Constants.API_VERSION}type/{id}/songs")
     suspend fun getSongFromType(@Path("id") id : Long): Response<ListSongResponse>
 
 
