@@ -15,7 +15,7 @@ interface TypeAPI {
     @GET("${Constants.API_VERSION}/type/all")
     suspend fun getAllType(): Response<ListTypeResponse>
 
-    @GET("${Constants.API_VERSION}type/{id}/songs")
+    @GET("${Constants.API_VERSION}/type/{id}/songs")
     suspend fun getSongFromType(@Path("id") id : Long): Response<ListSongResponse>
 
 

@@ -5,13 +5,14 @@ import com.ahuynh.muzimusicapp.data.model.Type
 data class TypeResponse(
     val id: Long,
     val name: String,
+    val avatar: String,
 
 
     ) {
     fun toType(): Type {
         return Type(
-            id = this.id, name = this.name
-
+            id = this.id, name = this.name,
+            avatar = this.avatar
         )
     }
 }

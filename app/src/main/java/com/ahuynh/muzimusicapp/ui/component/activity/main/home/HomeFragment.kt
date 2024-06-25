@@ -3,9 +3,8 @@ package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
-import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.adapter.TypeAdapter
+import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.adapter.home.TypeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
@@ -142,12 +141,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     override fun onTypeClicked(type: Type) {
-
+        val action = HomeFragmentDirections.actionSongFragmentToDetailTypeFragment(type)
+        findNavController().navigate(action)
     }
 
     override fun onSingerClicked(singer: Singer) {
 
     }
+
+
 
 
 }

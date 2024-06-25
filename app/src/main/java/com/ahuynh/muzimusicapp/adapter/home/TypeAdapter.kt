@@ -1,12 +1,15 @@
-package com.ahuynh.muzimusicapp.adapter
+package com.ahuynh.muzimusicapp.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.ItemTypeBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class TypeAdapter(private val listener: OnTypeClicked) :
     ListAdapter<Type, TypeAdapter.ViewHolder>(DiffCallback()) {
@@ -20,7 +23,14 @@ class TypeAdapter(private val listener: OnTypeClicked) :
 
         }
         fun bind(type: Type) {
-            binding.tvType.text = type.name
+            Glide
+                .with(binding.imvType.context)
+                .load(type.avatar)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.note)
+                .into(binding.imvType)
+            binding.tvName.text = type.name
 
 
         }

@@ -17,6 +17,10 @@
             android:id="@+id/action_songFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
         <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_songFragment_to_detailTypeFragment"
             app:destination="@id/detailTypeFragment" />
     </fragment>
@@ -35,7 +39,7 @@
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.DetailAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.detail.DetailAlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument
@@ -64,7 +68,7 @@
     </dialog>
     <fragment
         android:id="@+id/detailTypeFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.DetailTypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.activity.main.home.detail.DetailTypeFragment"
         android:label="fragment_detail_type"
         tools:layout="@layout/fragment_detail_type" >
         <argument

@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:paddingVertical="20dp"
+    android:layout_height="wrap_content"
     android:paddingHorizontal="10dp"
-    android:layout_height="wrap_content">
+    android:paddingVertical="20dp">
 
-    <TextView
-        android:id="@+id/tv_type"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imv_type"
         android:layout_width="192dp"
         android:layout_height="109dp"
         android:background="@drawable/rounded_square"
@@ -19,6 +19,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Rounded Square" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/demi"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/imv_type"
+        app:layout_constraintEnd_toEndOf="@id/imv_type"
+        app:layout_constraintStart_toStartOf="@id/imv_type"
+        app:layout_constraintTop_toTopOf="@id/imv_type"
+        tools:text="Type Name " />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

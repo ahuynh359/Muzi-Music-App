@@ -17,9 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_17dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:fontFamily="@font/demi"
+            android:textSize="24sp"
             android:text="@string/type"
-            android:textSize="@dimen/_19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,9 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+            android:textSize="24sp"
+                android:fontFamily="@font/demi"
             android:text="@string/recently_played"
-            android:textSize="@dimen/_19sp"
             app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_type" />
 
@@ -108,9 +108,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
+
             android:text="@string/new_song"
-            android:textSize="@dimen/_19sp"
+            android:textSize="24sp"
+            android:fontFamily="@font/demi"
             app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_recently_played" />
 
@@ -149,13 +150,13 @@
             tools:listitem="@layout/item_circle_recently" />
         <!--    New singer-->
         <androidx.appcompat.widget.AppCompatTextView
+            android:textSize="24sp"
+            android:fontFamily="@font/demi"
             android:id="@+id/tv_new_singer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
             android:text="@string/new_singer"
-            android:textSize="@dimen/_19sp"
             app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_new_song" />
 
@@ -195,13 +196,14 @@
 
         <!--    New album-->
         <androidx.appcompat.widget.AppCompatTextView
+            app:fontFamily="@font/demi"
             android:id="@+id/tv_new_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/bold"
             android:text="@string/new_album"
-            android:textSize="@dimen/_19sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_new_singer" />
 
