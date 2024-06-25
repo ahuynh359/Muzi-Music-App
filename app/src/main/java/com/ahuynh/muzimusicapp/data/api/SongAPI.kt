@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.data.api
 
+import com.ahuynh.muzimusicapp.data.model.response.ListSingerResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.ListUserResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -22,7 +22,7 @@ interface SongAPI {
 
 
     @GET("${Constants.API_VERSION}/song/singer/{id}")
-    suspend fun getSingerFromSongById(@Path("id") id: Long): Response<ListUserResponse>
+    suspend fun getSingerFromSongById(@Path("id") id: Long): Response<ListSingerResponse>
 
     @GET("${Constants.API_VERSION}/song/search")
     suspend fun searchSong(@Query("str") str: String): Response<SearchResponse>

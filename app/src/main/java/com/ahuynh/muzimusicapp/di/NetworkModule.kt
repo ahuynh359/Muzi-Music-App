@@ -4,6 +4,7 @@ import android.util.Log
 import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
 import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
+import com.ahuynh.muzimusicapp.data.api.SingerAPI
 import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.api.TypeAPI
 import com.ahuynh.muzimusicapp.data.api.UserAPI
@@ -113,5 +114,11 @@ class NetworkModule {
     @Provides
     fun providePlaylistAPI(retrofit: Retrofit): PlaylistAPI {
         return retrofit.create(PlaylistAPI::class.java)
+    }
+
+
+    @Provides
+    fun provideSingerAPI(retrofit: Retrofit): SingerAPI {
+        return retrofit.create(SingerAPI::class.java)
     }
 }

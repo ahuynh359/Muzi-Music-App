@@ -30,11 +30,7 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun getSingerFromSongById(id: Long): List<User> {
-        return withContext(dispatcher) {
-            songService.getSingerFromSongById(id)
-        }
-    }
+
 
     suspend fun searchSong(str: String): SearchJson? {
         return withContext(dispatcher) {

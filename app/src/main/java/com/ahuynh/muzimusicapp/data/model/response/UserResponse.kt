@@ -34,11 +34,7 @@ data class UserResponseData(
     val data : UserResponse
 )
 
-data class ListUserResponse(
-    val success: Boolean,
-    val message: String,
-    val data: List<UserResponse>
-)
+
 
 fun List<UserResponse>.toListUser(): List<User> {
     return map { it.toUser() }

@@ -7,8 +7,10 @@ import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
+import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
@@ -19,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     AlbumHomeAdapter.OnAlbumHomeAdapterClicked, TypeAdapter.OnTypeClicked,
-    SongHomeAdapter.OnSongHomeClicked {
+    SongHomeAdapter.OnSongHomeClicked, SingerHomeAdapter.OnSingerHomeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
@@ -29,10 +31,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val newSongAdapter = SongHomeAdapter(this)
     private val newAlbumAdapter = AlbumHomeAdapter(this)
+    private val newSingerAdapter = SingerHomeAdapter(this)
     private val typeAdapter = TypeAdapter(this)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
+    private var newSingerList: ArrayList<Singer> = arrayListOf()
     private var typeList: ArrayList<Type> = arrayListOf()
     private var loveList: ArrayList<Song> = arrayListOf()
 
@@ -51,6 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleTypeList()
         handleNewSongList()
         handleNewAlbumList()
+        handleNewSingerList()
 
 
     }
@@ -103,6 +108,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    //New Singer List
+    private fun handleNewSingerList() {
+        binding.rcyNewSinger.adapter = newSingerAdapter
+        viewModel.newSingerList.observe(viewLifecycleOwner) {
+            binding.rcyNewSinger.visibility = View.VISIBLE
+            if (it != null) {
+                newSingerList = it as ArrayList<Singer>
+                newSingerAdapter.submitList(it)
+            }
+            binding.shimmerNewSinger.stopShimmer()
+            binding.shimmerNewSinger.visibility = View.INVISIBLE
+
+
+        }
+    }
+
+
 
     private fun handleUI() {
 
@@ -120,6 +142,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     override fun onTypeClicked(type: Type) {
+
+    }
+
+    override fun onSingerClicked(singer: Singer) {
 
     }
 

@@ -4,6 +4,7 @@ import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.response.SearchJson
+import com.ahuynh.muzimusicapp.data.model.response.toListSinger
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toListUser
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
@@ -31,14 +32,14 @@ class SongService @Inject constructor(
             return null
         }
     }
-    suspend fun getSingerFromSongById(id: Long): List<User> {
-        val result = callApi { songAPI.getSingerFromSongById(id) }
-        return if (result is Response.Success) {
-            result.data.data.toListUser()
-        } else {
-            arrayListOf()
-        }
-    }
+//    suspend fun getSingerFromSongById(id: Long): List<User> {
+//        val result = callApi { songAPI.getSingerFromSongById(id) }
+//        return if (result is Response.Success) {
+//            result.data.data.toListSinger()
+//        } else {
+//            arrayListOf()
+//        }
+//    }
 
     suspend fun searchSong(str: String): SearchJson? {
         val result = callApi { songAPI.searchSong(str) }

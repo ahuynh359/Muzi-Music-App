@@ -3,10 +3,12 @@ package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
+import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
@@ -23,10 +25,12 @@ class HomeViewModel @Inject constructor(
     private val songRepository: SongRepository,
     private val typeRepository: TypeRepository,
     private val userRepository: UserRepository,
-    private val playlistRepository: PlaylistRepository
+    private val playlistRepository: PlaylistRepository,
+    private val singerRepository: SingerRepository
 ) : BaseViewModel() {
 
     var newAlbumList = MutableLiveData<List<Album>>()
+    var newSingerList = MutableLiveData<List<Singer>>()
     var typeList = MutableLiveData<List<Type>>()
     var newSongList = MutableLiveData<List<Song>>()
     var loveSongList = MutableLiveData<List<Song>>()
@@ -47,6 +51,7 @@ class HomeViewModel @Inject constructor(
         getAllTypes()
         getNewSongs()
         getNewAlbums()
+        getNewSingers()
 //        getAllAlbum()
 //        getAccessToken()
 
@@ -89,6 +94,13 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
+    fun getNewSingers() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            newSingerList.postValue(singerRepository.getNewSingers())
+        }
+        registerEventParentJobFinish()
+    }
     fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
