@@ -61,7 +61,6 @@
             android:id="@+id/tv_recently_played"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_17dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/bold"
             android:text="@string/recently_played"
@@ -112,7 +111,7 @@
             android:fontFamily="@font/bold"
             android:text="@string/new_song"
             android:textSize="@dimen/_19sp"
-            app:layout_constraintStart_toStartOf="@id/tv_recently_played"
+            app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_recently_played" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -157,7 +156,7 @@
             android:fontFamily="@font/bold"
             android:text="@string/new_singer"
             android:textSize="@dimen/_19sp"
-            app:layout_constraintStart_toStartOf="@id/tv_recently_played"
+            app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_new_song" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -203,7 +202,7 @@
             android:fontFamily="@font/bold"
             android:text="@string/new_album"
             android:textSize="@dimen/_19sp"
-            app:layout_constraintStart_toStartOf="@id/tv_recently_played"
+            app:layout_constraintStart_toStartOf="@id/tv_type"
             app:layout_constraintTop_toBottomOf="@id/shimmer_new_singer" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
