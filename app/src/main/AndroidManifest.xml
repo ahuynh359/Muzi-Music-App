@@ -27,12 +27,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.component.activity.main.search.SearchActivity"
+            android:name=".ui.component.main.search.SearchActivity"
             android:exported="false"
             android:label="@string/title_activity_search"
             android:theme="@style/Base.Theme.MuziMusicApp" />
         <activity
-            android:name=".ui.component.activity.splash.SplashActivity"
+            android:name=".ui.component.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.component.activity.auth.AuthActivity"
+            android:name=".ui.component.auth.AuthActivity"
             android:exported="false" />
 
         <meta-data
@@ -56,7 +56,7 @@
             android:name=".ui.component.player.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.component.activity.main.MainActivity"
+            android:name=".ui.component.main.MainActivity"
             android:exported="false" />
 
         <service

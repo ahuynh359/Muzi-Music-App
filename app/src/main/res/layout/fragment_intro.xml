@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.component.activity.auth.intro.IntroFragment">
+    tools:context=".ui.component.auth.intro.IntroFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imv_icon"

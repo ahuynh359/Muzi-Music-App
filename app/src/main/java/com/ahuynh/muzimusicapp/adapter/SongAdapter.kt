@@ -9,7 +9,6 @@ import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
-import com.ahuynh.muzimusicapp.ui.component.activity.main.home.HomeFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 

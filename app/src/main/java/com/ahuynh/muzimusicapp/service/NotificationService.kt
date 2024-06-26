@@ -9,7 +9,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.ui.component.activity.main.MainActivity
+import com.ahuynh.muzimusicapp.ui.component.main.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
