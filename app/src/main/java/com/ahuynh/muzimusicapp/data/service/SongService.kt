@@ -1,8 +1,13 @@
 package com.ahuynh.muzimusicapp.data.service
 
+import android.os.Message
 import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
+import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
+import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
+import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseData
 import com.ahuynh.muzimusicapp.data.model.response.SearchJson
 import com.ahuynh.muzimusicapp.data.model.response.toListSinger
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
@@ -49,6 +54,19 @@ class SongService @Inject constructor(
             null
         }
     }
+
+    suspend fun loveSong(userId: Long, songId : Long) : Response<MessageResponse>{
+        return callApi { songAPI.loveSong(userId,songId) }
+    }
+
+    suspend fun unloveSong(userId: Long, songId : Long) : Response<MessageResponse>{
+        return callApi { songAPI.unloveSong(userId,songId) }
+    }
+
+    suspend fun isUserLoveSong(userId: Long, songId : Long) : Response<LoveSongResponse>{
+        return callApi { songAPI.isUserLoveSong(userId,songId) }
+    }
+
 
 
 }

@@ -31,7 +31,6 @@ class AlbumHomeAdapter(private val listener: OnAlbumHomeAdapterClicked) :
                 .load(album.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.note)
                 .into(binding.imv)
             binding.tvName.text = album.name
             //binding.tvAlbumName.text = album.description

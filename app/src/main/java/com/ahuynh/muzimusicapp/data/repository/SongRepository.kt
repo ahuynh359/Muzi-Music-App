@@ -2,10 +2,13 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
+import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchJson
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.service.SongService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -37,6 +40,25 @@ class SongRepository @Inject constructor(
             songService.searchSong(str)
         }
     }
+
+    suspend fun loveSong(userId: Long, songId : Long): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            songService.loveSong(userId,songId)
+        }
+    }
+
+    suspend fun unloveSong(userId: Long, songId : Long): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            songService.unloveSong(userId,songId)
+        }
+    }
+
+    suspend fun isUserLoveSong(userId: Long, songId : Long): Response<LoveSongResponse> {
+        return withContext(dispatcher) {
+            songService.isUserLoveSong(userId,songId)
+        }
+    }
+
 
 
 }

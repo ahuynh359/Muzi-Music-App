@@ -10,7 +10,7 @@ import com.ahuynh.muzimusicapp.databinding.ActivitySearchBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.activity.main.search.album.AlbumSearchFragment
 import com.ahuynh.muzimusicapp.ui.component.activity.main.search.song.SongSearchFragment
-import com.ahuynh.muzimusicapp.ui.component.activity.main.search.user.UserSearchFragment
+import com.ahuynh.muzimusicapp.ui.component.activity.main.search.singer.SingerSearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,11 +33,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
 
     private fun observe() {
         viewModel.isLoading.observe(this) {
-            binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
+            binding.pgLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
-        viewModel.isSearchDone.observe(this){
-            if(it){
-                binding.history.visibility = View.GONE
+        viewModel.isSearchDone.observe(this) {
+            if (it) {
+                binding.rcyHistory.visibility = View.GONE
+                binding.searchHistory.visibility = View.GONE
                 binding.tabLayout.visibility = View.VISIBLE
                 binding.viewPager.visibility = View.VISIBLE
             }
@@ -45,14 +46,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     }
 
     private fun handleUI() {
-        binding.btnBack.setOnClickListener {
+        binding.tvCancle.setOnClickListener {
             finish()
         }
 
 
-        binding.btnSearch.setOnEditorActionListener { _, actionId, _ ->
+        binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val str = binding.btnSearch.text.toString().trim()
+                val str = binding.edtSearch.text.toString().trim()
                 if (str.isNotEmpty()) {
                     viewModel.search(str)
                 }
@@ -64,19 +65,21 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
         val fragmentList = arrayListOf(
             SongSearchFragment(),
             AlbumSearchFragment(),
-            UserSearchFragment()
+            SingerSearchFragment()
         )
-        binding.viewPager.adapter = ViewPagerAdapter(fragmentList,this)
+        binding.viewPager.adapter = ViewPagerAdapter(fragmentList, this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> {
                     tab.text = "Songs"
                 }
+
                 1 -> {
                     tab.text = "Albums"
                 }
+
                 2 -> {
-                    tab.text = "Users"
+                    tab.text = "Singers"
                 }
             }
         }.attach()

@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="@id/imv"
         android:id="@+id/tv_name"
         android:fontFamily="@font/demi"
-        android:textSize="12sp"
+        android:textSize="14sp"
         tools:text="Lama Del Rey"
         app:layout_constraintStart_toEndOf="@id/imv"
         android:layout_width="wrap_content"

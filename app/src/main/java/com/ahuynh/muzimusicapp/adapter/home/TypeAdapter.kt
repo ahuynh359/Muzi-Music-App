@@ -28,7 +28,6 @@ class TypeAdapter(private val listener: OnTypeClicked) :
                 .load(type.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.note)
                 .into(binding.imvType)
             binding.tvName.text = type.name
 
@@ -39,7 +38,7 @@ class TypeAdapter(private val listener: OnTypeClicked) :
 
     private class DiffCallback : DiffUtil.ItemCallback<Type>() {
         override fun areItemsTheSame(oldItem: Type, newItem: Type): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Type, newItem: Type): Boolean {

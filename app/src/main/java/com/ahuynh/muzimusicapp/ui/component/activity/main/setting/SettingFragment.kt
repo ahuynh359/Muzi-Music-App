@@ -37,7 +37,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                 .load(it)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.one_direction)
                 .into(binding.imvAvatar)
 //
 //            val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)

@@ -106,7 +106,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     .load(it.avatar)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.note)
                     .into(binding.imvSong)
             }
         }

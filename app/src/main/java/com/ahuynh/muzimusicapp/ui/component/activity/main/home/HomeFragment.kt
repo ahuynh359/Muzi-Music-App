@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.activity.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -13,13 +14,16 @@ import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
+import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    AlbumHomeAdapter.OnAlbumHomeAdapterClicked, TypeAdapter.OnTypeClicked,
+    AlbumHomeAdapter.OnAlbumHomeAdapterClicked,
     SongHomeAdapter.OnSongHomeClicked, SingerHomeAdapter.OnSingerHomeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
@@ -31,13 +35,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val newSongAdapter = SongHomeAdapter(this)
     private val newAlbumAdapter = AlbumHomeAdapter(this)
     private val newSingerAdapter = SingerHomeAdapter(this)
-    private val typeAdapter = TypeAdapter(this)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
-    private var typeList: ArrayList<Type> = arrayListOf()
-    private var loveList: ArrayList<Song> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun observe() {
 
-        handleTypeList()
+
         handleNewSongList()
         handleNewAlbumList()
         handleNewSingerList()
@@ -59,21 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     }
 
-    //Type List
-    private fun handleTypeList() {
-        binding.rcyType.adapter = typeAdapter
-        viewModel.typeList.observe(viewLifecycleOwner) {
-            binding.rcyType.visibility = View.VISIBLE
-            if (it != null) {
-                typeList = it as ArrayList<Type>
-                typeAdapter.submitList(it)
-            }
-            binding.shimmerType.stopShimmer()
-            binding.shimmerType.visibility = View.INVISIBLE
 
-
-        }
-    }
 
     //New Song List
     private fun handleNewSongList() {
@@ -131,7 +118,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onSongClicked(song: Song) {
-
+        startActivity(Intent(context, PlayerActivity::class.java))
+        Utils.sendMusic(
+            requireContext(),
+            MusicService.ACTION_PLAY,
+            song,
+            newSongList
+        )
     }
 
 
@@ -140,10 +133,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-    override fun onTypeClicked(type: Type) {
-        val action = HomeFragmentDirections.actionSongFragmentToDetailTypeFragment(type)
-        findNavController().navigate(action)
-    }
 
     override fun onSingerClicked(singer: Singer) {
 

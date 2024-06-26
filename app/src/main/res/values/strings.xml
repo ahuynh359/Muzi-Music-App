@@ -72,4 +72,9 @@
     <string name="new_singer">New Singer</string>
     <string name="new_album">New Album</string>
     <string name="type">Type</string>
+    <string name="singer_songs_or_album">Singer, songs, or album</string>
+    <string name="browse_all">Browse all</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="there_is_no_result">There is no result</string>
+    <string name="singer">Singer</string>
 </resources>

@@ -10,5 +10,5 @@ data class SearchResponse(
 data class SearchJson(
     val songs : List<SongResponse>,
     val albums : List<AlbumResponse>,
-    val users : List<UserResponse>
+    val singers : List<SingerResponse>
 )

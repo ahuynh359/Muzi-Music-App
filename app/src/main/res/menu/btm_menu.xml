@@ -3,15 +3,19 @@
     <item
         android:id="@+id/songFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/home" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search" />
     <item
         android:id="@+id/playlistFragment"
         android:icon="@drawable/ic_playlist"
-        android:title="Playlist" />
+        android:title="@string/playlist" />
     <item
         android:id="@+id/settingFragment"
         android:icon="@drawable/ic_settings"
-        android:title="Setting" />
+        android:title="@string/setting" />
 
 
 

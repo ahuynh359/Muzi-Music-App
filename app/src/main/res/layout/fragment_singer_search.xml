@@ -2,22 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:id="@+id/rcy_singer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_user" />
+        tools:listitem="@layout/item_singer_no_more" />
 
     <TextView
-        android:id="@+id/tvNoResult"
+        android:fontFamily="@font/demi"
+        android:id="@+id/tv_no_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Không tìm thấy tài khoản nào!"
+        android:text="There is no singer"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="gone" />
 

@@ -29,7 +29,6 @@ class UserAdapter(private val listener: OnUserClicked) :
                 .load(user.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.note)
                 .into(binding.imvUser)
             binding.tvName.text = user.username
 

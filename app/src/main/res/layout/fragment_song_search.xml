@@ -8,16 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_song" />
-
     <TextView
-        android:id="@+id/tvNoResult"
+        android:fontFamily="@font/demi"
+        android:id="@+id/tv_no_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Không tìm thấy bài hát nào!"
+        android:text="There is no song"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:visibility="gone" />
-
 </RelativeLayout>

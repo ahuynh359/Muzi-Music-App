@@ -48,7 +48,6 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getAllTypes()
         getNewSongs()
         getNewAlbums()
         getNewSingers()

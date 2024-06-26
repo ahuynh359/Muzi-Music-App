@@ -105,4 +105,10 @@
 
     </style>
 
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/green</item> <!-- Change to your desired text color -->
+        <item name="android:textSize">16sp</item> <!-- Change to your desired text size -->
+        <item name="android:fontFamily">@font/bold</item> <!-- Change to your desired font -->
+    </style>
+
 </resources>

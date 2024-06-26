@@ -74,7 +74,6 @@ class DetailAlbumFragment :
             .load(currentAlbum.avatar)
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade())
-            .placeholder(R.drawable.note)
             .into(binding.imvPlaylist)
         binding.tvAlbumName.text = currentAlbum.name
 
