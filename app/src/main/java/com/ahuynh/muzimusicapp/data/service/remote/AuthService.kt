@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.data.service
+package com.ahuynh.muzimusicapp.data.service.remote
 
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
 import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest

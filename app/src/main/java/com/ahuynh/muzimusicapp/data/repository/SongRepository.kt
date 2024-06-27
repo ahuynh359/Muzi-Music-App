@@ -1,12 +1,10 @@
 package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchJson
-import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
-import com.ahuynh.muzimusicapp.data.service.SongService
+import com.ahuynh.muzimusicapp.data.service.remote.SongService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher

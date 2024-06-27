@@ -7,10 +7,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.adapter.SettingAdapter
+import com.ahuynh.muzimusicapp.data.model.SettingItem
+import com.ahuynh.muzimusicapp.data.model.SettingName
 import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
+import com.ahuynh.muzimusicapp.ui.component.main.changpassword.ChangePasswordFragment
+import com.ahuynh.muzimusicapp.ui.component.main.home.detail.DetailTypeFragment
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -22,46 +29,49 @@ import java.io.File
 import android.content.ActivityNotFoundException as ActivityNotFoundException1
 
 @AndroidEntryPoint
-class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
+class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate),SettingAdapter.OnSettingAdapterClicked {
     companion object {
         const val TAG = "SettingFragment"
     }
 
-    private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        val file: File? = FileHelper.from(requireContext(), uri!!)
-        file?.let {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar)
-//
-//            val multipart = MultipartBody.Builder().setType(MultipartBody.FORM)
-//                .addFormDataPart("abc", file.name, file.absolutePath.toMediaTypeOrNull())
-//                .build()
-            viewModel.changeAvatar(
-                MultipartBody.Part.createFormData(
-                    "file",
-                    file.name,
-                    RequestBody.create("image/**".toMediaTypeOrNull(), file)
-                )
-            )
-        }
-    }
+    private val settingList = ArrayList<SettingItem>()
+    private val settingAdapter = SettingAdapter(this)
+
+
 
     private val viewModel by viewModels<SettingViewModel>({ requireActivity() })
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initSettingItem()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         handleUI()
-        //observeData()
+        observeData()
 
 
+    }
+
+    private fun observeData() {
+        viewModel.currentUser.observe(viewLifecycleOwner){
+            Glide
+                .with(binding.imvAvatar.context)
+                .load(it.avatar)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.imvAvatar);
+
+            binding.tvName.text = it.username
+
+        }
+    }
+
+    private fun initSettingItem(){
+        settingList.add(SettingItem(SettingName.LANGUAGE))
+        settingList.add(SettingItem(SettingName.THEME))
+        settingList.add(SettingItem(SettingName.SECURITY))
     }
 
 
@@ -70,19 +80,25 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
         binding.btnLogOut.setOnClickListener {
             viewModel.logout()
             startActivity(Intent(requireContext(), AuthActivity::class.java))
-            activity?.finish()
         }
 
-        binding.btnEdit.setOnClickListener {
-            try {
-                fileChooser.launch("image/*")
-            } catch (ex: ActivityNotFoundException1) {
-                Toast.makeText(
-                    requireContext(),
-                    "Vui lòng cài đặt File Manager",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+        binding.rcySetting.adapter = settingAdapter
+        settingAdapter.submitList(settingList)
+
+        binding.viewProfile.setOnClickListener {
+            val action = SettingFragmentDirections.actionSettingFragmentToProfileFragment()
+            findNavController().navigate(action)
+        }
+
+
+
+    }
+
+    override fun onSettingClicked(setting: SettingItem) {
+        if(setting.name == SettingName.LANGUAGE){
+
+        } else if(setting.name == SettingName.THEME){
+
         }
     }
 }

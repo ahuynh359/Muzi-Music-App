@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Singer
-import com.ahuynh.muzimusicapp.data.service.SingerService
+import com.ahuynh.muzimusicapp.data.service.remote.SingerService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

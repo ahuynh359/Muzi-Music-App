@@ -3,7 +3,7 @@ package com.ahuynh.muzimusicapp.data.repository
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.response.AlbumResponse
-import com.ahuynh.muzimusicapp.data.service.AlbumService
+import com.ahuynh.muzimusicapp.data.service.remote.AlbumService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher

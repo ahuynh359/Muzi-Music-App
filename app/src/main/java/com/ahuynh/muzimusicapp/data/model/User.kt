@@ -11,5 +11,6 @@ data class User(
     val username: String,
     val avatar: String,
     val enabled: Boolean,
-    val role: List<String>,
+    val locked : Boolean,
+    val roles: List<Role>,
 ) : Parcelable

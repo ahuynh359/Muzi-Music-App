@@ -1,8 +1,10 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -15,26 +17,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    private val songRepository: SongRepository,
     private val sharePreferencesHelper: SharePreferencesHelper
 ) :
     BaseViewModel() {
     var currentRotate = 0f
-    var isPlaying=  MutableLiveData(false)
-    var song =  MutableLiveData<Song>()
-    var loveSong =  MutableLiveData<Boolean>()
+    var isPlaying = MutableLiveData(false)
+    var song = MutableLiveData<Song>()
+    var loveSong = MutableLiveData<Boolean>()
     var loveOrUnlove = MutableLiveData<Boolean>()
-    var sleepTime =  MutableLiveData<String>()
-    var songList =  MutableLiveData<ArrayList<Song>>(arrayListOf())
+    var sleepTime = MutableLiveData<String>()
+    var songList = MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
-    var currentSongTime  = MutableLiveData<Int>(0)
-    var isShuffle:MutableLiveData<Boolean> =  MutableLiveData(false)
-    var isRepeat :MutableLiveData<Boolean> =  MutableLiveData(false)
+    var currentSongTime = MutableLiveData<Int>(0)
+    var isShuffle: MutableLiveData<Boolean> = MutableLiveData(false)
+    var isRepeat: MutableLiveData<Boolean> = MutableLiveData(false)
     var isUserTouchSlider = false
     var audioSessionId = MutableLiveData(0)
 
     var username = MutableLiveData<String>()
-
 
 
     fun setShuffle(value: Boolean) {
@@ -47,32 +48,36 @@ class PlayerViewModel @Inject constructor(
         }
     }
 
-    fun isUserLoveSong(songId: Long) {
+    fun loveOrUnlove(songId: Long) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-
-            loveSong.postValue(
-                userRepository.isUserLoveSong(
-                    sharePreferencesHelper.getId(),
-                    songId
-                )
+            songRepository.loveSong(
+                sharePreferencesHelper.getId(),
+                songId
             )
+            isUserLoveSong(songId)
+
         }
         registerEventParentJobFinish()
     }
 
-//    fun loveOrUnlove(songId: Long) {
-//        isLoading.postValue(true)
-//        parentJob = viewModelScope.launch {
-//            val result = userRepository.loveOrUnlove(sharePreferencesHelper.getId(), songId)
-//            if (result is Response.Success) {
-//                loveOrUnlove.postValue(result.data.success)
-//                isUserLoveSong(songId)
-//            }
-//        }
-//        registerEventParentJobFinish()
-//    }
+    fun isUserLoveSong(songId: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val result = songRepository.isUserLoveSong(
+                sharePreferencesHelper.getId(),
+                songId
+            )
 
+            if (result is Response.Success) {
+                loveSong.postValue(
+                    result.data.data
+                )
+            }
+
+        }
+        registerEventParentJobFinish()
+    }
 
 
     fun getShuffle() {
@@ -100,7 +105,7 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun getRepeat() {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             isRepeat.postValue(sharePreferencesHelper.isRepeat())
         }
 
@@ -108,7 +113,7 @@ class PlayerViewModel @Inject constructor(
 
 
     fun getUserLogin() {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             isRepeat.postValue(sharePreferencesHelper.isRepeat())
         }
 

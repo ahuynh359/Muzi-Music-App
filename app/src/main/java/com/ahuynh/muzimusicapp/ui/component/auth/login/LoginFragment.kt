@@ -56,7 +56,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         viewModel.status.observe(viewLifecycleOwner) {
             if (it == true) {
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
-                activity?.finish()
             } else
                 if (viewModel.mess != null)
                     Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()

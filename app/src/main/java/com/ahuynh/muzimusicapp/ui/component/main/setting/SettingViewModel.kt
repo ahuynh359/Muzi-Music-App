@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.main.setting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
@@ -23,9 +24,14 @@ constructor(private val playlistRepository: PlaylistRepository,
 
     var playlists = MutableLiveData<List<Playlist>>()
     var email = MutableLiveData<String>()
+    var currentUser = MutableLiveData<User>()
     var status = MutableLiveData<Boolean>(false)
     var mess: String? = null
     var avatarFile: File? = null
+
+    init {
+        getUserInfo()
+    }
 
     fun logout(){
         viewModelScope.launch {
@@ -33,7 +39,16 @@ constructor(private val playlistRepository: PlaylistRepository,
         }
     }
 
-    fun changeAvatar(file: MultipartBody.Part) {
+    fun getUserInfo(){
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val id = sharePreferencesHelper.getId()
+            currentUser.postValue(userRepository.getUserById(id))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun changeAvatar(file: File) {
 
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {

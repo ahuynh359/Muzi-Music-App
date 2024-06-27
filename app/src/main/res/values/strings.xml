@@ -77,4 +77,8 @@
     <string name="recent_searches">Recent searches</string>
     <string name="there_is_no_result">There is no result</string>
     <string name="singer">Singer</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="change">Change</string>
+    <string name="love_song">Love Song</string>
 </resources>

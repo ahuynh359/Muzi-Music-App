@@ -1,11 +1,8 @@
-package com.ahuynh.muzimusicapp.data.service
+package com.ahuynh.muzimusicapp.data.service.remote
 
 import com.ahuynh.muzimusicapp.data.api.SingerAPI
-import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Singer
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.response.toListSinger
-import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import javax.inject.Inject

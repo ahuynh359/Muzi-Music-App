@@ -30,12 +30,12 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/search")
     suspend fun searchSong(@Query("query")  query : String): Response<SearchResponse>
 
-    @POST("${Constants.API_VERSION}/song/love/{userId}/{songId}")
+    @POST("${Constants.API_VERSION}/song/love-or-unlove/{userId}/{songId}")
     suspend fun loveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long) : Response<MessageResponse>
 
     @POST("${Constants.API_VERSION}/song/unlove/{userId}/{songId}")
     suspend fun unloveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long) : Response<MessageResponse>
 
-    @GET("${Constants.API_VERSION}/song/is-user-love-song/{userId}/{songId}")
+    @GET("${Constants.API_VERSION}/song/is-love-song/{userId}/{songId}")
     suspend fun isUserLoveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long): Response<LoveSongResponse>
 }

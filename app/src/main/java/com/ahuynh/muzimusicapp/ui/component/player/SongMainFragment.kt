@@ -44,7 +44,6 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
                 .load(song.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(com.ahuynh.muzimusicapp.R.drawable.big_song)
                 .into(binding.imvSong);
 
         }

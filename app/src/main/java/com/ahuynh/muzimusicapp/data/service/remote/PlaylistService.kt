@@ -1,10 +1,9 @@
-package com.ahuynh.muzimusicapp.data.service
+package com.ahuynh.muzimusicapp.data.service.remote
 
 import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListSong

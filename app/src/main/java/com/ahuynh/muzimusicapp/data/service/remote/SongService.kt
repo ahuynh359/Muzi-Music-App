@@ -1,17 +1,11 @@
-package com.ahuynh.muzimusicapp.data.service
+package com.ahuynh.muzimusicapp.data.service.remote
 
-import android.os.Message
 import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseData
 import com.ahuynh.muzimusicapp.data.model.response.SearchJson
-import com.ahuynh.muzimusicapp.data.model.response.toListSinger
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
-import com.ahuynh.muzimusicapp.data.model.response.toListUser
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import javax.inject.Inject

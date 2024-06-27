@@ -11,6 +11,7 @@ import com.ahuynh.muzimusicapp.ui.base.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.main.search.album.AlbumSearchFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.singer.SingerSearchFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.song.SongSearchFragment
+import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +44,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
                 binding.viewPager.visibility = View.VISIBLE
             }
         }
+
+        viewModel.searchHistory.observe(this) {
+            binding.chipGroup.removeAllViews()
+            for (element in it) {
+                val chip = createHistoryChip(element.keyword)
+                binding.chipGroup.addView(chip)
+            }
+        }
     }
 
     private fun handleUI() {
@@ -56,6 +65,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
                 val str = binding.edtSearch.text.toString().trim()
                 if (str.isNotEmpty()) {
                     viewModel.search(str)
+                    viewModel.saveSearchKeywordHistory(str)
                 }
             }
             true
@@ -83,6 +93,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
                 }
             }
         }.attach()
+    }
+
+    private fun createHistoryChip(keyword: String): Chip {
+        return Chip(this).apply {
+            text = keyword
+            setOnClickListener {
+                binding.edtSearch.apply {
+                    setText(keyword)
+                    setSelection(length())
+                }
+            }
+        }
     }
 
     override fun getSnackbarView(): View {

@@ -68,20 +68,27 @@
             android:text="@string/recent_searches"
             android:textSize="17sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_history"
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10dp"
-            tools:itemCount="10"
-            tools:listitem="@layout/item_song" />
+            android:paddingHorizontal="8dp">
+
+        </com.google.android.material.chip.ChipGroup>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item_song" />
     </LinearLayout>
 
 
     <com.google.android.material.tabs.TabLayout
-        app:tabIndicatorColor="@color/green"
-        app:tabSelectedTextColor="@color/green"
-        app:tabTextAppearance="@style/CustomTabText"
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -90,7 +97,10 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_search" />
+        app:layout_constraintTop_toBottomOf="@id/edt_search"
+        app:tabIndicatorColor="@color/green"
+        app:tabSelectedTextColor="@color/green"
+        app:tabTextAppearance="@style/CustomTabText" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

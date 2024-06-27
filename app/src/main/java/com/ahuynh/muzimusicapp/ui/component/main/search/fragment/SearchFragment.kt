@@ -42,6 +42,7 @@ TypeAdapter.OnTypeClicked{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         handleUI()
         observeData()
 
