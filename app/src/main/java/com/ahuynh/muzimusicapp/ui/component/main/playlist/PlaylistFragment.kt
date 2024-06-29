@@ -1,27 +1,49 @@
 package com.ahuynh.muzimusicapp.ui.component.main.playlist
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
+import com.ahuynh.muzimusicapp.ui.base.BaseDialogFragment
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.PlaylistAddDialog
+import com.ahuynh.muzimusicapp.ui.component.main.type.DetailTypeFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistBinding::inflate),
+class PlaylistFragment : BaseDialogFragment(),
     PlaylistAdapter.OnPlaylistClicked {
     companion object {
         const val TAG = "PlaylistFragment"
     }
 
-    private val viewModel by viewModels<PlaylistViewModel>({requireActivity()})
+    private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
     private val playlistAdapter = PlaylistAdapter(this)
+    private lateinit var binding: FragmentPlaylistBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentPlaylistBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +61,10 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding>(FragmentPlaylistB
 
     private fun handleUI() {
         binding.rcyPlaylist.adapter = playlistAdapter
+
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.btnAdd.setOnClickListener {
             val bundle = bundleOf("playlist" to null)

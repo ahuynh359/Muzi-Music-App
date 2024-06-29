@@ -81,4 +81,6 @@
     <string name="old_password">Old Password</string>
     <string name="change">Change</string>
     <string name="love_song">Love Song</string>
+    <string name="profile">Profile</string>
+    <string name="my_playlist">My Playlist</string>
 </resources>

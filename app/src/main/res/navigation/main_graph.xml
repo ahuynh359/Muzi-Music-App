@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/songFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/songFragment"
+        android:id="@+id/homeFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_songFragment_to_songMenuBottom"
+            android:id="@+id/action_homeFragment_to_songMenuBottom"
             app:destination="@id/songMenuBottom" />
         <action
-            android:id="@+id/action_songFragment_to_detailAlbumFragment"
+            android:id="@+id/action_homeFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
     </fragment>
 
@@ -23,7 +23,7 @@
 
     <dialog
         android:id="@+id/songMenuBottom"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.home.HomeMenuBottom"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.menu.HomeMenuBottom"
         android:label="SongMenuBottom" >
         <argument
             android:name="song"
@@ -32,33 +32,14 @@
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.home.detail.DetailAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.album.DetailAlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument
             android:name="album"
             app:argType="com.ahuynh.muzimusicapp.data.model.Album" />
     </fragment>
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistFragment"
-        android:label="fragment_playlist"
-        tools:layout="@layout/fragment_playlist" >
-        <action
-            android:id="@+id/action_playlistFragment_to_playlistModelBottomSheet"
-            app:destination="@id/playlistModelBottomSheet" />
-        <action
-            android:id="@+id/action_playlistFragment_to_detailPlaylistFragment"
-            app:destination="@id/detailPlaylistFragment" />
-    </fragment>
-    <dialog
-        android:id="@+id/playlistModelBottomSheet"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.PlaylistModelBottomSheet"
-        android:label="PlaylistModelBottomSheet" >
-        <argument
-            android:name="playlist"
-            app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
-    </dialog>
+
     <fragment
         android:id="@+id/detailPlaylistFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.DetailPlaylistFragment"
@@ -74,34 +55,60 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" >
         <action
-            app:popExitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_right"
-            android:id="@+id/action_settingFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_settingFragment_to_playlistAddDialog"
+            app:destination="@id/playlistAddDialog" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.search.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailTypeFragment"
+            app:destination="@id/detailTypeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
+            android:id="@+id/action_profileFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
             app:popExitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_right"
-            android:id="@+id/action_profileFragment_to_changePasswordFragment"
-            app:destination="@id/changePasswordFragment" />
+            android:id="@+id/action_profileFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+
+            android:id="@+id/action_profileFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.changpassword.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <dialog
+        android:id="@+id/detailTypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.type.DetailTypeFragment"
+        android:label="fragment_detail_type"
+        tools:layout="@layout/fragment_detail_type" >
+        <argument
+            android:name="type"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Type" />
+    </dialog>
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" />
+    <dialog
+        android:id="@+id/playlistAddDialog"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.PlaylistAddDialog"
+        android:label="fragment_playlist_add_dialog"
+        tools:layout="@layout/fragment_playlist_add_dialog" />
 </navigation>

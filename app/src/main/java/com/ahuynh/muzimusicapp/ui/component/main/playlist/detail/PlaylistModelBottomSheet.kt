@@ -32,40 +32,40 @@ class PlaylistModelBottomSheet : BottomSheetDialogFragment() {
             false
         )
 
-        handleUI()
+        //handleUI()
         return binding.root
     }
 
-    private fun handleUI() {
-        val currentPlaylist = PlaylistModelBottomSheetArgs.fromBundle(requireArguments()).playlist
-        binding.btnDelete.setOnClickListener {
-            ConfirmDialog(
-                requireContext(),
-                title = "Delete playlist",
-                message = "Are you sure want to delete ${currentPlaylist.name} ?",
-                negativeButtonTitle = "CANCEL",
-                positiveButtonTitle = "DELETE",
-                callback = object : ConfirmDialog.ConfirmCallBack {
-                    override fun negativeAction() {
-                        dismiss()
-                    }
-
-                    override fun positiveAction() {
-                        viewModel.deletePlaylist(currentPlaylist.id)
-                        dismiss()
-                    }
-                }
-            ).show()
-        }
-
-        binding.btnEdit.setOnClickListener {
-            val bundle = bundleOf("playlist" to currentPlaylist)
-            val dialogFragment = PlaylistAddDialog()
-            dialogFragment.arguments = bundle
-            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
-            dismiss()
-        }
-    }
+//    private fun handleUI() {
+//        val currentPlaylist = PlaylistModelBottomSheetArgs.fromBundle(requireArguments()).playlist
+//        binding.btnDelete.setOnClickListener {
+//            ConfirmDialog(
+//                requireContext(),
+//                title = "Delete playlist",
+//                message = "Are you sure want to delete ${currentPlaylist.name} ?",
+//                negativeButtonTitle = "CANCEL",
+//                positiveButtonTitle = "DELETE",
+//                callback = object : ConfirmDialog.ConfirmCallBack {
+//                    override fun negativeAction() {
+//                        dismiss()
+//                    }
+//
+//                    override fun positiveAction() {
+//                        viewModel.deletePlaylist(currentPlaylist.id)
+//                        dismiss()
+//                    }
+//                }
+//            ).show()
+//        }
+//
+//        binding.btnEdit.setOnClickListener {
+//            val bundle = bundleOf("playlist" to currentPlaylist)
+//            val dialogFragment = PlaylistAddDialog()
+//            dialogFragment.arguments = bundle
+//            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
+//            dismiss()
+//        }
+//    }
 
 
 }

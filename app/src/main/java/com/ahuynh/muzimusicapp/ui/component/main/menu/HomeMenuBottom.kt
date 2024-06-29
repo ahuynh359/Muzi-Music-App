@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.main.home
+package com.ahuynh.muzimusicapp.ui.component.main.menu
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMenuBottomBinding
+import com.ahuynh.muzimusicapp.ui.component.main.home.HomeViewModel
 import com.ahuynh.muzimusicapp.ui.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

@@ -10,6 +10,8 @@ import com.ahuynh.muzimusicapp.data.model.UserList
 import com.ahuynh.muzimusicapp.data.model.UserListName
 import com.ahuynh.muzimusicapp.databinding.ItemSettingBinding
 import com.ahuynh.muzimusicapp.databinding.ItemUserListBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class UserListAdapter(private val listener: OnUserListAdapterClicked) :
     ListAdapter<UserList, UserListAdapter.ViewHolder>(DiffCallback()) {
@@ -26,13 +28,20 @@ class UserListAdapter(private val listener: OnUserListAdapterClicked) :
 
         fun bind(str: UserList) {
             var s : String = ""
-            when (str.name) {
-                UserListName.PLAYLIST -> s = "Playlist"
-                UserListName.LOVESONG ->  s = "Love Song"
-                UserListName.LOVESINGER -> s = "Love Singer"
+            s = when (str.name) {
+                UserListName.PLAYLIST -> "Playlist"
+                UserListName.LOVESONG -> "Love Song"
+                UserListName.LOVESINGER -> "Love Singer"
             }
             binding.tvName.text = s
             binding.tvUser.text = "User"
+            Glide
+                .with(binding.imvItem.context)
+                .load(str.image)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.imvItem);
+
 
         }
 

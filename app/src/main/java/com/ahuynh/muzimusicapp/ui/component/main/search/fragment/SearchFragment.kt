@@ -2,28 +2,14 @@ package com.ahuynh.muzimusicapp.ui.component.main.search.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
-import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.TypeAdapter
-import com.ahuynh.muzimusicapp.data.model.Album
-import com.ahuynh.muzimusicapp.data.model.Singer
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.home.detail.DetailTypeFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.SearchActivity
-import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -65,11 +51,7 @@ TypeAdapter.OnTypeClicked{
     }
 
     override fun onTypeClicked(type: Type) {
-       val fragment = DetailTypeFragment()
-        fragment.arguments = Bundle().apply {
-            putParcelable(Constants.TYPE, type)
-        }
-        fragment.show(requireActivity().supportFragmentManager,null)
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailTypeFragment(type))
     }
 
 }

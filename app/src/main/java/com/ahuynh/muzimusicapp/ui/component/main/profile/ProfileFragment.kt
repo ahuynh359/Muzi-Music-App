@@ -11,17 +11,19 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SettingAdapter
 import com.ahuynh.muzimusicapp.adapter.UserListAdapter
 import com.ahuynh.muzimusicapp.data.model.SettingItem
+import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.UserList
+import com.ahuynh.muzimusicapp.data.model.UserListName
 import com.ahuynh.muzimusicapp.databinding.FragmentProfileBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
 import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.setting.SettingFragmentDirections
-import com.ahuynh.muzimusicapp.ui.component.main.setting.SettingViewModel
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -41,6 +43,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private val userListAdapter = UserListAdapter(this)
+    private val userList : ArrayList<UserList> = arrayListOf()
     private val viewModel by viewModels<ProfileViewModel>()
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -52,6 +55,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             )
 
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initData()
     }
 
 
@@ -97,15 +105,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     }
 
+    private fun initData(){
+        userList.add(UserList(R.drawable.big_song,UserListName.PLAYLIST))
+        userList.add(UserList(R.drawable.big_song,UserListName.LOVESONG))
+        userList.add(UserList(R.drawable.big_song,UserListName.LOVESINGER))
+    }
+
     private fun handleUI() {
+        binding.rcyUserList.adapter = userListAdapter
+        userListAdapter.submitList(userList)
         binding.btnEditPassword.setOnClickListener {
             val action = ProfileFragmentDirections.actionProfileFragmentToChangePasswordFragment()
             findNavController().navigate(action)
         }
 
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.btnSetting.setOnClickListener {
+            navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment())
         }
+
+
 
 
         binding.btnEdit.setOnClickListener {
@@ -122,7 +140,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     override fun onUserListAdapterClicked(str: UserList) {
+       when (str.name) {
+            UserListName.PLAYLIST -> {
+                navigate(ProfileFragmentDirections.actionProfileFragmentToPlaylistFragment())
+            }
+            UserListName.LOVESONG -> "Love Song"
+            UserListName.LOVESINGER -> "Love Singer"
+        }
 
+    }
+    private fun navigate(nav : NavDirections){
+        findNavController().navigate(nav)
     }
 
 }
