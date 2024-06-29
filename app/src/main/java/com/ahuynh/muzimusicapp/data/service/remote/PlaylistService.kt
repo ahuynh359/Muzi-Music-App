@@ -15,8 +15,8 @@ import javax.inject.Inject
 class PlaylistService @Inject constructor(
     private val playlistAPI: PlaylistAPI
 ) : BaseRemoteService() {
-    suspend fun getAllPlaylist(id : Long): List<Playlist> {
-        val result = callApi { playlistAPI.getAllPlaylist(id) }
+    suspend fun getAllPlaylist(): List<Playlist> {
+        val result = callApi { playlistAPI.getAllPlaylist() }
         return if (result is Response.Success) {
             result.data.data.toPlaylistResponse()
         } else {

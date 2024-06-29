@@ -3,13 +3,9 @@ package com.ahuynh.muzimusicapp.ui.component.auth.forgotpassword
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
-import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

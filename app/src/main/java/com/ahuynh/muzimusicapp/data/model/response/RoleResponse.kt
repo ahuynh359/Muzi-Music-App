@@ -16,7 +16,7 @@ data class RoleResponse(
     }
 }
 
-data class ListRoleResponse(
+data class RoleResponseData(
     val data: List<AlbumResponse>
 )
 

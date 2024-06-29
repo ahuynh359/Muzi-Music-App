@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.base
+package com.ahuynh.muzimusicapp.ui.base.activity
 
 import android.content.Intent
 import android.os.Bundle

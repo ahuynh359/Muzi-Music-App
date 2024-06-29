@@ -3,7 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel

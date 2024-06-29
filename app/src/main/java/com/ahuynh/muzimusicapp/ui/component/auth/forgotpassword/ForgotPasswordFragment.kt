@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.auth.forgotpassword
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,10 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
-import com.ahuynh.muzimusicapp.data.model.request.ResendOtpRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentForgotPasswordBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

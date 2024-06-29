@@ -9,7 +9,7 @@ import com.ahuynh.muzimusicapp.adapter.SettingAdapter
 import com.ahuynh.muzimusicapp.data.model.SettingItem
 import com.ahuynh.muzimusicapp.data.model.SettingName
 import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

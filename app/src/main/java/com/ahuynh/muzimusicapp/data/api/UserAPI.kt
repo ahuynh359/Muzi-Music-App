@@ -4,7 +4,7 @@ import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.CheckLoveSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
@@ -34,7 +34,7 @@ interface UserAPI {
     @GET("${Constants.API_VERSION}/user/{id}/get-love-song")
     suspend fun getLoveSong(
         @Path("id") id: Long,
-    ): Response<ListSongResponse>
+    ): Response<SongResponseData>
 
     @GET("${Constants.API_VERSION}/user/{id}")
     suspend fun getUserById(

@@ -202,13 +202,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="playlistAddDialog">
+                  <entry key="playlistAddFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1274" />
-                            <option name="y" value="142" />
+                            <option name="x" value="1409" />
+                            <option name="y" value="-553" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -219,9 +219,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1169" />
-                            <option name="y" value="-470" />
+                            <option name="x" value="1194" />
+                            <option name="y" value="-555" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_playlistFragment_to_playlistAddFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

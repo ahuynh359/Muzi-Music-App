@@ -13,7 +13,7 @@ import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.BaseActivity
+import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.lyrics.LyricsFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel

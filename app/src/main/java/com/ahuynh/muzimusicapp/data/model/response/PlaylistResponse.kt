@@ -22,12 +22,9 @@ data class PlaylistResponse(
 
 data class PlaylistResponseData(
     val message: String,
-    val data: PlaylistResponse
-)
-
-data class ListPlaylistResponse(
     val data: List<PlaylistResponse>
 )
+
 
 fun List<PlaylistResponse>.toPlaylistResponse(): List<Playlist> {
     return map { it.toPlaylistResponse() }

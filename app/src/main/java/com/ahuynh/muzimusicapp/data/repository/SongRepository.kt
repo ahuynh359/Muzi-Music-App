@@ -3,7 +3,8 @@ package com.ahuynh.muzimusicapp.data.repository
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.SearchJson
+import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
+import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.service.remote.SongService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
@@ -32,13 +33,6 @@ class SongRepository @Inject constructor(
     }
 
 
-
-    suspend fun searchSong(str: String): SearchJson? {
-        return withContext(dispatcher) {
-            songService.searchSong(str)
-        }
-    }
-
     suspend fun loveSong(userId: Long, songId : Long): Response<MessageResponse> {
         return withContext(dispatcher) {
             songService.loveSong(userId,songId)
@@ -54,6 +48,11 @@ class SongRepository @Inject constructor(
     suspend fun isUserLoveSong(userId: Long, songId : Long): Response<LoveSongResponse> {
         return withContext(dispatcher) {
             songService.isUserLoveSong(userId,songId)
+        }
+    }
+    suspend fun searchSong(str: String): SearchResponse? {
+        return withContext(dispatcher) {
+            songService.searchSong(str)
         }
     }
 

@@ -11,9 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentLoginBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.main.MainActivity
-import com.ahuynh.muzimusicapp.utils.Utils.isValidEmail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

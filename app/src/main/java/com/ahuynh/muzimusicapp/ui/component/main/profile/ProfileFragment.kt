@@ -2,37 +2,23 @@ package com.ahuynh.muzimusicapp.ui.component.main.profile
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
-import androidx.navigation.NavGraph
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.SettingAdapter
 import com.ahuynh.muzimusicapp.adapter.UserListAdapter
-import com.ahuynh.muzimusicapp.data.model.SettingItem
-import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.UserList
 import com.ahuynh.muzimusicapp.data.model.UserListName
 import com.ahuynh.muzimusicapp.databinding.FragmentProfileBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 @AndroidEntryPoint

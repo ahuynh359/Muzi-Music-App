@@ -1,7 +1,7 @@
 package com.ahuynh.muzimusicapp.data.api
 
-import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.ListTypeResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.utils.Constants
 import retrofit2.Response
@@ -13,10 +13,10 @@ interface TypeAPI {
 
 
     @GET("${Constants.API_VERSION}/type/all")
-    suspend fun getAllType(): Response<ListTypeResponse>
+    suspend fun getAllType(): Response<TypeResponseData>
 
     @GET("${Constants.API_VERSION}/type/{id}/songs")
-    suspend fun getSongFromType(@Path("id") id : Long): Response<ListSongResponse>
+    suspend fun getSongFromType(@Path("id") id : Long): Response<SongResponseData>
 
 
 }

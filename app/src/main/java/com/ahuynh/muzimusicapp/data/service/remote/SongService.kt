@@ -4,7 +4,8 @@ import com.ahuynh.muzimusicapp.data.api.SongAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.SearchJson
+import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
+import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
@@ -31,23 +32,7 @@ class SongService @Inject constructor(
             return null
         }
     }
-//    suspend fun getSingerFromSongById(id: Long): List<User> {
-//        val result = callApi { songAPI.getSingerFromSongById(id) }
-//        return if (result is Response.Success) {
-//            result.data.data.toListSinger()
-//        } else {
-//            arrayListOf()
-//        }
-//    }
 
-    suspend fun searchSong(str: String): SearchJson? {
-        val result = callApi { songAPI.searchSong(str) }
-        return if (result is Response.Success) {
-            result.data.data
-        } else {
-            null
-        }
-    }
 
     suspend fun loveSong(userId: Long, songId : Long) : Response<MessageResponse>{
         return callApi { songAPI.loveSong(userId,songId) }
@@ -59,6 +44,14 @@ class SongService @Inject constructor(
 
     suspend fun isUserLoveSong(userId: Long, songId : Long) : Response<LoveSongResponse>{
         return callApi { songAPI.isUserLoveSong(userId,songId) }
+    }
+    suspend fun searchSong(str: String): SearchResponse? {
+        val result = callApi { songAPI.searchSong(str) }
+        return if (result is Response.Success) {
+            result.data.data
+        } else {
+            null
+        }
     }
 
 

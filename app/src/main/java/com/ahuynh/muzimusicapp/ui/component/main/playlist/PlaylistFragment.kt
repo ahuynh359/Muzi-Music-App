@@ -4,23 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
-import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseDialogFragment
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.PlaylistAddDialog
-import com.ahuynh.muzimusicapp.ui.component.main.type.DetailTypeFragmentArgs
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistFragment : BaseDialogFragment(),
+class PlaylistFragment : BaseDialogBottomSheetFragment(),
     PlaylistAdapter.OnPlaylistClicked {
     companion object {
         const val TAG = "PlaylistFragment"
@@ -67,10 +62,7 @@ class PlaylistFragment : BaseDialogFragment(),
         }
 
         binding.btnAdd.setOnClickListener {
-            val bundle = bundleOf("playlist" to null)
-            val dialogFragment = PlaylistAddDialog()
-            dialogFragment.arguments = bundle
-            dialogFragment.show(parentFragmentManager, PlaylistAddDialog.TAG)
+            findNavController().navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistAddFragment())
 
 
         }

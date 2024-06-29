@@ -1,19 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.main.profile
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
 

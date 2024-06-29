@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
 import com.ahuynh.muzimusicapp.databinding.ActivitySearchBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseActivity
+import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.main.search.album.AlbumSearchFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.singer.SingerSearchFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.song.SongSearchFragment

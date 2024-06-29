@@ -4,29 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.SongAdapter
-import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
-import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentChangePasswordBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentProfileBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseDialogFragment
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
-import com.ahuynh.muzimusicapp.ui.component.auth.signup.SignupViewModel
-import com.ahuynh.muzimusicapp.ui.component.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChangePasswordFragment : BaseDialogFragment() {
+class ChangePasswordBottomSheetFragment : BaseDialogBottomSheetFragment() {
 
     private lateinit var binding: FragmentChangePasswordBinding
     private var changePasswordEnable = false

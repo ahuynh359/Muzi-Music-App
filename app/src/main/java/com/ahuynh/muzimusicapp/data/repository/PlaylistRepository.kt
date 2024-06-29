@@ -20,9 +20,9 @@ class PlaylistRepository @Inject constructor(
 
 ) {
 
-    suspend fun getAllPlaylist(id : Long): List<Playlist> {
+    suspend fun getAllPlaylist(): List<Playlist> {
         return withContext(dispatcher) {
-            playlistService.getAllPlaylist(id)
+            playlistService.getAllPlaylist()
         }
     }
 

@@ -17,7 +17,7 @@ data class TypeResponse(
     }
 }
 
-data class ListTypeResponse(
+data class TypeResponseData(
     val message: String,
     val data: List<TypeResponse>
 )

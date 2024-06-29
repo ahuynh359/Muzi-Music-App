@@ -3,13 +3,8 @@ package com.ahuynh.muzimusicapp.ui.component.main.changpassword
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
-import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
-import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
-import com.ahuynh.muzimusicapp.data.repository.SingerRepository
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
-import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel

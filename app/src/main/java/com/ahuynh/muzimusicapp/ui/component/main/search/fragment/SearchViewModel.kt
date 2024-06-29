@@ -2,16 +2,9 @@ package com.ahuynh.muzimusicapp.ui.component.main.search.fragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Album
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.data.model.response.toListAlbum
-import com.ahuynh.muzimusicapp.data.model.response.toListSong
-import com.ahuynh.muzimusicapp.data.model.response.toListUser
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

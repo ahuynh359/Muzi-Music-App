@@ -18,7 +18,7 @@ data class SingerResponse(
     }
 }
 
-data class ListSingerResponse(
+data class SingerResponseData(
     val message: String,
     val data: List<SingerResponse>
 )

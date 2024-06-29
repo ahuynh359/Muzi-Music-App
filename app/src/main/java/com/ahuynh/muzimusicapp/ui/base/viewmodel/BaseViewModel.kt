@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.base
+package com.ahuynh.muzimusicapp.ui.base.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

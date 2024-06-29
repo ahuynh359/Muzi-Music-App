@@ -6,12 +6,14 @@ import com.ahuynh.muzimusicapp.data.database.entity.SearchHistoryEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
 import com.ahuynh.muzimusicapp.data.model.response.toListAlbum
 import com.ahuynh.muzimusicapp.data.model.response.toListSinger
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.repository.SearchHistoryRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
+import com.ahuynh.muzimusicapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -41,7 +43,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun getAllSearchHistory(){
+    fun getAllSearchHistory() {
         viewModelScope.launch {
             searchHistory.postValue(searchHistoryRepository.getAllSearchHistory())
         }
@@ -50,13 +52,13 @@ class SearchViewModel @Inject constructor(
     fun search(str: String) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
+
             val result = songRepository.searchSong(str)
             result?.let {
-                songs.postValue(it.songs.toListSong())
-                albums.postValue(it.albums.toListAlbum())
-                singers.postValue(it.singers.toListSinger())
+                songs.postValue(result.songs.toListSong())
+                albums.postValue(result.albums.toListAlbum())
+                singers.postValue(result.singers.toListSinger())
             }
-
         }
         isSearchDone.postValue(true)
         registerEventParentJobFinish()

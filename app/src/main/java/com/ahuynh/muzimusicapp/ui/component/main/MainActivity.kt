@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityMainBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.BaseActivity
+import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel

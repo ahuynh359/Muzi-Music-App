@@ -1,20 +1,15 @@
 package com.ahuynh.muzimusicapp.ui.component.main.menu
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
 import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseDialogFragment
-import com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistViewModel
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SortFragment : BaseDialogFragment(){
+class SortBottomSheetFragment : BaseDialogBottomSheetFragment(){
 
     companion object {
         const val TAG = "SortFragment"

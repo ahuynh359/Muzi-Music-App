@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentResetPasswordBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

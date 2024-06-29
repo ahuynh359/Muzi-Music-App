@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.main.playlist.detail
+package com.ahuynh.muzimusicapp.ui.component.main.playlist.add_new_playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,30 +9,27 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.databinding.DialogPlaylistAddBinding
+import com.ahuynh.muzimusicapp.ui.base.dialog.BaseDialogFragment
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistViewModel
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
-import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistAddDialog : DialogFragment() {
+class PlaylistAddFragment : BaseDialogFragment() {
     private var _binding: DialogPlaylistAddBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
 
     companion object {
-        const val TAG = "PlaylistAddDialog"
+        const val TAG = "PlaylistAddFragment"
     }
 
-    private var playlist: Playlist? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = DialogPlaylistAddBinding.inflate(inflater, container, false)
-        playlist = arguments?.parcelable("playlist")
-
         handleUI()
         return binding.root
     }
@@ -46,12 +43,7 @@ class PlaylistAddDialog : DialogFragment() {
             val playlist = getCurrentPlaylist()
             playlist?.let {
                 viewModel.addNewPlaylist(playlist)
-
                 dismiss()
-
-            }
-            if(viewModel.mess != null){
-                Toast.makeText(requireContext(),viewModel.mess,Toast.LENGTH_LONG).show()
             }
 
 

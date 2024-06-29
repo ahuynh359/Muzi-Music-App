@@ -12,7 +12,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.BaseDialogFragment
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.component.main.home.HomeViewModel
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -21,8 +21,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailTypeFragment :
-    BaseDialogFragment(),
+class TypeFragment :
+    BaseDialogBottomSheetFragment(),
     SongAdapter.OnNewSongClicked {
 
     companion object {
@@ -37,7 +37,7 @@ class DetailTypeFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        currentType = DetailTypeFragmentArgs.fromBundle(requireArguments()).type
+        currentType = TypeFragmentArgs.fromBundle(requireArguments()).type
 
     }
 

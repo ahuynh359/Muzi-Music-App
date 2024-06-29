@@ -9,7 +9,7 @@ import com.ahuynh.muzimusicapp.adapter.LyricsClickListener
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils

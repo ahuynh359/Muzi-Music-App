@@ -6,7 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +29,7 @@ constructor(private val playlistRepository: PlaylistRepository,
     fun getAllPlaylist() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            playlists.postValue(playlistRepository.getAllPlaylist(sharePreferencesHelper.getId()))
+            playlists.postValue(playlistRepository.getAllPlaylist())
         }
         registerEventParentJobFinish()
     }
@@ -38,8 +38,7 @@ constructor(private val playlistRepository: PlaylistRepository,
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
 
-            val id = sharePreferencesHelper.getId()
-            val playlistRequest = PlaylistRequest(playlist, id)
+            val playlistRequest = PlaylistRequest(playlist)
             val result = playlistRepository.addPlaylist(playlistRequest)
             if (result is Response.Success) {
                 mess = result.data.message

@@ -1,13 +1,10 @@
 package com.ahuynh.muzimusicapp.ui.component.auth.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
-import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
-import com.ahuynh.muzimusicapp.ui.base.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel

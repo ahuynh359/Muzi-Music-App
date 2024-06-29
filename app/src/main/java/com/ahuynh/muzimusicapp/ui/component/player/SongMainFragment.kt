@@ -6,7 +6,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMainBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

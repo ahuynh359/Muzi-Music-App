@@ -27,7 +27,7 @@ data class SongResponse(
     }
 }
 
-data class ListSongResponse(
+data class SongResponseData(
     val message : String,
     val data: List<SongResponse>
 )

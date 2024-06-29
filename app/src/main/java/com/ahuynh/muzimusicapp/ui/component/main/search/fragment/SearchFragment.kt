@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.home.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
-import com.ahuynh.muzimusicapp.ui.base.BaseFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.main.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 

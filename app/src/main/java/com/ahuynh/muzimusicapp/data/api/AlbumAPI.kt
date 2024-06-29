@@ -4,7 +4,7 @@ import com.ahuynh.muzimusicapp.data.model.request.AlbumRequest
 import com.ahuynh.muzimusicapp.data.model.response.AlbumResponse
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListAlbumResponse
-import com.ahuynh.muzimusicapp.data.model.response.ListSongResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
 import com.ahuynh.muzimusicapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,7 +27,7 @@ interface AlbumAPI {
     suspend fun getNewAlbums(): Response<ListAlbumResponse>
 
     @GET("${Constants.API_VERSION}/album/{id}/songs")
-    suspend fun getSongsFromAlbum(@Path("id") id: Long): Response<ListSongResponse>
+    suspend fun getSongsFromAlbum(@Path("id") id: Long): Response<SongResponseData>
 
 
 
