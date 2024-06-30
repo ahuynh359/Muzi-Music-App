@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.main.playlist.add_new_playlist
+package com.ahuynh.muzimusicapp.ui.component.main.playlist.edit_playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,19 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistAddBinding
+import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.databinding.FragmentPlaylistEditBinding
 import com.ahuynh.muzimusicapp.ui.base.dialog_fragment.BaseDialogFragment
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PlaylistAddFragment : BaseDialogFragment() {
-    private var _binding: FragmentPlaylistAddBinding? = null
+class PlaylistEditFragment : BaseDialogFragment() {
+    private var _binding: FragmentPlaylistEditBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
+    private lateinit var currentPlaylist: Playlist
 
     companion object {
-        const val TAG = "PlaylistAddFragment"
+        const val TAG = "PlaylistEditFragment"
     }
 
     override fun onCreateView(
@@ -26,14 +28,15 @@ class PlaylistAddFragment : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPlaylistAddBinding.inflate(inflater, container, false)
+        _binding = FragmentPlaylistEditBinding.inflate(inflater, container, false)
+        currentPlaylist = PlaylistEditFragmentArgs.fromBundle(requireArguments()).playlist
         handleUI()
         observeData()
         return binding.root
     }
 
     private fun observeData() {
-        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
+        viewModel.updatePlaylistStatus.observe(viewLifecycleOwner) {
             it?.let {
                 if (it) {
                     this.dismiss()
@@ -52,10 +55,10 @@ class PlaylistAddFragment : BaseDialogFragment() {
             this.dismiss()
         }
 
-        binding.btnCreate.setOnClickListener {
+        binding.btnEdit.setOnClickListener {
             val playlist = getCurrentPlaylist()
             playlist?.let {
-                viewModel.addNewPlaylist(playlist)
+                viewModel.updatePlaylist(playlist, currentPlaylist.id)
             }
 
 

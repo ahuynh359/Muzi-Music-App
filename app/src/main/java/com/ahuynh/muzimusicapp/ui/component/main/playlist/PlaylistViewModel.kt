@@ -1,8 +1,10 @@
 package com.ahuynh.muzimusicapp.ui.component.main.playlist
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
+import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
@@ -16,15 +18,20 @@ import javax.inject.Inject
 @HiltViewModel
 class PlaylistViewModel @Inject
 constructor(private val playlistRepository: PlaylistRepository,
-    private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository
 ) :
     BaseViewModel() {
 
     var playlists = MutableLiveData<List<Playlist>>()
     var email = MutableLiveData<String>()
-    var status = MutableLiveData<Boolean>(false)
-    var mess: String? = null
+    var addPlaylistStatus = MutableLiveData<Boolean?>()
+    var updatePlaylistStatus = MutableLiveData<Boolean?>()
+    var songOfPlaylist = MutableLiveData<List<Song>>()
+    var mess=MutableLiveData<String>()
+
+    init {
+        getAllPlaylist()
+        Log.d("ABC","New")
+    }
 
     fun getAllPlaylist() {
         isLoading.postValue(true)
@@ -41,13 +48,13 @@ constructor(private val playlistRepository: PlaylistRepository,
             val playlistRequest = PlaylistRequest(playlist)
             val result = playlistRepository.addPlaylist(playlistRequest)
             if (result is Response.Success) {
-                mess = result.data.message
+                mess.postValue(result.data.message)
                 getAllPlaylist()
 
             } else if (result is Response.Failure) {
-                mess = result.errorMessage
+                mess.postValue(result.errorMessage)
             }
-            status.postValue(true)
+            addPlaylistStatus.postValue(result is Response.Success)
         }
 
         registerEventParentJobFinish()
@@ -56,19 +63,38 @@ constructor(private val playlistRepository: PlaylistRepository,
     fun deletePlaylist(id: Long) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
+            playlistRepository.deletePlaylist(id)
+            getAllPlaylist()
 
-            val result = playlistRepository.deletePlaylist(id)
+
+        }
+        registerEventParentJobFinish()
+    }
+    fun updatePlaylist(playlist: String , id : Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+
+            val playlistRequest = PlaylistRequest(playlist)
+            val result = playlistRepository.updatePlaylist(playlistRequest , id)
             if (result is Response.Success) {
-                mess = result.data.message
+                mess.postValue(result.data.message)
                 getAllPlaylist()
 
             } else if (result is Response.Failure) {
-                mess = result.errorMessage
+                mess.postValue(result.errorMessage)
             }
-            status.postValue(true)
+            updatePlaylistStatus.postValue(result is Response.Success)
         }
 
         registerEventParentJobFinish()
+    }
+    fun getSongOfPlaylist(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            songOfPlaylist.postValue(playlistRepository.getAllSongFromPlaylist(id))
+        }
+        registerEventParentJobFinish()
+
     }
 
 

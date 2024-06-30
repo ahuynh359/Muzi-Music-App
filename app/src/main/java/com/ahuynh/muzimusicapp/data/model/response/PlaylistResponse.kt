@@ -5,7 +5,6 @@ import com.ahuynh.muzimusicapp.data.model.Playlist
 data class PlaylistResponse(
     val id: Long,
     val name: String,
-     val userId: Long,
     val avatar : String
 
 
@@ -14,7 +13,6 @@ data class PlaylistResponse(
         return Playlist(
             id = this.id,
             name = this.name,
-            userId = this.userId,
             avatar = this.avatar
         )
     }
@@ -23,6 +21,11 @@ data class PlaylistResponse(
 data class PlaylistResponseData(
     val message: String,
     val data: List<PlaylistResponse>
+)
+
+data class PlaylistResponseJson(
+    val message: String,
+    val data: PlaylistResponse
 )
 
 

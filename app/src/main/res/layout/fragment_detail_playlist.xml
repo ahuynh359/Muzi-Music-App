@@ -81,6 +81,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/btn_download" />
 
+    <LinearLayout
+        android:layout_marginTop="@dimen/_20dp"
+        android:id="@+id/btn_add_song"
+        app:layout_constraintTop_toBottomOf="@id/btn_download"
+        app:layout_constraintEnd_toEndOf="@id/btn_play"
+        app:layout_constraintStart_toStartOf="@id/btn_download"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:padding="16dp"
+            android:src="@drawable/ic_add"
+            android:background="@drawable/bg_btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/_15dp"
+            android:id="@+id/tv_add"
+            style="@style/TextMedium"
+            android:text="@string/add_to_this_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcy_songs"
         android:layout_width="@dimen/_0dp"
@@ -91,7 +114,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_play"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_song"
         tools:listitem="@layout/item_song" />
 
 

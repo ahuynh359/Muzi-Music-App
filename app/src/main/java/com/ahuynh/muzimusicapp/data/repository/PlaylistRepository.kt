@@ -5,6 +5,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseData
+import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseJson
 import com.ahuynh.muzimusicapp.data.service.remote.PlaylistService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
@@ -26,7 +27,7 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
-    suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<PlaylistResponseData>{
+    suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<PlaylistResponseJson>{
         return withContext(dispatcher) {
             playlistService.addPlaylist(playlistRequest)
         }
@@ -44,6 +45,11 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
+    suspend fun updatePlaylist(playlistRequest: PlaylistRequest, id: Long): Response<PlaylistResponseJson> {
+        return withContext(dispatcher) {
+            playlistService.updatePlaylist(playlistRequest,id)
+        }
+    }
 
 
 }

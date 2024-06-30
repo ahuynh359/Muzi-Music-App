@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.dialog
+package com.ahuynh.muzimusicapp.ui.base.dialog
 
 import android.app.Dialog
 import android.content.Context

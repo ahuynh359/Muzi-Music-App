@@ -1,9 +1,11 @@
 package com.ahuynh.muzimusicapp.ui.component.main.playlist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.PlaylistAdapter
@@ -25,11 +27,6 @@ class PlaylistFragment : BaseDialogBottomSheetFragment(),
     private val playlistAdapter = PlaylistAdapter(this)
     private lateinit var binding: FragmentPlaylistBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,15 +41,13 @@ class PlaylistFragment : BaseDialogBottomSheetFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getData()
+
         handleUI()
         observe()
 
     }
 
-    private fun getData() {
-        viewModel.getAllPlaylist()
-    }
+
 
     private fun handleUI() {
         binding.rcyPlaylist.adapter = playlistAdapter
@@ -62,10 +57,12 @@ class PlaylistFragment : BaseDialogBottomSheetFragment(),
         }
 
         binding.btnAdd.setOnClickListener {
-            findNavController().navigate(PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistAddFragment())
+            val action = PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistAddFragment()
+            findNavController().navigate(action)
 
 
         }
+
 
     }
 
@@ -90,23 +87,23 @@ class PlaylistFragment : BaseDialogBottomSheetFragment(),
             hideShimmer()
         }
 
+        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
+            it?.let {
+               viewModel.addPlaylistStatus.postValue(null)
+            }
 
-//        viewModel.addPlaylistStatus.observe(viewLifecycleOwner) {
-//            getData()
-//        }
-//        viewModel.updatePlaylistStatus.observe(viewLifecycleOwner) {
-//            getData()
-//        }
-//
-//        viewModel.deletePlaylistStatus.observe(viewLifecycleOwner) {
-//            getData()
-//        }
-//        viewModel.message.observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                makeErrorToast(requireContext(), it)
-//            }
-//
-//        }
+        }
+
+
+        viewModel.updatePlaylistStatus.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel.updatePlaylistStatus.postValue(null)
+            }
+
+        }
+
+
+
 
 
     }
@@ -119,15 +116,15 @@ class PlaylistFragment : BaseDialogBottomSheetFragment(),
 
 
     override fun onPlaylistClicked(playlist: Playlist) {
-//        val action =
-//            PlaylistFragmentDirections.actionPlaylistFragmentToDetailPlaylistFragment(playlist)
-//        findNavController().navigate(action)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToDetailPlaylistFragment(playlist)
+        findNavController().navigate(action)
     }
 
     override fun onMoreItemClicked(playlist: Playlist) {
-//        val action =
-//            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistModelBottomSheet(playlist)
-//        findNavController().navigate(action)
+        val action =
+            PlaylistFragmentDirections.actionPlaylistFragmentToPlaylistModelBottomSheet(playlist)
+        findNavController().navigate(action)
     }
 
 

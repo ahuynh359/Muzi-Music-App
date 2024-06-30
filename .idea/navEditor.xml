@@ -128,6 +128,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="addSongToPlaylistFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1800" />
+                            <option name="y" value="-148" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="changePasswordFragment">
                     <value>
                       <LayoutPositions>
@@ -157,9 +169,23 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="304" />
-                            <option name="y" value="392" />
+                            <option name="x" value="1520" />
+                            <option name="y" value="-152" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_detailPlaylistFragment_to_addSongToPlaylistFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_detailPlaylistFragment_to_addSongToPlaylistFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -207,8 +233,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1409" />
-                            <option name="y" value="-553" />
+                            <option name="x" value="1436" />
+                            <option name="y" value="-812" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="playlistEditFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1730" />
+                            <option name="y" value="-473" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -225,7 +263,38 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_playlistFragment_to_playlistAddFragment2">
+                            <entry key="action_playlistFragment_to_detailPlaylistFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_playlistFragment_to_playlistAddFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_playlistFragment_to_playlistModelBottomSheet">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="playlistModelBottomSheet">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="1520" />
+                            <option name="y" value="-460" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_playlistModelBottomSheet_to_playlistEditFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

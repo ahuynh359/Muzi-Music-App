@@ -7,7 +7,7 @@
     android:background="#2E2D2D"
     android:paddingHorizontal="12dp"
     android:paddingVertical="24dp"
-    tools:context=".ui.dialog.ConfirmDialog">
+    tools:context=".ui.base.dialog.ConfirmDialog">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"

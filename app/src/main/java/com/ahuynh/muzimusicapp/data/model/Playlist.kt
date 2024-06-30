@@ -8,7 +8,6 @@ import java.time.Instant
 data class Playlist(
     val id: Long,
     val name: String,
-    val userId: Long,
     val avatar : String
 ) :
     Parcelable

@@ -2,7 +2,9 @@ package com.ahuynh.muzimusicapp.ui.component.main.playlist.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -10,9 +12,13 @@ import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailPlaylistBinding
+import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.main.home.HomeViewModel
+import com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistViewModel
+import com.ahuynh.muzimusicapp.ui.component.main.type.TypeFragmentArgs
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
@@ -21,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailPlaylistFragment :
-    BaseFragment<FragmentDetailPlaylistBinding>(FragmentDetailPlaylistBinding::inflate),
+    BaseDialogBottomSheetFragment(),
     SongAdapter.OnNewSongClicked {
 
     companion object {
@@ -29,19 +35,33 @@ class DetailPlaylistFragment :
     }
 
     private lateinit var songAdapter: SongAdapter
-    private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
+    private val viewModel by viewModels<PlaylistViewModel>({ requireActivity() })
     private lateinit var songOfPlaylist: ArrayList<Song>
     private lateinit var currentPlaylist: Playlist
+    private lateinit var binding: FragmentDetailPlaylistBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentPlaylist = DetailPlaylistFragmentArgs.fromBundle(requireArguments()).playlist
+
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDetailPlaylistBinding.inflate(inflater,container,false)
+        return binding.root
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        currentPlaylist = DetailPlaylistFragmentArgs.fromBundle(requireArguments()).playlist
-//        songAdapter = SongAdapter(this)
-//        binding.rcySongs.adapter = songAdapter
-//
-//        handleUI()
-//        observe()
-//        getData()
+
+        songAdapter = SongAdapter(this)
+        binding.rcySongs.adapter = songAdapter
+
+        handleUI()
+        observe()
+        getData()
 
     }
 
@@ -82,7 +102,7 @@ class DetailPlaylistFragment :
         }
 
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            dismiss()
         }
 
 

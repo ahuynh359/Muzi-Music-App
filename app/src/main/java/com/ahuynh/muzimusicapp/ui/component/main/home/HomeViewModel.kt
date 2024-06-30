@@ -133,14 +133,7 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun getSongOfPlaylist(id: Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            songOfPlaylist.postValue(playlistRepository.getAllSongFromPlaylist(id))
-        }
-        registerEventParentJobFinish()
 
-    }
 }
 
 
