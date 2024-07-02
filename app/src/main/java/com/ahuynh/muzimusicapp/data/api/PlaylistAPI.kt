@@ -23,7 +23,7 @@ interface PlaylistAPI {
             Response<PlaylistResponseData>
 
 
-    @GET("${Constants.API_VERSION}/playlist/{id}/get/song")
+    @GET("${Constants.API_VERSION}/playlist/songs/{id}")
     suspend fun getAllSongFromPlaylist(@Path("id") id: Long):
             Response<SongResponseData>
 
@@ -38,6 +38,9 @@ interface PlaylistAPI {
         @Body playlistRequest: PlaylistRequest,
         @Path("id") id: Long
     ): Response<PlaylistResponseJson>
+
+    @POST("${Constants.API_VERSION}/playlist/{playlistId}/song/{songId}")
+    suspend fun addSongToPlaylist(@Path("playlistId") playlistId: Long, @Path("songId") songId: Long): Response<MessageResponse>
 
 
 }

@@ -84,4 +84,6 @@
     <string name="profile">Profile</string>
     <string name="my_playlist">My Playlist</string>
     <string name="edit_your_playlist">Edit your playlist</string>
+    <string name="add_song_to_playlist">Add song to playlist</string>
+    <string name="find_in_liked_songs">Find in Liked Songs</string>
 </resources>

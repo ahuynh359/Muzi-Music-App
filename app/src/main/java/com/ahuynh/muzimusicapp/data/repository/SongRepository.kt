@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
@@ -41,7 +42,7 @@ class SongRepository @Inject constructor(
 
 
 
-    suspend fun isUserLoveSong(songId : Long): Response<LoveSongResponse> {
+    suspend fun isUserLoveSong(songId : Long): Response<IsLoveSongResponse> {
         return withContext(dispatcher) {
             songService.isUserLoveSong(songId)
         }
@@ -52,6 +53,11 @@ class SongRepository @Inject constructor(
         }
     }
 
+    suspend fun getLoveSong(): Response<LoveSongResponse> {
+        return withContext(dispatcher) {
+            songService.getLoveSong()
+        }
+    }
 
 
 }

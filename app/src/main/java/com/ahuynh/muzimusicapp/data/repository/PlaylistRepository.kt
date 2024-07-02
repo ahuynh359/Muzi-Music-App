@@ -51,5 +51,11 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
+    suspend fun addSongToPlaylist(playlistId: Long, songId: Long): Response<MessageResponse>{
+        return withContext(dispatcher) {
+            playlistService.addSongToPlaylist(playlistId,songId)
+        }
+    }
+
 
 }

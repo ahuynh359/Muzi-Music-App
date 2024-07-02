@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.data.api
 
+import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
@@ -30,5 +31,8 @@ interface SongAPI {
     suspend fun loveSong(@Path("songId") songId : Long) : Response<MessageResponse>
 
     @GET("${Constants.API_VERSION}/song/is-love-song/{songId}")
-    suspend fun isUserLoveSong(@Path("songId") songId : Long): Response<LoveSongResponse>
+    suspend fun isUserLoveSong(@Path("songId") songId : Long): Response<IsLoveSongResponse>
+
+    @GET("${Constants.API_VERSION}/song/love")
+    suspend fun getLoveSong(): Response<LoveSongResponse>
 }

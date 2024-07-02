@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     private val userListAdapter = UserListAdapter(this)
-    private val userList : ArrayList<UserList> = arrayListOf()
+    private val userList: ArrayList<UserList> = arrayListOf()
     private val viewModel by viewModels<ProfileViewModel>()
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -91,10 +91,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     }
 
-    private fun initData(){
-        userList.add(UserList(R.drawable.big_song,UserListName.PLAYLIST))
-        userList.add(UserList(R.drawable.big_song,UserListName.LOVESONG))
-        userList.add(UserList(R.drawable.big_song,UserListName.LOVESINGER))
+    private fun initData() {
+        userList.add(UserList("My Playlist", R.drawable.big_song, UserListName.PLAYLIST))
+        userList.add(UserList("Love Song", R.drawable.big_song, UserListName.LOVESONG))
+        userList.add(UserList("Love Singer", R.drawable.big_song, UserListName.LOVESINGER))
     }
 
     private fun handleUI() {
@@ -126,16 +126,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     }
 
     override fun onUserListAdapterClicked(str: UserList) {
-       when (str.name) {
+        when (str.type) {
             UserListName.PLAYLIST -> {
                 navigate(ProfileFragmentDirections.actionProfileFragmentToPlaylistFragment())
             }
-            UserListName.LOVESONG -> "Love Song"
+
+            UserListName.LOVESONG ->  navigate(ProfileFragmentDirections.actionProfileFragmentToSongFragment())
             UserListName.LOVESINGER -> "Love Singer"
         }
 
     }
-    private fun navigate(nav : NavDirections){
+
+    private fun navigate(nav: NavDirections) {
         findNavController().navigate(nav)
     }
 

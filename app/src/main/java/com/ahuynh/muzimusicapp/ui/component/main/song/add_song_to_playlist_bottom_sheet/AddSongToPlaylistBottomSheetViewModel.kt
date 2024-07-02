@@ -1,11 +1,10 @@
-package com.ahuynh.muzimusicapp.ui.component.main.song
+package com.ahuynh.muzimusicapp.ui.component.main.song.add_song_to_playlist_bottom_sheet
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.data.model.response.toListSong
+import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
@@ -17,28 +16,36 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class SongViewModel @Inject
+class AddSongToPlaylistBottomSheetViewModel @Inject
 constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
     private val userRepository: UserRepository,
-    private val songRepository: SongRepository
+    private val songRepository: SongRepository,
+    private val playlistRepository: PlaylistRepository
 ) :
     BaseViewModel() {
-    var loveSong = MutableLiveData<List<Song>>()
-    var des = MutableLiveData<String>()
+    var playlists = MutableLiveData<List<Playlist>>()
     var addSongToPlaylistStatus = MutableLiveData<Boolean?>(null)
     var mess: String? = null
 
+    init {
+        getAllPlaylists()
+    }
 
+    private fun getAllPlaylists() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            playlists.postValue(playlistRepository.getAllPlaylist())
+        }
+        registerEventParentJobFinish()
+    }
 
-    fun getLoveSong() {
+    fun addSongToPlaylist(playlistId : Long, songId: Long){
         isLoading.postValue(true)
         viewModelScope.launch {
-            val result = songRepository.getLoveSong()
+            val result = playlistRepository.addSongToPlaylist(playlistId,songId)
             if(result is Response.Success){
                 mess = result.data.message
-                loveSong.postValue(result.data.data.songs.toListSong())
-                des.postValue(result.data.data.total)
             } else if(result is Response.Failure){
                 mess = result.errorMessage
             }

@@ -86,6 +86,9 @@
 
             android:id="@+id/action_profileFragment_to_playlistFragment"
             app:destination="@id/playlistFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_songFragment"
+            app:destination="@id/songFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"
@@ -150,4 +153,8 @@
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
     </dialog>
+    <dialog
+        android:id="@+id/songFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.song.SongFragment"
+        android:label="SongFragment" />
 </navigation>

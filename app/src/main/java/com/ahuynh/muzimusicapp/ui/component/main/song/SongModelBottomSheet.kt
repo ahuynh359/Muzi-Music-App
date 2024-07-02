@@ -26,6 +26,7 @@ import com.ahuynh.muzimusicapp.ui.base.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.PlaylistViewModel
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.bottom_sheet.PlaylistModelBottomSheetArgs
 import com.ahuynh.muzimusicapp.ui.component.main.playlist.bottom_sheet.PlaylistModelBottomSheetDirections
+import com.ahuynh.muzimusicapp.ui.component.main.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
 import com.bumptech.glide.Glide
@@ -94,11 +95,21 @@ class SongModelBottomSheet : BottomSheetDialogFragment(), MenuAdapter.OnItemMenu
     }
 
     override fun onMenuClicked(menu: ItemMenu) {
-//        when(menu.type){
-//            ItemMenuName.PLAYLIST ->{
-//
-//            }
-//        }
+        when(menu.type){
+            ItemMenuName.PLAYLIST ->{
+                AddSongToPlaylistBottomSheet().apply {
+                    arguments = Bundle().apply {
+                        putParcelable(Constants.SONG,currentSong)
+                    }
+                }.show(requireActivity().supportFragmentManager,null)
+                dismiss()
+            }
+
+
+            else -> {
+
+            }
+        }
     }
 
 

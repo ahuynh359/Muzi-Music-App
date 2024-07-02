@@ -27,13 +27,8 @@ class UserListAdapter(private val listener: OnUserListAdapterClicked) :
         }
 
         fun bind(str: UserList) {
-            var s : String = ""
-            s = when (str.name) {
-                UserListName.PLAYLIST -> "Playlist"
-                UserListName.LOVESONG -> "Love Song"
-                UserListName.LOVESINGER -> "Love Singer"
-            }
-            binding.tvName.text = s
+
+            binding.tvName.text = str.title
             binding.tvUser.text = "User"
             Glide
                 .with(binding.imvItem.context)
