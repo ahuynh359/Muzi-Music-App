@@ -11,5 +11,7 @@ data class Song(
     val file: String,
     val lyrics: String,
     val album: Album,
+    val singers : List<Singer>,
+    val types : List<Type>
 
 ) : Parcelable

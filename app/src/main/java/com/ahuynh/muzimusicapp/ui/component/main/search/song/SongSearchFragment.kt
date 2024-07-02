@@ -14,7 +14,9 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongSearchBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.main.search.SearchViewModel
+import com.ahuynh.muzimusicapp.ui.component.main.song.SongModelBottomSheet
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +35,7 @@ class SongSearchFragment : Fragment(), SongAdapter.OnNewSongClicked {
         binding = FragmentSongSearchBinding.inflate(inflater, container, false)
 
         songAdapter = SongAdapter(this)
-        binding.recyclerView.apply {
+        binding.rcySong.apply {
             adapter = songAdapter
             layoutManager = LinearLayoutManager(context)
         }
@@ -41,12 +43,12 @@ class SongSearchFragment : Fragment(), SongAdapter.OnNewSongClicked {
         viewModel.songs.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.tvNoResult.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
+                binding.rcySong.visibility = View.GONE
             } else {
                 songAdapter.submitList(it)
 
                 binding.tvNoResult.visibility = View.GONE
-                binding.recyclerView.visibility = View.VISIBLE
+                binding.rcySong.visibility = View.VISIBLE
             }
         }
 
@@ -67,7 +69,11 @@ class SongSearchFragment : Fragment(), SongAdapter.OnNewSongClicked {
     }
 
     override fun openMenu(song: Song) {
-        Toast.makeText(requireContext(), song.name, Toast.LENGTH_SHORT).show()
+        SongModelBottomSheet().apply {
+            arguments = Bundle().apply {
+                putParcelable(Constants.SONG,song)
+            }
+        }.show(requireActivity().supportFragmentManager,null)
     }
 
 }

@@ -12,7 +12,6 @@ data class UserResponse(
     val email: String,
     val username: String,
     val avatar: String,
-    val enabled: Boolean,
     val locked: Boolean,
     val roles: List<Role>,
 
@@ -25,7 +24,6 @@ data class UserResponse(
             email = this.email,
             username = this.username,
             avatar = this.avatar,
-            enabled = this.enabled,
             locked = this.locked,
             roles = this.roles,
         )

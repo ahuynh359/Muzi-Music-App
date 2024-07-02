@@ -41,23 +41,12 @@ constructor(private val playlistRepository: PlaylistRepository,
     fun getUserInfo(){
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val id = sharePreferencesHelper.getId()
-            currentUser.postValue(userRepository.getUserById(id))
+            currentUser.postValue(userRepository.getCurrentUser())
         }
         registerEventParentJobFinish()
     }
 
-    fun changeAvatar(file: File) {
 
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val id = sharePreferencesHelper.getId()
-            userRepository.changeAvatar(id, file)
-        }
-        registerEventParentJobFinish()
-
-
-    }
 
 
 }

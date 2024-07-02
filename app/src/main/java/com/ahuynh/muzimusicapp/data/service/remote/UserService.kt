@@ -21,22 +21,10 @@ class UserService @Inject constructor(
 ) : BaseRemoteService() {
 
 
-    suspend fun loveOrUnlove(userId: Long, songId: Long): Response<ApiResponse> {
-        return callApi { userAPI.loveOrUnlove(userId, songId) }
-    }
 
 
-    suspend fun getLoveSong(id: Long): List<Song> {
-        val result = callApi { userAPI.getLoveSong(id) }
-        return if (result is Response.Success) {
-            result.data.data.toListSong()
-        } else {
-            arrayListOf()
-        }
-    }
-
-    suspend fun getUserById(id: Long): User? {
-        val result = callApi { userAPI.getUserById(id) }
+    suspend fun getCurrentUser(): User? {
+        val result = callApi { userAPI.getCurrentUser() }
         return if (result is Response.Success) {
             result.data.data.toUser()
         } else {
@@ -44,12 +32,12 @@ class UserService @Inject constructor(
         }
     }
 
-    suspend fun changeAvatar(id: Long, file: File): Response<UserResponseData> {
+    suspend fun changeAvatar(file: File): Response<UserResponseData> {
         return callApi {
             val imageFileRequestBody =
                 file.asRequestBody("image/*".toMediaTypeOrNull())
             userAPI.changeAvatar(
-                id, MultipartBody.Part.createFormData(
+                 MultipartBody.Part.createFormData(
                     "avatar",
                     file.name,
                     imageFileRequestBody

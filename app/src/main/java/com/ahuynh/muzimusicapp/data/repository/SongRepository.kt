@@ -33,21 +33,17 @@ class SongRepository @Inject constructor(
     }
 
 
-    suspend fun loveSong(userId: Long, songId : Long): Response<MessageResponse> {
+    suspend fun loveSong( songId : Long): Response<MessageResponse> {
         return withContext(dispatcher) {
-            songService.loveSong(userId,songId)
+            songService.loveSong(songId)
         }
     }
 
-    suspend fun unloveSong(userId: Long, songId : Long): Response<MessageResponse> {
-        return withContext(dispatcher) {
-            songService.unloveSong(userId,songId)
-        }
-    }
 
-    suspend fun isUserLoveSong(userId: Long, songId : Long): Response<LoveSongResponse> {
+
+    suspend fun isUserLoveSong(songId : Long): Response<LoveSongResponse> {
         return withContext(dispatcher) {
-            songService.isUserLoveSong(userId,songId)
+            songService.isUserLoveSong(songId)
         }
     }
     suspend fun searchSong(str: String): SearchResponse? {

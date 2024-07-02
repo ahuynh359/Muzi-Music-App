@@ -10,7 +10,6 @@ data class User(
     val email: String,
     val username: String,
     val avatar: String,
-    val enabled: Boolean,
     val locked : Boolean,
     val roles: List<Role>,
 ) : Parcelable

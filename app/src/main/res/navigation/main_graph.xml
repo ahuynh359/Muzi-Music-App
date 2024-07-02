@@ -42,7 +42,7 @@
 
     <dialog
         android:id="@+id/detailPlaylistFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.detail.DetailPlaylistFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.playlist.detail_playlist.DetailPlaylistFragment"
         android:label="fragment_detail_playlist"
         tools:layout="@layout/fragment_detail_playlist" >
         <argument
@@ -51,9 +51,7 @@
         <action
             android:id="@+id/action_detailPlaylistFragment_to_addSongToPlaylistFragment"
             app:destination="@id/addSongToPlaylistFragment" />
-        <action
-            android:id="@+id/action_detailPlaylistFragment_to_addSongToPlaylistFragment2"
-            app:destination="@id/addSongToPlaylistFragment" />
+
     </dialog>
     <fragment
         android:id="@+id/settingFragment"

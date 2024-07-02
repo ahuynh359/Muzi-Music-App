@@ -24,27 +24,13 @@ import retrofit2.http.Query
 interface UserAPI {
 
 
-    @Multipart
-    @PUT("${Constants.API_VERSION}/user/love-or-unlove")
-    suspend fun loveOrUnlove(
-        @Part("userId") userId: Long,
-        @Part("songId") songId: Long
-    ): Response<ApiResponse>
-
-    @GET("${Constants.API_VERSION}/user/{id}/get-love-song")
-    suspend fun getLoveSong(
-        @Path("id") id: Long,
-    ): Response<SongResponseData>
-
-    @GET("${Constants.API_VERSION}/user/{id}")
-    suspend fun getUserById(
-        @Path("id") id: Long,
+    @GET("${Constants.API_VERSION}/user/information")
+    suspend fun getCurrentUser(
     ): Response<UserResponseData>
 
     @Multipart
-    @POST("${Constants.API_VERSION}/user/avatar/{id}")
+    @PUT("${Constants.API_VERSION}/user/avatar")
     suspend fun changeAvatar(
-        @Path("id") id: Long,
         @Part avatar: MultipartBody.Part
     ): Response<UserResponseData>
 

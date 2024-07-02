@@ -50,7 +50,6 @@ class PlayerViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             songRepository.loveSong(
-                sharePreferencesHelper.getId(),
                 songId
             )
             isUserLoveSong(songId)
@@ -63,7 +62,6 @@ class PlayerViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = songRepository.isUserLoveSong(
-                sharePreferencesHelper.getId(),
                 songId
             )
 

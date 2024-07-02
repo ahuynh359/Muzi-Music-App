@@ -22,27 +22,17 @@ class UserRepository @Inject constructor(
 ) {
 
 
-    suspend fun loveOrUnlove(userId: Long, songId: Long): Response<ApiResponse> {
+
+
+    suspend fun getCurrentUser(): User? {
         return withContext(dispatcher) {
-            userService.loveOrUnlove(userId, songId)
+            userService.getCurrentUser()
         }
     }
 
-    suspend fun getLoveSong(id: Long): List<Song> {
+    suspend fun changeAvatar(file: File): Response<UserResponseData>  {
         return withContext(dispatcher) {
-            userService.getLoveSong(id)
-        }
-    }
-
-    suspend fun getUserById(id: Long): User? {
-        return withContext(dispatcher) {
-            userService.getUserById(id)
-        }
-    }
-
-    suspend fun changeAvatar(id: Long, file: File): Response<UserResponseData>  {
-        return withContext(dispatcher) {
-            userService.changeAvatar(id, file)
+            userService.changeAvatar( file)
         }
     }
 

@@ -10,6 +10,8 @@ data class SongResponse(
     val file: String,
     val lyrics: String,
     val album: AlbumResponse,
+    val singers: List<SingerResponse>,
+    val types: List<TypeResponse>,
 
 
 
@@ -21,7 +23,9 @@ data class SongResponse(
             avatar = this.avatar,
             file = this.file,
             lyrics = this.lyrics,
-            album = this.album.toAlbum()
+            album = this.album.toAlbum(),
+            singers = this.singers.toListSinger(),
+            types = this.types.toListType(),
 
         )
     }

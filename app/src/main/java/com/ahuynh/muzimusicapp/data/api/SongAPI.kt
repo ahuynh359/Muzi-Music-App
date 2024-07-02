@@ -10,6 +10,7 @@ import com.ahuynh.muzimusicapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -25,15 +26,9 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/search")
     suspend fun searchSong(@Query("query")  query : String): Response<ListSearchResponse>
 
-    @GET("${Constants.API_VERSION}/song/singer/{id}")
-    suspend fun getSingerFromSongById(@Path("id") id: Long): Response<SingerResponseData>
+    @PUT("${Constants.API_VERSION}/song/love-or-unlove/{songId}")
+    suspend fun loveSong(@Path("songId") songId : Long) : Response<MessageResponse>
 
-    @POST("${Constants.API_VERSION}/song/love-or-unlove/{userId}/{songId}")
-    suspend fun loveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long) : Response<MessageResponse>
-
-    @POST("${Constants.API_VERSION}/song/unlove/{userId}/{songId}")
-    suspend fun unloveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long) : Response<MessageResponse>
-
-    @GET("${Constants.API_VERSION}/song/is-love-song/{userId}/{songId}")
-    suspend fun isUserLoveSong(@Path("userId") userId : Long ,@Path("songId") songId : Long): Response<LoveSongResponse>
+    @GET("${Constants.API_VERSION}/song/is-love-song/{songId}")
+    suspend fun isUserLoveSong(@Path("songId") songId : Long): Response<LoveSongResponse>
 }

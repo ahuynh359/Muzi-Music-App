@@ -157,8 +157,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="194" />
-                            <option name="y" value="-1085" />
+                            <option name="x" value="221" />
+                            <option name="y" value="-706" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -176,11 +176,6 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_detailPlaylistFragment_to_addSongToPlaylistFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_detailPlaylistFragment_to_addSongToPlaylistFragment2">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -373,8 +368,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="160" />
-                            <option name="y" value="-488" />
+                            <option name="x" value="382" />
+                            <option name="y" value="-164" />
                           </Point>
                         </option>
                       </LayoutPositions>

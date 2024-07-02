@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_more_small"
-        android:layout_width="70dp"
+        android:layout_width="@dimen/_50dp"
         android:layout_height="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

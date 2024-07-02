@@ -33,8 +33,7 @@ constructor(
     fun getUserInfo() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val id = sharePreferencesHelper.getId()
-            currentUser.postValue(userRepository.getUserById(id))
+            currentUser.postValue(userRepository.getCurrentUser())
         }
         registerEventParentJobFinish()
     }
@@ -43,8 +42,7 @@ constructor(
     fun changeAvatar(file:File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val id = sharePreferencesHelper.getId()
-            val result = userRepository.changeAvatar(id, file)
+            val result = userRepository.changeAvatar( file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
             } else if (result is Response.Failure) {

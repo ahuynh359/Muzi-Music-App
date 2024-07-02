@@ -33,56 +33,24 @@ class HomeViewModel @Inject constructor(
     var newSingerList = MutableLiveData<List<Singer>>()
     var typeList = MutableLiveData<List<Type>>()
     var newSongList = MutableLiveData<List<Song>>()
-    var loveSongList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
-    var accessToken = MutableLiveData<String>()
 
     var songOfAlbum = MutableLiveData<List<Song>>()
     var songOfType = MutableLiveData<List<Song>>()
-    var songOfPlaylist = MutableLiveData<List<Song>>()
 
     var deleteSong = MutableLiveData<Boolean>()
-
-    var sortIndex = MutableLiveData<Int>(-1)
-    var getNotification = MutableLiveData<Int>()
 
 
     init {
         getNewSongs()
         getNewAlbums()
         getNewSingers()
-//        getAllAlbum()
-//        getAccessToken()
 
 
-    }
-
-    fun getAllLoveSong() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            loveSongList.postValue(userRepository.getLoveSong(sharePreferencesHelper.getId()))
-        }
-        registerEventParentJobFinish()
-    }
-
-    fun getAccessToken() {
-
-        viewModelScope.launch {
-            accessToken.postValue(sharePreferencesHelper.getToken())
-
-        }
 
     }
 
 
-    fun getUnreadNoti() {
-
-        viewModelScope.launch {
-            getNotification.postValue(sharePreferencesHelper.getUnreadNoti())
-
-        }
-
-    }
 
 
     fun getNewSongs() {
@@ -97,13 +65,6 @@ class HomeViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             newSingerList.postValue(singerRepository.getNewSingers())
-        }
-        registerEventParentJobFinish()
-    }
-    fun getAllTypes() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllType())
         }
         registerEventParentJobFinish()
     }

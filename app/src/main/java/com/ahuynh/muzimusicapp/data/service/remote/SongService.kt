@@ -34,16 +34,14 @@ class SongService @Inject constructor(
     }
 
 
-    suspend fun loveSong(userId: Long, songId : Long) : Response<MessageResponse>{
-        return callApi { songAPI.loveSong(userId,songId) }
+    suspend fun loveSong( songId : Long) : Response<MessageResponse>{
+        return callApi { songAPI.loveSong(songId) }
     }
 
-    suspend fun unloveSong(userId: Long, songId : Long) : Response<MessageResponse>{
-        return callApi { songAPI.unloveSong(userId,songId) }
-    }
 
-    suspend fun isUserLoveSong(userId: Long, songId : Long) : Response<LoveSongResponse>{
-        return callApi { songAPI.isUserLoveSong(userId,songId) }
+
+    suspend fun isUserLoveSong( songId : Long) : Response<LoveSongResponse>{
+        return callApi { songAPI.isUserLoveSong(songId) }
     }
     suspend fun searchSong(str: String): SearchResponse? {
         val result = callApi { songAPI.searchSong(str) }
