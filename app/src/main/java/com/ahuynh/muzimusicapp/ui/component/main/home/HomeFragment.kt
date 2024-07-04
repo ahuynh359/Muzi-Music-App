@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
@@ -13,15 +16,18 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.main.song.SongModelBottomSheet
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.min
 
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     AlbumHomeAdapter.OnAlbumHomeAdapterClicked,
-    SongHomeAdapter.OnSongHomeClicked, SingerHomeAdapter.OnSingerHomeClicked {
+    SongAdapter.OnNewSongClicked, SingerHomeAdapter.OnSingerHomeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
@@ -29,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         const val TAG = "SongFragment"
     }
 
-    private val newSongAdapter = SongHomeAdapter(this)
+    private val newSongAdapter = SongAdapter(this)
     private val newAlbumAdapter = AlbumHomeAdapter(this)
     private val newSingerAdapter = SingerHomeAdapter(this)
 
@@ -56,7 +62,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     }
-
 
 
     //New Song List
@@ -108,7 +113,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-
     private fun handleUI() {
 
 
@@ -124,18 +128,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         )
     }
 
+    override fun openMenu(song: Song) {
+        SongModelBottomSheet().apply {
+            arguments = Bundle().apply {
+                putParcelable(Constants.SONG, song)
+            }
+        }.show(requireActivity().supportFragmentManager, null)
+    }
+
+
 
     override fun onAlbumClicked(album: Album) {
 
     }
 
 
-
     override fun onSingerClicked(singer: Singer) {
-
+        val action = HomeFragmentDirections.actionHomeFragmentToSingerFragment(singer)
+        findNavController().navigate(action)
     }
-
-
 
 
 }

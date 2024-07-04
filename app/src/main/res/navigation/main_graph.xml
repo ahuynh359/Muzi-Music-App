@@ -16,6 +16,13 @@
         <action
             android:id="@+id/action_homeFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_homeFragment_to_singerFragment"
+            app:destination="@id/singerDetailFragment" />
     </fragment>
 
 
@@ -89,6 +96,9 @@
         <action
             android:id="@+id/action_profileFragment_to_songFragment"
             app:destination="@id/songFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_singerFragment"
+            app:destination="@id/singerFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"
@@ -97,7 +107,7 @@
         tools:layout="@layout/fragment_change_password" />
     <dialog
         android:id="@+id/detailTypeFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.type.TypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.type.detail.DetailTypeFragment"
         android:label="fragment_detail_type"
         tools:layout="@layout/fragment_detail_type" >
         <argument
@@ -157,4 +167,18 @@
         android:id="@+id/songFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.main.song.SongFragment"
         android:label="SongFragment" />
+    <fragment
+        android:id="@+id/singerDetailFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.singer.detail.DetailSingerFragment"
+        android:label="fragment_singer"
+        tools:layout="@layout/fragment_detail_singer" >
+        <argument
+            android:name="singer"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Singer" />
+    </fragment>
+    <fragment
+        android:id="@+id/singerFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.singer.SingerFragment"
+        android:label="fragment_singer"
+        tools:layout="@layout/fragment_singer" />
 </navigation>

@@ -51,7 +51,7 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun observeData() {
         viewModel.song.observe(requireActivity()) { song ->
-            playerAdapter.setData(getSongLyrics(song.lyrics!!))
+            playerAdapter.setData(getSongLyrics(song.lyrics))
             songLyrics = getSongLyrics(song.lyrics)
 
         }
@@ -134,7 +134,7 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
 
     private fun getSongLyrics(text : String) : ArrayList<Lyric>{
         val lyrics = arrayListOf<Lyric>()
-        if(text.isEmpty()){
+        if(text.isBlank()){
             lyrics.add(Lyric(0,"No lyrics"))
         } else {
             val list = text.split("\\n").map { it.trimEnd('\\') }

@@ -97,6 +97,7 @@
             app:layout_constraintTop_toBottomOf="@id/shimmer_recently_played" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_marginStart="@dimen/_20dp"
             android:id="@+id/shimmer_new_song"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
@@ -107,28 +108,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <include layout="@layout/item_shimmer_round_recently" />
+                <include layout="@layout/item_shimmer_round" />
 
-                <include layout="@layout/item_shimmer_round_recently" />
+                <include layout="@layout/item_shimmer_round" />
 
-                <include layout="@layout/item_shimmer_round_recently" />
+                <include layout="@layout/item_shimmer_round" />
+                <include layout="@layout/item_shimmer_round" />
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="@dimen/_20dp"
             android:id="@+id/rcy_new_song"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
+            tools:itemCount="5"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_new_song"
-            tools:listitem="@layout/item_circle_recently" />
+            tools:listitem="@layout/item_song" />
         <!--    New singer-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_new_singer"

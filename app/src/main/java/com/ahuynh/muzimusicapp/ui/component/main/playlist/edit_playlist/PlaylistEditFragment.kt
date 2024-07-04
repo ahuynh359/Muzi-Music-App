@@ -41,7 +41,7 @@ class PlaylistEditFragment : BaseDialogFragment() {
                 if (it) {
                     this.dismiss()
                 } else {
-                    Toast.makeText(requireContext(), viewModel.mess.value, Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT)
                         .show()
                 }
             }

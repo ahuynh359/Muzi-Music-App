@@ -26,7 +26,7 @@ class TypeService @Inject constructor(
         return if (result is Response.Success) {
             result.data.data.toListSong()
         } else {
-            emptyList()
+            arrayListOf()
         }
     }
 

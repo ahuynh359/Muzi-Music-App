@@ -57,5 +57,15 @@ class SongService @Inject constructor(
         return callApi { songAPI.getLoveSong() }
     }
 
+    suspend fun getSongByListen(): List<Song> {
+        val result = callApi { songAPI.getSongByListen() }
+        return if (result is Response.Success) {
+            result.data.data.toListSong()
+        } else {
+            arrayListOf()
+        }
+    }
+
+
 
 }

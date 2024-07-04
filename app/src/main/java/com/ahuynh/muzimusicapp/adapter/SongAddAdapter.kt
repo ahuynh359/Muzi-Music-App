@@ -5,27 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
+import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
+import com.ahuynh.muzimusicapp.databinding.ItemSongAddBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
+class SongAddAdapter(private val listener: OnSongAddClicked) :
+    ListAdapter<Song, SongAddAdapter.ViewHolder>(DiffCallback()) {
 
-class SongAdapter(private val listener: OnNewSongClicked) :
-    ListAdapter<Song, SongAdapter.ViewHolder>(DiffCallback()) {
-
-    inner class ViewHolder(private val binding: ItemSongBinding) :
+    inner class ViewHolder(private val binding: ItemSongAddBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.main.setOnClickListener {
-                listener.onSongClicked(currentList[layoutPosition])
+            binding.root.setOnClickListener {
+                listener.onSongAdd(currentList[layoutPosition])
             }
-            binding.btnMore.setOnClickListener {
-                listener.openMenu(currentList[layoutPosition])
-            }
+
         }
+
         fun bind(song: Song) {
             Glide
                 .with(binding.imvSong.context)
@@ -53,7 +50,8 @@ class SongAdapter(private val listener: OnNewSongClicked) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemSongAddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -65,9 +63,9 @@ class SongAdapter(private val listener: OnNewSongClicked) :
         return currentList.size
     }
 
-    interface OnNewSongClicked {
-        fun onSongClicked(song: Song)
-        fun openMenu(song : Song)
+    interface OnSongAddClicked {
+        fun onSongAdd(song: Song)
+
     }
 
 }

@@ -24,19 +24,15 @@ class HomeViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val songRepository: SongRepository,
     private val typeRepository: TypeRepository,
-    private val userRepository: UserRepository,
-    private val playlistRepository: PlaylistRepository,
     private val singerRepository: SingerRepository
 ) : BaseViewModel() {
 
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
-    var typeList = MutableLiveData<List<Type>>()
     var newSongList = MutableLiveData<List<Song>>()
     var deleteSongFromPlaylist = MutableLiveData<Boolean>()
 
     var songOfAlbum = MutableLiveData<List<Song>>()
-    var songOfType = MutableLiveData<List<Song>>()
 
     var deleteSong = MutableLiveData<Boolean>()
 
@@ -86,13 +82,6 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun getSongOfType(id: Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            songOfType.postValue(typeRepository.getSongFromType(id))
-        }
-        registerEventParentJobFinish()
-    }
 
 
 }

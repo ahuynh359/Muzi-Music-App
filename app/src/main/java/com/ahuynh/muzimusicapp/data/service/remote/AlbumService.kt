@@ -18,7 +18,7 @@ class AlbumService @Inject constructor(
         return if (result is Response.Success) {
             result.data.data.toListAlbum()
         } else {
-            emptyList()
+            arrayListOf()
         }
     }
 
@@ -31,7 +31,7 @@ class AlbumService @Inject constructor(
         return if (result is Response.Success) {
             result.data.data.toListSong()
         } else {
-            emptyList()
+            arrayListOf()
         }
     }
 }

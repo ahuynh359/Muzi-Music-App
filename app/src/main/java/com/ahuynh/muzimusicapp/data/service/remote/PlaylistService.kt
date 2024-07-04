@@ -38,6 +38,15 @@ class PlaylistService @Inject constructor(
         }
     }
 
+    suspend fun getAllSongsNotFromPlaylist(id: Long): List<Song> {
+        val result = callApi { playlistAPI.getAllSongsNotFromPlaylist(id) }
+        return if (result is Response.Success) {
+            result.data.data.toListSong()
+        } else {
+            arrayListOf()
+        }
+    }
+
 
     suspend fun deletePlaylist(id: Long): Response<MessageResponse> {
         return callApi { playlistAPI.deletePlaylist(id) }

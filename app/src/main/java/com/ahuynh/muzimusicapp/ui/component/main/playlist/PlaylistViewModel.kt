@@ -26,7 +26,11 @@ constructor(private val playlistRepository: PlaylistRepository,
     var addPlaylistStatus = MutableLiveData<Boolean?>()
     var updatePlaylistStatus = MutableLiveData<Boolean?>()
     var songOfPlaylist = MutableLiveData<List<Song>>()
-    var mess=MutableLiveData<String>()
+
+    var listSongNotInPlaylist = MutableLiveData<List<Song>>()
+    var addSongToPlaylistStatus = MutableLiveData<Boolean?>(null)
+    var mess: String? = null
+
 
     init {
         getAllPlaylist()
@@ -48,11 +52,11 @@ constructor(private val playlistRepository: PlaylistRepository,
             val playlistRequest = PlaylistRequest(playlist)
             val result = playlistRepository.addPlaylist(playlistRequest)
             if (result is Response.Success) {
-                mess.postValue(result.data.message)
+                mess = (result.data.message)
                 getAllPlaylist()
 
             } else if (result is Response.Failure) {
-                mess.postValue(result.errorMessage)
+                mess= (result.errorMessage)
             }
             addPlaylistStatus.postValue(result is Response.Success)
         }
@@ -77,11 +81,11 @@ constructor(private val playlistRepository: PlaylistRepository,
             val playlistRequest = PlaylistRequest(playlist)
             val result = playlistRepository.updatePlaylist(playlistRequest , id)
             if (result is Response.Success) {
-                mess.postValue(result.data.message)
+                mess = (result.data.message)
                 getAllPlaylist()
 
             } else if (result is Response.Failure) {
-                mess.postValue(result.errorMessage)
+                mess = (result.errorMessage)
             }
             updatePlaylistStatus.postValue(result is Response.Success)
         }
@@ -95,6 +99,30 @@ constructor(private val playlistRepository: PlaylistRepository,
         }
         registerEventParentJobFinish()
 
+    }
+
+    fun getAllSongsNotInPlaylist(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            listSongNotInPlaylist.postValue(playlistRepository.getAllSongsNotFromPlaylist(id))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun addSongToPlaylist(playlistId: Long, songId: Long) {
+        isLoading.postValue(true)
+        viewModelScope.launch {
+            val result = playlistRepository.addSongToPlaylist(playlistId, songId)
+            if (result is Response.Success) {
+                mess = result.data.message
+                getAllSongsNotInPlaylist(playlistId)
+                getSongOfPlaylist(playlistId)
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            addSongToPlaylistStatus.postValue(result is Response.Success)
+        }
+        registerEventParentJobFinish()
     }
 
 

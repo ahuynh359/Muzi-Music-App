@@ -99,7 +99,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             } else {
                 binding.player.visibility = View.VISIBLE
                 binding.tvSong.text = it.name
-                //binding.tvSinger.text = it.singer
+                binding.tvSinger.text =it.singers.joinToString(", ") { it.name }
                 Glide
                     .with(binding.imvSong.context)
                     .load(it.avatar)

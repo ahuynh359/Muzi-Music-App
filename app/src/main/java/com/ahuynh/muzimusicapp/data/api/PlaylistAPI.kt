@@ -43,4 +43,9 @@ interface PlaylistAPI {
     suspend fun addSongToPlaylist(@Path("playlistId") playlistId: Long, @Path("songId") songId: Long): Response<MessageResponse>
 
 
+    @GET("${Constants.API_VERSION}/playlist/songs/not/{id}")
+    suspend fun getAllSongsNotFromPlaylist(@Path("id") id: Long):
+            Response<SongResponseData>
+
+
 }

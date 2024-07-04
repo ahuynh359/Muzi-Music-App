@@ -59,5 +59,12 @@ class SongRepository @Inject constructor(
         }
     }
 
+    suspend fun getSongByListen(): List<Song> {
+        return withContext(dispatcher) {
+            songService.getSongByListen()
+        }
+    }
+
+
 
 }

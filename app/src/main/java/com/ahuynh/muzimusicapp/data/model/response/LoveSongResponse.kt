@@ -4,11 +4,11 @@ import androidx.core.text.util.LocalePreferences.FirstDayOfWeek.Days
 
 data class LoveSongResponse(
     val message: String,
-    val data: Love
+    val data: LoveSong
 
 )
 
-data class Love(
+data class LoveSong(
     val total: String,
     val songs: List<SongResponse>
 )

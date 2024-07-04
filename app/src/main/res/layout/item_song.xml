@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="@dimen/_10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginTop="@dimen/_10dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
-        app:layout_constraintEnd_toStartOf="@id/btn_more"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_more"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imv_song"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:shapeAppearanceOverlay="@style/rounded_corner"
             android:scaleType="centerCrop"
             android:src="@drawable/note"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/rounded_corner" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintBottom_toTopOf="@+id/tv_singer"
-            app:layout_constraintTop_toTopOf="@id/imv_song"
-            android:layout_marginStart="@dimen/_15dp"
             android:id="@+id/tv_name_song"
             style="@style/TextMedium"
-            tools:text="Lama Del Rey"
-            app:layout_constraintStart_toEndOf="@id/imv_song"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toTopOf="@+id/tv_singer"
+            app:layout_constraintStart_toEndOf="@id/imv_song"
+            app:layout_constraintTop_toTopOf="@id/imv_song"
+            tools:text="Lama Del Rey" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:textColor="@color/nobel"
-            android:textSize="13sp"
-            app:layout_constraintTop_toBottomOf="@id/tv_name_song"
             android:id="@+id/tv_singer"
             style="@style/TextMedium"
-            tools:text="Artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/nobel"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@id/imv_song"
             app:layout_constraintStart_toStartOf="@id/tv_name_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_name_song"
+            tools:text="Artist" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -53,12 +56,12 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_more"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="50dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_more_small"
-        android:layout_width="@dimen/_50dp"
-        android:layout_height="50dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

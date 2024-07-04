@@ -45,6 +45,12 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
+    suspend fun getAllSongsNotFromPlaylist(id: Long): List<Song> {
+        return withContext(dispatcher) {
+            playlistService.getAllSongsNotFromPlaylist(id)
+        }
+    }
+
     suspend fun updatePlaylist(playlistRequest: PlaylistRequest, id: Long): Response<PlaylistResponseJson> {
         return withContext(dispatcher) {
             playlistService.updatePlaylist(playlistRequest,id)

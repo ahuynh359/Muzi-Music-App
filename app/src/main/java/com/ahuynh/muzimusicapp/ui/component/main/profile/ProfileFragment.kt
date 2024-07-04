@@ -127,12 +127,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun onUserListAdapterClicked(str: UserList) {
         when (str.type) {
-            UserListName.PLAYLIST -> {
+            UserListName.PLAYLIST ->
                 navigate(ProfileFragmentDirections.actionProfileFragmentToPlaylistFragment())
-            }
 
-            UserListName.LOVESONG ->  navigate(ProfileFragmentDirections.actionProfileFragmentToSongFragment())
-            UserListName.LOVESINGER -> "Love Singer"
+            UserListName.LOVESONG -> navigate(ProfileFragmentDirections.actionProfileFragmentToSongFragment())
+            UserListName.LOVESINGER -> navigate(ProfileFragmentDirections.actionProfileFragmentToSingerFragment())
         }
 
     }

@@ -23,16 +23,21 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/{id}")
     suspend fun getSongById(@Path("id") id: Long): Response<SongResponse>
 
-
     @GET("${Constants.API_VERSION}/song/search")
-    suspend fun searchSong(@Query("query")  query : String): Response<ListSearchResponse>
+    suspend fun searchSong(@Query("query") query: String): Response<ListSearchResponse>
 
-    @PUT("${Constants.API_VERSION}/song/love-or-unlove/{songId}")
-    suspend fun loveSong(@Path("songId") songId : Long) : Response<MessageResponse>
+    @POST("${Constants.API_VERSION}/song/love-or-unlove/{songId}")
+    suspend fun loveSong(@Path("songId") songId: Long): Response<MessageResponse>
 
     @GET("${Constants.API_VERSION}/song/is-love-song/{songId}")
-    suspend fun isUserLoveSong(@Path("songId") songId : Long): Response<IsLoveSongResponse>
+    suspend fun isUserLoveSong(@Path("songId") songId: Long): Response<IsLoveSongResponse>
 
     @GET("${Constants.API_VERSION}/song/love")
     suspend fun getLoveSong(): Response<LoveSongResponse>
+
+    @GET("${Constants.API_VERSION}/song/chart")
+    suspend fun getSongByListen(): Response<SongResponseData>
+
+
+
 }

@@ -200,6 +200,10 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
             }
         }
 
+        binding.btnComment.setOnClickListener {
+
+        }
+
 
     }
 

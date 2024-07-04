@@ -86,4 +86,6 @@
     <string name="edit_your_playlist">Edit your playlist</string>
     <string name="add_song_to_playlist">Add song to playlist</string>
     <string name="find_in_liked_songs">Find in Liked Songs</string>
+    <string name="no_singer">No Singer</string>
+    <string name="love_singers">Love Singers</string>
 </resources>
