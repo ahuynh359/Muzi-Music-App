@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.di
 import android.util.Log
 import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
+import com.ahuynh.muzimusicapp.data.api.CommentAPI
 import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
 import com.ahuynh.muzimusicapp.data.api.SingerAPI
 import com.ahuynh.muzimusicapp.data.api.SongAPI
@@ -120,5 +121,10 @@ class NetworkModule {
     @Provides
     fun provideSingerAPI(retrofit: Retrofit): SingerAPI {
         return retrofit.create(SingerAPI::class.java)
+    }
+
+    @Provides
+    fun provideCommentAPI(retrofit: Retrofit): CommentAPI {
+        return retrofit.create(CommentAPI::class.java)
     }
 }

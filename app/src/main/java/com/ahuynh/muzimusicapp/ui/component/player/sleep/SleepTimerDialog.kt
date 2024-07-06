@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.player
+package com.ahuynh.muzimusicapp.ui.component.player.sleep
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.databinding.DialogSleepTimerBinding
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import java.util.Locale
 
 class SleepTimerDialog : DialogFragment() {

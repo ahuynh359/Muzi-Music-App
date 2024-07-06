@@ -53,6 +53,7 @@
             android:resource="@color/green" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".ui.component.player.PlayerActivity"
             android:exported="false" />
         <activity

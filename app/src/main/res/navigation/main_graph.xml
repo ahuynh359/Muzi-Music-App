@@ -181,4 +181,8 @@
         android:name="com.ahuynh.muzimusicapp.ui.component.main.singer.SingerFragment"
         android:label="fragment_singer"
         tools:layout="@layout/fragment_singer" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.chart.ChartFragment"
+        android:label="ChartFragment" />
 </navigation>

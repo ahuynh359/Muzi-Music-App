@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,6 +18,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -138,8 +141,5 @@ object Utils {
 
 
 
-    fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
 
 }

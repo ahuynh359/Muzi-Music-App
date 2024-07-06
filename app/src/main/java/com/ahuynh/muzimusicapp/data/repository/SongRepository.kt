@@ -20,10 +20,16 @@ class SongRepository @Inject constructor(
 
 
 ) {
-    //ok
+
     suspend fun getNewSongs(): List<Song> {
         return withContext(dispatcher) {
             songService.getNewSongs()
+        }
+    }
+
+    suspend fun getTop10(): List<Song> {
+        return withContext(dispatcher) {
+            songService.getTop10()
         }
     }
 
@@ -41,6 +47,11 @@ class SongRepository @Inject constructor(
     }
 
 
+    suspend fun listen( songId : Long): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            songService.listen(songId)
+        }
+    }
 
     suspend fun isUserLoveSong(songId : Long): Response<IsLoveSongResponse> {
         return withContext(dispatcher) {

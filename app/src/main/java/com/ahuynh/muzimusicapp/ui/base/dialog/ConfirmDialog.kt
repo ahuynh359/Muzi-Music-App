@@ -5,8 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import com.ahuynh.muzimusicapp.databinding.DialogConfirmBinding
 
-class ConfirmDialog constructor(
-    private val context: Context,
+class ConfirmDialog(
+    context: Context,
     private val callback: ConfirmCallBack?,
     private val title: String,
     private val message: String,

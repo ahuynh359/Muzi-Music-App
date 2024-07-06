@@ -25,6 +25,15 @@ class SongService @Inject constructor(
         }
     }
 
+    suspend fun getTop10(): List<Song> {
+        val result = callApi { songAPI.getTop10() }
+        return if (result is Response.Success) {
+            result.data.data.toListSong()
+        } else {
+            arrayListOf()
+        }
+    }
+
     suspend fun getSongById(id: Long): Song? {
         val result = callApi { songAPI.getSongById(id) }
         if (result is Response.Success) {
@@ -39,7 +48,9 @@ class SongService @Inject constructor(
         return callApi { songAPI.loveSong(songId) }
     }
 
-
+    suspend fun listen( songId : Long) : Response<MessageResponse>{
+        return callApi { songAPI.listen(songId) }
+    }
 
     suspend fun isUserLoveSong( songId : Long) : Response<IsLoveSongResponse>{
         return callApi { songAPI.isUserLoveSong(songId) }

@@ -20,6 +20,9 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/new")
     suspend fun getNewSongs(): Response<SongResponseData>
 
+    @GET("${Constants.API_VERSION}/song/top10")
+    suspend fun getTop10(): Response<SongResponseData>
+
     @GET("${Constants.API_VERSION}/song/{id}")
     suspend fun getSongById(@Path("id") id: Long): Response<SongResponse>
 
@@ -28,6 +31,9 @@ interface SongAPI {
 
     @POST("${Constants.API_VERSION}/song/love-or-unlove/{songId}")
     suspend fun loveSong(@Path("songId") songId: Long): Response<MessageResponse>
+
+    @POST("${Constants.API_VERSION}/song/listen/{id}")
+    suspend fun listen(@Path("id") songId: Long): Response<MessageResponse>
 
     @GET("${Constants.API_VERSION}/song/is-love-song/{songId}")
     suspend fun isUserLoveSong(@Path("songId") songId: Long): Response<IsLoveSongResponse>

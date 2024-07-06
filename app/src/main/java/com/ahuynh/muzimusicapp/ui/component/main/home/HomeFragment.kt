@@ -5,23 +5,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
 import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.song.SongModelBottomSheet
+import com.ahuynh.muzimusicapp.ui.component.main.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.min
 
 
 @AndroidEntryPoint
@@ -129,7 +126,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun openMenu(song: Song) {
-        SongModelBottomSheet().apply {
+        SongMenu().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.SONG, song)
             }

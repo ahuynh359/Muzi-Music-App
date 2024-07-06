@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.player
+package com.ahuynh.muzimusicapp.ui.component.player.viewpager
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.player.CenterLayoutManager
+import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils

@@ -8,7 +8,10 @@
         android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
         android:title="@string/search" />
-
+    <item
+        android:id="@+id/chartFragment"
+        android:icon="@drawable/ic_chart"
+        android:title="Chart" />
 
     <item
         android:id="@+id/profileFragment"

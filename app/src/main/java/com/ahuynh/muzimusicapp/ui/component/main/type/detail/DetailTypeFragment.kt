@@ -55,10 +55,10 @@ class DetailTypeFragment :
         super.onViewCreated(view, savedInstanceState)
         songAdapter = SongAdapter(this)
         binding.rcySongs.adapter = songAdapter
-
+        getData()
         handleUI()
         observe()
-        getData()
+
     }
 
     private fun getData() {

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.component.chart.ChartFragment">
+    tools:context="ui.component.main.chart.ChartFragment">
 
     <com.github.mikephil.charting.charts.LineChart
         android:visibility="invisible"
@@ -26,24 +26,7 @@
         android:layout_height="200dp" />
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
-        android:hint="Sort by"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-        app:layout_constraintTop_toBottomOf="@id/line_chart"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/input"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
 
-            android:inputType="none"
-            android:id="@+id/select"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -55,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input">
+        app:layout_constraintTop_toBottomOf="@id/bar_chart">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input"
+        app:layout_constraintTop_toBottomOf="@id/bar_chart"
         tools:listitem="@layout/item_song_chart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

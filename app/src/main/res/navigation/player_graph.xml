@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/player_graph"
+    app:startDestination="@id/playerViewPagerFragment">
+
+    <dialog
+        android:id="@+id/commentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.CommentFragment"
+        android:label="fragment_comment"
+        tools:layout="@layout/fragment_comment" >
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+        <action
+            android:id="@+id/action_commentFragment_to_commentMenu"
+            app:destination="@id/commentMenu" />
+    </dialog>
+    <fragment
+        android:id="@+id/playerViewPagerFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.player.viewpager.PlayerViewPagerFragment"
+        android:label="PlayerViewPagerFragment" >
+        <action
+            android:id="@+id/action_playerViewPagerFragment_to_commentFragment"
+            app:destination="@id/commentFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/commentMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.menu.CommentMenu"
+        android:label="fragment_comment_menu"
+        tools:layout="@layout/fragment_comment_menu" >
+        <argument
+            android:name="comment"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
+        <action
+            android:id="@+id/action_commentMenu_to_editCommentFragment"
+            app:destination="@id/editCommentFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/editCommentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.edit.EditCommentFragment"
+        android:label="fragment_edit_comment"
+        tools:layout="@layout/fragment_edit_comment" >
+        <argument
+            android:name="comment"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
+    </dialog>
+</navigation>

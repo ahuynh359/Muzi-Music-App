@@ -12,8 +12,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailSingerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.singer.SingerViewModel
-import com.ahuynh.muzimusicapp.ui.component.main.song.SongModelBottomSheet
+import com.ahuynh.muzimusicapp.ui.component.main.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -133,7 +132,7 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
     }
 
     override fun openMenu(song: Song) {
-        SongModelBottomSheet().apply {
+        SongMenu().apply {
             arguments = Bundle().apply {
                 putParcelable(Constants.SONG,song)
             }

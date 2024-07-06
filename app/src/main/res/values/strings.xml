@@ -88,4 +88,9 @@
     <string name="find_in_liked_songs">Find in Liked Songs</string>
     <string name="no_singer">No Singer</string>
     <string name="love_singers">Love Singers</string>
+    <string name="comment">Comment</string>
+    <string name="be_the_first_to_comment">Be the first to comment</string>
+    <string name="enter_your_comment">Enter Your Comment</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="your_comment">Your comment</string>
 </resources>

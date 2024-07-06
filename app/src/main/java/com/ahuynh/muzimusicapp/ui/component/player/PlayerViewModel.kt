@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -32,12 +33,14 @@ class PlayerViewModel @Inject constructor(
     var isRepeat: MutableLiveData<Boolean> = MutableLiveData(false)
     var isUserTouchSlider = false
     var audioSessionId = MutableLiveData(0)
+    var duration : MutableLiveData<Long> = MutableLiveData(0)
+    var timeMillis : MutableLiveData<Long> = MutableLiveData(0)
 
     var username = MutableLiveData<String>()
 
 
     fun setShuffle(value: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             sharePreferencesHelper.setShuffle(value)
             isShuffle.postValue(value)
             Constants.IS_SHUFFLE = value
@@ -77,22 +80,16 @@ class PlayerViewModel @Inject constructor(
 
 
     fun getShuffle() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             isShuffle.postValue(sharePreferencesHelper.isShuffle())
         }
 
     }
 
-    fun getUserName() {
-        viewModelScope.launch() {
-            isShuffle.postValue(sharePreferencesHelper.isShuffle())
-        }
-
-    }
 
 
     fun setRepeat(value: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             sharePreferencesHelper.setRepeat(value)
             isRepeat.postValue(value)
             Constants.IS_REPEAT = value
@@ -101,18 +98,18 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun getRepeat() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             isRepeat.postValue(sharePreferencesHelper.isRepeat())
         }
 
     }
 
 
-    fun getUserLogin() {
-        viewModelScope.launch(Dispatchers.IO) {
-            isRepeat.postValue(sharePreferencesHelper.isRepeat())
+    fun listen(id : Long){
+        viewModelScope.launch {
+            songRepository.listen(id)
+            Log.d("ABC","ABCDE")
         }
-
     }
 
 

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.ahuynh.muzimusicapp.adapter.ViewPagerAdapter
+import com.ahuynh.muzimusicapp.adapter.SearchViewPagerAdapter
 import com.ahuynh.muzimusicapp.databinding.ActivitySearchBinding
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.main.search.album.AlbumSearchFragment
@@ -77,7 +77,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
             AlbumSearchFragment(),
             SingerSearchFragment()
         )
-        binding.viewPager.adapter = ViewPagerAdapter(fragmentList, this)
+        binding.viewPager.adapter = SearchViewPagerAdapter(fragmentList, this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
                 0 -> {
