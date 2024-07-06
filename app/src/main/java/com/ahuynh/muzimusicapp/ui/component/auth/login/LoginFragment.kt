@@ -12,7 +12,7 @@ import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentLoginBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.main.MainActivity
+import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,7 +54,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun observeData() {
         viewModel.status.observe(viewLifecycleOwner) {
             if (it == true) {
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                startActivity(Intent(requireActivity(), UserActivity::class.java))
             } else
                 if (viewModel.mess != null)
                     Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()

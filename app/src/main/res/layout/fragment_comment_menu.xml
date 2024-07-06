@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/custom_bg_playlist_add"
     android:padding="@dimen/_10dp"
-    tools:context=".ui.component.main.comment.menu.CommentMenu">
+    tools:context=".ui.component.user.comment.menu.CommentMenu">
 
 
 

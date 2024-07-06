@@ -7,7 +7,7 @@
 
     <dialog
         android:id="@+id/commentFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.CommentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.CommentFragment"
         android:label="fragment_comment"
         tools:layout="@layout/fragment_comment" >
         <argument
@@ -27,7 +27,7 @@
     </fragment>
     <dialog
         android:id="@+id/commentMenu"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.menu.CommentMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.menu.CommentMenu"
         android:label="fragment_comment_menu"
         tools:layout="@layout/fragment_comment_menu" >
         <argument
@@ -39,7 +39,7 @@
     </dialog>
     <dialog
         android:id="@+id/editCommentFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.main.comment.edit.EditCommentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.edit.EditCommentFragment"
         android:label="fragment_edit_comment"
         tools:layout="@layout/fragment_edit_comment" >
         <argument

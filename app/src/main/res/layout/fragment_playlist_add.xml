@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bg_playlist_dialog"
     android:padding="@dimen/_20dp"
-    tools:context=".ui.component.main.playlist.add_new_playlist.PlaylistAddFragment"
+    tools:context=".ui.component.user.playlist.add_new_playlist.PlaylistAddFragment"
 
     >
 

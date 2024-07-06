@@ -6,7 +6,7 @@
     android:padding="@dimen/_10dp"
     android:background="@drawable/custom_bg_playlist_add"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.component.main.song.menu.SongMenu">
+    tools:context=".ui.component.user.song.menu.SongMenu">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imv_song"

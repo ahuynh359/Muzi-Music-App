@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingVertical="@dimen/_10dp"
-    tools:context=".ui.component.main.search.fragment.SearchFragment"
+    tools:context=".ui.component.user.search.fragment.SearchFragment"
     >
 
     <com.google.android.material.imageview.ShapeableImageView

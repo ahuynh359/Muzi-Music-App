@@ -6,7 +6,7 @@
     android:padding="@dimen/_10dp"
     android:background="@drawable/custom_bg_playlist_add"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.component.main.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet">
+    tools:context=".ui.component.user.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_add_to_playlist"

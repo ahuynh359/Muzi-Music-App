@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_playlist_dialog"
     android:padding="@dimen/_20dp"
-    tools:context=".ui.component.main.comment.edit.EditCommentFragment"
+    tools:context=".ui.component.user.comment.edit.EditCommentFragment"
 
     >
 

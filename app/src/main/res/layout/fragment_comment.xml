@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/custom_bg_playlist_add"
     android:padding="@dimen/_10dp"
-    tools:context=".ui.component.main.comment.CommentFragment">
+    tools:context=".ui.component.user.comment.CommentFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
