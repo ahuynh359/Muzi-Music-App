@@ -4,7 +4,8 @@ data class Response(
     val id: Long,
     val username: String,
     val email: String,
-    val jwt: String
+    val jwt: String,
+    val admin : Boolean
 )
 
 data class LoginResponse(

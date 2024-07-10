@@ -27,6 +27,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.component.admin.song.add_song.UploadSongActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.component.admin.AdminActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Base.Theme.MuziMusicApp"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui.component.user.search.SearchActivity"
             android:exported="false"
             android:label="@string/title_activity_search"
@@ -53,9 +62,9 @@
             android:resource="@color/green" />
 
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".ui.component.player.PlayerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.component.user.UserActivity"
             android:exported="false" />

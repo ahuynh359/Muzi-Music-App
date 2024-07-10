@@ -8,10 +8,13 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.utils.Constants
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -44,6 +47,17 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/chart")
     suspend fun getSongByListen(): Response<SongResponseData>
 
+    @Multipart
+    @POST("${Constants.API_VERSION}/song/create")
+    suspend fun createSong(
+        @Query("name") name: String,
+        @Query("avatar") avatar: MultipartBody.Part,
+        @Query("file") file: MultipartBody.Part,
+        @Query("lyrics") lyrics: String,
+        @Query("albumId") albumId: String,
+        @Query("singerId") singerId: Set<Long>,
+        @Query("typeId") typeId: Set<Long>
+    )
 
 
 }

@@ -13,11 +13,12 @@ data class UserResponse(
     val username: String,
     val avatar: String,
     val locked: Boolean,
-    val roles: List<Role>,
+    val role: Role,
+    val createdAt: String,
+    val updatedAt: String
 
 
-
-    ) {
+) {
     fun toUser(): User {
         return User(
             id = this.id,
@@ -25,16 +26,22 @@ data class UserResponse(
             username = this.username,
             avatar = this.avatar,
             locked = this.locked,
-            roles = this.roles,
+            role = this.role,
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
         )
     }
 }
 
 data class UserResponseData(
-    val message : String,
-    val data : UserResponse
+    val message: String,
+    val data: UserResponse
 )
 
+data class UserResponseDataList(
+    val message: String,
+    val data: List<UserResponse>
+)
 
 
 fun List<UserResponse>.toListUser(): List<User> {

@@ -4,5 +4,5 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Type(val id: Long, val name: String, val avatar : String) :
+data class Type(val id: Long, val name: String, val avatar : String, val createdAt : String , val updatedAt : String) :
     Parcelable

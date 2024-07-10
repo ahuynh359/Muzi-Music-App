@@ -6,12 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentLoginBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.admin.AdminActivity
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private val viewModel by viewModels<LoginViewModel>()
     private var isLoginEnable = false
 
-    private val loginTextWatcher = object : TextWatcher{
+    private val loginTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
 
@@ -31,7 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             val emailInput = binding.edtEmail.text.toString().trim()
             val passwordInput = binding.edtPassword.text.toString().trim()
             isLoginEnable = emailInput.isNotEmpty() && passwordInput.isNotEmpty()
-            if(isLoginEnable){
+            if (isLoginEnable) {
                 binding.btnLogIn.setBackgroundResource(R.drawable.btn_enable)
             } else
                 binding.btnLogIn.setBackgroundResource(R.drawable.btn_disable)
@@ -52,13 +54,22 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun observeData() {
-        viewModel.status.observe(viewLifecycleOwner) {
-            if (it == true) {
-                startActivity(Intent(requireActivity(), UserActivity::class.java))
-            } else
-                if (viewModel.mess != null)
-                    Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()
+        viewModel.loginStatus.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it) {
+                    if (viewModel.isAdmin())
+                        startActivityAndFinishCurrent(AdminActivity::class.java)
+                    else
+                        startActivityAndFinishCurrent(UserActivity::class.java)
+                } else
+                    viewModel.mess?.let { mess ->
+                        Toast.makeText(requireContext(), mess, Toast.LENGTH_LONG).show()
+                    }
+
+            }
+            viewModel.loginStatus.postValue(null)
         }
+
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             binding.btnLogIn.isEnabled = !it
@@ -99,9 +110,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
 
 
+    }
 
-
-
+    private fun startActivityAndFinishCurrent(destinationActivity: Class<*>) {
+        val intent = Intent(requireActivity(), destinationActivity)
+        startActivity(intent)
+        requireActivity().finish()
     }
 
 

@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ahuynh.muzimusicapp.databinding.ActivitySplashBinding
+import com.ahuynh.muzimusicapp.ui.component.admin.AdminActivity
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,13 +36,21 @@ class SplashActivity : AppCompatActivity() {
 
     private fun checkIfUserIsAuthenticated() {
         if (viewModel.isLoggedIn()) {
-            startActivity(Intent(this@SplashActivity, UserActivity::class.java))
-            finish()
+            if (viewModel.isAdmin()) {
+                startActivityAndFinishCurrent(AdminActivity::class.java)
+            } else {
+                startActivityAndFinishCurrent(UserActivity::class.java)
+            }
         } else {
-            startActivity(Intent(this@SplashActivity, AuthActivity::class.java))
-            finish()
+            startActivityAndFinishCurrent(AuthActivity::class.java)
         }
 
+    }
+
+    private fun startActivityAndFinishCurrent(destinationActivity: Class<*>) {
+        val intent = Intent(this@SplashActivity, destinationActivity)
+        startActivity(intent)
+        finish()
     }
 
 

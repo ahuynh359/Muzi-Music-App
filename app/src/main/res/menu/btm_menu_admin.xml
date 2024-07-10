@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/manageUserFragment"
+        android:icon="@drawable/ic_user"
+        android:title="@string/user" />
+    <item
+        android:id="@+id/manageSongFragment"
+        android:icon="@drawable/ic_song"
+        android:title="@string/song" />
+
+    <item
+        android:id="@+id/manageTypeFragment"
+        android:icon="@drawable/ic_type"
+        android:title="@string/type" />
+
+</menu>

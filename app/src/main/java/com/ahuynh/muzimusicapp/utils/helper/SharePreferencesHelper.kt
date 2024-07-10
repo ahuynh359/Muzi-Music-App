@@ -17,6 +17,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val EMAIL = "email"
         const val PASSWORD = "password"
         const val ID = "id"
+        const val IS_ADMIN_OR_USER = "is_admin_or_user"
     }
 
     private var pref = context.getSharedPreferences(APP_SHARE_KEY, Context.MODE_PRIVATE)
@@ -62,7 +63,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
 
     }
 
-    fun getEmail() : String {
+    fun getEmail(): String {
         return pref.getString(EMAIL, "") ?: ""
 
     }
@@ -81,7 +82,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.apply()
     }
 
-    fun logout(){
+    fun logout() {
         editor.putString(EMAIL, "")
         editor.putString(PASSWORD, "")
         editor.putBoolean(IS_LOGGED_IN, false)
@@ -91,6 +92,16 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
 
     fun getId(): Long {
         return pref.getLong(ID, 1) ?: 1
+    }
+
+    //Admin is true - user is false
+    fun setIsAdminOrUser(b: Boolean) {
+        editor.putBoolean(IS_ADMIN_OR_USER, b)
+        editor.apply()
+    }
+
+    fun getAdminOrUser(): Boolean {
+        return pref.getBoolean(IS_ADMIN_OR_USER, true)
     }
 
 }

@@ -17,8 +17,11 @@ class UserAdapter(private val listener: OnUserClicked) :
     inner class ViewHolder(private val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.main.setOnClickListener {
                 listener.onUserClicked(currentList[layoutPosition])
+            }
+            binding.btnMore.setOnClickListener {
+                listener.onMoreClicked(currentList[layoutPosition])
             }
 
         }
@@ -30,7 +33,8 @@ class UserAdapter(private val listener: OnUserClicked) :
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.imvUser)
-            binding.tvName.text = user.username
+            binding.tvUserName.text = user.username
+            binding.tvEmail.text = user.email
 
 
         }
@@ -63,6 +67,7 @@ class UserAdapter(private val listener: OnUserClicked) :
 
     interface OnUserClicked {
         fun onUserClicked(user: User)
+        fun onMoreClicked(user: User)
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.auth.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
@@ -17,8 +18,7 @@ class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
     var mess: String? = null
-    var status = MutableLiveData<Boolean?>(null)
-
+    var loginStatus = MutableLiveData<Boolean?>(null)
 
 
     fun login(loginRequest: LoginRequest) {
@@ -37,16 +37,20 @@ class LoginViewModel @Inject constructor(
                 sharePreferencesHelper.saveToken(
                     result.data.data.jwt
                 )
-
-
+                sharePreferencesHelper.setIsAdminOrUser(result.data.data.admin)
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }
-            status.postValue(result is Response.Success)
+            loginStatus.postValue(result is Response.Success)
         }
         registerEventParentJobFinish()
 
 
+    }
+
+    fun isAdmin(): Boolean {
+        Log.d("ACB",sharePreferencesHelper.getAdminOrUser().toString())
+        return sharePreferencesHelper.getAdminOrUser()
     }
 
 

@@ -3,11 +3,13 @@ package com.ahuynh.muzimusicapp.data.service.remote
 import com.ahuynh.muzimusicapp.data.api.UserAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
+import com.ahuynh.muzimusicapp.data.model.response.toListUser
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.utils.Response
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -19,8 +21,6 @@ import javax.inject.Inject
 class UserService @Inject constructor(
     private val userAPI: UserAPI
 ) : BaseRemoteService() {
-
-
 
 
     suspend fun getCurrentUser(): User? {
@@ -37,7 +37,7 @@ class UserService @Inject constructor(
             val imageFileRequestBody =
                 file.asRequestBody("image/*".toMediaTypeOrNull())
             userAPI.changeAvatar(
-                 MultipartBody.Part.createFormData(
+                MultipartBody.Part.createFormData(
                     "avatar",
                     file.name,
                     imageFileRequestBody
@@ -53,5 +53,27 @@ class UserService @Inject constructor(
         return callApi { userAPI.changePassword(changePasswordRequest) }
     }
 
+    suspend fun getAllUser(): List<User> {
+        val result = callApi { userAPI.getAllUser() }
+        return if (result is Response.Success) {
+            result.data.data.toListUser()
+        } else {
+            arrayListOf()
+        }
+    }
+
+    suspend fun getUserById(id: Long) : User? {
+        val result = callApi { userAPI.getUserById(id) }
+        return if (result is Response.Success) {
+            result.data.data.toUser()
+        } else {
+          null
+        }
+
+    }
+
+    suspend fun createUser(addUserRequest: AddUserRequest): Response<UserResponseData> {
+        return callApi { userAPI.createUser(addUserRequest) }
+    }
 
 }

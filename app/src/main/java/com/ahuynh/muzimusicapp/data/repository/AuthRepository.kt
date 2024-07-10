@@ -46,11 +46,7 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun resendOtp(resendOtpRequest : ResendOtpRequest): Response<MessageResponse> {
-        return withContext(dispatcher) {
-            authService.resendOtp(resendOtpRequest)
-        }
-    }
+
 
 
 }

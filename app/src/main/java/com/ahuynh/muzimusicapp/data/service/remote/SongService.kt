@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SongService @Inject constructor(
     private val songAPI: SongAPI
 ) : BaseRemoteService() {
-    //ok
+
     suspend fun getNewSongs(): List<Song> {
         val result = callApi { songAPI.getNewSongs() }
         return if (result is Response.Success) {

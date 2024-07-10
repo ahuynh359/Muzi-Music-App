@@ -21,7 +21,7 @@ TypeAdapter.OnTypeClicked{
     private var typeList: ArrayList<Type> = arrayListOf()
 
     companion object {
-        const val TAG = "SongFragment"
+        const val TAG = "SearchFragment"
     }
 
 

@@ -136,7 +136,18 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
 
     private fun observe() {
 
+        binding.rcySong.adapter = chartSongAdapter
+        viewModel.chartList.observe(viewLifecycleOwner) {
+            binding.rcySong.visibility = View.VISIBLE
+            if (it != null) {
+                chartList = it as ArrayList<Song>
+                chartSongAdapter.submitList(it)
+            }
+            binding.shimmerSong.stopShimmer()
+            binding.shimmerSong.visibility = View.INVISIBLE
 
+
+        }
 
 
     }

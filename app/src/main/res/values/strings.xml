@@ -93,4 +93,27 @@
     <string name="enter_your_comment">Enter Your Comment</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="your_comment">Your comment</string>
+    <string name="title_activity_admin">AdminActivity</string>
+    <string name="manage_user">Manage User</string>
+    <string name="search_user">Search User</string>
+    <string name="username">Username</string>
+    <string name="locked_status">Locked Status</string>
+    <string name="status">Status</string>
+    <string name="created_at">Created At</string>
+    <string name="updated_at">Updated At</string>
+    <string name="created_and_updated_time">Created And Updated Time</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="done">Done</string>
+    <string name="search_username_or_email">Search Username Or Email</string>
+    <string name="no_user">No User</string>
+    <string name="add">Add</string>
+    <string name="manage_song">Manage Song</string>
+    <string name="search_song">Search Song</string>
+    <string name="songs_name">Songs Name</string>
+    <string name="song_name">Song Name</string>
+    <string name="manage_type">Manage Type</string>
+    <string name="search_type">Search Type</string>
+    <string name="no_type">No Type</string>
+    <string name="type_name">Type Name</string>
 </resources>

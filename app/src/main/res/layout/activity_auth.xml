@@ -8,6 +8,7 @@
     tools:context=".ui.component.auth.AuthActivity">
 
 
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
