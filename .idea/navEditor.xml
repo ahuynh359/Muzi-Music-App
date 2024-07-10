@@ -86,6 +86,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_manageTypeFragment_to_manageTypeMenu">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_manageTypeFragment_to_searchManageTypeFragment">
                               <value>
                                 <LayoutPositions />
@@ -101,8 +106,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1501" />
-                            <option name="y" value="-105" />
+                            <option name="x" value="1445" />
+                            <option name="y" value="-363" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -212,6 +217,18 @@
                           <Point>
                             <option name="x" value="14" />
                             <option name="y" value="381" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="sortBottomSheetFragment2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="784" />
+                            <option name="y" value="-625" />
                           </Point>
                         </option>
                       </LayoutPositions>

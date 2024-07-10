@@ -83,9 +83,16 @@ class ManageTypeViewModel @Inject constructor(
     fun deleteType(id: Long) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-          typeRepository.deleteType(id)
+            val result = typeRepository.deleteType(id)
+            if (result is Response.Success) {
+                mess = result.data.message
 
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            deleteTypeStatus.postValue(result is Response.Success)
         }
+
         registerEventParentJobFinish()
     }
 

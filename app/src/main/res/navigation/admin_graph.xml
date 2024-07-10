@@ -110,6 +110,10 @@
             app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_manageTypeFragment_to_manageTypeDetailFragment"
             app:destination="@id/manageTypeDetailFragment" />
+        <action
+            android:id="@+id/action_manageTypeFragment_to_manageTypeMenu"
+            app:destination="@id/manageTypeMenu" />
+
 
     </fragment>
     <fragment
@@ -120,9 +124,6 @@
         <action
             android:id="@+id/action_searchManageTypeFragment_to_manageTypeDetailFragment"
             app:destination="@id/manageTypeDetailFragment" />
-        <action
-            android:id="@+id/action_searchManageTypeFragment_to_manageTypeMenu"
-            app:destination="@id/manageTypeMenu" />
     </fragment>
     <fragment
         android:id="@+id/addTypeFragment"

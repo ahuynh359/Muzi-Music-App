@@ -98,6 +98,7 @@ class ManageTypeMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
                                 it?.let {
                                     if(it){
                                         dismiss()
+                                        viewModel.getAllType()
                                     }
                                     viewModel.mess?.let { mess ->
                                         Toast.makeText(requireContext(), mess, Toast.LENGTH_LONG).show()
@@ -105,6 +106,7 @@ class ManageTypeMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
 
                                 }
                                 viewModel.deleteTypeStatus.postValue(null)
+
                             }
 
                         }

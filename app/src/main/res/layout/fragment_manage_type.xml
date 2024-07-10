@@ -53,14 +53,14 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_a_z"
+        android:id="@+id/btn_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/btn_add"
         app:layout_constraintTop_toTopOf="@id/btn_add"
         android:drawableStart="@drawable/ic_sort"
         android:fontFamily="@font/bold"
-        android:text="@string/a_z"
+        android:text="@string/sort"
         android:textSize="@dimen/_12sp"
 
         app:layout_constraintStart_toStartOf="@id/edt_search"
@@ -109,6 +109,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_add"
-        tools:listitem="@layout/item_user" />
+        tools:listitem="@layout/item_type_full" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

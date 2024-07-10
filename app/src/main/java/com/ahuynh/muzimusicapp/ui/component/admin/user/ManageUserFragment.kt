@@ -37,7 +37,6 @@ class ManageUserFragment :
 
     override fun onResume() {
         super.onResume()
-        Log.d("ABC","do nay")
         viewModel.getAllUser()
     }
 

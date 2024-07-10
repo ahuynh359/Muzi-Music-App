@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_bg_playlist_add"
+    android:orientation="vertical"
+    android:paddingVertical="16dp"
+    tools:context=".ui.base.bottom_sheet.SortBottomSheetFragment">
+
+    <LinearLayout
+        android:id="@+id/btn_new"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:id="@+id/ic_new"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_new" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="New" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/btn_old"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:id="@+id/ic_old"
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_sort_new" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="Old" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_a_z"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_a_z" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="Name (A - Z)" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_z_a"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+
+            android:layout_width="@dimen/_24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_z_a" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="Name (Z - A)" />
+    </LinearLayout>
+</LinearLayout>

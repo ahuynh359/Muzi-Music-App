@@ -116,4 +116,8 @@
     <string name="search_type">Search Type</string>
     <string name="no_type">No Type</string>
     <string name="type_name">Type Name</string>
+    <string name="sort">Sort</string>
+    <string name="new_a">New</string>
+    <string name="old">Old</string>
+    <string name="z_a">Z - A</string>
 </resources>

@@ -41,7 +41,7 @@ class TypeAdapter(private val listener: OnTypeClicked) :
 
     private class DiffCallback : DiffUtil.ItemCallback<Type>() {
         override fun areItemsTheSame(oldItem: Type, newItem: Type): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Type, newItem: Type): Boolean {

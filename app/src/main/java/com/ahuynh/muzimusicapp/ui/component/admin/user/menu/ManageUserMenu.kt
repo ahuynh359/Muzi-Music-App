@@ -39,6 +39,11 @@ class ManageUserMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
 
     }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
