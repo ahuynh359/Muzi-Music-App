@@ -36,11 +36,11 @@ class ManageTypeDetailFragment :
 
     private val viewModel by viewModels<ManageTypeViewModel>({ requireActivity() })
     private lateinit var currentType: Type
-    private lateinit var file: File
+    private  lateinit var file :  File
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        file = FileHelper.from(requireContext(), uri!!)!!
+        file= FileHelper.from(requireContext(), uri!!)!!
         file.let {
             Glide
                 .with(binding.imvAvatar.context)
@@ -167,8 +167,7 @@ class ManageTypeDetailFragment :
         binding.btnDone.setOnClickListener {
             val str = binding.edtType.text.toString().trim()
             if (str.isNotEmpty()) {
-                Log.d("ABC",currentType.name)
-                viewModel.updateType(currentType.id, str, file)
+                viewModel.updateType(currentType.id, str, file!!)
             } else {
                 Toast.makeText(requireContext(), "Not Leave empty", Toast.LENGTH_SHORT).show()
             }
