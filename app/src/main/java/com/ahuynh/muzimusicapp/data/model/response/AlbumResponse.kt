@@ -7,6 +7,8 @@ data class AlbumResponse(
     val id: Long,
     val name: String,
     val avatar: String,
+    val createdAt: String,
+    val updatedAt : String
 
 
 ) {
@@ -15,12 +17,19 @@ data class AlbumResponse(
             id = this.id,
             name = this.name,
             avatar = this.avatar,
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
 
         )
     }
 }
 
-data class ListAlbumResponse(
+data class AlbumResponseData(
+    val message: String,
+    val data: AlbumResponse
+)
+
+data class AlbumResponseDataList(
     val message: String,
     val data: List<AlbumResponse>
 )

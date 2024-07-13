@@ -120,4 +120,8 @@
     <string name="new_a">New</string>
     <string name="old">Old</string>
     <string name="z_a">Z - A</string>
+    <string name="manage_album">Manage Album</string>
+    <string name="search_album">Search Album</string>
+    <string name="album_name">Album Name</string>
+    <string name="no_album">No Album</string>
 </resources>

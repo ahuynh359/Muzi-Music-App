@@ -17,7 +17,7 @@ object Constants {
     var INTENT_ACTION = "intent_service"
     const val POSITION = "position"
 
-    const val BASE_URL = "http://192.168.0.116:8080"
+    const val BASE_URL = "http://192.168.0.101:8080"
     const val API_VERSION = "/api/v1"
 
     const val TYPE="type"

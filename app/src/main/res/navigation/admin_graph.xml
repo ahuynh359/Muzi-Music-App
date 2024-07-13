@@ -148,5 +148,60 @@
             android:name="type"
             app:argType="com.ahuynh.muzimusicapp.data.model.Type" />
     </dialog>
+    <fragment
+        android:id="@+id/manageAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.ManageAlbumFragment"
+        android:label="fragment_manage_album"
+        tools:layout="@layout/fragment_manage_album" >
+        <action
+            android:id="@+id/action_manageAlbumFragment_to_searchManageAlbumFragment"
+            app:destination="@id/searchManageAlbumFragment" />
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageAlbumFragment_to_addAlbumFragment"
+            app:destination="@id/addAlbumFragment" />
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageAlbumFragment_to_manageAlbumDetailFragment"
+            app:destination="@id/manageAlbumDetailFragment" />
+        <action
+            android:id="@+id/action_manageAlbumFragment_to_manageAlbumMenu"
+            app:destination="@id/manageAlbumMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchManageAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.search.SearchManageAlbumFragment"
+        android:label="fragment_search_manage_album"
+        tools:layout="@layout/fragment_search_manage_album" />
+    <fragment
+        android:id="@+id/addAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.add_album.AddAlbumFragment"
+        android:label="fragment_add_album"
+        tools:layout="@layout/fragment_add_album" />
+    <fragment
+        android:id="@+id/manageAlbumDetailFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.detail_manage_album.ManageAlbumDetailFragment"
+        android:label="fragment_manage_album_detail"
+        tools:layout="@layout/fragment_manage_album_detail" >
+        <argument
+            android:name="album"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Album" />
+    </fragment>
+    <dialog
+        android:id="@+id/manageAlbumMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.menu.ManageAlbumMenu"
+        android:label="fragment_manage_album_menu"
+        tools:layout="@layout/fragment_manage_album_menu" >
+        <argument
+            android:name="album"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Album" />
+    </dialog>
+
 
 </navigation>

@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.utils.helper
 
 import android.content.Context
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import org.bouncycastle.cms.RecipientId.password
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,6 +19,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val PASSWORD = "password"
         const val ID = "id"
         const val IS_ADMIN_OR_USER = "is_admin_or_user"
+
     }
 
     private var pref = context.getSharedPreferences(APP_SHARE_KEY, Context.MODE_PRIVATE)
@@ -31,6 +33,9 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.putBoolean(SHUFFLE, isShuffle)
         editor.apply()
     }
+
+
+
 
     fun isRepeat(): Boolean {
         return pref.getBoolean(REPEAT, false)

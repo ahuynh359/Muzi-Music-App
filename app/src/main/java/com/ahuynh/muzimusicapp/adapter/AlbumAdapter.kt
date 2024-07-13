@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 
-class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
+class AlbumAdapter(private val listener: OnAlbumClicked) :
     ListAdapter<Album, AlbumAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemAlbumBinding) :
@@ -65,7 +65,7 @@ class AlbumAdapter(private val listener: OnAlbumAdapterClicked) :
     override fun getItemCount(): Int {
         return currentList.size
     }
-    interface OnAlbumAdapterClicked {
+    interface OnAlbumClicked {
         fun onAlbumClicked(album: Album)
         fun onMoreItemAlbumClicked(album: Album)
 
