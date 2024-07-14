@@ -1,58 +1,60 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
+import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.UserResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
-import com.ahuynh.muzimusicapp.data.service.remote.UserService
+import com.ahuynh.muzimusicapp.data.service.remote.UserRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val userService: UserService,
+    private val userRemoteService: UserRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
 
-
-
     suspend fun getCurrentUser(): User? {
         return withContext(dispatcher) {
-            userService.getCurrentUser()
+            userRemoteService.getCurrentUser()
         }
     }
 
-    suspend fun changeAvatar(file: File): Response<UserResponseData>  {
+    suspend fun changeAvatar(id: Long, file: File): Response<UserResponseData> {
         return withContext(dispatcher) {
-            userService.changeAvatar( file)
+            userRemoteService.changeAvatar(id, file)
         }
     }
 
-    suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): Response<MessageResponse>  {
+    suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): Response<MessageResponse> {
         return withContext(dispatcher) {
-            userService.changePassword(changePasswordRequest)
+            userRemoteService.changePassword(changePasswordRequest)
         }
     }
 
-    suspend fun getAllUser(): List<User> {
+    suspend fun deleteUser(id: Long): Response<MessageResponse> {
         return withContext(dispatcher) {
-            userService.getAllUser()
+            userRemoteService.deleteUser(id)
+        }
+    }
+
+    suspend fun getAllUsers(sort : SortName): List<User> {
+        return withContext(dispatcher) {
+            userRemoteService.getAllUsers(sort)
         }
     }
 
     suspend fun getUserById(id: Long): User? {
         return withContext(dispatcher) {
-            userService.getUserById(id)
+            userRemoteService.getUserById(id)
         }
 
     }
@@ -60,7 +62,19 @@ class UserRepository @Inject constructor(
     suspend fun createUser(addUserRequest: AddUserRequest): Response<UserResponseData> {
 
         return withContext(dispatcher) {
-            userService.createUser(addUserRequest)
+            userRemoteService.createUser(addUserRequest)
+        }
+    }
+
+    suspend fun lockOrUnlockUser(id: Long): Response<UserResponseData> {
+        return withContext(dispatcher) {
+            userRemoteService.lockOrUnlockUser(id)
+        }
+    }
+
+    suspend fun updateUser(updateUserRequest: UpdateUserRequest): Response<UserResponseData> {
+        return withContext(dispatcher) {
+            userRemoteService.updateUser(updateUserRequest)
         }
     }
 

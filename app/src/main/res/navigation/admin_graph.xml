@@ -11,6 +11,10 @@
         android:label="fragment_manage_user"
         tools:layout="@layout/fragment_manage_user" >
         <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_manageUserFragment_to_manageUserDetail"
             app:destination="@id/manageUserDetail" />
         <action
@@ -27,8 +31,11 @@
             app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_manageUserFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_manageUserFragment_to_manageUserMenu"
+            app:destination="@id/manageUserMenu" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/manageUserDetail"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.detail_manage_user.ManageUserDetailFragment"
         android:label="fragment_manage_user_detail"
@@ -36,10 +43,7 @@
         <argument
             android:name="user"
             app:argType="com.ahuynh.muzimusicapp.data.model.User" />
-        <action
-            android:id="@+id/action_manageUserDetail_to_manageUserMenu"
-            app:destination="@id/manageUserMenu" />
-    </dialog>
+    </fragment>
     <dialog
         android:id="@+id/manageUserMenu"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.menu.ManageUserMenu"
@@ -52,7 +56,14 @@
         android:id="@+id/searchManageUserFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.search.SearchManageUserFragment"
         android:label="fragment_search_manage_user"
-        tools:layout="@layout/fragment_search_manage_user" />
+        tools:layout="@layout/fragment_search_manage_user" >
+        <action
+            android:id="@+id/action_searchManageUserFragment_to_manageUserDetail"
+            app:destination="@id/manageUserDetail" />
+        <action
+            android:id="@+id/action_searchManageUserFragment_to_manageUserMenu"
+            app:destination="@id/manageUserMenu" />
+    </fragment>
     <fragment
         app:popExitAnim="@anim/slide_out_right"
         app:popEnterAnim="@anim/slide_in_left"

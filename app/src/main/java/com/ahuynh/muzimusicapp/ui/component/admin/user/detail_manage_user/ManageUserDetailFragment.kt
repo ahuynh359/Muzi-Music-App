@@ -2,6 +2,9 @@ package com.ahuynh.muzimusicapp.ui.component.admin.user.detail_manage_user
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +12,16 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
+import com.ahuynh.muzimusicapp.databinding.FragmentManageAlbumDetailBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentManageUserDetailBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
+import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -21,27 +29,54 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 @AndroidEntryPoint
-class ManageUserDetailFragment :
-    BaseDialogBottomSheetFragment() {
+class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
+    FragmentManageUserDetailBinding::inflate
+) {
 
     companion object {
         const val TAG = "ManageUserDetail"
     }
 
+    private var isUpdateOk = false
     private val viewModel by viewModels<ManageUserViewModel>({ requireActivity() })
     private lateinit var currentUser: User
-    private lateinit var binding: FragmentManageUserDetailBinding
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         val file: File? = FileHelper.from(requireContext(), uri!!)
         file?.let {
             viewModel.changeAvatar(
+                currentUser.id,
                 file
             )
 
         }
     }
+    private val loginTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            val email = binding.edtEmail.text.toString().trim()
+            val username = binding.edtUserName.text.toString().trim()
+            val isEmail = Utils.isValidEmail(email)
+            isUpdateOk = email.isNotEmpty() && username.isNotEmpty() && isEmail
+            if (!isEmail) {
+                binding.edtEmail.error = "Email is invalid"
+            } else {
+                binding.edtEmail.error = null
+
+            }
+            if (isUpdateOk) {
+                binding.btnDone.setBackgroundResource(R.drawable.btn_enable)
+            } else
+                binding.btnDone.setBackgroundResource(R.drawable.btn_disable)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +85,6 @@ class ManageUserDetailFragment :
 
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentManageUserDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,8 +110,12 @@ class ManageUserDetailFragment :
                 binding.edtUserName.setText(it.username)
                 if (it.locked) {
                     binding.btnLock.setText(R.string.locked)
-                } else
+                    binding.btnLock.setBackgroundResource(R.drawable.bg_btn_lock)
+
+                } else {
                     binding.btnLock.setText(R.string.unlocked)
+                    binding.btnLock.setBackgroundResource(R.drawable.bg_btn_unlock)
+                }
                 binding.tvCreatedAt.text = it.createdAt
                 binding.tvUpdatedAt.text = it.updatedAt
 
@@ -114,13 +144,29 @@ class ManageUserDetailFragment :
             }
         }
 
+        viewModel.updateUserStatus.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it) {
+                    findNavController().popBackStack()
+                }
+                viewModel.mess?.let { mess ->
+                    Toast.makeText(requireContext(), mess, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            viewModel.updateUserStatus.postValue(null)
+        }
+
 
     }
 
 
     private fun handleUI() {
+        binding.edtEmail.addTextChangedListener(loginTextWatcher)
+        binding.edtUserName.addTextChangedListener(loginTextWatcher)
+
         binding.btnBack.setOnClickListener {
-            dismiss()
+            findNavController().popBackStack()
         }
 
         binding.btnEdit.setOnClickListener {
@@ -132,6 +178,19 @@ class ManageUserDetailFragment :
                     "Vui lòng cài đặt File Manager",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+        binding.btnDone.setOnClickListener {
+            Log.d("ABC","Bam do")
+            if (isUpdateOk) {
+                val updateUserRequest = UpdateUserRequest(
+                    currentUser.id,
+                    binding.edtEmail.text.toString().trim(),
+                    binding.edtUserName.text.toString().trim()
+                )
+                viewModel.updateUser(
+                    updateUserRequest
+                )
             }
         }
 

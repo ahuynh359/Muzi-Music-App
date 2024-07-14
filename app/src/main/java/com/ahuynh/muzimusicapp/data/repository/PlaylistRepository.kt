@@ -4,9 +4,8 @@ import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseData
 import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseJson
-import com.ahuynh.muzimusicapp.data.service.remote.PlaylistService
+import com.ahuynh.muzimusicapp.data.service.remote.PlaylistRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PlaylistRepository @Inject constructor(
-    private val playlistService: PlaylistService,
+    private val playlistRemoteService: PlaylistRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 
@@ -23,43 +22,43 @@ class PlaylistRepository @Inject constructor(
 
     suspend fun getAllPlaylist(): List<Playlist> {
         return withContext(dispatcher) {
-            playlistService.getAllPlaylist()
+            playlistRemoteService.getAllPlaylist()
         }
     }
 
     suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<PlaylistResponseJson>{
         return withContext(dispatcher) {
-            playlistService.addPlaylist(playlistRequest)
+            playlistRemoteService.addPlaylist(playlistRequest)
         }
     }
 
     suspend fun deletePlaylist(id: Long): Response<MessageResponse> {
         return withContext(dispatcher) {
-            playlistService.deletePlaylist(id)
+            playlistRemoteService.deletePlaylist(id)
         }
     }
 
     suspend fun getAllSongFromPlaylist(id: Long): List<Song> {
         return withContext(dispatcher) {
-            playlistService.getAllSongFromPlaylist(id)
+            playlistRemoteService.getAllSongFromPlaylist(id)
         }
     }
 
     suspend fun getAllSongsNotFromPlaylist(id: Long): List<Song> {
         return withContext(dispatcher) {
-            playlistService.getAllSongsNotFromPlaylist(id)
+            playlistRemoteService.getAllSongsNotFromPlaylist(id)
         }
     }
 
     suspend fun updatePlaylist(playlistRequest: PlaylistRequest, id: Long): Response<PlaylistResponseJson> {
         return withContext(dispatcher) {
-            playlistService.updatePlaylist(playlistRequest,id)
+            playlistRemoteService.updatePlaylist(playlistRequest,id)
         }
     }
 
     suspend fun addSongToPlaylist(playlistId: Long, songId: Long): Response<MessageResponse>{
         return withContext(dispatcher) {
-            playlistService.addSongToPlaylist(playlistId,songId)
+            playlistRemoteService.addSongToPlaylist(playlistId,songId)
         }
     }
 

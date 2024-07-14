@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.player
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
@@ -23,6 +24,7 @@ class PlayerViewModel @Inject constructor(
     var currentRotate = 0f
     var isPlaying = MutableLiveData(false)
     var song = MutableLiveData<Song>()
+
     var loveSong = MutableLiveData<Boolean>()
     var loveOrUnlove = MutableLiveData<Boolean>()
     var sleepTime = MutableLiveData<String>()
@@ -33,14 +35,15 @@ class PlayerViewModel @Inject constructor(
     var isRepeat: MutableLiveData<Boolean> = MutableLiveData(false)
     var isUserTouchSlider = false
     var audioSessionId = MutableLiveData(0)
-    var duration : MutableLiveData<Long> = MutableLiveData(0)
-    var timeMillis : MutableLiveData<Long> = MutableLiveData(0)
+    var duration: MutableLiveData<Long> = MutableLiveData(0)
+    var timeMillis: MutableLiveData<Long> = MutableLiveData(0)
+
 
     var username = MutableLiveData<String>()
 
 
     fun setShuffle(value: Boolean) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             sharePreferencesHelper.setShuffle(value)
             isShuffle.postValue(value)
             Constants.IS_SHUFFLE = value
@@ -48,6 +51,14 @@ class PlayerViewModel @Inject constructor(
 
         }
     }
+
+    fun insertSong(song: SongEntity) {
+        viewModelScope.launch {
+            songRepository.insertSong(song)
+        }
+    }
+
+
 
     fun loveOrUnlove(songId: Long) {
         isLoading.postValue(true)
@@ -87,7 +98,6 @@ class PlayerViewModel @Inject constructor(
     }
 
 
-
     fun setRepeat(value: Boolean) {
         viewModelScope.launch {
             sharePreferencesHelper.setRepeat(value)
@@ -105,10 +115,9 @@ class PlayerViewModel @Inject constructor(
     }
 
 
-    fun listen(id : Long){
+    fun listen(id: Long) {
         viewModelScope.launch {
             songRepository.listen(id)
-            Log.d("ABC","ABCDE")
         }
     }
 

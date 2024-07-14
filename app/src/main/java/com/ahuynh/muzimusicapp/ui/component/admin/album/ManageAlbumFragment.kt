@@ -134,6 +134,8 @@ class ManageAlbumFragment :
                 albumList.sortByDescending { it.name }
                 albumAdapter.submitList(albumList.toList())
                 viewModel.sortOrder.postValue(SortName.Z_A.name)
+            } else ->{
+
             }
         }
     }

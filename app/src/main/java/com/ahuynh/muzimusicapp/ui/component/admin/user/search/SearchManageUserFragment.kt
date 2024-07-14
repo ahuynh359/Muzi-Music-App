@@ -2,6 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.admin.user.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchManageUserBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserFragmentDirections
 import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchActivity
 import com.ahuynh.muzimusicapp.ui.component.user.search.fragment.SearchFragmentDirections
@@ -24,8 +26,9 @@ import com.ahuynh.muzimusicapp.ui.component.user.search.fragment.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchManageUserFragment : BaseFragment<FragmentSearchManageUserBinding>(FragmentSearchManageUserBinding::inflate) ,
-    UserAdapter.OnUserClicked{
+class SearchManageUserFragment :
+    BaseFragment<FragmentSearchManageUserBinding>(FragmentSearchManageUserBinding::inflate),
+    UserAdapter.OnUserClicked {
 
     private val viewModel by viewModels<ManageUserViewModel>({ requireActivity() })
     private val userAdapter = UserAdapter(this)
@@ -89,10 +92,15 @@ class SearchManageUserFragment : BaseFragment<FragmentSearchManageUserBinding>(F
 
     private fun observeData() {
         viewModel.userList.observe(viewLifecycleOwner) {
+            Log.d("ABC user list", it.toString())
             binding.rcyUser.visibility = View.VISIBLE
             if (it != null) {
                 userList = it as ArrayList<User>
                 userAdapter.submitList(it)
+                if (it.isEmpty()) {
+                    binding.tvNoUser.visibility = View.VISIBLE
+                } else
+                    binding.tvNoUser.visibility = View.INVISIBLE
             }
 
 
@@ -101,12 +109,16 @@ class SearchManageUserFragment : BaseFragment<FragmentSearchManageUserBinding>(F
     }
 
 
-
-
     override fun onUserClicked(user: User) {
+        val action =
+            SearchManageUserFragmentDirections.actionSearchManageUserFragmentToManageUserDetail(user)
+        findNavController().navigate(action)
     }
 
     override fun onMoreClicked(user: User) {
+        val action =
+            SearchManageUserFragmentDirections.actionSearchManageUserFragmentToManageUserMenu(user)
+        findNavController().navigate(action)
     }
 
 }

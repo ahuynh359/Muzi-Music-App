@@ -1,6 +1,11 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.google.gson.Gson
+import java.time.Instant
 
 
 data class SongResponse(
@@ -12,6 +17,8 @@ data class SongResponse(
     val album: AlbumResponse,
     val singers: List<SingerResponse>,
     val types: List<TypeResponse>,
+    val createdAt : String,
+    val updatedAt : String
 
 
 
@@ -26,9 +33,14 @@ data class SongResponse(
             album = this.album.toAlbum(),
             singers = this.singers.toListSinger(),
             types = this.types.toListType(),
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
 
         )
     }
+
+
+
 }
 
 data class SongResponseData(
@@ -39,3 +51,5 @@ data class SongResponseData(
 fun List<SongResponse>.toListSong(): List<Song> {
     return map { it.toSong() }
 }
+
+

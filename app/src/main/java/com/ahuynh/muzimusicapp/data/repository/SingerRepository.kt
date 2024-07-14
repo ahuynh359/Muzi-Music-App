@@ -2,10 +2,9 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSingerResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.service.remote.SingerService
+import com.ahuynh.muzimusicapp.data.service.remote.SingerRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SingerRepository @Inject constructor(
-    private val singerService: SingerService,
+    private val singerService: SingerRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 

@@ -34,13 +34,13 @@ class ManageSongViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun getAllUser() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            userList.postValue(userRepository.getAllUser())
-        }
-        registerEventParentJobFinish()
-    }
+//    fun getNewUsers() {
+//        isLoading.postValue(true)
+//        parentJob = viewModelScope.launch {
+//            userList.postValue(userRepository.getNewUsers())
+//        }
+//        registerEventParentJobFinish()
+//    }
 
     fun getUserById(id: Long) {
         isLoading.postValue(true)
@@ -56,7 +56,6 @@ class ManageSongViewModel @Inject constructor(
             val result = userRepository.createUser(addUserRequest)
             if(result is Response.Success){
                 mess = result.data.message
-                getAllUser()
             } else if(result is Response.Failure){
                 mess = result.errorMessage
             }
@@ -66,13 +65,12 @@ class ManageSongViewModel @Inject constructor(
 
     }
 
-    fun changeAvatar(file: File) {
+    fun changeAvatar(id : Long,file: File, ) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.changeAvatar( file)
+            val result = userRepository.changeAvatar( id,file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
-                getAllUser()
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
 

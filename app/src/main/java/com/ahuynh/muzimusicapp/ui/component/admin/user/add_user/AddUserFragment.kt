@@ -22,6 +22,7 @@ import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
 import com.ahuynh.muzimusicapp.ui.component.auth.login.LoginFragmentDirections
 import com.ahuynh.muzimusicapp.ui.component.auth.login.LoginViewModel
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
+import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,18 @@ class AddUserFragment : BaseFragment<FragmentAddUserBinding>(FragmentAddUserBind
             val email = binding.edtEmail.text.toString().trim()
             val password = binding.edtPassword.text.toString().trim()
             val username = binding.edtUserName.text.toString().trim()
-            isCreateOk = email.isNotEmpty() && password.isNotEmpty() && username.isNotEmpty()
+            val isEmail = Utils.isValidEmail(email)
+            isCreateOk = email.isNotEmpty() && password.isNotEmpty() && username.isNotEmpty() && isEmail
+            if(!isEmail){
+                binding.edtEmail.error = "Email is invalid"
+            } else {
+                binding.edtEmail.error = null
+            }
+            if(password.length<6){
+                binding.edtPassword.error = "Password must be at least 6 characters"
+            } else {
+                binding.edtPassword.error = null
+            }
             if (isCreateOk) {
                 binding.btnAdd.setBackgroundResource(R.drawable.btn_enable)
             } else
@@ -95,6 +107,7 @@ class AddUserFragment : BaseFragment<FragmentAddUserBinding>(FragmentAddUserBind
 
         binding.btnAdd.setOnClickListener {
             if (isCreateOk) {
+
                 val addUserRequest = AddUserRequest(
                     binding.edtEmail.text.toString().trim(),
                     binding.edtPassword.text.toString(),

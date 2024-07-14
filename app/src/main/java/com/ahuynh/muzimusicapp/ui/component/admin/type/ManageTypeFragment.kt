@@ -128,6 +128,9 @@ class ManageTypeFragment :
                 typeList.sortByDescending { it.name }
                 typeAdapter.submitList(typeList.toList())
             }
+            else ->{
+
+            }
         }
     }
 

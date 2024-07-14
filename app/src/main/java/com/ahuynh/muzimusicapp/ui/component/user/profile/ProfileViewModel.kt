@@ -39,10 +39,10 @@ constructor(
     }
 
 
-    fun changeAvatar(file:File) {
+    fun changeAvatar(id : Long, file:File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.changeAvatar( file)
+            val result = userRepository.changeAvatar(  id,file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
             } else if (result is Response.Failure) {

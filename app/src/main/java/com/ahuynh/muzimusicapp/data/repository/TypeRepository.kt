@@ -1,13 +1,10 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import android.os.Message
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
-import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
-import com.ahuynh.muzimusicapp.data.service.remote.TypeService
+import com.ahuynh.muzimusicapp.data.service.remote.TypeRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +14,7 @@ import java.io.File
 import javax.inject.Inject
 
 class TypeRepository @Inject constructor(
-    private val typeService: TypeService,
+    private val typeRemoteService: TypeRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
 
@@ -25,39 +22,39 @@ class TypeRepository @Inject constructor(
 
     suspend fun getAllType(): List<Type> {
         return withContext(dispatcher) {
-            typeService.getAllType()
+            typeRemoteService.getAllType()
         }
     }
 
     suspend fun getTypeById(id : Long): Type? {
         return withContext(dispatcher) {
-            typeService.getTypeById(id)
+            typeRemoteService.getTypeById(id)
         }
     }
     suspend fun getSongFromType(id: Long): List<Song> {
         return withContext(dispatcher) {
-            typeService.getSongFromType(id)
+            typeRemoteService.getSongFromType(id)
         }
     }
 
     suspend fun createType(name: String, avatar: File): Response<TypeResponseData> {
 
         return withContext(dispatcher) {
-            typeService.createType(name, avatar)
+            typeRemoteService.createType(name, avatar)
         }
     }
 
     suspend fun deleteType(id : Long): Response<MessageResponse> {
 
         return withContext(dispatcher) {
-            typeService.deleteType(id)
+            typeRemoteService.deleteType(id)
         }
     }
 
     suspend fun updateType(id : Long , name: String, avatar: File): Response<TypeResponseData> {
 
         return withContext(dispatcher) {
-            typeService.updateType(id , name, avatar)
+            typeRemoteService.updateType(id , name, avatar)
         }
     }
 

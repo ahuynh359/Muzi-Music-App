@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     tools:context=".ui.component.user.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,8 +50,21 @@
             app:layout_constraintStart_toEndOf="@id/imv_new_song"
             />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textColor="@color/green"
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/clear"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/imv_new_song"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imv_new_song" />
+
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_recently_played"
+            android:id="@+id/shimmer_recent_songs"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +86,7 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_recently_played"
+            android:id="@+id/rcy_recent_songs"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -94,7 +108,7 @@
             android:text="@string/new_song"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@id/imv_new_song"
-            app:layout_constraintTop_toBottomOf="@id/shimmer_recently_played" />
+            app:layout_constraintTop_toBottomOf="@id/shimmer_recent_songs" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_marginStart="@dimen/_20dp"
@@ -115,19 +129,17 @@
                 <include layout="@layout/item_shimmer_round" />
 
                 <include layout="@layout/item_shimmer_round" />
-                <include layout="@layout/item_shimmer_round" />
 
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="invisible"
             android:layout_marginStart="@dimen/_20dp"
             android:id="@+id/rcy_new_song"
             android:layout_width="@dimen/_0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:itemCount="5"
-            android:visibility="invisible"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +236,51 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_new_album"
+            tools:listitem="@layout/item_circle_recently" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_top_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/top_songs"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/imv_new_song"
+            app:layout_constraintTop_toBottomOf="@id/shimmer_new_album" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_top_song"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_top_song">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include layout="@layout/item_shimmer_circle_recently" />
+
+                <include layout="@layout/item_shimmer_circle_recently" />
+
+                <include layout="@layout/item_shimmer_circle_recently" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcy_top_song"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imv_new_song"
+            app:layout_constraintTop_toBottomOf="@id/tv_top_song"
             tools:listitem="@layout/item_circle_recently" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

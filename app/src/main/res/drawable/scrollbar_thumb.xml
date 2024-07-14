@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp"/> <!-- Tạo hình oval bằng cách thiết lập radius -->
+    <solid android:color="#FF0000"/> <!-- Thay đổi thành màu bạn muốn -->
+    <size android:width="10dp" android:height="20dp"/> <!-- Kích thước của thanh cuộn, chỉnh sửa để ngắn hơn -->
+</shape>

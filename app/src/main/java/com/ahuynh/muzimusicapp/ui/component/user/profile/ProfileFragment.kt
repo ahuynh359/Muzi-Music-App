@@ -36,9 +36,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     ) { uri ->
         val file: File? = FileHelper.from(requireContext(), uri!!)
         file?.let {
-            viewModel.changeAvatar(
-                file
-            )
+            viewModel.currentUser.value?.id?.let { it1 ->
+                viewModel.changeAvatar(
+                    it1,
+                    file
+                )
+            }
 
         }
     }

@@ -1,11 +1,11 @@
 package com.ahuynh.muzimusicapp.data.service.local
 
-import com.ahuynh.muzimusicapp.data.database.dao.SearchHistoryDAO
+import com.ahuynh.muzimusicapp.data.database.dao.SearchHistoryDao
 import com.ahuynh.muzimusicapp.data.database.entity.SearchHistoryEntity
 import javax.inject.Inject
 
 class SearchHistoryService @Inject constructor(
-    private val searchHistoryDAO: SearchHistoryDAO
+    private val searchHistoryDAO: SearchHistoryDao
 ) {
 
     suspend fun getAllSearchHistory(): List<SearchHistoryEntity> {

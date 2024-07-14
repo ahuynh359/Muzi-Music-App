@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.adapter.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,16 +14,18 @@ import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class SongHomeAdapter(private val listener: OnSongHomeClicked) :
-    ListAdapter<Song, SongHomeAdapter.ViewHolder>(DiffCallback()) {
+class SongHomeAdapter(private val currentList: List<Song>, private val listener: OnSongHomeClick) :
+    RecyclerView.Adapter<SongHomeAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
+            binding.main.setOnClickListener {
                 listener.onSongClicked(currentList[layoutPosition])
             }
-
+            binding.btnMore.setOnClickListener {
+                listener.openMenu(currentList[layoutPosition])
+            }
         }
 
         fun bind(song: Song) {
@@ -40,20 +43,9 @@ class SongHomeAdapter(private val listener: OnSongHomeClicked) :
 
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<Song>() {
-        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem == newItem
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -65,9 +57,10 @@ class SongHomeAdapter(private val listener: OnSongHomeClicked) :
         return currentList.size
     }
 
-    interface OnSongHomeClicked {
+    interface OnSongHomeClick {
         fun onSongClicked(song: Song)
+        fun openMenu(song: Song)
     }
 
-}
 
+}

@@ -6,8 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
+import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Response
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,20 +20,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ManageUserViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val sharePreferencesHelper: SharePreferencesHelper
 ) : BaseViewModel() {
     var userList = MutableLiveData<List<User>>()
     var deleteUserStatus = MutableLiveData<Boolean?>()
     var createUserStatus = MutableLiveData<Boolean?>()
+    var updateUserStatus = MutableLiveData<Boolean?>()
     var user = MutableLiveData<User>()
-    var mess : String ?= null
+    var mess: String? = null
     var avatar = MutableLiveData<String>()
+    var sortUser = MutableLiveData<SortName>()
+    var lockOrUnlockStatus = MutableLiveData<Boolean?>()
 
+    init {
+        getSortUser()
+    }
 
-     fun getAllUser() {
+    fun getSortUser(){
+        viewModelScope.launch {
+            sortUser.postValue(sharePreferencesHelper.isSortUser())
+        }
+    }
+    fun setSortUser(sortName : SortName){
+        viewModelScope.launch {
+            sortUser.postValue(sortName)
+            sharePreferencesHelper.setSortUser(sortName)
+        }
+    }
+
+    fun getAllUsers() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            userList.postValue(userRepository.getAllUser())
+            userList.postValue(userRepository.getAllUsers(sharePreferencesHelper.isSortUser()))
         }
         registerEventParentJobFinish()
     }
@@ -43,13 +65,13 @@ class ManageUserViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun createUser(addUserRequest: AddUserRequest){
+    fun createUser(addUserRequest: AddUserRequest) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = userRepository.createUser(addUserRequest)
-            if(result is Response.Success){
+            if (result is Response.Success) {
                 mess = result.data.message
-            } else if(result is Response.Failure){
+            } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }
             createUserStatus.postValue(result is Response.Success)
@@ -58,13 +80,24 @@ class ManageUserViewModel @Inject constructor(
 
     }
 
-    fun changeAvatar(file: File) {
+    fun deleteUser(id: Long) {
+        viewModelScope.launch {
+            val result = userRepository.deleteUser(id)
+            if (result is Response.Success) {
+                mess = result.data.message
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            deleteUserStatus.postValue(result is Response.Success)
+        }
+    }
+
+    fun changeAvatar(id: Long, file: File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.changeAvatar( file)
+            val result = userRepository.changeAvatar(id, file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
-                getAllUser()
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
 
@@ -76,7 +109,37 @@ class ManageUserViewModel @Inject constructor(
 
     }
 
+    fun lockOrUnlockUser(id: Long) {
+        viewModelScope.launch {
+            val result = userRepository.lockOrUnlockUser(id)
+            if (result is Response.Success) {
+                mess = result.data.message
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
 
+            }
+            lockOrUnlockStatus.postValue(result is Response.Success)
+        }
+
+    }
+
+    fun updateUser(updateUserRequest: UpdateUserRequest) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val result = userRepository.updateUser(updateUserRequest)
+            if (result is Response.Success) {
+                mess = result.data.message
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+
+            }
+            updateUserStatus.postValue(result is Response.Success)
+            registerEventParentJobFinish()
+
+
+        }
+
+    }
 
 
 }

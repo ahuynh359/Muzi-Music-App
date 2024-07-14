@@ -124,4 +124,6 @@
     <string name="search_album">Search Album</string>
     <string name="album_name">Album Name</string>
     <string name="no_album">No Album</string>
+    <string name="clear">Clear</string>
+    <string name="top_songs">Top Songs</string>
 </resources>

@@ -19,6 +19,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val PASSWORD = "password"
         const val ID = "id"
         const val IS_ADMIN_OR_USER = "is_admin_or_user"
+        const val SORT_USER = "sort_user"
 
     }
 
@@ -34,7 +35,18 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.apply()
     }
 
-
+    fun isSortUser(): SortName {
+        val sortString = pref.getString(SORT_USER, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortUser(sortName: SortName) {
+        editor.putString(SORT_USER, sortName.name)
+        editor.apply()
+    }
 
 
     fun isRepeat(): Boolean {

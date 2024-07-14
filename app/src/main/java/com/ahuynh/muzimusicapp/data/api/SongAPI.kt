@@ -36,7 +36,7 @@ interface SongAPI {
     suspend fun loveSong(@Path("songId") songId: Long): Response<MessageResponse>
 
     @POST("${Constants.API_VERSION}/song/listen/{id}")
-    suspend fun listen(@Path("id") songId: Long): Response<MessageResponse>
+    suspend fun listen(@Path("id") id: Long): Response<MessageResponse>
 
     @GET("${Constants.API_VERSION}/song/is-love-song/{songId}")
     suspend fun isUserLoveSong(@Path("songId") songId: Long): Response<IsLoveSongResponse>

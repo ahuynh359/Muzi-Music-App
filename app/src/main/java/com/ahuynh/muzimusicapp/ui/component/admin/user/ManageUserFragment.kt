@@ -8,17 +8,21 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.UserAdapter
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.FragmentManageUserBinding
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.ui.component.admin.type.ManageTypeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class ManageUserFragment :
     BaseFragment<FragmentManageUserBinding>(FragmentManageUserBinding::inflate),
-    UserAdapter.OnUserClicked {
+    UserAdapter.OnUserClicked, SortBottomSheetFragment.SortOptionListener {
 
     private val viewModel by viewModels<ManageUserViewModel>({ requireActivity() })
 
@@ -30,14 +34,9 @@ class ManageUserFragment :
 
     private var userList: ArrayList<User> = arrayListOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onResume() {
         super.onResume()
-        viewModel.getAllUser()
+        viewModel.getAllUsers()
     }
 
 
@@ -57,15 +56,25 @@ class ManageUserFragment :
             if (it != null) {
                 userList = it as ArrayList<User>
                 userAdapter.submitList(it)
+                if (it.isEmpty()) {
+                    binding.tvNoUser.visibility = View.VISIBLE
+                } else
+                    binding.tvNoUser.visibility = View.INVISIBLE
             }
             binding.shimmer.stopShimmer()
             binding.shimmer.visibility = View.INVISIBLE
 
 
         }
+        viewModel.sortUser.observe(viewLifecycleOwner){
+            binding.btnSort.text = it.name
+            viewModel.getAllUsers()
+        }
 
 
     }
+
+
 
 
     private fun handleUI() {
@@ -83,6 +92,15 @@ class ManageUserFragment :
             findNavController().navigate(action)
         }
 
+        binding.btnSort.setOnClickListener {
+            val sortBottomSheet = SortBottomSheetFragment()
+            sortBottomSheet.listener = this
+            val args = Bundle()
+            args.putBoolean("IS_USER_MANAGE_FRAGMENT", true)
+            sortBottomSheet.arguments = args
+            sortBottomSheet.show(parentFragmentManager, null)
+        }
+
 
     }
 
@@ -92,7 +110,39 @@ class ManageUserFragment :
     }
 
     override fun onMoreClicked(user: User) {
+        val action =
+            ManageUserFragmentDirections.actionManageUserFragmentToManageUserMenu(user)
+        findNavController().navigate(action)
+    }
 
+    override fun onSortOptionSelected(name: SortName) {
+        when (name) {
+            SortName.NEW -> {
+                viewModel.setSortUser(SortName.NEW)
+            }
+
+            SortName.OLD -> {
+                viewModel.setSortUser(SortName.OLD)
+            }
+
+            SortName.A_Z -> {
+                viewModel.setSortUser(SortName.A_Z)
+
+            }
+
+            SortName.Z_A -> {
+                viewModel.setSortUser(SortName.Z_A)
+            }
+
+            SortName.LOCKED -> {
+                viewModel.setSortUser(SortName.LOCKED)
+            }
+
+            SortName.UNLOCKED -> {
+                viewModel.setSortUser(SortName.UNLOCKED)
+            }
+
+        }
     }
 
 

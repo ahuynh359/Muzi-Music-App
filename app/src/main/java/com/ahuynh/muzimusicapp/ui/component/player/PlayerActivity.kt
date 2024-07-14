@@ -1,11 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.utils.EventBusModel
@@ -13,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.time.Instant
 
 
 @AndroidEntryPoint
@@ -62,11 +66,13 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
         event.song?.let {
             viewModel.song.postValue(it)
             viewModel.listen(it.id)
+            viewModel.insertSong(it.toSongEntity())
         }
     }
 

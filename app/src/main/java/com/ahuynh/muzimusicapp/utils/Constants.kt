@@ -1,13 +1,16 @@
 package com.ahuynh.muzimusicapp.utils
 
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
+
 
 object Constants {
 
 
+    var SORT_USER: SortName = SortName.NEW
     const val NOTIFICATION_ID = 101
     const val PERMISSION_REQUEST_ID = 1
 
-    const val SONG ="song"
+    const val SONG = "song"
     const val SONG_LIST = "song_list"
     const val DATA = "data"
     const val ACTION = "action"
@@ -20,7 +23,7 @@ object Constants {
     const val BASE_URL = "http://192.168.0.101:8080"
     const val API_VERSION = "/api/v1"
 
-    const val TYPE="type"
+    const val TYPE = "type"
 
 
 }

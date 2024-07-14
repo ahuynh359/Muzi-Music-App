@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Patterns
 import android.util.TypedValue
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -137,6 +138,9 @@ object Utils {
             context.startService(intent)
         }
 
+    }
+     fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
 
