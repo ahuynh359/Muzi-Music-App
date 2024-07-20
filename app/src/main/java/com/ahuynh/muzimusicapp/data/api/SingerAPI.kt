@@ -31,8 +31,7 @@ interface SingerAPI {
     @GET("${Constants.API_VERSION}/singer/all")
     suspend fun getAllSingers(@Query("sort") sortName: SortName): Response<SingerResponseDataList>
 
-    @GET("${Constants.API_VERSION}/singer/popular")
-    suspend fun getPopularSingers(): Response<SingerResponseDataList>
+
 
     @GET("${Constants.API_VERSION}/singer/{id}/songs")
     suspend fun getSongsOfSinger(@Path("id") id: Long): Response<SongResponseDataList>

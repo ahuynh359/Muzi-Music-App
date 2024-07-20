@@ -26,7 +26,6 @@ class HomeViewModel @Inject constructor(
     var recentSong = MutableLiveData<List<SongEntity>>()
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
-    var popularSingerList = MutableLiveData<List<Singer>>()
     var newSongList = MutableLiveData<List<Song>>()
     var topSongList = MutableLiveData<List<Song>>()
 
@@ -73,13 +72,7 @@ class HomeViewModel @Inject constructor(
 
 
 
-    fun getPopularSingers() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            popularSingerList.postValue(singerRepository.getPopularSingers())
-        }
-        registerEventParentJobFinish()
-    }
+
 
 }
 

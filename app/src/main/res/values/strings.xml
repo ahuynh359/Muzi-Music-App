@@ -137,4 +137,7 @@
     <string name="no_comments">No Comments</string>
     <string name="admin">Admin</string>
     <string name="popular_singer">Popular Singer</string>
+    <string name="popular_song">Popular Song</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="follow">Follow</string>
 </resources>

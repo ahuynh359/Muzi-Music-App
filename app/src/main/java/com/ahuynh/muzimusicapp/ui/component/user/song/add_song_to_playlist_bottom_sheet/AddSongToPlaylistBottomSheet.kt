@@ -33,6 +33,12 @@ class AddSongToPlaylistBottomSheet : BottomSheetDialogFragment(),PlaylistAdapter
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllPlaylists()
+
+    }
+
 
 
     override fun onCreateView(

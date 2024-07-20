@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongEntityAdapter
 import com.ahuynh.muzimusicapp.adapter.VerticalSongAdapter
@@ -39,8 +40,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
+    private var scrollPosition = 0
     companion object {
         const val TAG = "HomeFragment"
+        const val SCROLL_POSITION_KEY = "scroll_position_key"
     }
 
     private val songEntityAdapter = SongEntityAdapter(this)
@@ -48,21 +51,46 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var topSongAdapter: VerticalSongAdapter
     private val newAlbumAdapter = AlbumHomeAdapter(this)
     private val newSingerAdapter = SingerHomeAdapter(this)
-    private val popularSingerAdapter = SingerHomeAdapter(this)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
-    private var popularSingerList: ArrayList<Singer> = arrayListOf()
-    private var topSongList: ArrayList<Song> = arrayListOf()
+    private var popularSongList: ArrayList<Song> = arrayListOf()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        savedInstanceState?.let {
+            scrollPosition = it.getInt(SCROLL_POSITION_KEY, 0)
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
 
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getData()
         handleUI()
         observe()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.scrollView.post {
+            binding.scrollView.scrollTo(0, scrollPosition)
+        }
+        getData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        scrollPosition = binding.scrollView.scrollY
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(SCROLL_POSITION_KEY, scrollPosition)
     }
 
 
@@ -72,7 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewSingers()
         viewModel.getRecentSongs()
         viewModel.getTopSongs()
-        viewModel.getPopularSingers()
+
 
 
     }
@@ -84,7 +112,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleNewAlbumList()
         handleNewSingerList()
         handleTopSongList()
-        handlePopularSingerList()
+
 
 
     }
@@ -92,17 +120,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun handleRecentSong() {
         binding.rcyRecentSongs.adapter = songEntityAdapter
         viewModel.recentSong.observe(viewLifecycleOwner) {
-
-            if (it.isNotEmpty()) {
-                binding.rcyRecentSongs.visibility = View.VISIBLE
-                songEntityAdapter.submitList(it)
-            } else {
-                binding.rcyRecentSongs.visibility = View.GONE
-                binding.tvRecentlyPlayed.visibility = View.GONE
-                binding.imvRecentlyPlayed.visibility = View.GONE
-                binding.tvWrap.visibility = View.GONE
-            }
-
+            binding.rcyRecentSongs.visibility = View.VISIBLE
+            songEntityAdapter.submitList(it)
             binding.shimmerRecentSongs.stopShimmer()
             binding.shimmerRecentSongs.visibility = View.INVISIBLE
 
@@ -163,37 +182,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private fun handleTopSongList() {
         viewModel.topSongList.observe(viewLifecycleOwner) {
-            binding.rcyTopSong.visibility = View.VISIBLE
+            binding.rcyPopularSong.visibility = View.VISIBLE
             val list = it.subList(0, min(9, it.size))
-            topSongList = it as ArrayList<Song>
+            popularSongList = it as ArrayList<Song>
             val songLists = list.chunked(3)
 
             topSongAdapter = VerticalSongAdapter(songLists, this)
-            binding.rcyTopSong.layoutManager =
+            binding.rcyPopularSong.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rcyTopSong.adapter = topSongAdapter
+            binding.rcyPopularSong.adapter = topSongAdapter
 
-            binding.shimmerTopSong.stopShimmer()
-            binding.shimmerTopSong.visibility = View.INVISIBLE
-
-
-        }
-    }
-
-    private fun handlePopularSingerList() {
-        binding.rcyPopularSinger.adapter = popularSingerAdapter
-        viewModel.popularSingerList.observe(viewLifecycleOwner) {
-            binding.rcyPopularSinger.visibility = View.VISIBLE
-            if (it != null) {
-                popularSingerList = it as ArrayList<Singer>
-                popularSingerAdapter.submitList(it)
-            }
-            binding.shimmerPopularSinger.stopShimmer()
-            binding.shimmerPopularSinger.visibility = View.INVISIBLE
+            binding.shimmerPopularSong.stopShimmer()
+            binding.shimmerPopularSong.visibility = View.INVISIBLE
 
 
         }
     }
+
 
 
     private fun handleUI() {
@@ -228,7 +233,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     override fun onSingerClicked(singer: Singer) {
-        val action = HomeFragmentDirections.actionHomeFragmentToSingerFragment(singer)
+        val action = HomeFragmentDirections.actionHomeFragmentToSingerDetailFragment(singer)
         findNavController().navigate(action)
     }
 

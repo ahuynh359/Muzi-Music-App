@@ -26,11 +26,8 @@ constructor(
     var addSongToPlaylistStatus = MutableLiveData<Boolean?>(null)
     var mess: String? = null
 
-    init {
-        getAllPlaylists()
-    }
 
-    private fun getAllPlaylists() {
+    fun getAllPlaylists() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             playlists.postValue(playlistRepository.getAllPlaylist())

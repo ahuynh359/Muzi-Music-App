@@ -33,14 +33,6 @@ class SingerRemoteService @Inject constructor(
         }
     }
 
-    suspend fun getPopularSingers(): List<Singer> {
-        val result = callApi { singerAPI.getPopularSingers() }
-        return if (result is Response.Success) {
-            result.data.data.toListSinger()
-        } else {
-            arrayListOf()
-        }
-    }
 
 
     suspend fun getSongsOfSinger(id : Long): List<Song> {

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -14,6 +15,7 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.user.singer.SingerViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.bumptech.glide.Glide
@@ -21,14 +23,16 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentDetailSingerBinding::inflate)
-    ,SongAdapter.OnNewSongClicked {
+class DetailSingerFragment :
+    BaseFragment<FragmentDetailSingerBinding>(FragmentDetailSingerBinding::inflate),
+    SongAdapter.OnNewSongClicked {
 
     companion object {
         const val TAG = "DetailSingerFragment"
     }
-    private  val songAdapter = SongAdapter(this)
-    private val viewModel by viewModels<DetailSingerViewModel>()
+
+    private val songAdapter = SongAdapter(this)
+    private val viewModel by viewModels<SingerViewModel>({ requireActivity() })
     private lateinit var songOfSinger: ArrayList<Song>
     private lateinit var currentSinger: Singer
 
@@ -39,9 +43,13 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getData()
         handleUI()
         observe()
 
@@ -53,9 +61,7 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
     }
 
     private fun observe() {
-
         viewModel.songOfSinger.observe(viewLifecycleOwner) {
-
             songAdapter.submitList(it)
             songOfSinger = it as ArrayList<Song>
             binding.rcySongs.visibility = View.VISIBLE
@@ -70,11 +76,13 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
             binding.shimmer.visibility = View.GONE
         }
 
-        viewModel.loveSinger.observe(viewLifecycleOwner){
-            if(it){
-                binding.btnFollow.text = "Unfollow"
+        viewModel.loveSinger.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.btnFollow.text = getString(R.string.unfollow)
+                binding.btnFollow.setBackgroundResource(R.drawable.btn_transparent)
             } else {
-                binding.btnFollow.text = "Follow"
+                binding.btnFollow.text = getString(R.string.follow)
+                binding.btnFollow.setBackgroundResource(R.drawable.btn_round_green)
             }
         }
 
@@ -82,9 +90,7 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
     }
 
 
-
     private fun handleUI() {
-
         binding.rcySongs.adapter = songAdapter
         Glide
             .with(binding.imvSinger.context)
@@ -95,9 +101,8 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
         binding.tvSinger.text = currentSinger.name
 
 
-
         binding.btnBack.setOnClickListener {
-           findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
 
@@ -112,12 +117,7 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
 
         binding.btnFollow.setOnClickListener {
             viewModel.loveOrUnloveSinger(currentSinger.id)
-            if(viewModel.mess != null){
-                Toast.makeText(requireContext(),viewModel.mess,Toast.LENGTH_SHORT).show()
-            }
         }
-
-
 
 
     }
@@ -134,11 +134,10 @@ class DetailSingerFragment : BaseFragment<FragmentDetailSingerBinding>(FragmentD
     override fun openMenu(song: Song) {
         SongMenu().apply {
             arguments = Bundle().apply {
-                putParcelable(Constants.SONG,song)
+                putParcelable(Constants.SONG, song)
             }
-        }.show(requireActivity().supportFragmentManager,null)
+        }.show(requireActivity().supportFragmentManager, null)
     }
-
 
 
 }
