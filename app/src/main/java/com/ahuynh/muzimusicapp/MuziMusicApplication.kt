@@ -5,9 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import dagger.hilt.android.HiltAndroidApp
-
+import androidx.work.Configuration
+import androidx.work.WorkManager
 @HiltAndroidApp
-class MuziMusicApplication : Application(){
+class MuziMusicApplication : Application() {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "Muzi Channel"
@@ -32,6 +33,7 @@ class MuziMusicApplication : Application(){
             notificationManager.createNotificationChannel(channel)
         }
     }
+
 
 
 }

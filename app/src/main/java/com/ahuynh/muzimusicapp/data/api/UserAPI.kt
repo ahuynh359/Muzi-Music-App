@@ -6,7 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
 import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.CheckLoveSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData

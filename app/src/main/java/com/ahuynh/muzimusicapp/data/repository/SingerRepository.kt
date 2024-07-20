@@ -2,14 +2,20 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.request.UpdateSingerRequest
+import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoveSingerResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
+import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
+import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.service.remote.SingerRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 import javax.inject.Inject
 
 class SingerRepository @Inject constructor(
@@ -19,9 +25,9 @@ class SingerRepository @Inject constructor(
 
 ) {
 
-    suspend fun getNewSingers(): List<Singer> {
+    suspend fun getAllSingers(sortName: SortName): List<Singer> {
         return withContext(dispatcher) {
-            singerService.getNewSingers()
+            singerService.getAllSingers(sortName)
         }
     }
 
@@ -50,4 +56,41 @@ class SingerRepository @Inject constructor(
         }
 
     }
+
+    suspend fun createSinger(name: String, avatar: File): Response<SingerResponseData> {
+        return withContext(dispatcher) {
+            singerService.createSinger(name,avatar)
+        }
+    }
+
+
+
+
+    suspend fun deleteSinger(id : Long): Response<MessageResponse> {
+
+        return withContext(dispatcher) {
+            singerService.deleteSinger(id)
+        }
+    }
+
+    suspend fun updateSinger(updateSingerRequest: UpdateSingerRequest): Response<SingerResponseData> {
+
+        return withContext(dispatcher) {
+            singerService.updateSinger(updateSingerRequest)
+        }
+    }
+
+    suspend fun changeAvatar(id: Long, file: File): Response<SingerResponseData> {
+        return withContext(dispatcher) {
+            singerService.changeAvatar(id , file)
+        }
+    }
+
+    suspend fun getSingerById(id: Long): Singer? {
+        return withContext(dispatcher) {
+            singerService.getSingerById(id)
+        }
+
+    }
+
 }

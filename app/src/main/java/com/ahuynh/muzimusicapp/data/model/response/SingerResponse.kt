@@ -6,21 +6,30 @@ data class SingerResponse(
     val id: Long,
     val name: String,
     val avatar: String,
+    val createdAt: String,
+    val updatedAt: String
 
 
-    ) {
+) {
     fun toSinger(): Singer {
         return Singer(
             id = this.id,
             name = this.name,
-            avatar = this.avatar
+            avatar = this.avatar,
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
         )
     }
 }
 
-data class SingerResponseData(
+data class SingerResponseDataList(
     val message: String,
     val data: List<SingerResponse>
+)
+
+data class SingerResponseData(
+    val message: String,
+    val data: SingerResponse
 )
 
 

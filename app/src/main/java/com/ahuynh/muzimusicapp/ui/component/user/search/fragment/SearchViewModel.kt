@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ class SearchViewModel @Inject constructor(
     private fun getAllType() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllType())
+            typeList.postValue(typeRepository.getAllTypes(SortName.NEW))
 
         }
         isSearchDone.postValue(true)

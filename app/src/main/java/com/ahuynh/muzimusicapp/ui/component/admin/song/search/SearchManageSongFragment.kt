@@ -35,6 +35,11 @@ class SearchManageSongFragment : BaseFragment<FragmentSearchManageSongBinding>(
         const val TAG = "SearchManageSongFragment"
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllSongs()
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,16 +56,17 @@ class SearchManageSongFragment : BaseFragment<FragmentSearchManageSongBinding>(
         binding.edtSearch.clearFocus()
         binding.edtSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     songAdapter.submitList(songList)
+                    binding.tvNoSong.visibility = View.INVISIBLE
 
                 } else
                     performSearch(newText)
-                return true
+                return false
             }
         })
 
@@ -87,7 +93,7 @@ class SearchManageSongFragment : BaseFragment<FragmentSearchManageSongBinding>(
     }
 
     private fun observeData() {
-        viewModel.userList.observe(viewLifecycleOwner) {
+        viewModel.songList.observe(viewLifecycleOwner) {
             binding.rcySong.visibility = View.VISIBLE
             if (it != null) {
                 songList = it as ArrayList<Song>

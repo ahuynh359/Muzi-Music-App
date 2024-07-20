@@ -2,10 +2,12 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
+import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.service.remote.TypeRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +22,9 @@ class TypeRepository @Inject constructor(
 
 ) {
 
-    suspend fun getAllType(): List<Type> {
+    suspend fun getAllTypes(sortName: SortName): List<Type> {
         return withContext(dispatcher) {
-            typeRemoteService.getAllType()
+            typeRemoteService.getAllTypes(sortName)
         }
     }
 
@@ -51,10 +53,16 @@ class TypeRepository @Inject constructor(
         }
     }
 
-    suspend fun updateType(id : Long , name: String, avatar: File): Response<TypeResponseData> {
+    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): Response<TypeResponseData> {
 
         return withContext(dispatcher) {
-            typeRemoteService.updateType(id , name, avatar)
+            typeRemoteService.updateType(updateTypeRequest)
+        }
+    }
+
+    suspend fun changeAvatar(id: Long, file: File): Response<TypeResponseData> {
+        return withContext(dispatcher) {
+            typeRemoteService.changeAvatar(id , file)
         }
     }
 

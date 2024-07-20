@@ -20,6 +20,11 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val ID = "id"
         const val IS_ADMIN_OR_USER = "is_admin_or_user"
         const val SORT_USER = "sort_user"
+        const val SORT_TYPE = "sort_type"
+        const val SORT_SONG = "sort_song"
+        const val SORT_ALBUM = "sort_album"
+        const val SORT_SINGER = "sort_singer"
+        const val SORT_COMMENT = "sort_comment"
 
     }
 
@@ -34,6 +39,33 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.putBoolean(SHUFFLE, isShuffle)
         editor.apply()
     }
+    fun isSortSinger(): SortName {
+        val sortString = pref.getString(SORT_SINGER, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortSinger(sortName: SortName) {
+        editor.putString(SORT_SINGER, sortName.name)
+        editor.apply()
+    }
+
+    fun isSortComment(): SortName {
+        val sortString = pref.getString(SORT_COMMENT, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortComment(sortName: SortName) {
+        editor.putString(SORT_COMMENT, sortName.name)
+        editor.apply()
+    }
+
+
 
     fun isSortUser(): SortName {
         val sortString = pref.getString(SORT_USER, SortName.NEW.name) ?: SortName.NEW.name
@@ -45,6 +77,45 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
     }
     fun setSortUser(sortName: SortName) {
         editor.putString(SORT_USER, sortName.name)
+        editor.apply()
+    }
+
+    fun isSortAlbum(): SortName {
+        val sortString = pref.getString(SORT_ALBUM, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortAlbum(sortName: SortName) {
+        editor.putString(SORT_ALBUM, sortName.name)
+        editor.apply()
+    }
+    fun isSortSong(): SortName {
+        val sortString = pref.getString(SORT_SONG, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortSong(sortName: SortName) {
+        editor.putString(SORT_SONG, sortName.name)
+        editor.apply()
+    }
+
+
+    fun isSortType(): SortName {
+        val sortString = pref.getString(SORT_TYPE, SortName.NEW.name) ?: SortName.NEW.name
+        return try {
+            SortName.valueOf(sortString)
+        } catch (e: IllegalArgumentException) {
+            SortName.NEW
+        }
+    }
+    fun setSortType(sortName: SortName) {
+        editor.putString(SORT_TYPE, sortName.name)
         editor.apply()
     }
 

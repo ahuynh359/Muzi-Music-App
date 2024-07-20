@@ -29,14 +29,10 @@ class ManageTypeFragment :
 
     private var typeList: ArrayList<Type> = arrayListOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllType()
+        viewModel.getAllTypes()
     }
 
 
@@ -62,6 +58,11 @@ class ManageTypeFragment :
 
 
         }
+        viewModel.sortType.observe(viewLifecycleOwner){
+            binding.btnSort.text = it.name
+            viewModel.getAllTypes()
+        }
+
 
 
     }
@@ -105,32 +106,25 @@ class ManageTypeFragment :
     override fun onSortOptionSelected(name: SortName) {
         when (name) {
             SortName.NEW -> {
-                binding.btnSort.text = getString(R.string.new_a)
-                typeList.sortBy { it.createdAt }
-                typeAdapter.submitList(typeList.toList())
+                viewModel.setSortType(SortName.NEW)
             }
 
             SortName.OLD -> {
-                binding.btnSort.text = getString(R.string.old)
-                typeList.sortByDescending { it.createdAt }
-                typeAdapter.submitList(typeList.toList())
+                viewModel.setSortType(SortName.OLD)
             }
 
             SortName.A_Z -> {
-                binding.btnSort.text = getString(R.string.a_z)
-                typeList.sortBy { it.name }
-                typeAdapter.submitList(typeList.toList())
+                viewModel.setSortType(SortName.A_Z)
 
             }
 
             SortName.Z_A -> {
-                binding.btnSort.text = getString(R.string.z_a)
-                typeList.sortByDescending { it.name }
-                typeAdapter.submitList(typeList.toList())
+                viewModel.setSortType(SortName.Z_A)
             }
-            else ->{
 
-            }
+            else -> { viewModel.setSortType(SortName.NEW)}
+
+
         }
     }
 

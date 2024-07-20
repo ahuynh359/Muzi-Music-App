@@ -27,8 +27,9 @@ import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class ManageTypeDetailFragment :
-     BaseFragment<FragmentManageTypeDetailBinding>(
-         FragmentManageTypeDetailBinding::inflate) {
+    BaseFragment<FragmentManageTypeDetailBinding>(
+        FragmentManageTypeDetailBinding::inflate
+    ) {
 
     companion object {
         const val TAG = "ManageTyperDetail"
@@ -36,48 +37,33 @@ class ManageTypeDetailFragment :
 
     private val viewModel by viewModels<ManageTypeViewModel>({ requireActivity() })
     private lateinit var currentType: Type
-    private  lateinit var file :  File
+    private lateinit var file: File
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        file= FileHelper.from(requireContext(), uri!!)!!
-        file.let {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar)
-
+        if (uri != null) {
+            val file = FileHelper.from(requireContext(), uri)!!
+            file.let {
+                viewModel.changeAvatar(currentType.id, it)
+            }
+        } else {
+            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.type_1)
-        val bitmap = (drawable as BitmapDrawable).bitmap
-        file = saveBitmapToFile(bitmap, requireContext())
+
         currentType = ManageTypeDetailFragmentArgs.fromBundle(requireArguments()).type
 
 
     }
-    private fun saveBitmapToFile(bitmap: Bitmap, context: Context): File {
-        val filesDir = context.filesDir
-        val imageFile = File(filesDir, "default_type")
 
-        val outputStream = FileOutputStream(imageFile)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        outputStream.flush()
-        outputStream.close()
-
-        return imageFile
-    }
 
     override fun onResume() {
         super.onResume()
         viewModel.getTypeById(currentType.id)
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,7 +85,7 @@ class ManageTypeDetailFragment :
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.imvAvatar)
-
+                binding.tvType.text = it.id.toString()
                 binding.edtType.setText(it.name)
 
                 binding.tvCreatedAt.text = it.createdAt
@@ -120,8 +106,8 @@ class ManageTypeDetailFragment :
 
         viewModel.updateTypeStatus.observe(viewLifecycleOwner) {
             it?.let {
-                if(it){
-                  findNavController().popBackStack()
+                if (it) {
+                    findNavController().popBackStack()
                 }
                 viewModel.mess?.let { mess ->
                     Toast.makeText(requireContext(), mess, Toast.LENGTH_LONG).show()
@@ -167,7 +153,7 @@ class ManageTypeDetailFragment :
         binding.btnDone.setOnClickListener {
             val str = binding.edtType.text.toString().trim()
             if (str.isNotEmpty()) {
-                viewModel.updateType(currentType.id, str, file!!)
+                viewModel.updateType(currentType.id, str)
             } else {
                 Toast.makeText(requireContext(), "Not Leave empty", Toast.LENGTH_SHORT).show()
             }

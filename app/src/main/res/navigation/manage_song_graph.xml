@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/manage_song_graph"
+    app:startDestination="@id/manageSongFragment">
+
+    <fragment
+        app:popExitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:enterAnim="@anim/slide_in_right"
+        android:id="@+id/manageSongDetailFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.detail_manage_song.ManageSongDetailFragment"
+        android:label="fragment_manage_song_detail"
+        tools:layout="@layout/fragment_manage_song_detail" >
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+    </fragment>
+    <dialog
+        android:id="@+id/manageSongMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.menu.ManageSongMenu"
+        android:label="fragment_manage_song_menu"
+        tools:layout="@layout/fragment_manage_song_menu" >
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+    </dialog>
+    <fragment
+        android:id="@+id/manageSongFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.ManageSongFragment"
+        android:label="fragment_manage_song"
+        tools:layout="@layout/fragment_manage_song" >
+
+        <action
+            android:id="@+id/action_manageSongFragment_to_manageSongDetailFragment"
+            app:destination="@id/manageSongDetailFragment" />
+        <action
+            android:id="@+id/action_manageSongFragment_to_manageSongMenu"
+            app:destination="@id/manageSongMenu" />
+
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageSongFragment_to_searchManageSongFragment"
+            app:destination="@id/searchManageSongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchManageSongFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.search.SearchManageSongFragment"
+        android:label="fragment_search_manage_song"
+        tools:layout="@layout/fragment_search_manage_song" >
+        <action
+            android:id="@+id/action_searchManageSongFragment_to_manageSongDetailFragment"
+            app:destination="@id/manageSongDetailFragment" />
+    </fragment>
+
+
+</navigation>

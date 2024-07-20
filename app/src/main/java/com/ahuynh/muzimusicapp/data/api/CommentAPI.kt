@@ -6,8 +6,10 @@ import com.ahuynh.muzimusicapp.data.model.request.EditCommentRequest
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponse
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseData
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseDataList
+import com.ahuynh.muzimusicapp.data.model.response.CommentResponseWithTotalCommentList
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Constants
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -19,6 +21,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface CommentAPI {
@@ -27,6 +30,11 @@ interface CommentAPI {
     @GET("${Constants.API_VERSION}/comment/song/{id}")
     suspend fun getAllCommentsOfSong(
         @Path("id") id: Long
+    ): Response<CommentResponseWithTotalCommentList>
+
+    @GET("${Constants.API_VERSION}/comment/all")
+    suspend fun getAllComments(
+        @Query("sort") sortName: SortName
     ): Response<CommentResponseDataList>
 
     @POST("${Constants.API_VERSION}/comment/create")

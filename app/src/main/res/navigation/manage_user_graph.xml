@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_graph"
+    app:startDestination="@id/manageUserFragment">
+
+    <fragment
+        android:id="@+id/manageUserFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserFragment"
+        android:label="fragment_manage_user"
+        tools:layout="@layout/fragment_manage_user" >
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageUserFragment_to_manageUserDetail"
+            app:destination="@id/manageUserDetail" />
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageUserFragment_to_searchManageUserFragment"
+            app:destination="@id/searchManageUserFragment" />
+        <action
+            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_in_right"
+            android:id="@+id/action_manageUserFragment_to_addUserFragment"
+            app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_manageUserFragment_to_manageUserMenu"
+            app:destination="@id/manageUserMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/manageUserDetail"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.detail_manage_user.ManageUserDetailFragment"
+        android:label="fragment_manage_user_detail"
+        tools:layout="@layout/fragment_manage_user_detail" >
+        <argument
+            android:name="user"
+            app:argType="com.ahuynh.muzimusicapp.data.model.User" />
+    </fragment>
+    <dialog
+        android:id="@+id/manageUserMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.menu.ManageUserMenu"
+        android:label="ManageUserMenu" >
+        <argument
+            android:name="user"
+            app:argType="com.ahuynh.muzimusicapp.data.model.User" />
+    </dialog>
+    <fragment
+        android:id="@+id/searchManageUserFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.search.SearchManageUserFragment"
+        android:label="fragment_search_manage_user"
+        tools:layout="@layout/fragment_search_manage_user" >
+        <action
+            android:id="@+id/action_searchManageUserFragment_to_manageUserDetail"
+            app:destination="@id/manageUserDetail" />
+        <action
+            android:id="@+id/action_searchManageUserFragment_to_manageUserMenu"
+            app:destination="@id/manageUserMenu" />
+    </fragment>
+    <fragment
+        app:popExitAnim="@anim/slide_out_right"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_left"
+        app:enterAnim="@anim/slide_in_right"
+        android:id="@+id/addUserFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.user.add_user.AddUserFragment"
+        android:label="fragment_add_user"
+        tools:layout="@layout/fragment_add_user" />
+
+
+
+
+
+</navigation>

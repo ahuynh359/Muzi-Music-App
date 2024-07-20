@@ -3,11 +3,13 @@ package com.ahuynh.muzimusicapp.data.service.remote
 import com.ahuynh.muzimusicapp.data.api.TypeAPI
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
+import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toListType
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -19,15 +21,16 @@ import javax.inject.Inject
 class TypeRemoteService @Inject constructor(
     private val typeAPI: TypeAPI
 ) : BaseRemoteService() {
-    suspend fun getAllType(): List<Type> {
-        val result = callApi { typeAPI.getAllType() }
+    suspend fun getAllTypes(sortName: SortName): List<Type> {
+        val result = callApi { typeAPI.getAllTypes(sortName) }
         return if (result is Response.Success) {
             result.data.data.toListType()
         } else {
             arrayListOf()
         }
     }
-    suspend fun getSongFromType(id : Long): List<Song> {
+
+    suspend fun getSongFromType(id: Long): List<Song> {
         val result = callApi { typeAPI.getSongFromType(id) }
         return if (result is Response.Success) {
             result.data.data.toListSong()
@@ -36,7 +39,7 @@ class TypeRemoteService @Inject constructor(
         }
     }
 
-    suspend fun getTypeById(id : Long): Type? {
+    suspend fun getTypeById(id: Long): Type? {
         val result = callApi { typeAPI.getTypeById(id) }
         return if (result is Response.Success) {
             result.data.data.toType()
@@ -46,28 +49,40 @@ class TypeRemoteService @Inject constructor(
     }
 
 
-    suspend fun createType(name : String ,avatar : File): Response<TypeResponseData> {
+    suspend fun createType(name: String, avatar: File): Response<TypeResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
-        return callApi { typeAPI.createType(name, MultipartBody.Part.createFormData(
-            "avatar",
-            avatar.name,
-            imageFileRequestBody
-        )) }
+        return callApi {
+            typeAPI.createType(
+                name, MultipartBody.Part.createFormData(
+                    "avatar",
+                    avatar.name,
+                    imageFileRequestBody
+                )
+            )
+        }
     }
 
-    suspend fun updateType(id : Long ,name : String ,avatar : File): Response<TypeResponseData> {
-        val imageFileRequestBody =
-            avatar.asRequestBody("image/*".toMediaTypeOrNull())
-        return callApi { typeAPI.updateType(id,name, MultipartBody.Part.createFormData(
-            "avatar",
-            avatar.name,
-            imageFileRequestBody
-        )) }
+    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): Response<TypeResponseData> {
+        return callApi { typeAPI.updateType(updateTypeRequest) }
     }
 
-    suspend fun deleteType(id: Long)  : Response<MessageResponse>{
+    suspend fun deleteType(id: Long): Response<MessageResponse> {
         return callApi { typeAPI.deleteType(id) }
+    }
+
+    suspend fun changeAvatar(id: Long, file: File): Response<TypeResponseData> {
+        val imageFileRequestBody =
+            file.asRequestBody("image/*".toMediaTypeOrNull())
+        return callApi {
+            typeAPI.changeAvatar(
+                id, MultipartBody.Part.createFormData(
+                    "avatar",
+                    file.name,
+                    imageFileRequestBody
+                )
+            )
+        }
     }
 
 

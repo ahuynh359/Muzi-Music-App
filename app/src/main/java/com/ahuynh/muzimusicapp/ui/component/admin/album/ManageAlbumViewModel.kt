@@ -36,7 +36,7 @@ class ManageAlbumViewModel @Inject constructor(
     fun getNewAlbums() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            albumList.postValue(albumRepository.getNewAlbums())
+            albumList.postValue(albumRepository.getAllAlbums(SortName.NEW))
 
         }
         registerEventParentJobFinish()

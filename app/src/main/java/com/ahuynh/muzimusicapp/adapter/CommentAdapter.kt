@@ -32,7 +32,7 @@ class CommentAdapter(private val listener: OnCommentClicked) :
                 .into(binding.imvAvatar)
             binding.tvName.text = comment.user.username
             binding.tvContent.text = comment.content
-            binding.tvTime.text = comment.time
+            //binding.tvTime.text = comment.time
 
 
         }

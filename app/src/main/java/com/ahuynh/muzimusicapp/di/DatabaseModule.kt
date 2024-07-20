@@ -22,7 +22,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDB(@ApplicationContext appContext: Context): AppDatabase {
-        return Room.databaseBuilder(appContext, AppDatabase::class.java, "muzi_music_db").build()
+        return Room.databaseBuilder(appContext, AppDatabase::class.java, "abc_db").build()
     }
 
 

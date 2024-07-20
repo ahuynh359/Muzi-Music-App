@@ -8,12 +8,20 @@
     <fragment
         android:id="@+id/step1Fragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.add_song.step.Step1Fragment"
-        android:label="Step1Fragment" />
+        android:label="Step1Fragment" >
+        <action
+            android:id="@+id/action_step1Fragment_to_step2Fragment"
+            app:destination="@id/step2Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/step2Fragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.add_song.step.Step2Fragment"
         android:label="fragment_step2"
-        tools:layout="@layout/fragment_step2" />
+        tools:layout="@layout/fragment_step2" >
+        <action
+            android:id="@+id/action_step2Fragment_to_step3Fragment"
+            app:destination="@id/step3Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/step3Fragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.add_song.step.Step3Fragment"

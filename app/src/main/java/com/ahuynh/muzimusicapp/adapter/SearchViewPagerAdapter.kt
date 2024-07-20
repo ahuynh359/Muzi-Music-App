@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 
-class SearchViewPagerAdapter(private val items: ArrayList<Fragment>, activity: AppCompatActivity) :
+class SearchViewPagerAdapter(private val items: List<Fragment>, activity: AppCompatActivity) :
     FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int = items.size

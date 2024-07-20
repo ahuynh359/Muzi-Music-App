@@ -9,6 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.toListAlbum
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -19,17 +20,8 @@ import javax.inject.Inject
 class AlbumRemoteService @Inject constructor(
     private val albumAPI: AlbumAPI
 ) : BaseRemoteService() {
-    suspend fun getNewAlbums(): List<Album> {
-        val result = callApi { albumAPI.getNewAlbums() }
-        return if (result is Response.Success) {
-            result.data.data.toListAlbum()
-        } else {
-            arrayListOf()
-        }
-    }
-
-    suspend fun getAllAlbums(): List<Album> {
-        val result = callApi { albumAPI.getAllAlbum() }
+    suspend fun getAllAlbums(sort: SortName): List<Album> {
+        val result = callApi { albumAPI.getAllAlbums(sort) }
         return if (result is Response.Success) {
             result.data.data.toListAlbum()
         } else {
@@ -75,7 +67,7 @@ class AlbumRemoteService @Inject constructor(
         return callApi { albumAPI.updateAlbum(updateAlbumRequest) }
     }
 
-    suspend fun updateAvatar(id : Long, avatar : File): Response<AlbumResponseData> {
+    suspend fun updateAvatar(id: Long, avatar: File): Response<AlbumResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {

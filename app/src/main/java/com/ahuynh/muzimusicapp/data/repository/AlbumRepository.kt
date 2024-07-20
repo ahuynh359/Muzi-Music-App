@@ -7,6 +7,7 @@ import com.ahuynh.muzimusicapp.data.model.response.AlbumResponseData
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.service.remote.AlbumRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +22,9 @@ class AlbumRepository @Inject constructor(
 
 ) {
 
-    suspend fun getNewAlbums(): List<Album> {
+    suspend fun getAllAlbums(sort : SortName): List<Album> {
         return withContext(dispatcher) {
-            albumRemoteService.getNewAlbums()
+            albumRemoteService.getAllAlbums(sort)
         }
     }
 

@@ -6,16 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.component.admin.song.add_song.step.Step1Fragment">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="@dimen/_32dp"
-        android:layout_height="@dimen/_32dp"
-        android:layout_marginStart="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_34dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_name"
@@ -25,7 +16,8 @@
         android:fontFamily="@font/bold"
         android:text="@string/song_name"
         android:textSize="@dimen/_26sp"
-        app:layout_constraintStart_toStartOf="@id/btn_back"
+        android:layout_marginStart="@dimen/_24dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imv_avatar" />
 
 
@@ -52,11 +44,11 @@
         android:id="@+id/imv_avatar"
         android:layout_width="@dimen/_123dp"
         android:layout_height="@dimen/_123dp"
-        android:src="@drawable/one_direction"
-        android:theme="@style/circle"
+        android:src="@drawable/song"
+        android:theme="@style/rounded_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.component.admin.type.ManageTypeFragment">
+
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:imeOptions="actionSearch"
+        android:id="@+id/edt_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="13dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/bg_edt_search_white"
+        android:drawableStart="@drawable/ic_search_big"
+        android:drawablePadding="@dimen/_11dp"
+        android:fontFamily="@font/medium"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:hint="@string/search_singer"
+        android:textColor="#131313"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_add"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="@dimen/_50dp"
+        android:layout_marginEnd="@dimen/_15dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_add"
+        android:text="@string/recents"
+        app:layout_constraintTop_toBottomOf="@id/edt_search"
+        app:layout_constraintEnd_toEndOf="@id/edt_search"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/btn_add"
+        app:layout_constraintTop_toTopOf="@id/btn_add"
+        android:drawableStart="@drawable/ic_sort"
+        android:fontFamily="@font/bold"
+        android:text="@string/sort"
+        android:textSize="@dimen/_12sp"
+
+        app:layout_constraintStart_toStartOf="@id/edt_search"
+        app:layout_constraintTop_toBottomOf="@id/edt_search" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:id="@+id/shimmer"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_shimmer_round" />
+
+            <include layout="@layout/item_shimmer_round" />
+
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+            <include layout="@layout/item_shimmer_round" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:id="@+id/rcy_singer"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:itemCount="5"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add"
+        tools:listitem="@layout/item_type_full" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -126,4 +126,14 @@
     <string name="no_album">No Album</string>
     <string name="clear">Clear</string>
     <string name="top_songs">Top Songs</string>
+    <string name="file_music">File Music</string>
+    <string name="choose_album">Choose Album</string>
+    <string name="choose_type">Choose type</string>
+    <string name="choose_singer">Choose singer</string>
+    <string name="manage_singer">Manage Singer</string>
+    <string name="search_singer">Search Singer</string>
+    <string name="singer_name">Singer Name</string>
+    <string name="search_comment">Search Comment</string>
+    <string name="no_comments">No Comments</string>
+    <string name="admin">Admin</string>
 </resources>

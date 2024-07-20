@@ -43,13 +43,13 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        val file: File? = FileHelper.from(requireContext(), uri!!)
-        file?.let {
-            viewModel.changeAvatar(
-                currentUser.id,
-                file
-            )
-
+        if (uri != null) {
+            val file = FileHelper.from(requireContext(), uri)!!
+            file.let {
+                viewModel.changeAvatar(currentUser.id,it)
+            }
+        } else {
+            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
     private val loginTextWatcher = object : TextWatcher {
@@ -81,7 +81,6 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentUser = ManageUserDetailFragmentArgs.fromBundle(requireArguments()).user
-        viewModel.getUserById(currentUser.id)
 
     }
 
@@ -97,8 +96,7 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
 
     private fun observe() {
 
-        viewModel.user.observe(viewLifecycleOwner) {
-            it?.let {
+            currentUser?.let {
                 Glide
                     .with(binding.imvAvatar.context)
                     .load(it.avatar)
@@ -121,7 +119,6 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
 
             }
 
-        }
 
         viewModel.avatar.observe(viewLifecycleOwner) {
             Glide

@@ -39,15 +39,18 @@ class AddTypeFragment : BaseFragment<FragmentAddTypeBinding>(FragmentAddTypeBind
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        file= FileHelper.from(requireContext(), uri!!)!!
-        file.let {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar)
-
+        if (uri != null) {
+            file = FileHelper.from(requireContext(), uri)!!
+            file.let {
+                Glide
+                    .with(binding.imvAvatar.context)
+                    .load(it)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.imvAvatar)
+            }
+        } else {
+            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
 

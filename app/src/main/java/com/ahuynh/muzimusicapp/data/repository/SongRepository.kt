@@ -2,17 +2,24 @@ package com.ahuynh.muzimusicapp.data.repository
 
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.request.UpdateSongRequest
 import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.service.local.SongLocalService
 import com.ahuynh.muzimusicapp.data.service.remote.SongRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Response
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import java.io.File
 import javax.inject.Inject
 
 class SongRepository @Inject constructor(
@@ -23,9 +30,9 @@ class SongRepository @Inject constructor(
 
 ) {
 
-    suspend fun getNewSongs(): List<Song> {
+    suspend fun getAllSongs(sortName: SortName): List<Song> {
         return withContext(dispatcher) {
-            songRemoteService.getNewSongs()
+            songRemoteService.getAllSongs(sortName)
         }
     }
 
@@ -94,6 +101,44 @@ class SongRepository @Inject constructor(
             songLocalService.clearRecentSongs()
         }
 
+    }
+
+    suspend fun createSong(
+        name: String,
+        avatar: File,
+        file: File,
+        lyrics: String,
+        albumId: Long,
+        singerId: Set<Long>,
+        typeId: Set<Long>
+    ) : Response<SongResponseData> {
+        return withContext(dispatcher) {
+            songRemoteService.createSong(name, avatar, file, lyrics, albumId, singerId, typeId)
+        }
+    }
+
+    suspend fun changeAvatar(id: Long, file: File): Response<SongResponseData> {
+        return withContext(dispatcher) {
+            songRemoteService.changeAvatar(id , file)
+        }
+    }
+
+    suspend fun uploadMusic(id: Long, file: File): Response<SongResponseData> {
+        return withContext(dispatcher) {
+            songRemoteService.uploadMusic(id , file)
+        }
+    }
+
+    suspend fun updateSong(updateSongRequest: UpdateSongRequest): Response<SongResponseData> {
+        return withContext(dispatcher) {
+            songRemoteService.updateSong(updateSongRequest)
+        }
+    }
+
+    suspend fun deleteSong(id: Long): Response<MessageResponse> {
+        return withContext(dispatcher) {
+            songRemoteService.deleteSong(id)
+        }
     }
 
 

@@ -2,13 +2,23 @@ package com.ahuynh.muzimusicapp.ui.component.admin.song
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.ListenableWorker.Result.Success
+import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
+import com.ahuynh.muzimusicapp.data.model.request.UpdateSongRequest
+import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
+import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
+import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -16,59 +26,59 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ManageSongViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val songRepository: SongRepository
+    private val songRepository: SongRepository,
+    private val sharePreferencesHelper: SharePreferencesHelper,
+    private val albumRepository: AlbumRepository,
+    private val singerRepository: SingerRepository,
+    private val typeRepository: TypeRepository,
 ) : BaseViewModel() {
+    var nameSong = ""
+    var lyricsSong = ""
     var userList = MutableLiveData<List<User>>()
-    var deleteUserStatus = MutableLiveData<Boolean?>()
-    var createUserStatus = MutableLiveData<Boolean?>()
     var user = MutableLiveData<User>()
-    var mess : String ?= null
+    var mess: String? = null
     var avatar = MutableLiveData<String>()
-    var newSongList = MutableLiveData<List<Song>>()
-    fun getNewSongs() {
+    var mp3File = MutableLiveData<String>()
+    var songList = MutableLiveData<List<Song>>()
+    var sortSong = MutableLiveData<SortName>()
+    var song = MutableLiveData<Song>()
+    var singerIds: MutableSet<Long> = mutableSetOf()
+    var albumList = MutableLiveData<List<Album>>()
+    var singerName: String = ""
+    var singerList = MutableLiveData<List<Singer>>()
+    var typeName: String = ""
+    var typeList = MutableLiveData<List<Type>>()
+    var albumId: Long? = null
+    var albumName: String = ""
+    var updateSongStatus = MutableLiveData<Boolean?>()
+    var deleteSongStatus = MutableLiveData<Boolean?>()
+    var typeIds: MutableSet<Long> = mutableSetOf()
+    fun getSortSong() {
+        viewModelScope.launch {
+            sortSong.postValue(sharePreferencesHelper.isSortSong())
+        }
+    }
+
+    fun setSortSong(sortName: SortName) {
+        viewModelScope.launch {
+            sortSong.postValue(sortName)
+            sharePreferencesHelper.setSortSong(sortName)
+        }
+    }
+
+    fun getAllSongs() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            newSongList.postValue(songRepository.getNewSongs())
+            songList.postValue(songRepository.getAllSongs(sharePreferencesHelper.isSortSong()))
         }
         registerEventParentJobFinish()
     }
 
-//    fun getNewUsers() {
-//        isLoading.postValue(true)
-//        parentJob = viewModelScope.launch {
-//            userList.postValue(userRepository.getNewUsers())
-//        }
-//        registerEventParentJobFinish()
-//    }
 
-    fun getUserById(id: Long) {
+    fun changeAvatar(id: Long, file: File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            user.postValue(userRepository.getUserById(id))
-        }
-        registerEventParentJobFinish()
-    }
-
-    fun createUser(addUserRequest: AddUserRequest){
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val result = userRepository.createUser(addUserRequest)
-            if(result is Response.Success){
-                mess = result.data.message
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
-            }
-            createUserStatus.postValue(result is Response.Success)
-        }
-        registerEventParentJobFinish()
-
-    }
-
-    fun changeAvatar(id : Long,file: File, ) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val result = userRepository.changeAvatar( id,file)
+            val result = songRepository.changeAvatar(id, file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
             } else if (result is Response.Failure) {
@@ -82,7 +92,87 @@ class ManageSongViewModel @Inject constructor(
 
     }
 
+    fun getSongById(id: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val result = songRepository.getSongById(id)
+            result?.let {
+                song.postValue(it)
+            }
 
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun uploadMusic(id: Long, file: File) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val result = songRepository.uploadMusic(id, file)
+            if (result is Response.Success) {
+                mp3File.postValue(result.data.data.avatar)
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+
+            }
+            registerEventParentJobFinish()
+
+
+        }
+    }
+
+    fun updateSong(id: Long) {
+        parentJob = viewModelScope.launch {
+            val updateSongRequest =
+                UpdateSongRequest(id, nameSong, lyricsSong, albumId!!, singerIds, typeIds)
+            val result = songRepository.updateSong(updateSongRequest)
+            if (result is Response.Success) {
+                mess = result.data.message
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+
+            }
+            updateSongStatus.postValue(result is Response.Success)
+            registerEventParentJobFinish()
+
+
+        }
+    }
+
+    fun getAllAlbums() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            albumList.postValue(albumRepository.getAllAlbums(SortName.A_Z))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun getAllSingers() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            singerList.postValue(singerRepository.getAllSingers(SortName.A_Z))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun getAllTypes() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            typeList.postValue(typeRepository.getAllTypes(SortName.A_Z))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun deleteSong(id: Long) {
+        viewModelScope.launch {
+            val result = songRepository.deleteSong(id)
+            if (result is Response.Success) {
+                mess = result.data.message
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+            }
+            deleteSongStatus.postValue(result is Response.Success)
+        }
+    }
 
 
 }

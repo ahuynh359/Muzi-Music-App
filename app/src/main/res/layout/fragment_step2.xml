@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.component.admin.song.add_song.step.Step2">
+    tools:context=".ui.component.admin.song.add_song.step.Step2Fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_file_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_34dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/file_music"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        app:drawableEndCompat="@drawable/ic_navigate_next"
+        android:id="@+id/edt_file_music"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/regular"
+        android:inputType="text"
+        android:padding="@dimen/_12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_file_music" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_lyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/lyrics"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/tv_file_music"
+        app:layout_constraintTop_toBottomOf="@id/edt_file_music" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:gravity="top"
+        android:hint="@string/lyrics"
+        android:id="@+id/edt_lyrics"
+        android:layout_width="0dp"
+        android:layout_marginBottom="@dimen/_40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/regular"
+        android:inputType="text"
+        android:padding="@dimen/_12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="@id/edt_file_music"
+        app:layout_constraintStart_toStartOf="@id/edt_file_music"
+        app:layout_constraintTop_toBottomOf="@id/tv_lyrics" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

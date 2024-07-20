@@ -60,6 +60,7 @@ class SearchManageUserFragment :
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     userAdapter.submitList(userList)
+                    binding.tvNoUser.visibility = View.INVISIBLE
 
                 } else
                     performSearch(newText)
@@ -92,7 +93,6 @@ class SearchManageUserFragment :
 
     private fun observeData() {
         viewModel.userList.observe(viewLifecycleOwner) {
-            Log.d("ABC user list", it.toString())
             binding.rcyUser.visibility = View.VISIBLE
             if (it != null) {
                 userList = it as ArrayList<User>

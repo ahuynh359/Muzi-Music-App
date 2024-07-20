@@ -43,9 +43,15 @@ data class SongResponse(
 
 }
 
-data class SongResponseData(
+data class SongResponseDataList(
     val message : String,
     val data: List<SongResponse>
+)
+
+
+data class SongResponseData(
+    val message : String,
+    val data: SongResponse
 )
 
 fun List<SongResponse>.toListSong(): List<Song> {

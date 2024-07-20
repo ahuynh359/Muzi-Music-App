@@ -6,7 +6,9 @@ data class CommentResponse(
     val id: Long,
     val content: String,
     val user: UserResponse,
-    val time: String
+    val parentCommentId: Long ?= null,
+    val createdAt: String,
+    val updatedAt: String
 
 ) {
     fun toComment(): Comment {
@@ -14,20 +16,26 @@ data class CommentResponse(
             id = this.id,
             content = this.content,
             user = this.user.toUser(),
-            time = this.time
+            parentCommentId = this.parentCommentId ,
+            createdAt = this.createdAt,
+            updatedAt = this.updatedAt
         )
     }
 }
 
-data class CommentResponseWithTotalComment
-    (
+data class CommentResponseWithTotalComment(
     val comments: List<CommentResponse>,
     val totalComments: Int,
 )
 
-data class CommentResponseDataList(
+data class CommentResponseWithTotalCommentList(
     val message: String,
     val data: CommentResponseWithTotalComment
+)
+
+data class CommentResponseDataList(
+    val message: String,
+    val data: List<CommentResponse>
 )
 
 data class CommentResponseData(

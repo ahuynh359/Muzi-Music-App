@@ -10,6 +10,7 @@ import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +48,7 @@ class HomeViewModel @Inject constructor(
     fun getNewSongs() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            newSongList.postValue(songRepository.getNewSongs())
+            newSongList.postValue(songRepository.getAllSongs(SortName.NEW))
         }
         registerEventParentJobFinish()
     }
@@ -63,7 +64,7 @@ class HomeViewModel @Inject constructor(
     fun getNewSingers() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            newSingerList.postValue(singerRepository.getNewSingers())
+            newSingerList.postValue(singerRepository.getAllSingers(SortName.NEW))
         }
         registerEventParentJobFinish()
     }
@@ -80,22 +81,12 @@ class HomeViewModel @Inject constructor(
     fun getNewAlbums() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            newAlbumList.postValue(albumRepository.getNewAlbums())
+            newAlbumList.postValue(albumRepository.getAllAlbums(SortName.NEW))
         }
         registerEventParentJobFinish()
     }
 
-    fun getSongById(id: Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val result = songRepository.getSongById(id)
-            result?.let {
-                song.postValue(it)
-            }
 
-        }
-        registerEventParentJobFinish()
-    }
 
     fun clearRecentSongs() {
         viewModelScope.launch {

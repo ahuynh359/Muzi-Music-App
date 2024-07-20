@@ -8,5 +8,7 @@ data class Singer(
     val id: Long,
     val name: String,
     val avatar: String,
+    val createdAt: String,
+    val updatedAt: String
 ) :
     Parcelable

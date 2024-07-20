@@ -124,8 +124,7 @@ class ResetPasswordFragment :
         }
 
         binding.btnBack.setOnClickListener {
-//            val action = ResetPasswordFragmentDirections.actionResetPasswordFragmentToForgotPasswordFragment()
-//            findNavController().navigate(action)
+
             findNavController().popBackStack(R.id.forgotPasswordFragment,true)
         }
     }

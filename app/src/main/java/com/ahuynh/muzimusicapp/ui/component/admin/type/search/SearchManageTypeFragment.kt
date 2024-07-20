@@ -32,7 +32,7 @@ class SearchManageTypeFragment : BaseFragment<FragmentSearchManageTypeBinding>(
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllType()
+        viewModel.getAllTypes()
     }
 
 
@@ -51,16 +51,17 @@ class SearchManageTypeFragment : BaseFragment<FragmentSearchManageTypeBinding>(
         binding.edtSearch.clearFocus()
         binding.edtSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     typeAdapter.submitList(typeList)
+                    binding.tvNoType.visibility = View.INVISIBLE
 
                 } else
                     performSearch(newText)
-                return true
+                return false
             }
         })
 
