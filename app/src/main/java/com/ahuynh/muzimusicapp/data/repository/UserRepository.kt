@@ -22,11 +22,6 @@ class UserRepository @Inject constructor(
 ) {
 
 
-    suspend fun getCurrentUser(): User? {
-        return withContext(dispatcher) {
-            userRemoteService.getCurrentUser()
-        }
-    }
 
     suspend fun changeAvatar(id: Long, file: File): Response<UserResponseData> {
         return withContext(dispatcher) {

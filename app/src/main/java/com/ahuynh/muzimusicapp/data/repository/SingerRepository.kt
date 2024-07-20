@@ -31,6 +31,12 @@ class SingerRepository @Inject constructor(
         }
     }
 
+    suspend fun getPopularSingers(): List<Singer> {
+        return withContext(dispatcher) {
+            singerService.getPopularSingers()
+        }
+    }
+
 
     suspend fun getSongsOfSinger(id : Long): List<Song> {
         return withContext(dispatcher) {

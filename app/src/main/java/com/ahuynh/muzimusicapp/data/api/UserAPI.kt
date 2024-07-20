@@ -29,14 +29,10 @@ import retrofit2.http.Query
 interface UserAPI {
 
 
-    @GET("${Constants.API_VERSION}/user/information")
-    suspend fun getCurrentUser(
-    ): Response<UserResponseData>
-
     @Multipart
     @PUT("${Constants.API_VERSION}/user/avatar/{id}")
     suspend fun changeAvatar(
-        @Path("id") id : Long,
+        @Path("id") id: Long,
         @Part avatar: MultipartBody.Part
     ): Response<UserResponseData>
 

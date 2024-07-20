@@ -99,25 +99,25 @@ class HomeMenuBottom : BottomSheetDialogFragment() {
                 }
 
                 override fun positiveAction() {
-                    if (currentPlaylist == null && oldSong != null) {
-                        //viewModel.deleteSong(currentSongOld!!)
-                        viewModel.deleteSong.observe(viewLifecycleOwner) {
-                            if (it) {
-                                dismiss()
-                            } else {
-                                makeErrorToast(requireContext(), "Error when delete song from system")
-                            }
-                        }
-                    }  else if(currentPlaylist != null){
-                        //viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSongOld!!)
-                        viewModel.deleteSongFromPlaylist.observe(viewLifecycleOwner) {
-                            if (it) {
-                                dismiss()
-                            } else {
-                                makeErrorToast(requireContext(), "Error when delete song from system")
-                            }
-                        }
-                    }
+//                    if (currentPlaylist == null && oldSong != null) {
+//                        //viewModel.deleteSong(currentSongOld!!)
+//                        viewModel.deleteSong.observe(viewLifecycleOwner) {
+//                            if (it) {
+//                                dismiss()
+//                            } else {
+//                                makeErrorToast(requireContext(), "Error when delete song from system")
+//                            }
+//                        }
+//                    }  else if(currentPlaylist != null){
+//                        //viewModel.deleteSongFromPlaylist(currentPlaylist!!,currentSongOld!!)
+//                        viewModel.deleteSongFromPlaylist.observe(viewLifecycleOwner) {
+//                            if (it) {
+//                                dismiss()
+//                            } else {
+//                                makeErrorToast(requireContext(), "Error when delete song from system")
+//                            }
+//                        }
+//                    }
 
 
                 }

@@ -26,23 +26,20 @@ constructor(
     var status = MutableLiveData<Boolean>(false)
     var mess: String? = null
 
-    init {
-        getUserInfo()
-    }
 
-    fun getUserInfo() {
+    fun getUserById() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            currentUser.postValue(userRepository.getCurrentUser())
+            currentUser.postValue(userRepository.getUserById(sharePreferencesHelper.getId()))
         }
         registerEventParentJobFinish()
     }
 
 
-    fun changeAvatar(id : Long, file:File) {
+    fun changeAvatar(id: Long, file: File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = userRepository.changeAvatar(  id,file)
+            val result = userRepository.changeAvatar(id, file)
             if (result is Response.Success) {
                 avatar.postValue(result.data.data.avatar)
             } else if (result is Response.Failure) {

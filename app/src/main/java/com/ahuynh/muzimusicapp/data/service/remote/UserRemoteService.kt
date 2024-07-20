@@ -22,14 +22,6 @@ class UserRemoteService @Inject constructor(
 ) : BaseRemoteService() {
 
 
-    suspend fun getCurrentUser(): User? {
-        val result = callApi { userAPI.getCurrentUser() }
-        return if (result is Response.Success) {
-            result.data.data.toUser()
-        } else {
-            null
-        }
-    }
 
     suspend fun changeAvatar(id : Long, file: File): Response<UserResponseData> {
         return callApi {

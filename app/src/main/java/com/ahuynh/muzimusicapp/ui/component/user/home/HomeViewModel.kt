@@ -19,23 +19,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val sharePreferencesHelper: SharePreferencesHelper,
     private val albumRepository: AlbumRepository,
     private val songRepository: SongRepository,
-    private val typeRepository: TypeRepository,
     private val singerRepository: SingerRepository
 ) : BaseViewModel() {
     var recentSong = MutableLiveData<List<SongEntity>>()
-    var song = MutableLiveData<Song>()
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
+    var popularSingerList = MutableLiveData<List<Singer>>()
     var newSongList = MutableLiveData<List<Song>>()
     var topSongList = MutableLiveData<List<Song>>()
-    var deleteSongFromPlaylist = MutableLiveData<Boolean>()
-
-    var songOfAlbum = MutableLiveData<List<Song>>()
-
-    var deleteSong = MutableLiveData<Boolean>()
 
 
     fun getRecentSongs() {
@@ -69,14 +62,6 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun getSongOfAlbum(id: Long) {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            songOfAlbum.postValue(albumRepository.getSongsFromAlbum(id))
-        }
-        registerEventParentJobFinish()
-    }
-
 
     fun getNewAlbums() {
         isLoading.postValue(true)
@@ -88,14 +73,13 @@ class HomeViewModel @Inject constructor(
 
 
 
-    fun clearRecentSongs() {
-        viewModelScope.launch {
-            songRepository.clearRecentSongs()
-            recentSong.postValue(songRepository.getRecentSongs())
-
+    fun getPopularSingers() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            popularSingerList.postValue(singerRepository.getPopularSingers())
         }
+        registerEventParentJobFinish()
     }
-
 
 }
 

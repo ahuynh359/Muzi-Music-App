@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.album.DetailAlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.album.AlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument

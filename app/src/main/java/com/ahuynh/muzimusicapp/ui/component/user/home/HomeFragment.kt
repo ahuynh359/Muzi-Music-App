@@ -35,12 +35,12 @@ import kotlin.math.min
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     AlbumHomeAdapter.OnAlbumHomeAdapterClicked,
     SongHomeAdapter.OnSongHomeClick, SingerHomeAdapter.OnSingerHomeClicked,
-    SongEntityAdapter.OnSongEntityClick{
+    SongEntityAdapter.OnSongEntityClick {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
     companion object {
-        const val TAG = "SongFragment"
+        const val TAG = "HomeFragment"
     }
 
     private val songEntityAdapter = SongEntityAdapter(this)
@@ -48,77 +48,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var topSongAdapter: VerticalSongAdapter
     private val newAlbumAdapter = AlbumHomeAdapter(this)
     private val newSingerAdapter = SingerHomeAdapter(this)
+    private val popularSingerAdapter = SingerHomeAdapter(this)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
+    private var popularSingerList: ArrayList<Singer> = arrayListOf()
     private var topSongList: ArrayList<Song> = arrayListOf()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("ABC", "On create")
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        Log.d("ABC", "On create view")
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d("ABC", "On view created")
+        getData()
         handleUI()
         observe()
 
-
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        Log.d("ABC", "onViewStateRestored")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("ABC", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getData()
-        Log.d("ABC", "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("ABC", "onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("ABC", "onStop")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d("ABC", "onSaveInstanceState")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("ABC", "onSaveInstanceState")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("ABC", "onDestroy")
-    }
 
     private fun getData() {
         viewModel.getNewSongs()
@@ -126,6 +72,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewSingers()
         viewModel.getRecentSongs()
         viewModel.getTopSongs()
+        viewModel.getPopularSingers()
+
 
     }
 
@@ -136,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleNewAlbumList()
         handleNewSingerList()
         handleTopSongList()
+        handlePopularSingerList()
 
 
     }
@@ -146,14 +95,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             if (it.isNotEmpty()) {
                 binding.rcyRecentSongs.visibility = View.VISIBLE
-                //newAlbumList = it as ArrayList<Album>
                 songEntityAdapter.submitList(it)
-                binding.shimmerRecentSongs.stopShimmer()
-                binding.shimmerRecentSongs.visibility = View.INVISIBLE
-
             } else {
                 binding.rcyRecentSongs.visibility = View.GONE
+                binding.tvRecentlyPlayed.visibility = View.GONE
+                binding.imvRecentlyPlayed.visibility = View.GONE
+                binding.tvWrap.visibility = View.GONE
             }
+
+            binding.shimmerRecentSongs.stopShimmer()
+            binding.shimmerRecentSongs.visibility = View.INVISIBLE
 
 
         }
@@ -229,6 +180,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    private fun handlePopularSingerList() {
+        binding.rcyPopularSinger.adapter = popularSingerAdapter
+        viewModel.popularSingerList.observe(viewLifecycleOwner) {
+            binding.rcyPopularSinger.visibility = View.VISIBLE
+            if (it != null) {
+                popularSingerList = it as ArrayList<Singer>
+                popularSingerAdapter.submitList(it)
+            }
+            binding.shimmerPopularSinger.stopShimmer()
+            binding.shimmerPopularSinger.visibility = View.INVISIBLE
+
+
+        }
+    }
 
 
     private fun handleUI() {
@@ -236,9 +201,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val snapHelper1 = LinearSnapHelper()
         snapHelper1.attachToRecyclerView(binding.rcyNewSong)
 
-        binding.tvClear.setOnClickListener {
-            viewModel.clearRecentSongs()
-        }
     }
 
     override fun onSongClicked(song: Song) {

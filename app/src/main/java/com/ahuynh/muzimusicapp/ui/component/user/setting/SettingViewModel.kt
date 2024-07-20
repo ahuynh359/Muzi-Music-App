@@ -41,7 +41,8 @@ constructor(private val playlistRepository: PlaylistRepository,
     fun getUserInfo(){
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            currentUser.postValue(userRepository.getCurrentUser())
+            currentUser.postValue(userRepository.getUserById(sharePreferencesHelper.getId()
+            ))
         }
         registerEventParentJobFinish()
     }
