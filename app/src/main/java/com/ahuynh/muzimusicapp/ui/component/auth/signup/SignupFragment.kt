@@ -15,85 +15,81 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate) {
+
     private val viewModel by viewModels<SignupViewModel>()
     private var isSignUpEnable = false
-    private val loginTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            val emailInput = binding.edtEmail.text.toString().trim()
-            val passwordInput = binding.edtPassword.text.toString().trim()
-            val confirmPasswordInput = binding.edtConfirmPassword.text.toString().trim()
-            val usernameInput = binding.edtUser.text.toString().trim()
-            isSignUpEnable =
-                emailInput.isNotEmpty() && passwordInput.isNotEmpty() && confirmPasswordInput.isNotEmpty() && usernameInput.isNotEmpty()
-            if (isSignUpEnable) {
-                binding.btnSignUp.setBackgroundResource(R.drawable.btn_enable)
-            } else
-                binding.btnSignUp.setBackgroundResource(R.drawable.btn_disable)
-        }
-
-    }
 
     companion object {
         const val TAG = "SignupFragment"
     }
 
+    private val loginTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            updateSignUpButtonState()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        handleUI()
+        setupUI()
         observeData()
-
     }
 
     private fun observeData() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.btnSignUp.isEnabled = !it
-            if (it == true) {
-                binding.pbLoading.show()
-            } else
-                binding.pbLoading.hide()
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.btnSignUp.isEnabled = !isLoading
+            if (isLoading) binding.pbLoading.show() else binding.pbLoading.hide()
         }
 
-        viewModel.status.observe(viewLifecycleOwner) {
-            if (it == true) {
+        viewModel.status.observe(viewLifecycleOwner) { status ->
+            if (status == true) {
                 findNavController().popBackStack()
-                Toast.makeText(requireContext(), "Create account successfully ", Toast.LENGTH_LONG)
-                    .show()
-            } else
-                if (viewModel.mess != null)
-                    Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun handleUI() {
-
-        binding.edtUser.addTextChangedListener(loginTextWatcher)
-        binding.edtEmail.addTextChangedListener(loginTextWatcher)
-        binding.edtConfirmPassword.addTextChangedListener(loginTextWatcher)
-        binding.edtPassword.addTextChangedListener(loginTextWatcher)
-
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        binding.btnSignUp.setOnClickListener {
-            if (isSignUpEnable) {
-                val signUpRequest = SignUpRequest(
-                    binding.edtEmail.text.toString(),
-                    binding.edtPassword.text.toString(),
-                    binding.edtConfirmPassword.text.toString(),
-                    binding.edtUser.text.toString()
-                )
-                viewModel.signup(signUpRequest)
+                showToast("Create account successfully")
+            } else {
+                viewModel.mess?.let { showToast(it) }
             }
         }
-
     }
 
+    private fun setupUI() {
+        binding.apply {
+            edtUser.addTextChangedListener(loginTextWatcher)
+            edtEmail.addTextChangedListener(loginTextWatcher)
+            edtConfirmPassword.addTextChangedListener(loginTextWatcher)
+            edtPassword.addTextChangedListener(loginTextWatcher)
 
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            btnSignUp.setOnClickListener {
+                if (isSignUpEnable) {
+                    val signUpRequest = SignUpRequest(
+                        edtEmail.text.toString(),
+                        edtPassword.text.toString(),
+                        edtConfirmPassword.text.toString(),
+                        edtUser.text.toString()
+                    )
+                    viewModel.signup(signUpRequest)
+                }
+            }
+        }
+    }
+
+    private fun updateSignUpButtonState() {
+        val emailInput = binding.edtEmail.text.toString().trim()
+        val passwordInput = binding.edtPassword.text.toString().trim()
+        val confirmPasswordInput = binding.edtConfirmPassword.text.toString().trim()
+        val usernameInput = binding.edtUser.text.toString().trim()
+
+        isSignUpEnable = emailInput.isNotEmpty() && passwordInput.isNotEmpty() && confirmPasswordInput.isNotEmpty() && usernameInput.isNotEmpty()
+
+        binding.btnSignUp.setBackgroundResource(if (isSignUpEnable) R.drawable.btn_enable else R.drawable.btn_disable)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
 }

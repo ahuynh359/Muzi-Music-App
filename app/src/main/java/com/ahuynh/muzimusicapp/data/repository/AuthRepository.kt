@@ -1,11 +1,12 @@
 package com.ahuynh.muzimusicapp.data.repository
 
-import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
+import com.ahuynh.muzimusicapp.data.model.request.EmailRequest
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoginResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
+import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.data.service.remote.AuthRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.utils.Response
@@ -20,7 +21,7 @@ class AuthRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun signup(signUpRequest: SignUpRequest): Response<MessageResponse> {
+    suspend fun signup(signUpRequest: SignUpRequest): Response<UserResponseData> {
         return withContext(dispatcher) {
             authRemoteService.signup(signUpRequest)
         }
@@ -33,9 +34,9 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Response<MessageResponse> {
+    suspend fun sendEmail(emailRequest: EmailRequest): Response<MessageResponse> {
         return withContext(dispatcher) {
-            authRemoteService.forgotPassword(forgotPasswordRequest)
+            authRemoteService.sendEmail(emailRequest)
         }
     }
 
@@ -44,8 +45,6 @@ class AuthRepository @Inject constructor(
             authRemoteService.changePassword(resetPasswordRequest)
         }
     }
-
-
 
 
 }

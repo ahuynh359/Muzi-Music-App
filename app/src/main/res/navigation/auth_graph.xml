@@ -25,7 +25,7 @@
         android:label="SignupFragment" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.auth.forgotpassword.ForgotPasswordFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.auth.changepassword.EmailFragment"
         android:label="ForgotPasswordFragment" >
         <action
             app:popExitAnim="@anim/slide_out_right"

@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.auth.forgotpassword
+package com.ahuynh.muzimusicapp.ui.component.auth.changepassword
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,15 +8,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.model.request.ForgotPasswordRequest
-import com.ahuynh.muzimusicapp.databinding.FragmentForgotPasswordBinding
+import com.ahuynh.muzimusicapp.databinding.FragmentEmailBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForgotPasswordFragment :
-    BaseFragment<FragmentForgotPasswordBinding>(FragmentForgotPasswordBinding::inflate) {
-    private val viewModel by viewModels<ForgotPasswordViewModel>()
+class EmailFragment : BaseFragment<FragmentEmailBinding>(FragmentEmailBinding::inflate) {
+    private val viewModel by viewModels<ResetPasswordViewModel>({ requireActivity() })
     private var isSendEnable = false
     private val sendTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -37,7 +35,7 @@ class ForgotPasswordFragment :
 
 
     companion object {
-        const val TAG = "ForgotPasswordFragment"
+        const val TAG = "EmailFragment"
     }
 
 
@@ -49,16 +47,13 @@ class ForgotPasswordFragment :
 
     }
 
+
     private fun observeData() {
-        viewModel.status.observe(viewLifecycleOwner) {
-            if (it == true) {
-                val action = ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment()
-                findNavController().navigate(action)
-            } else if (viewModel.mess != null) Toast.makeText(
-                requireContext(),
-                viewModel.mess,
-                Toast.LENGTH_LONG
-            ).show()
+        viewModel.sendEmailStatus.observe(viewLifecycleOwner) { status ->
+            status?.let {
+                handleSendEmailStatus(it)
+            }
+            viewModel.sendEmailStatus.postValue(null)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -76,10 +71,24 @@ class ForgotPasswordFragment :
 
         binding.btnSend.setOnClickListener {
             if (isSendEnable) {
-                viewModel.forgotPassword(ForgotPasswordRequest(binding.edtEmail.text.toString()))
+                viewModel.email = binding.edtEmail.text.toString()
+                viewModel.sendEmail()
             }
         }
 
+
+    }
+
+    private fun handleSendEmailStatus(status: Boolean) {
+        if (status) {
+            val action = EmailFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment()
+            findNavController().navigate(action)
+        } else {
+
+            if (viewModel.mess != null) {
+                Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 

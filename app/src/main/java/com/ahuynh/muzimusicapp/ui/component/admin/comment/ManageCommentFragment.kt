@@ -88,7 +88,14 @@ class ManageCommentFragment :
 
     }
 
-    override fun onCommentClicked(comment: Comment) {
+
+
+    override fun onReplyComment(comment: Comment) {
+
+    }
+
+    override fun onHeartComment(comment: Comment) {
+
     }
 
     override fun openMenu(comment: Comment) {

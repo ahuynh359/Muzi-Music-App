@@ -28,6 +28,7 @@ import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDi
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 object Utils {
 
@@ -141,6 +142,14 @@ object Utils {
     }
      fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun formatTime(millisUntilFinished: Long): String {
+        val totalSeconds = millisUntilFinished / 1000
+        val hours = totalSeconds / 3600
+        val min = (totalSeconds % 3600) / 60
+        val sec = totalSeconds % 60
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, min, sec)
     }
 
 

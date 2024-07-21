@@ -16,13 +16,17 @@ class CommentAdapter(private val listener: OnCommentClicked) :
     inner class ViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.root.setOnClickListener {
-                listener.onCommentClicked(currentList[layoutPosition])
+            binding.btnHeart.setOnClickListener {
+                listener.onHeartComment(currentList[layoutPosition])
+            }
+            binding.tvReply.setOnClickListener {
+                listener.onReplyComment(currentList[layoutPosition])
             }
             binding.btnMore.setOnClickListener {
                 listener.openMenu(currentList[layoutPosition])
             }
         }
+
         fun bind(comment: Comment) {
             Glide
                 .with(binding.imvAvatar.context)
@@ -32,7 +36,7 @@ class CommentAdapter(private val listener: OnCommentClicked) :
                 .into(binding.imvAvatar)
             binding.tvName.text = comment.user.username
             binding.tvContent.text = comment.content
-            //binding.tvTime.text = comment.time
+            binding.tvTime.text = comment.createdAt
 
 
         }
@@ -64,8 +68,9 @@ class CommentAdapter(private val listener: OnCommentClicked) :
     }
 
     interface OnCommentClicked {
-        fun onCommentClicked(comment: Comment)
-        fun openMenu(comment : Comment)
+        fun onReplyComment(comment: Comment)
+        fun onHeartComment(comment: Comment)
+        fun openMenu(comment: Comment)
     }
 
 }

@@ -71,14 +71,12 @@ class SleepTimerDialog : DialogFragment() {
 
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-    }
+
 
 
     private fun startTimer() {
         if (!isTimerRunning) {
-            var time = seekBarProgress * 1000 ;
+            val time = seekBarProgress * 1000 ;
 
             timer = object : CountDownTimer(time, 1000) { // 10 seconds countdown
                 override fun onTick(millisUntilFinished: Long) {

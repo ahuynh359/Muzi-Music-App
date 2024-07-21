@@ -140,4 +140,6 @@
     <string name="popular_song">Popular Song</string>
     <string name="unfollow">Unfollow</string>
     <string name="follow">Follow</string>
+    <string name="reply">Reply</string>
+    <string name="comment_count"> %d Comments</string>
 </resources>

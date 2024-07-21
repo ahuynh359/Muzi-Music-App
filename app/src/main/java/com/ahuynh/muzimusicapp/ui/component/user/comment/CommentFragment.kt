@@ -11,6 +11,7 @@ import android.widget.Toast
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.CommentAdapter
 import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -19,8 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommentFragment :
-    BottomSheetDialogFragment(), CommentAdapter.OnCommentClicked {
+class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentClicked {
 
     companion object {
         const val TAG = "CommentFragment"
@@ -29,7 +29,7 @@ class CommentFragment :
     private lateinit var currentSong: Song
 
     private lateinit var binding: FragmentCommentBinding
-    private val viewModel by viewModels<CommentViewModel>({requireActivity()})
+    private val viewModel by viewModels<CommentViewModel>({ requireActivity() })
     private val commentAdapter = CommentAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,28 +62,28 @@ class CommentFragment :
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCommentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//
         handleUI()
         observe()
-        getData()
     }
 
     private fun observe() {
         viewModel.commentList.observe(viewLifecycleOwner) {
             binding.rcyComment.visibility = View.VISIBLE
             if (it != null) {
-                //newSongList = it as ArrayList<Song>
                 commentAdapter.submitList(it)
             }
 
@@ -93,17 +93,16 @@ class CommentFragment :
         viewModel.totalComments.observe(viewLifecycleOwner) {
             if (it > 0) {
                 binding.tvNoComment.visibility = View.INVISIBLE
-                binding.tvComment.text = it.toString() + " Comments"
+                binding.tvComment.text = getString(R.string.comment_count, it);
             } else {
                 binding.tvNoComment.visibility = View.VISIBLE
-                binding.tvComment.text = "Comment"
+                binding.tvComment.text = getString(R.string.comment)
             }
         }
 
 
         viewModel.addCommentStatus.observe(viewLifecycleOwner) {
-            if (it != null &&it == true) {
-                viewModel.getCommentsOfSong(currentSong.id)
+            it?.let {
                 binding.edtComment.text = null
                 Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
             }
@@ -111,19 +110,15 @@ class CommentFragment :
             viewModel.addCommentStatus.postValue(null)
         }
         viewModel.deleteCommentStatus.observe(viewLifecycleOwner) {
-
-            if (it != null &&it == true) {
-                viewModel.getCommentsOfSong(currentSong.id)
-
+            it?.let {
+                Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
             }
             viewModel.deleteCommentStatus.postValue(null)
         }
 
         viewModel.updateCommentStatus.observe(viewLifecycleOwner) {
-
-            if (it != null &&it == true) {
-                viewModel.getCommentsOfSong(currentSong.id)
-
+            it?.let {
+                Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
             }
             viewModel.updateCommentStatus.postValue(null)
         }
@@ -153,17 +148,17 @@ class CommentFragment :
         viewModel.getCommentsOfSong(currentSong.id)
     }
 
-    override fun onCommentClicked(comment: Comment) {
+
+    override fun onReplyComment(comment: Comment) {
+    }
+
+    override fun onHeartComment(comment: Comment) {
     }
 
     override fun openMenu(comment: Comment) {
-        Log.d("ABC","Clicked")
         val action = CommentFragmentDirections.actionCommentFragmentToCommentMenu(comment)
         findNavController().navigate(action)
     }
-
-
-
 
 
 }
