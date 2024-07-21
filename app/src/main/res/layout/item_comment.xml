@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="10dp"
     android:layout_height="wrap_content">
 
 
@@ -11,8 +10,10 @@
         android:id="@+id/imv_avatar"
         android:layout_width="@dimen/_58dp"
         android:layout_height="@dimen/_58dp"
+        android:layout_marginStart="5dp"
         android:src="@drawable/one_direction"
         android:theme="@style/circle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
@@ -33,41 +34,45 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:ellipsize="end"
         android:fontFamily="@font/medium"
-        android:text="Good song"
+        android:maxLines="3"
         android:textColor="@color/white"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
+        app:layout_constraintEnd_toStartOf="@id/btn_more"
         app:layout_constraintStart_toStartOf="@id/tv_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        tools:text="Good songsdl;fjsdklfjsdklfjklsdjflksdjflksdjflkjfksldkfjklsdfjksdljfsdklfjfklsdjfsdlk" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:fontFamily="@font/medium"
         android:text="•"
         android:textColor="#797777"
         android:textSize="13sp"
-        android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_name"
         app:layout_constraintStart_toEndOf="@id/tv_name"
         app:layout_constraintTop_toTopOf="@id/tv_name" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_marginStart="5dp"
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:fontFamily="@font/medium"
-        android:text="13 minutes ago"
         android:textColor="#B3B3B3"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_name"
         app:layout_constraintStart_toEndOf="@id/circle"
-        app:layout_constraintTop_toTopOf="@id/tv_name" />
+        app:layout_constraintTop_toTopOf="@id/tv_name"
+        tools:text="13 minutes ago" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_more"
@@ -75,9 +80,32 @@
         android:layout_height="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_more_small"
+        app:layout_constraintBottom_toBottomOf="@id/tv_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
-        app:layout_constraintTop_toTopOf="@id/imv_avatar" />
+        app:layout_constraintTop_toTopOf="@id/tv_content" />
 
+    <androidx.appcompat.widget.AppCompatImageButton
+
+        android:id="@+id/btn_heart"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintStart_toStartOf="@id/tv_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/demi"
+        android:text="Reply"
+        android:textColor="@color/dusty_gray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_heart"
+        app:layout_constraintStart_toEndOf="@id/btn_heart"
+        app:layout_constraintTop_toTopOf="@id/btn_heart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
