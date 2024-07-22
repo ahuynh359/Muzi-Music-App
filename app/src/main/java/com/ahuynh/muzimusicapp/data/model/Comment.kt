@@ -8,7 +8,7 @@ data class Comment(
     val id: Long,
     val content: String,
     val user: User,
-    val parentCommentId: Long ?= null,
+    val  time : String,
     val createdAt: String,
     val updatedAt: String
 

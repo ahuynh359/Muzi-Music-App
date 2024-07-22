@@ -142,4 +142,5 @@
     <string name="follow">Follow</string>
     <string name="reply">Reply</string>
     <string name="comment_count"> %d Comments</string>
+    <string name="reply_of">Reply %1$s</string>
 </resources>

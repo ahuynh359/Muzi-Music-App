@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/custom_bg_playlist_add"
     android:padding="@dimen/_10dp"
-    tools:context=".ui.component.user.comment.CommentFragment">
+    tools:context=".ui.component.user.comment.reply.ReplyCommentFragment">
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_comment"
+        android:id="@+id/tv_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/demi"
-        android:text="@string/comment"
+        android:text="Reply"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +26,9 @@
         android:layout_height="50dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_down"
-        app:layout_constraintBottom_toBottomOf="@id/tv_comment"
+        app:layout_constraintBottom_toBottomOf="@id/tv_reply"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_comment" />
+        app:layout_constraintTop_toTopOf="@id/tv_reply" />
 
     <View
         android:id="@+id/view"
@@ -38,36 +38,32 @@
         android:background="@drawable/bg_circle_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_comment" />
+        app:layout_constraintTop_toBottomOf="@id/tv_reply" />
+
+    <include
+
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/parent_comment"
+        layout="@layout/item_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintBottom_toTopOf="@id/view_1"
-        android:id="@+id/rcy_comment"
+        android:layout_marginStart="50dp"
+        android:id="@+id/rcy_comment_reply"
         android:layout_width="@dimen/_0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/parent_comment"
+        app:layout_constraintVertical_bias="0.652"
         tools:itemCount="3"
-        tools:listitem="@layout/item_comment" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_no_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/demi"
-        android:text="@string/be_the_first_to_comment"
-        android:textColor="@color/green"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view" />
+        tools:listitem="@layout/item_comment_reply" />
 
     <View
         android:id="@+id/view_1"

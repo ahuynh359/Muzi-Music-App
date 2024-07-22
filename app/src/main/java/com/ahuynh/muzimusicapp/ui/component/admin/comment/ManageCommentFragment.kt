@@ -94,9 +94,7 @@ class ManageCommentFragment :
 
     }
 
-    override fun onHeartComment(comment: Comment) {
 
-    }
 
     override fun openMenu(comment: Comment) {
         val action =

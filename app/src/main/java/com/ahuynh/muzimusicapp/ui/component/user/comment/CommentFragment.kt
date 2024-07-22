@@ -2,13 +2,11 @@ package com.ahuynh.muzimusicapp.ui.component.user.comment
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
@@ -105,6 +103,7 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
             it?.let {
                 binding.edtComment.text = null
                 Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                getData()
             }
 
             viewModel.addCommentStatus.postValue(null)
@@ -112,6 +111,7 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
         viewModel.deleteCommentStatus.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                getData()
             }
             viewModel.deleteCommentStatus.postValue(null)
         }
@@ -119,6 +119,7 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
         viewModel.updateCommentStatus.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                getData()
             }
             viewModel.updateCommentStatus.postValue(null)
         }
@@ -142,6 +143,8 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
             true
         }
 
+
+
     }
 
     private fun getData() {
@@ -150,10 +153,11 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
 
 
     override fun onReplyComment(comment: Comment) {
+        val action = CommentFragmentDirections.actionCommentFragmentToReplyCommentFragment(currentSong,comment)
+        findNavController().navigate(action)
     }
 
-    override fun onHeartComment(comment: Comment) {
-    }
+
 
     override fun openMenu(comment: Comment) {
         val action = CommentFragmentDirections.actionCommentFragmentToCommentMenu(comment)

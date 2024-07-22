@@ -16,9 +16,7 @@ class CommentAdapter(private val listener: OnCommentClicked) :
     inner class ViewHolder(private val binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.btnHeart.setOnClickListener {
-                listener.onHeartComment(currentList[layoutPosition])
-            }
+
             binding.tvReply.setOnClickListener {
                 listener.onReplyComment(currentList[layoutPosition])
             }
@@ -36,7 +34,7 @@ class CommentAdapter(private val listener: OnCommentClicked) :
                 .into(binding.imvAvatar)
             binding.tvName.text = comment.user.username
             binding.tvContent.text = comment.content
-            binding.tvTime.text = comment.createdAt
+            binding.tvTime.text = comment.time
 
 
         }
@@ -69,7 +67,6 @@ class CommentAdapter(private val listener: OnCommentClicked) :
 
     interface OnCommentClicked {
         fun onReplyComment(comment: Comment)
-        fun onHeartComment(comment: Comment)
         fun openMenu(comment: Comment)
     }
 

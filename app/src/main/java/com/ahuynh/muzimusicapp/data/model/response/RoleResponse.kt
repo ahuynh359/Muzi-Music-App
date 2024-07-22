@@ -16,12 +16,6 @@ data class RoleResponse(
     }
 }
 
-data class RoleResponseData(
-    val data: List<AlbumResponse>
-)
 
-fun List<RoleResponse>.toRoleList(): List<Role> {
-    return map { it.toRole() }
-}
 
 

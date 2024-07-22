@@ -2,19 +2,13 @@ package com.ahuynh.muzimusicapp.data.api
 
 import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
-import com.ahuynh.muzimusicapp.data.model.request.PlaylistRequest
 import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
-import com.ahuynh.muzimusicapp.data.model.response.CheckLoveSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.UserResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseDataList
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Constants
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

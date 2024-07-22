@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.data.model.response
 
-import com.ahuynh.muzimusicapp.data.model.Playlist
 
 
 data class SearchResponse(

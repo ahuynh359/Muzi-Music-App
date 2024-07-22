@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_commentFragment_to_commentMenu"
             app:destination="@id/commentMenu" />
+        <action
+            android:id="@+id/action_commentFragment_to_replyCommentFragment"
+            app:destination="@id/replyCommentFragment" />
     </dialog>
     <fragment
         android:id="@+id/playerViewPagerFragment"
@@ -45,5 +48,20 @@
         <argument
             android:name="comment"
             app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
+    </dialog>
+    <dialog
+        android:id="@+id/replyCommentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.reply.ReplyCommentFragment"
+        android:label="fragment_reply_comment"
+        tools:layout="@layout/fragment_reply_comment" >
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+        <argument
+            android:name="comment"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
+        <action
+            android:id="@+id/action_replyCommentFragment_to_commentMenu"
+            app:destination="@id/commentMenu" />
     </dialog>
 </navigation>

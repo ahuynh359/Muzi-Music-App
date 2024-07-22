@@ -1,13 +1,10 @@
 package com.ahuynh.muzimusicapp.data.api
 
 import com.ahuynh.muzimusicapp.data.model.request.UpdateAlbumRequest
-import com.ahuynh.muzimusicapp.data.model.response.AlbumResponse
 import com.ahuynh.muzimusicapp.data.model.response.AlbumResponseData
-import com.ahuynh.muzimusicapp.data.model.response.ApiResponse
 import com.ahuynh.muzimusicapp.data.model.response.AlbumResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Constants
 import okhttp3.MultipartBody

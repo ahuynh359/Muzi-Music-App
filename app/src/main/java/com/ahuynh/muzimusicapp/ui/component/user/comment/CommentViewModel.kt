@@ -29,14 +29,7 @@ class CommentViewModel @Inject constructor(
     var updateCommentStatus = MutableLiveData<Boolean?>()
     var messageStatus : String ?= null
     var currentUserId = MutableLiveData<Long>()
-    init {
-        getCurrentId()
-    }
-    fun getCurrentId(){
-        viewModelScope.launch {
-            currentUserId.postValue(sharePreferencesHelper.getId())
-        }
-    }
+
 
 
     fun getCommentsOfSong(id: Long) {
@@ -47,7 +40,6 @@ class CommentViewModel @Inject constructor(
             if (result is Response.Success) {
                 commentList.postValue(result.data.data.comments.toCommentList())
                 totalComments.postValue(result.data.data.totalComments)
-                Log.d("ABC",result.data.data.totalComments.toString())
             }
 
         }
