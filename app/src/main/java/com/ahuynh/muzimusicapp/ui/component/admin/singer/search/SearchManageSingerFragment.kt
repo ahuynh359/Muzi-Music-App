@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
+import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchManageSingerBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -19,7 +20,7 @@ class SearchManageSingerFragment : BaseFragment<FragmentSearchManageSingerBindin
     SingerAdapter.OnSingerClicked {
 
     private val viewModel by viewModels<ManageSingerViewModel>({ requireActivity() })
-    private val singerAdapter = SingerAdapter(this)
+    private val singerAdapter = SingerAdapter(this,SingerViewType.LIST)
     private var singerList: ArrayList<Singer> = arrayListOf()
 
     companion object {

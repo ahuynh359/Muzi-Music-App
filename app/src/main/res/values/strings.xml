@@ -143,4 +143,5 @@
     <string name="reply">Reply</string>
     <string name="comment_count"> %d Comments</string>
     <string name="reply_of">Reply %1$s</string>
+    <string name="new_type">New Type</string>
 </resources>

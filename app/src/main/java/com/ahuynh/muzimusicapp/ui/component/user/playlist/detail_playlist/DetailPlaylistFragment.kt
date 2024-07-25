@@ -24,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailPlaylistFragment :
     BaseDialogBottomSheetFragment(),
-    SongAdapter.OnNewSongClicked {
+    SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "DetailPlaylistFragment"

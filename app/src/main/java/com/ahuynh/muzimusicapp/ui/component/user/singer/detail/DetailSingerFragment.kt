@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailSingerFragment :
     BaseFragment<FragmentDetailSingerBinding>(FragmentDetailSingerBinding::inflate),
-    SongAdapter.OnNewSongClicked {
+    SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "DetailSingerFragment"

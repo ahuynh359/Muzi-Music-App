@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.UserAdapter
-import com.ahuynh.muzimusicapp.adapter.home.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding

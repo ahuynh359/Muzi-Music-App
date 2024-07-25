@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
+import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentSingerBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -17,7 +18,7 @@ class SingerFragment : BaseFragment<FragmentSingerBinding>(FragmentSingerBinding
     companion object {
         const val TAG = "SingerFragment"
     }
-    private  val singerAdapter = SingerAdapter(this)
+    private  val singerAdapter = SingerAdapter(this,SingerViewType.LIST)
     private val viewModel by viewModels<SingerViewModel>()
     private lateinit var singerList: ArrayList<Singer>
 

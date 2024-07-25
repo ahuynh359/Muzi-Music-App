@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
+import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentManageSingerBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment
@@ -23,7 +24,7 @@ class ManageSingerFragment :
         const val TAG = "ManageSingerFragment"
     }
 
-    private val singerAdapter = SingerAdapter(this)
+    private val singerAdapter = SingerAdapter(this,SingerViewType.LIST)
 
     private var singerList: ArrayList<Singer> = arrayListOf()
 

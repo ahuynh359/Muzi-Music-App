@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchManageSongFragment : BaseFragment<FragmentSearchManageSongBinding>(
     FragmentSearchManageSongBinding::inflate) ,
-    SongAdapter.OnNewSongClicked{
+    SongAdapter.OnSongClicked{
 
     private val viewModel by viewModels<ManageSongViewModel>({ requireActivity() })
     private val songAdapter = SongAdapter(this)

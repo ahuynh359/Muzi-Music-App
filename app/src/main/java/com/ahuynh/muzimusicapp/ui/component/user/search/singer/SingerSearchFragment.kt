@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
+import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentSingerSearchBinding
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
@@ -18,7 +19,7 @@ class SingerSearchFragment : Fragment(), SingerAdapter.OnSingerClicked {
     private lateinit var binding: FragmentSingerSearchBinding
     private val viewModel by viewModels<SearchViewModel>({ requireActivity() })
 
-    private val singerAdapter = SingerAdapter(this)
+    private val singerAdapter = SingerAdapter(this,SingerViewType.LIST)
 
 
     override fun onCreateView(

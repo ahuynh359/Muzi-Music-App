@@ -11,16 +11,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
+import com.ahuynh.muzimusicapp.adapter.AlbumViewType
+import com.ahuynh.muzimusicapp.adapter.SingerAdapter
+import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongEntityAdapter
+import com.ahuynh.muzimusicapp.adapter.TypeAdapter
+import com.ahuynh.muzimusicapp.adapter.TypeViewType
 import com.ahuynh.muzimusicapp.adapter.VerticalSongAdapter
-import com.ahuynh.muzimusicapp.adapter.home.AlbumHomeAdapter
-import com.ahuynh.muzimusicapp.adapter.home.SingerHomeAdapter
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -34,13 +38,14 @@ import kotlin.math.min
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    AlbumHomeAdapter.OnAlbumHomeAdapterClicked,
-    SongHomeAdapter.OnSongHomeClick, SingerHomeAdapter.OnSingerHomeClicked,
-    SongEntityAdapter.OnSongEntityClick {
+    AlbumAdapter.OnAlbumClicked,
+    SongAdapter.OnSongClicked, SingerAdapter.OnSingerClicked,
+    SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
     private var scrollPosition = 0
+
     companion object {
         const val TAG = "HomeFragment"
         const val SCROLL_POSITION_KEY = "scroll_position_key"
@@ -48,14 +53,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val songEntityAdapter = SongEntityAdapter(this)
     private lateinit var newSongAdapter: VerticalSongAdapter
-    private lateinit var topSongAdapter: VerticalSongAdapter
-    private val newAlbumAdapter = AlbumHomeAdapter(this)
-    private val newSingerAdapter = SingerHomeAdapter(this)
+    private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
+    private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
+    private val newSingerAdapter = SingerAdapter(this,SingerViewType.HOME)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
+    private var newTypeList: ArrayList<Type> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
-    private var popularSongList: ArrayList<Song> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +73,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return super.onCreateView(inflater, container, savedInstanceState)
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleUI()
@@ -99,8 +105,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewAlbums()
         viewModel.getNewSingers()
         viewModel.getRecentSongs()
-        viewModel.getTopSongs()
-
+        viewModel.getNewTypes()
 
 
     }
@@ -111,10 +116,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleNewSongList()
         handleNewAlbumList()
         handleNewSingerList()
-        handleTopSongList()
+        handleNewTypeList()
 
 
+    }
 
+    private fun handleNewTypeList() {
+        binding.rcyNewType.adapter = newTypeAdapter
+        viewModel.newTypeList.observe(viewLifecycleOwner) {
+            Log.d("ABC", it.toString())
+            binding.rcyNewType.visibility = View.VISIBLE
+            if (it != null) {
+                newTypeList = it as ArrayList<Type>
+                newTypeAdapter.submitList(it)
+            }
+            binding.shimmerNewType.stopShimmer()
+            binding.shimmerNewType.visibility = View.INVISIBLE
+
+
+        }
     }
 
     private fun handleRecentSong() {
@@ -180,27 +200,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-    private fun handleTopSongList() {
-        viewModel.topSongList.observe(viewLifecycleOwner) {
-            binding.rcyPopularSong.visibility = View.VISIBLE
-            val list = it.subList(0, min(9, it.size))
-            popularSongList = it as ArrayList<Song>
-            val songLists = list.chunked(3)
-
-            topSongAdapter = VerticalSongAdapter(songLists, this)
-            binding.rcyPopularSong.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rcyPopularSong.adapter = topSongAdapter
-
-            binding.shimmerPopularSong.stopShimmer()
-            binding.shimmerPopularSong.visibility = View.INVISIBLE
-
-
-        }
-    }
-
-
-
     private fun handleUI() {
 
         val snapHelper1 = LinearSnapHelper()
@@ -231,6 +230,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     }
 
+    override fun onMoreItemAlbumClicked(album: Album) {
+
+    }
+
 
     override fun onSingerClicked(singer: Singer) {
         val action = HomeFragmentDirections.actionHomeFragmentToSingerDetailFragment(singer)
@@ -247,6 +250,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             song,
             arrayListOf(song)
         )
+    }
+
+    override fun onTypeClicked(type: Type) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailTypeFragment(type)
+        findNavController().navigate(action)
+    }
+
+    override fun onMoreClicked(type: Type) {
     }
 
 

@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.user.type.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,13 +25,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailTypeFragment :
     BaseDialogBottomSheetFragment(),
-    SongAdapter.OnNewSongClicked {
+    SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "DetailTypeFragment"
     }
 
-    private lateinit var songAdapter: SongAdapter
+    private var songAdapter = SongAdapter(this)
     private val viewModel by viewModels<TypeViewModel>()
     private lateinit var songOfType: ArrayList<Song>
     private lateinit var currentType: Type
@@ -47,15 +49,19 @@ class DetailTypeFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailTypeBinding.inflate(inflater,container,false)
+        binding = FragmentDetailTypeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getData()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        songAdapter = SongAdapter(this)
-        binding.rcySongs.adapter = songAdapter
-        getData()
+
+
         handleUI()
         observe()
 
@@ -87,8 +93,10 @@ class DetailTypeFragment :
     }
 
 
-
     private fun handleUI() {
+
+
+        binding.rcySongs.adapter = songAdapter
         Glide
             .with(binding.imvType.context)
             .load(currentType.avatar)
@@ -103,6 +111,21 @@ class DetailTypeFragment :
             dismiss()
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoSongs.visibility = View.GONE
+                    songAdapter.submitList(songOfType)
+                } else {
+                    filterSongs(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
 
         binding.btnPlay.setOnClickListener {
             startActivity(Intent(requireContext(), PlayerActivity::class.java))
@@ -114,8 +137,17 @@ class DetailTypeFragment :
         }
 
 
+    }
 
-
+    private fun filterSongs(query: String) {
+        val filteredList = songOfType.filter { song ->
+            song.name.contains(query, ignoreCase = true)
+        }
+        if (filteredList.isEmpty()) {
+            binding.tvNoSongs.visibility = View.VISIBLE
+        } else
+            binding.tvNoSongs.visibility = View.GONE
+        songAdapter.submitList(filteredList)
     }
 
     override fun onSongClicked(song: Song) {
@@ -130,8 +162,6 @@ class DetailTypeFragment :
     override fun openMenu(song: Song) {
         Toast.makeText(requireContext(), "ABC", Toast.LENGTH_LONG).show()
     }
-
-
 
 
 }

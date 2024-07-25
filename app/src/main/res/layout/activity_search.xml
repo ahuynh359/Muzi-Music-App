@@ -58,15 +58,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_search">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:id="@+id/tv_recent_searched"
-            android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatTextView
 
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/demi"
-            android:text="@string/recent_searches"
-            android:textSize="17sp" />
+                android:id="@+id/tv_recent_searched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/demi"
+                android:text="@string/recent_searches"
+                android:textSize="17sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/demi"
+                android:gravity="end"
+                android:text="@string/clear"
+                android:textColor="@color/green"
+                android:textSize="15sp" />
+        </LinearLayout>
 
 
         <com.google.android.material.chip.ChipGroup
@@ -78,13 +94,6 @@
         </com.google.android.material.chip.ChipGroup>
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcy_history"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10dp"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_song" />
     </LinearLayout>
 
 

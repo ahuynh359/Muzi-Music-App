@@ -554,8 +554,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="264" />
-                            <option name="y" value="740" />
+                            <option name="x" value="91" />
+                            <option name="y" value="421" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -577,7 +577,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_homeFragment_to_singerFragment">
+                            <entry key="action_homeFragment_to_singerDetailFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -714,8 +714,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="40" />
-                            <option name="y" value="745" />
+                            <option name="x" value="-133" />
+                            <option name="y" value="426" />
                           </Point>
                         </option>
                         <option name="myPositions">

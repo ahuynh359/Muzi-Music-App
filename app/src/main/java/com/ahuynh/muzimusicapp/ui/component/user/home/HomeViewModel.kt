@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
@@ -21,13 +22,14 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val songRepository: SongRepository,
-    private val singerRepository: SingerRepository
+    private val singerRepository: SingerRepository,
+    private val typeRepository: TypeRepository
 ) : BaseViewModel() {
     var recentSong = MutableLiveData<List<SongEntity>>()
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
     var newSongList = MutableLiveData<List<Song>>()
-    var topSongList = MutableLiveData<List<Song>>()
+    var newTypeList = MutableLiveData<List<Type>>()
 
 
     fun getRecentSongs() {
@@ -45,13 +47,6 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun getTopSongs() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            topSongList.postValue(songRepository.getTop10())
-        }
-        registerEventParentJobFinish()
-    }
 
     fun getNewSingers() {
         isLoading.postValue(true)
@@ -70,8 +65,13 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-
-
+    fun getNewTypes() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            newTypeList.postValue(typeRepository.getAllTypes(SortName.NEW))
+        }
+        registerEventParentJobFinish()
+    }
 
 
 }

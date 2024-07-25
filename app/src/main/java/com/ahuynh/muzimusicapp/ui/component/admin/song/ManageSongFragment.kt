@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ManageSongFragment :
     BaseFragment<FragmentManageSongBinding>(FragmentManageSongBinding::inflate),
-    SongAdapter.OnNewSongClicked, SortBottomSheetFragment.SortOptionListener {
+    SongAdapter.OnSongClicked, SortBottomSheetFragment.SortOptionListener {
 
     private val viewModel by viewModels<ManageSongViewModel>()
 

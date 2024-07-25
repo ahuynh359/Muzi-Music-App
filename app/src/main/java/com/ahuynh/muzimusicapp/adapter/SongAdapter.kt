@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.home.SongHomeAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 
-class SongAdapter(private val listener: OnNewSongClicked) :
+class SongAdapter(private val listener: OnSongClicked) :
     ListAdapter<Song, SongAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemSongBinding) :
@@ -65,7 +64,8 @@ class SongAdapter(private val listener: OnNewSongClicked) :
         return currentList.size
     }
 
-    interface OnNewSongClicked {
+
+    interface OnSongClicked {
         fun onSongClicked(song: Song)
         fun openMenu(song : Song)
     }

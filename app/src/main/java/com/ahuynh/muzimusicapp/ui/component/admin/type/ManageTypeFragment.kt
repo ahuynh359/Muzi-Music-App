@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
+import com.ahuynh.muzimusicapp.adapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentManageTypeBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment
@@ -25,7 +26,7 @@ class ManageTypeFragment :
         const val TAG = "ManageTypeFragment"
     }
 
-    private val typeAdapter = TypeAdapter(this)
+    private val typeAdapter = TypeAdapter(this,TypeViewType.FULL)
 
     private var typeList: ArrayList<Type> = arrayListOf()
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
+import com.ahuynh.muzimusicapp.adapter.AlbumViewType
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Type
@@ -27,7 +28,7 @@ class SearchManageAlbumFragment : BaseFragment<FragmentSearchManageAlbumBinding>
     AlbumAdapter.OnAlbumClicked{
 
     private val viewModel by viewModels<ManageAlbumViewModel>({ requireActivity() })
-    private val albumAdapter = AlbumAdapter(this)
+    private val albumAdapter = AlbumAdapter(this, AlbumViewType.LIST)
     private var albumList: ArrayList<Album> = arrayListOf()
 
     companion object {

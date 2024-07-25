@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.adapter.home.TypeAdapter
+import com.ahuynh.muzimusicapp.adapter.TypeAdapter
+import com.ahuynh.muzimusicapp.adapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -17,7 +18,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 TypeAdapter.OnTypeClicked{
 
     private val viewModel by viewModels<SearchViewModel>()
-    private val typeAdapter = TypeAdapter(this)
+    private val typeAdapter = TypeAdapter(this,TypeViewType.SIMPLE)
     private var typeList: ArrayList<Type> = arrayListOf()
 
     companion object {
@@ -33,6 +34,11 @@ TypeAdapter.OnTypeClicked{
         observeData()
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTypes()
     }
 
     private fun handleUI() {
@@ -53,5 +59,10 @@ TypeAdapter.OnTypeClicked{
     override fun onTypeClicked(type: Type) {
         findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailTypeFragment(type))
     }
+
+    override fun onMoreClicked(type: Type) {
+        
+    }
+
 
 }

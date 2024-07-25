@@ -20,7 +20,7 @@ import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SongSearchFragment : Fragment(), SongAdapter.OnNewSongClicked {
+class SongSearchFragment : Fragment(), SongAdapter.OnSongClicked {
 
     private lateinit var binding: FragmentSongSearchBinding
     private val viewModel by viewModels<SearchViewModel>({ requireActivity() })
@@ -64,6 +64,8 @@ class SongSearchFragment : Fragment(), SongAdapter.OnNewSongClicked {
                 song,
                 ArrayList(it)
             )
+
+
         }
     }
 

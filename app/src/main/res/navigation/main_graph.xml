@@ -23,6 +23,9 @@
             app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_homeFragment_to_singerDetailFragment"
             app:destination="@id/singerDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailTypeFragment"
+            app:destination="@id/detailTypeFragment" />
     </fragment>
 
 

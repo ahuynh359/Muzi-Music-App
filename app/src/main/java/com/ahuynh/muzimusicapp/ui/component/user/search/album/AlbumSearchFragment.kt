@@ -6,19 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.ahuynh.muzimusicapp.adapter.AlbumNoMoreAdapter
+import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
+import com.ahuynh.muzimusicapp.adapter.AlbumViewType
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.databinding.FragmentAlbumSearchBinding
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AlbumSearchFragment : Fragment(),  AlbumNoMoreAdapter.OnAlbumAdapterClicked{
+class AlbumSearchFragment : Fragment(),  AlbumAdapter.OnAlbumClicked{
 
     private lateinit var binding: FragmentAlbumSearchBinding
     private val viewModel by viewModels<SearchViewModel>({ requireActivity() })
 
-    private val albumAdapter=  AlbumNoMoreAdapter(this)
+    private val albumAdapter=  AlbumAdapter(this, AlbumViewType.LIST)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,10 @@ class AlbumSearchFragment : Fragment(),  AlbumNoMoreAdapter.OnAlbumAdapterClicke
 
 
     override fun onAlbumClicked(album: Album) {
+    }
+
+    override fun onMoreItemAlbumClicked(album: Album) {
+
     }
 
 }

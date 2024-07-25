@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.user.search
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.database.entity.SearchHistoryEntity
+import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
@@ -30,9 +31,6 @@ class SearchViewModel @Inject constructor(
     var searchHistory = MutableLiveData<List<SearchHistoryEntity>>()
     val isSearchDone = MutableLiveData(false)
 
-    init {
-        getAllSearchHistory()
-    }
 
 
     fun saveSearchKeywordHistory(keyword: String) {
@@ -60,6 +58,13 @@ class SearchViewModel @Inject constructor(
         }
         isSearchDone.postValue(true)
         registerEventParentJobFinish()
+    }
+
+    fun clearSearchHistory() {
+        viewModelScope.launch {
+            searchHistoryRepository.deleteAll()
+            searchHistory.postValue(searchHistoryRepository.getAllSearchHistory())
+        }
     }
 
 
