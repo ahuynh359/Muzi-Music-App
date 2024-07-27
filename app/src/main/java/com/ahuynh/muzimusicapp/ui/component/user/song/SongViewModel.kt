@@ -16,8 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SongViewModel @Inject
 constructor(
-    private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository,
     private val songRepository: SongRepository
 ) :
     BaseViewModel() {

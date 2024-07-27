@@ -90,9 +90,7 @@ class ManageCommentFragment :
 
 
 
-    override fun onReplyComment(comment: Comment) {
 
-    }
 
 
 
@@ -100,6 +98,10 @@ class ManageCommentFragment :
         val action =
             ManageCommentFragmentDirections.actionManageCommentFragmentToManageCommentMenu(comment)
         findNavController().navigate(action)
+    }
+
+    override fun replyComment(comment: Comment) {
+
     }
 
 

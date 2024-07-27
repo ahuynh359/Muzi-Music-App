@@ -6,6 +6,7 @@ import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 object Constants {
 
 
+    val PLAYLIST: String = "playlist"
     var SORT_USER: SortName = SortName.NEW
     const val NOTIFICATION_ID = 101
     const val PERMISSION_REQUEST_ID = 1

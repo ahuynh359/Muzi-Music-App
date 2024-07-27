@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.ChartAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
@@ -170,11 +171,11 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     }
 
     override fun openMenu(song: Song) {
-        SongMenu().apply {
-            arguments = Bundle().apply {
-                putParcelable(Constants.SONG, song)
-            }
-        }.show(requireActivity().supportFragmentManager, null)
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG,song)
+        }
+        fragment.show(requireActivity().supportFragmentManager,null)
     }
 
 

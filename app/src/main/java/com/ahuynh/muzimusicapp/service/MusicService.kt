@@ -3,11 +3,13 @@ package com.ahuynh.muzimusicapp.service
 import android.app.PendingIntent
 import android.app.Service
 import android.app.TaskStackBuilder
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.media.session.PlaybackState.ACTION_PAUSE
 import android.os.IBinder
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
@@ -65,6 +67,7 @@ class MusicService : Service() {
 
     }
 
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -95,17 +98,17 @@ class MusicService : Service() {
         val data = intent.getBundleExtra(DATA)
 
         data?.let {
-            val Song: Song? = data.parcelable<Song>(SONG)
+            val song: Song? = data.parcelable<Song>(SONG)
             val list: ArrayList<Song>? = data.parcelableArrayList<Song>(SONG_LIST)
 
-            Song?.let {
+            song?.let {
                 list?.let {
                     songList = list
                     if (Constants.IS_SHUFFLE) {
                         val shuffledSongList = ArrayList(songList).apply { shuffle() }
                         songList = shuffledSongList
                     }
-                    currentSongIndex = songList.indexOf(Song)
+                    currentSongIndex = songList.indexOf(song)
                     listenToMusic(currentSongIndex)
 
                 }

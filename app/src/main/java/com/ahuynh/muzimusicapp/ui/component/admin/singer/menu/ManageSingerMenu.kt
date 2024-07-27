@@ -40,7 +40,7 @@ class ManageSingerMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdap
         itemMenuList.add(
             ItemMenu(
                 "Delete Singer",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ahuynh.muzimusicapp.data.database.AppDatabase
 import com.ahuynh.muzimusicapp.data.database.dao.AlbumDao
 import com.ahuynh.muzimusicapp.data.database.dao.SearchHistoryDao
@@ -22,8 +24,10 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDB(@ApplicationContext appContext: Context): AppDatabase {
-        return Room.databaseBuilder(appContext, AppDatabase::class.java, "abc_db").build()
+        return Room.databaseBuilder(appContext, AppDatabase::class.java, "muzi_music_db").build()
     }
+
+
 
 
     @Provides

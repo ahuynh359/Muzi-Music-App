@@ -1,36 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/_10dp"
     android:background="@drawable/custom_bg_playlist_add"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.component.user.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet">
+    android:padding="@dimen/_10dp"
+    tools:context=".ui.component.user.song.add_song_to_playlist.AddSongToPlaylistFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_add_to_playlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
         android:fontFamily="@font/demi"
         android:text="@string/add_song_to_playlist"
         android:textSize="18sp"
-        android:layout_marginTop="@dimen/_20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/bg_circle_transparent"
-        app:layout_constraintTop_toBottomOf="@id/tv_add_to_playlist"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edt_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/_14dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_edt_search_white"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/black"
+        android:fontFamily="@font/medium"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_add_to_playlist" />
+
+    <View
+        android:id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/bg_circle_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_search" />
 
 
+    <LinearLayout
+        android:id="@+id/btn_add_song"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_add"
+            android:padding="16dp"
+            android:src="@drawable/ic_add" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_add_playlist"
+            style="@style/TextMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_15dp"
+            android:gravity="center_vertical"
+            android:text="@string/add_new_playlist" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/demi"
+        android:text="@string/there_is_no_playlist"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_song" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcy_playlist"
@@ -39,10 +104,9 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_song"
         tools:itemCount="3"
         tools:listitem="@layout/item_playlist" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

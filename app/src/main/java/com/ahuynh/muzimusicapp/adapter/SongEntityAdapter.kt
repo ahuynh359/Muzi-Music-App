@@ -10,6 +10,7 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemCircleRecentlyBinding
 import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -26,12 +27,7 @@ class SongEntityAdapter(private val listener: OnSongEntityClick) :
         }
 
         fun bind(song: SongEntity) {
-            Glide
-                .with(binding.imv.context)
-                .load(song.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imv)
+            binding.imvSinger.loadImage(song.avatar)
             binding.tvName.text = song.name
 
 

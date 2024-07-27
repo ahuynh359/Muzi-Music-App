@@ -1,4 +1,4 @@
-package com.ahuynh.muzimusicapp.ui.component.admin.type.Type
+package com.ahuynh.muzimusicapp.ui.component.admin.type.menu
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.MenuAdapter
-import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.data.model.ItemMenu
 import com.ahuynh.muzimusicapp.data.model.ItemMenuName
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.FragmentMangeUserMenuBinding
 import com.ahuynh.muzimusicapp.ui.base.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.ui.component.admin.type.ManageTypeViewModel
-import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
-import com.ahuynh.muzimusicapp.ui.component.admin.user.detail_manage_user.ManageUserDetailFragmentArgs
-import com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet
-import com.ahuynh.muzimusicapp.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +40,7 @@ class ManageTypeMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
         itemMenuList.add(
             ItemMenu(
                 "Delete type",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

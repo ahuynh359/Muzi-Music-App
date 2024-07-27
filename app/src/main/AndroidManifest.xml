@@ -64,12 +64,19 @@
         <activity
             android:name=".ui.component.player.PlayerActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|adjustResize"  />
         <activity
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:name=".ui.component.user.UserActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
 
+        <service
+            android:name=".service.BroadcastService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"
+            >
+
+        </service>
         <service
             android:name=".service.MusicService"
             android:exported="false"

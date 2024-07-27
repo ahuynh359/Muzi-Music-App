@@ -1,24 +1,18 @@
-package com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist_bottom_sheet
+package com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
-import com.ahuynh.muzimusicapp.data.repository.SongRepository
-import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddSongToPlaylistBottomSheetViewModel @Inject
+class AddSongToPlaylistViewModel @Inject
 constructor(
-    private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository,
-    private val songRepository: SongRepository,
     private val playlistRepository: PlaylistRepository
 ) :
     BaseViewModel() {

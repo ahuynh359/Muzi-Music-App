@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ahuynh.muzimusicapp.data.database.dao.AlbumDao
 import com.ahuynh.muzimusicapp.data.database.dao.SearchHistoryDao
 import com.ahuynh.muzimusicapp.data.database.dao.SingerDao

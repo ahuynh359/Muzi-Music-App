@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10dp"
+    android:background="@drawable/custom_bg_playlist_add"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/sleep_timer" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/bg_circle_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sleep" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:paddingVertical="@dimen/_15dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_10"
+        android:textColor="#B3B3B3"
+        android:textSize="15sp"
+        android:fontFamily="@font/medium"
+        android:text="10 seconds"
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:paddingVertical="15dp"
+        android:id="@+id/tv_15"
+        android:textColor="#B3B3B3"
+        android:textSize="15sp"
+        android:fontFamily="@font/medium"
+        android:text="15 seconds"
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_10"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:paddingVertical="15dp"
+        android:id="@+id/tv_20"
+        android:textColor="#B3B3B3"
+        android:textSize="15sp"
+        android:fontFamily="@font/medium"
+        android:text="20 seconds"
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_15"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:paddingVertical="15dp"
+        android:id="@+id/tv_60"
+        android:textColor="#B3B3B3"
+        android:textSize="15sp"
+        android:fontFamily="@font/medium"
+        android:text="60 seconds"
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_20"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

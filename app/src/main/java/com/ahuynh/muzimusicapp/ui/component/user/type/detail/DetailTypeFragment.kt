@@ -144,9 +144,12 @@ class DetailTypeFragment :
             song.name.contains(query, ignoreCase = true)
         }
         if (filteredList.isEmpty()) {
+            binding.btnPlay.visibility = View.GONE
             binding.tvNoSongs.visibility = View.VISIBLE
-        } else
+        } else {
             binding.tvNoSongs.visibility = View.GONE
+            binding.btnPlay.visibility = View.VISIBLE
+        }
         songAdapter.submitList(filteredList)
     }
 

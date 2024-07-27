@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.ahuynh.muzimusicapp.databinding.ItemSongChartBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -26,12 +27,7 @@ class ChartAdapter(private val listener: OnChartClicked) :
             }
         }
         fun bind(song: Song) {
-            Glide
-                .with(binding.imvSong.context)
-                .load(song.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvSong)
+            binding.imvSong.loadImage(song.avatar)
             binding.tvNameSong.text = song.name
             binding.tvSinger.text = song.singers.joinToString(", ") { it.name }
             binding.tvIndex.text = (layoutPosition + 1).toString()

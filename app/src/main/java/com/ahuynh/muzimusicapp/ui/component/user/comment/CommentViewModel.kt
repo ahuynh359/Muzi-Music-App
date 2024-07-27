@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.model.request.AddCommentRequest
 import com.ahuynh.muzimusicapp.data.model.request.EditCommentRequest
+import com.ahuynh.muzimusicapp.data.model.request.ReplyCommentRequest
 import com.ahuynh.muzimusicapp.data.model.response.toCommentList
 import com.ahuynh.muzimusicapp.data.repository.CommentRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
@@ -27,9 +28,16 @@ class CommentViewModel @Inject constructor(
     var addCommentStatus = MutableLiveData<Boolean?>()
     var deleteCommentStatus = MutableLiveData<Boolean?>()
     var updateCommentStatus = MutableLiveData<Boolean?>()
-    var messageStatus : String ?= null
+    var replyCommentStatus = MutableLiveData<Boolean?>()
+    var mess : String ?= null
     var currentUserId = MutableLiveData<Long>()
 
+    var commentReply = MutableLiveData<Comment?>()
+
+
+    init {
+        currentUserId.postValue(sharePreferencesHelper.getId())
+    }
 
 
     fun getCommentsOfSong(id: Long) {
@@ -52,10 +60,10 @@ class CommentViewModel @Inject constructor(
             val commentRequest = AddCommentRequest(id, str)
             val result = commentRepository.createComment(commentRequest)
             if (result is Response.Success) {
-                messageStatus = result.data.message
+                mess = result.data.message
 
             } else if(result is Response.Failure){
-                messageStatus = result.errorMessage
+                mess = result.errorMessage
             }
             addCommentStatus.postValue(result is Response.Success)
 
@@ -68,10 +76,10 @@ class CommentViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val result = commentRepository.deleteComment(commentId)
             if (result is Response.Success) {
-                messageStatus = result.data.message
+                mess = result.data.message
 
             } else if(result is Response.Failure){
-                messageStatus = result.errorMessage
+                mess = result.errorMessage
             }
             deleteCommentStatus.postValue(result is Response.Success)
 
@@ -85,12 +93,29 @@ class CommentViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val result = commentRepository.editComment(editCommentRequest)
             if (result is Response.Success) {
-                messageStatus = result.data.message
+                mess = result.data.message
 
             } else if(result is Response.Failure){
-                messageStatus = result.errorMessage
+                mess = result.errorMessage
             }
             updateCommentStatus.postValue(result is Response.Success)
+
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun addReply(songId: Long, parentId: Long, str: String) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val replyComment = ReplyCommentRequest(songId, parentId,str)
+            val result = commentRepository.replyComment(replyComment)
+            if (result is Response.Success) {
+                mess = result.data.message
+
+            } else if(result is Response.Failure){
+                mess = result.errorMessage
+            }
+            replyCommentStatus.postValue(result is Response.Success)
 
         }
         registerEventParentJobFinish()

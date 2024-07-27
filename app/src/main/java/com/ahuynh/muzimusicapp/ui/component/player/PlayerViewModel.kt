@@ -26,8 +26,6 @@ class PlayerViewModel @Inject constructor(
     var song = MutableLiveData<Song>()
 
     var loveSong = MutableLiveData<Boolean>()
-    var loveOrUnlove = MutableLiveData<Boolean>()
-    var sleepTime = MutableLiveData<String>()
     var songList = MutableLiveData<ArrayList<Song>>(arrayListOf())
     var isClear: Boolean = false
     var currentSongTime = MutableLiveData<Int>(0)

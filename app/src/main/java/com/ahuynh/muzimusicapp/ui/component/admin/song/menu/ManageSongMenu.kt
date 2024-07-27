@@ -1,7 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.song.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,7 @@ class ManageSongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
         itemMenuList.add(
             ItemMenu(
                 "Delete Song",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

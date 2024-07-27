@@ -1,17 +1,20 @@
 package com.ahuynh.muzimusicapp.ui.component.user.song.menu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.MenuAdapter
 import com.ahuynh.muzimusicapp.data.model.ItemMenu
 import com.ahuynh.muzimusicapp.data.model.ItemMenuName
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMenuBinding
-import com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist_bottom_sheet.AddSongToPlaylistBottomSheet
+import com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist.AddSongToPlaylistFragment
 import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -27,13 +30,15 @@ class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClick
     private val itemMenuList = ArrayList<ItemMenu>()
     private lateinit var binding: FragmentSongMenuBinding
 
-    //private val viewModel by viewModels<SongViewModel>()
     private lateinit var currentSong: Song
     private val menuAdapter = MenuAdapter(this)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val song: Song? = arguments?.parcelable(Constants.SONG)
+        if (song == null) dismiss()
+        else currentSong = song
         initData()
     }
 
@@ -56,7 +61,6 @@ class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClick
             container,
             false
         )
-        currentSong = arguments?.parcelable<Song>(Constants.SONG)!!
 
         handleUI()
         return binding.root
@@ -66,25 +70,21 @@ class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClick
         binding.rcyMenu.adapter = menuAdapter
         menuAdapter.submitList(itemMenuList)
 
-        Glide
-            .with(binding.imvSong.context)
-            .load(currentSong.avatar)
-            .centerCrop()
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(binding.imvSong)
+        binding.tvSinger.text = currentSong.singers.joinToString(", ") { it.name }
+        binding.imvSong.loadImage(currentSong.avatar)
         binding.tvNameSong.text = currentSong.name
 
 
     }
 
     override fun onMenuClicked(menu: ItemMenu) {
-        when(menu.type){
-            ItemMenuName.PLAYLIST ->{
-                AddSongToPlaylistBottomSheet().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(Constants.SONG,currentSong)
-                    }
-                }.show(requireActivity().supportFragmentManager,null)
+        when (menu.type) {
+            ItemMenuName.PLAYLIST -> {
+                val fragment = AddSongToPlaylistFragment()
+                fragment.arguments = Bundle().apply {
+                    putParcelable(Constants.SONG, currentSong)
+                }
+                fragment.show(requireActivity().supportFragmentManager, null)
                 dismiss()
             }
 

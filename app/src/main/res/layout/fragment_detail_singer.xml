@@ -1,134 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".ui.component.user.singer.detail.DetailSingerFragment">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="@dimen/_34dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
 
-        android:scaleType="fitXY"
-        android:id="@+id/imv_singer"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10dp"
+            android:background="@drawable/bg_edt_search_black"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/medium"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_back"
+            app:layout_constraintTop_toTopOf="@id/btn_back" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="@dimen/_20dp"
-        android:layout_marginStart="@dimen/_20dp"
-        android:background="@drawable/bg_circle_transparent"
-        android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="@id/imv_singer"
-        app:layout_constraintTop_toTopOf="@id/imv_singer" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_marginTop="@dimen/_20dp"
-        android:layout_marginStart="@dimen/_20dp"
-        android:id="@+id/tv_singer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/bold"
-        android:textSize="36sp"
-        app:layout_constraintTop_toBottomOf="@id/imv_singer"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Ariana Grande " />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="@dimen/_15dp"
-        android:background="@drawable/btn_transparent"
-        app:layout_constraintTop_toBottomOf="@id/tv_singer"
-        app:layout_constraintStart_toStartOf="@id/tv_singer"
-        android:id="@+id/btn_follow"
-        android:fontFamily="@font/demi"
-        android:textAllCaps="false"
-        android:text="Unfollow"
-        android:textSize="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"/>
-
-
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_play_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_singer" />
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="@dimen/_0dp"
-        android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_follow">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearance="@style/rounded_corner"
+            android:id="@+id/imv_singer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_search" />
 
 
-            android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:fontFamily="@font/bold"
+            android:textSize="36sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_singer"
+            tools:text="Ariana Grande " />
 
-            <include layout="@layout/item_shimmer_round" />
-
-            <include layout="@layout/item_shimmer_round" />
-
-            <include layout="@layout/item_shimmer_round" />
-
-            <include layout="@layout/item_shimmer_round" />
-
-            <include layout="@layout/item_shimmer_round" />
-
-            <include layout="@layout/item_shimmer_round" />
-
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcy_songs"
-        android:layout_width="@dimen/_0dp"
-        android:layout_height="@dimen/_0dp"
-        android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_follow"
-        tools:listitem="@layout/item_song" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/_15dp"
+            android:background="@drawable/btn_transparent"
+            android:fontFamily="@font/demi"
+            android:text="Unfollow"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tv_singer"
+            app:layout_constraintTop_toBottomOf="@id/tv_singer" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_no_songs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/demi"
-        android:text="@string/no_songs"
-        android:textColor="@color/dusty_gray"
-        android:textSize="36sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_follow" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_play_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_singer" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_follow">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                android:orientation="vertical">
+
+                <include layout="@layout/item_shimmer_round" />
+
+                <include layout="@layout/item_shimmer_round" />
+
+                <include layout="@layout/item_shimmer_round" />
+
+                <include layout="@layout/item_shimmer_round" />
+
+                <include layout="@layout/item_shimmer_round" />
+
+                <include layout="@layout/item_shimmer_round" />
+
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcy_songs"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_follow"
+            tools:listitem="@layout/item_song" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_no_songs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/demi"
+            android:text="@string/no_songs"
+            android:textColor="@color/dusty_gray"
+            android:textSize="36sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/rcy_songs"
+            app:layout_constraintEnd_toEndOf="@id/rcy_songs"
+            app:layout_constraintStart_toStartOf="@id/rcy_songs"
+            app:layout_constraintTop_toBottomOf="@id/rcy_songs" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -5,6 +5,7 @@ import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.model.request.AddCommentRequest
 import com.ahuynh.muzimusicapp.data.model.request.EditCommentRequest
+import com.ahuynh.muzimusicapp.data.model.request.ReplyCommentRequest
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseData
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseWithTotalCommentList
@@ -44,6 +45,11 @@ class CommentRemoteService @Inject constructor(
             arrayListOf()
         }
     }
+
+    suspend fun replyComment(replyCommentRequest: ReplyCommentRequest): Response<CommentResponseData> {
+        return callApi { commentAPI.replyComment(replyCommentRequest) }
+    }
+
 }
 
 

@@ -38,8 +38,8 @@ interface SongAPI {
     @GET("${Constants.API_VERSION}/song/search")
     suspend fun searchSong(@Query("query") query: String): Response<ListSearchResponse>
 
-    @POST("${Constants.API_VERSION}/song/love-or-unlove/{songId}")
-    suspend fun loveSong(@Path("songId") songId: Long): Response<MessageResponse>
+    @POST("${Constants.API_VERSION}/song/love/{id}")
+    suspend fun loveSong(@Path("id") id: Long): Response<MessageResponse>
 
     @POST("${Constants.API_VERSION}/song/listen/{id}")
     suspend fun listen(@Path("id") id: Long): Response<MessageResponse>

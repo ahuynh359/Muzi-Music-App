@@ -7,6 +7,8 @@ data class CommentResponse(
     val content: String,
     val user: UserResponse,
     val time: String,
+    val commentParentId : Long?= null,
+    val replies : List<CommentResponse>,
     val createdAt: String,
     val updatedAt: String
 
@@ -17,6 +19,8 @@ data class CommentResponse(
             content = this.content,
             user = this.user.toUser(),
             time = this.time,
+            commentParentId = this.commentParentId,
+            replies= this.replies.toCommentList(),
             createdAt = this.createdAt,
             updatedAt = this.updatedAt
         )

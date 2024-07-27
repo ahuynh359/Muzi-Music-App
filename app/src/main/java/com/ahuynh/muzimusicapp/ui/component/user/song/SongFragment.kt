@@ -13,13 +13,13 @@ import com.ahuynh.muzimusicapp.databinding.FragmentSongBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SongFragment :
-    BaseDialogBottomSheetFragment(),
-    SongAdapter.OnSongClicked {
+class SongFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "SongFragment"
@@ -30,98 +30,69 @@ class SongFragment :
     private lateinit var songOfType: ArrayList<Song>
     private lateinit var binding: FragmentSongBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSongBinding.inflate(inflater,container,false)
+    ): View {
+        binding = FragmentSongBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        songAdapter = SongAdapter(this)
-        binding.rcySongs.adapter = songAdapter
-
-        handleUI()
-        observe()
-        getData()
+        setupUI()
+        observeViewModel()
+        loadData()
     }
 
-    private fun getData() {
+    private fun loadData() {
         viewModel.getLoveSong()
     }
 
-    private fun observe() {
-
-        viewModel.loveSong.observe(viewLifecycleOwner) {
-
-            songAdapter.submitList(it)
-            songOfType = it as ArrayList<Song>
-            binding.rcySongs.visibility = View.VISIBLE
-            if (it.isEmpty()) {
-                binding.tvNoSongs.visibility = View.VISIBLE
-                binding.btnPlay.visibility = View.INVISIBLE
-            } else {
-                binding.btnPlay.visibility = View.VISIBLE
-                binding.tvNoSongs.visibility = View.GONE
-            }
+    private fun observeViewModel() {
+        viewModel.loveSong.observe(viewLifecycleOwner) { songs ->
+            songAdapter.submitList(songs)
+            songOfType = songs as ArrayList<Song>
+            binding.rcySongs.visibility = if (songs.isEmpty()) View.GONE else View.VISIBLE
+            binding.tvNoSongs.visibility = if (songs.isEmpty()) View.VISIBLE else View.GONE
+            binding.btnPlay.visibility = if (songs.isEmpty()) View.INVISIBLE else View.VISIBLE
             binding.shimmer.stopShimmer()
             binding.shimmer.visibility = View.GONE
         }
 
-        viewModel.des.observe(viewLifecycleOwner){
-            binding.tvDes.text = it
+        viewModel.des.observe(viewLifecycleOwner) { description ->
+            binding.tvDes.text = description
         }
-
-
     }
 
-
-
-    private fun handleUI() {
-
+    private fun setupUI() {
+        songAdapter = SongAdapter(this)
+        binding.rcySongs.adapter = songAdapter
 
         binding.btnBack.setOnClickListener {
             dismiss()
         }
 
-
         binding.btnPlay.setOnClickListener {
-            startActivity(Intent(requireContext(), PlayerActivity::class.java))
-            Utils.sendNewMusic(
-                requireActivity(),
-                MusicService.ACTION_PLAY,
-                songOfType[0], songOfType
-            )
+            startPlayerActivity(songOfType[0], songOfType)
         }
+    }
 
-
-
-
+    private fun startPlayerActivity(song: Song, songList: ArrayList<Song>) {
+        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+        Utils.sendNewMusic(requireActivity(), MusicService.ACTION_PLAY, song, songList)
     }
 
     override fun onSongClicked(song: Song) {
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
-        Utils.sendNewMusic(
-            requireActivity(),
-            MusicService.ACTION_PLAY,
-            song, songOfType
-        )
+        startPlayerActivity(song, songOfType)
     }
 
     override fun openMenu(song: Song) {
-        Toast.makeText(requireContext(), "ABC", Toast.LENGTH_LONG).show()
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG,song)
+        }
+        fragment.show(requireActivity().supportFragmentManager,null)
     }
-
-
-
-
 }

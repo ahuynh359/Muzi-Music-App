@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongSearchBinding
@@ -15,6 +17,7 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.user.home.HomeFragmentDirections
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,11 +73,7 @@ class SongSearchFragment : Fragment(), SongAdapter.OnSongClicked {
     }
 
     override fun openMenu(song: Song) {
-        SongMenu().apply {
-            arguments = Bundle().apply {
-                putParcelable(Constants.SONG,song)
-            }
-        }.show(requireActivity().supportFragmentManager,null)
+
     }
 
 }

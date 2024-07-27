@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.ItemUserBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -27,12 +28,7 @@ class UserAdapter(private val listener: OnUserClicked) :
         }
 
         fun bind(user: User) {
-            Glide
-                .with(binding.imvUser.context)
-                .load(user.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvUser)
+            binding.imvUser.loadImage(user.avatar)
             binding.tvUserName.text = user.username
             binding.tvEmail.text = user.email
 

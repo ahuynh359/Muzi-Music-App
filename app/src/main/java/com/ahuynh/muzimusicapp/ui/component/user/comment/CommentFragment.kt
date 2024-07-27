@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.user.comment
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,13 @@ import com.ahuynh.muzimusicapp.adapter.CommentAdapter
 import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentCommentBinding
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
+import com.ahuynh.muzimusicapp.ui.component.user.comment.menu.CommentMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentClicked {
+class CommentFragment : BaseDialogBottomSheetFragment(), CommentAdapter.OnCommentClicked
+  {
 
     companion object {
         const val TAG = "CommentFragment"
@@ -34,28 +35,6 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
         super.onCreate(savedInstanceState)
         currentSong = CommentFragmentArgs.fromBundle(requireArguments()).song
 
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.let { dialog ->
-            val bottomSheet =
-                dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            bottomSheet?.let { sheet ->
-                val layoutParams = sheet.layoutParams
-                layoutParams.height = getBottomSheetDialogDefaultHeight()
-                sheet.layoutParams = layoutParams
-            }
-        }
-    }
-
-    private fun getBottomSheetDialogDefaultHeight(): Int {
-        return (getScreenHeight() * 0.7).toInt()
-    }
-
-    private fun getScreenHeight(): Int {
-        return Resources.getSystem().displayMetrics.heightPixels
     }
 
 
@@ -102,7 +81,7 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
         viewModel.addCommentStatus.observe(viewLifecycleOwner) {
             it?.let {
                 binding.edtComment.text = null
-                Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
                 getData()
             }
 
@@ -110,7 +89,7 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
         }
         viewModel.deleteCommentStatus.observe(viewLifecycleOwner) {
             it?.let {
-                Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
                 getData()
             }
             viewModel.deleteCommentStatus.postValue(null)
@@ -118,10 +97,33 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
 
         viewModel.updateCommentStatus.observe(viewLifecycleOwner) {
             it?.let {
-                Toast.makeText(requireContext(), viewModel.messageStatus, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
                 getData()
             }
             viewModel.updateCommentStatus.postValue(null)
+        }
+
+        viewModel.commentReply.observe(viewLifecycleOwner) {
+            if(it != null){
+                binding.edtComment.setText("@"+ it.user.username + " ")
+                binding.tvName.text = it.user.username
+                binding.reply.visibility  = View.VISIBLE
+                binding.btnCancle.visibility = View.VISIBLE
+            } else {
+                binding.reply.visibility  = View.GONE
+                binding.btnCancle.visibility = View.GONE
+            }
+        }
+
+        viewModel.replyCommentStatus.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel.commentReply.postValue(null)
+                binding.edtComment.text = null
+                Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
+                getData()
+            }
+
+            viewModel.replyCommentStatus.postValue(null)
         }
 
 
@@ -143,6 +145,23 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
             true
         }
 
+        binding.btnSend.setOnClickListener {
+            val commentText = binding.edtComment.text.toString().trim()
+
+            if (commentText.isNotEmpty()) {
+                viewModel.commentReply.value?.let { reply ->
+                    val commentParentId = reply.commentParentId ?: reply.id
+                    viewModel.addReply(currentSong.id, commentParentId, commentText)
+                } ?: run {
+                    viewModel.addCommentToSong(commentText, currentSong.id)
+                }
+            }
+        }
+        binding.btnCancle.setOnClickListener {
+            viewModel.commentReply.postValue(null)
+            binding.edtComment.text = null
+        }
+
 
 
     }
@@ -152,17 +171,15 @@ class CommentFragment : BottomSheetDialogFragment(), CommentAdapter.OnCommentCli
     }
 
 
-    override fun onReplyComment(comment: Comment) {
-        val action = CommentFragmentDirections.actionCommentFragmentToReplyCommentFragment(currentSong,comment)
-        findNavController().navigate(action)
-    }
-
-
-
     override fun openMenu(comment: Comment) {
         val action = CommentFragmentDirections.actionCommentFragmentToCommentMenu(comment)
         findNavController().navigate(action)
     }
+
+    override fun replyComment(comment: Comment) {
+       viewModel.commentReply.postValue(comment)
+    }
+
 
 
 }

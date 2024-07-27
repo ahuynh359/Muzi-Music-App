@@ -10,7 +10,6 @@ data class SingerEntity(
     val singerId: Long,
     val name: String,
     val avatar: String,
-    val love : Boolean,
     val createdAt : String,
     val updatedAt : String
 ) {
@@ -19,7 +18,6 @@ data class SingerEntity(
             id = this.singerId,
             name = this.name,
             avatar = this.avatar,
-            love = this.love,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt
         )

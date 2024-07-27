@@ -10,8 +10,8 @@ import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.player.CenterLayoutManager
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
+import com.ahuynh.muzimusicapp.ui.component.player.lyrics.CenterLayoutManager
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -109,7 +109,6 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
             currentLine = indexLine
         }
     }
-    //Find position of right lyrics with currentTime
     private fun indexLine(time: Int, lyrics: ArrayList<Lyric>): Int {
         var left = 0
         var right = lyrics.size - 1
@@ -153,7 +152,7 @@ class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding
             Intent(requireContext(), MusicService::class.java).apply {
                 putExtra(Constants.ACTION, MusicService.ACTION_PLAY)
             }.also {
-                Utils.startMusic(requireContext(), it)
+                Utils.startService(requireContext(), it)
             }
         }
     }

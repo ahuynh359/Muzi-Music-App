@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.databinding.ItemAlbumBinding
 import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
@@ -29,12 +30,7 @@ class AlbumAdapter(
         }
 
         fun bind(album: Album) {
-            Glide
-                .with(binding.imv.context)
-                .load(album.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imv)
+            binding.imvAlbum.loadImage(album.avatar)
             binding.tvName.text = album.name
         }
     }

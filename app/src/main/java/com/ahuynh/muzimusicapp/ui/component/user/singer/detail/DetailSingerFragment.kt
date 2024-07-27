@@ -2,8 +2,11 @@ package com.ahuynh.muzimusicapp.ui.component.user.singer.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
@@ -12,19 +15,18 @@ import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailSingerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.singer.SingerViewModel
+import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailSingerFragment :
-    BaseFragment<FragmentDetailSingerBinding>(FragmentDetailSingerBinding::inflate),
+    BaseDialogBottomSheetFragment(),
     SongAdapter.OnSongClicked {
 
     companion object {
@@ -35,12 +37,21 @@ class DetailSingerFragment :
     private val viewModel by viewModels<SingerViewModel>({ requireActivity() })
     private lateinit var songOfSinger: ArrayList<Song>
     private lateinit var currentSinger: Singer
-
+    private lateinit var binding: FragmentDetailSingerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentSinger = DetailSingerFragmentArgs.fromBundle(requireArguments()).singer
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDetailSingerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onResume() {
@@ -82,7 +93,7 @@ class DetailSingerFragment :
                 binding.btnFollow.setBackgroundResource(R.drawable.btn_transparent)
             } else {
                 binding.btnFollow.text = getString(R.string.follow)
-                binding.btnFollow.setBackgroundResource(R.drawable.btn_round_green)
+                binding.btnFollow.setBackgroundResource(R.drawable.btn_transparent)
             }
         }
 
@@ -91,15 +102,11 @@ class DetailSingerFragment :
 
 
     private fun handleUI() {
-        binding.rcySongs.adapter = songAdapter
-        Glide
-            .with(binding.imvSinger.context)
-            .load(currentSinger.avatar)
-            .centerCrop()
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(binding.imvSinger)
-        binding.tvSinger.text = currentSinger.name
-
+        binding.apply {
+            rcySongs.adapter = songAdapter
+            imvSinger.loadImage(currentSinger.avatar)
+            tvSinger.text = currentSinger.name
+        }
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -119,8 +126,35 @@ class DetailSingerFragment :
             viewModel.loveOrUnloveSinger(currentSinger.id)
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoSongs.visibility = View.GONE
+                    songAdapter.submitList(songOfSinger)
+                } else {
+                    filterSongs(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
 
     }
+
+    private fun filterSongs(query: String) {
+        val filteredList = songOfSinger.filter { song ->
+            song.name.contains(query, ignoreCase = true)
+        }
+        if (filteredList.isEmpty()) {
+            binding.tvNoSongs.visibility = View.VISIBLE
+        } else
+            binding.tvNoSongs.visibility = View.GONE
+        songAdapter.submitList(filteredList)
+    }
+
 
     override fun onSongClicked(song: Song) {
         startActivity(Intent(requireContext(), PlayerActivity::class.java))
@@ -132,11 +166,11 @@ class DetailSingerFragment :
     }
 
     override fun openMenu(song: Song) {
-        SongMenu().apply {
-            arguments = Bundle().apply {
-                putParcelable(Constants.SONG, song)
-            }
-        }.show(requireActivity().supportFragmentManager, null)
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG,song)
+        }
+        fragment.show(requireActivity().supportFragmentManager,null)
     }
 
 

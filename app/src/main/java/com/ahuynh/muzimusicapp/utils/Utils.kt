@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Patterns
 import android.util.TypedValue
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -23,9 +24,13 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.palette.graphics.Palette
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.service.BroadcastService
+import com.ahuynh.muzimusicapp.service.BroadcastService.Companion.DURATION
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -109,7 +114,7 @@ object Utils {
             putExtra(Constants.DATA, bundle)
         }
 
-        startMusic(context, intent)
+        startService(context, intent)
     }
 
     fun sendMusic(
@@ -129,10 +134,10 @@ object Utils {
             putExtra(Constants.DATA, bundle)
         }
 
-        startMusic(context, intent)
+        startService(context, intent)
     }
 
-    fun startMusic(context: Context, intent: Intent) {
+    fun startService(context: Context, intent: Intent) {
         if (VersionHelper.isO()) {
             context.startForegroundService(intent)
         } else {
@@ -140,6 +145,23 @@ object Utils {
         }
 
     }
+    fun startSleepService(
+        context: Context,
+        time : Long
+    ) {
+
+        val bundle = Bundle().apply {
+            putLong(DURATION, time)
+        }
+
+        val intent = Intent(context , BroadcastService::class.java).apply {
+            putExtra(Constants.DATA, bundle)
+        }
+
+        startService(context, intent)
+    }
+
+
      fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
@@ -151,6 +173,17 @@ object Utils {
         val sec = totalSeconds % 60
         return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, min, sec)
     }
+
+    fun ImageView.loadImage(url: String) {
+        Glide
+            .with(this.context)
+            .load(url)
+            .centerCrop()
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(this)
+    }
+
+
 
 
 

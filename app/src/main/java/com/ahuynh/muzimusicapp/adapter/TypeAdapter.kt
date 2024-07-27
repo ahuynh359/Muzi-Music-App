@@ -2,10 +2,12 @@ package com.ahuynh.muzimusicapp.adapter
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.ItemTypeBinding
 import com.ahuynh.muzimusicapp.databinding.ItemTypeFullBinding
@@ -19,7 +21,8 @@ enum class TypeViewType {
 
 class TypeAdapter(
     private val listener: OnTypeClicked,
-    private val viewType: TypeViewType
+    private val viewType: TypeViewType,
+    private val hideBtnMore : Boolean = false
 ) : ListAdapter<Type, RecyclerView.ViewHolder>(DiffCallback()) {
 
     inner class SimpleViewHolder(private val binding: ItemTypeBinding) :
@@ -53,13 +56,12 @@ class TypeAdapter(
         }
 
         fun bind(type: Type) {
-            Glide
-                .with(binding.imvType.context)
-                .load(type.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvType)
+            binding.imvType.load(type.avatar)
             binding.tvTypeName.text = type.name
+            if(!hideBtnMore){
+                binding.btnMore.visibility = View.GONE
+            } else
+                binding.btnMore.visibility = View.VISIBLE
         }
     }
 

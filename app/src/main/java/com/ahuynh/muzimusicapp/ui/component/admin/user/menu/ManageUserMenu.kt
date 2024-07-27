@@ -45,7 +45,7 @@ class ManageUserMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapte
         itemMenuList.add(
             ItemMenu(
                 "Delete User",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

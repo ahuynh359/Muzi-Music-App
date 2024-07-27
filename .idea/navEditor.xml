@@ -521,8 +521,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="221" />
-                            <option name="y" value="-706" />
+                            <option name="x" value="323" />
+                            <option name="y" value="-115" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -555,7 +555,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="91" />
-                            <option name="y" value="421" />
+                            <option name="y" value="555" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -577,12 +577,12 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_homeFragment_to_singerDetailFragment">
+                            <entry key="action_homeFragment_to_detailTypeFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_homeFragment_to_songMenuBottom">
+                            <entry key="action_homeFragment_to_singerDetailFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -715,7 +715,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="-133" />
-                            <option name="y" value="426" />
+                            <option name="y" value="560" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -771,20 +771,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1184" />
-                            <option name="y" value="-257" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="songMenuBottom">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="382" />
-                            <option name="y" value="-164" />
+                            <option name="x" value="1253" />
+                            <option name="y" value="-259" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -1585,6 +1573,30 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="detailSingerFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-326" />
+                            <option name="y" value="-518" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="detailTypeFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="282" />
+                            <option name="y" value="-424" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="editCommentFragment">
                     <value>
                       <LayoutPositions>
@@ -1613,19 +1625,71 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_playerViewPagerFragment_to_singerMenu">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_playerViewPagerFragment_to_typeMenu">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="replyCommentFragment">
+                  <entry key="singerMenu">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="163" />
-                            <option name="y" value="354" />
+                            <option name="x" value="-528" />
+                            <option name="y" value="-312" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_singerMenu_to_detailSingerFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="sleepDialog">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-484" />
+                            <option name="y" value="143" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="typeMenu">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-20" />
+                            <option name="y" value="-325" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_typeMenu_to_detailTypeFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

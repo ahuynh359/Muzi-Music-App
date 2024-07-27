@@ -4,6 +4,7 @@ import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.request.AddCommentRequest
 import com.ahuynh.muzimusicapp.data.model.request.EditCommentRequest
+import com.ahuynh.muzimusicapp.data.model.request.ReplyCommentRequest
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseData
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.CommentResponseWithTotalCommentList
@@ -55,4 +56,11 @@ class CommentRepository @Inject constructor(
             commentRemoteService.deleteComment(id)
         }
     }
+
+    suspend fun replyComment(replyCommentRequest: ReplyCommentRequest): Response<CommentResponseData> {
+        return withContext(dispatcher) {
+            commentRemoteService.replyComment(replyCommentRequest)
+        }
+    }
+
 }

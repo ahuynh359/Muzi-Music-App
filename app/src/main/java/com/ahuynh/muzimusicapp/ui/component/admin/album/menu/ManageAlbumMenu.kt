@@ -1,7 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.album.menu
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,9 @@ import com.ahuynh.muzimusicapp.adapter.MenuAdapter
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.ItemMenu
 import com.ahuynh.muzimusicapp.data.model.ItemMenuName
-import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentManageAlbumMenuBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentMangeUserMenuBinding
 import com.ahuynh.muzimusicapp.ui.base.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.ui.component.admin.album.ManageAlbumViewModel
-import com.ahuynh.muzimusicapp.ui.component.admin.type.ManageTypeViewModel
-import com.ahuynh.muzimusicapp.ui.component.admin.type.Type.ManageTypeMenuArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +40,7 @@ class ManageAlbumMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapt
         itemMenuList.add(
             ItemMenu(
                 "Delete type",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

@@ -98,12 +98,12 @@ class SearchManageCommentFragment : BaseFragment<FragmentSearchManageCommentBind
 
 
 
-    override fun onReplyComment(comment: Comment) {
-    }
-
-
 
     override fun openMenu(comment: Comment) {
+
+    }
+
+    override fun replyComment(comment: Comment) {
 
     }
 

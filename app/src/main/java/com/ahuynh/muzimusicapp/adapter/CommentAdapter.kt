@@ -7,34 +7,39 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.databinding.ItemCommentBinding
+import com.ahuynh.muzimusicapp.databinding.ItemCommentReplyBinding
+import com.ahuynh.muzimusicapp.databinding.ItemCommentWithReplyBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class CommentAdapter(private val listener: OnCommentClicked) :
     ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffCallback()) {
 
-    inner class ViewHolder(private val binding: ItemCommentBinding) :
+    inner class ViewHolder(private val binding: ItemCommentWithReplyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
 
-            binding.tvReply.setOnClickListener {
-                listener.onReplyComment(currentList[layoutPosition])
-            }
+
             binding.btnMore.setOnClickListener {
                 listener.openMenu(currentList[layoutPosition])
+            }
+
+            binding.btnReply.setOnClickListener {
+                listener.replyComment(currentList[layoutPosition])
             }
         }
 
         fun bind(comment: Comment) {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(comment.user.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar)
+            binding.imvAvatar.loadImage(comment.user.avatar)
             binding.tvName.text = comment.user.username
             binding.tvContent.text = comment.content
             binding.tvTime.text = comment.time
+            
+            val replyAdapter = CommentAdapter(listener)
+            binding.rcyCommentReply.adapter = replyAdapter
+            replyAdapter.submitList(comment.replies)
+            
 
 
         }
@@ -49,11 +54,10 @@ class CommentAdapter(private val listener: OnCommentClicked) :
         override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
             return oldItem == newItem
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCommentWithReplyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -66,8 +70,9 @@ class CommentAdapter(private val listener: OnCommentClicked) :
     }
 
     interface OnCommentClicked {
-        fun onReplyComment(comment: Comment)
+
         fun openMenu(comment: Comment)
+        fun replyComment(comment: Comment)
     }
 
 }

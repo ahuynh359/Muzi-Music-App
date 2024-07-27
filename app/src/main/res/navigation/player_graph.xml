@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_graph"
     app:startDestination="@id/playerViewPagerFragment">
@@ -9,30 +9,37 @@
         android:id="@+id/commentFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.CommentFragment"
         android:label="fragment_comment"
-        tools:layout="@layout/fragment_comment" >
+        tools:layout="@layout/fragment_comment">
         <argument
             android:name="song"
             app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
         <action
             android:id="@+id/action_commentFragment_to_commentMenu"
             app:destination="@id/commentMenu" />
-        <action
-            android:id="@+id/action_commentFragment_to_replyCommentFragment"
-            app:destination="@id/replyCommentFragment" />
+
     </dialog>
     <fragment
         android:id="@+id/playerViewPagerFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.player.viewpager.PlayerViewPagerFragment"
-        android:label="PlayerViewPagerFragment" >
+        android:label="PlayerViewPagerFragment">
         <action
             android:id="@+id/action_playerViewPagerFragment_to_commentFragment"
             app:destination="@id/commentFragment" />
+        <action
+            android:id="@+id/action_playerViewPagerFragment_to_typeMenu"
+            app:destination="@id/typeMenu" />
+        <action
+            android:id="@+id/action_playerViewPagerFragment_to_singerMenu"
+            app:destination="@id/singerMenu" />
+        <action
+            android:id="@+id/action_playerViewPagerFragment_to_sleepDialog"
+            app:destination="@id/sleepDialog" />
     </fragment>
     <dialog
         android:id="@+id/commentMenu"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.menu.CommentMenu"
         android:label="fragment_comment_menu"
-        tools:layout="@layout/fragment_comment_menu" >
+        tools:layout="@layout/fragment_comment_menu">
         <argument
             android:name="comment"
             app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
@@ -44,24 +51,55 @@
         android:id="@+id/editCommentFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.edit.EditCommentFragment"
         android:label="fragment_edit_comment"
-        tools:layout="@layout/fragment_edit_comment" >
+        tools:layout="@layout/fragment_edit_comment">
         <argument
             android:name="comment"
             app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
     </dialog>
+
     <dialog
-        android:id="@+id/replyCommentFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.reply.ReplyCommentFragment"
-        android:label="fragment_reply_comment"
-        tools:layout="@layout/fragment_reply_comment" >
+        android:id="@+id/typeMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.type.menu.TypeMenu"
+        android:label="fragment_type_menu"
+        tools:layout="@layout/fragment_type_menu">
         <argument
             android:name="song"
             app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
-        <argument
-            android:name="comment"
-            app:argType="com.ahuynh.muzimusicapp.data.model.Comment" />
         <action
-            android:id="@+id/action_replyCommentFragment_to_commentMenu"
-            app:destination="@id/commentMenu" />
+            android:id="@+id/action_typeMenu_to_detailTypeFragment"
+            app:destination="@id/detailTypeFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/detailTypeFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.type.detail.DetailTypeFragment"
+        android:label="fragment_detail_type"
+        tools:layout="@layout/fragment_detail_type">
+        <argument
+            android:name="type"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Type" />
+    </dialog>
+    <dialog
+        android:id="@+id/singerMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.menu.SingerMenu"
+        android:label="SingerMenu">
+        <action
+            android:id="@+id/action_singerMenu_to_detailSingerFragment"
+            app:destination="@id/detailSingerFragment" />
+        <argument
+            android:name="song"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
+    </dialog>
+    <dialog
+        android:id="@+id/detailSingerFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.detail.DetailSingerFragment"
+        android:label="fragment_detail_singer"
+        tools:layout="@layout/fragment_detail_singer">
+        <argument
+            android:name="singer"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Singer" />
+    </dialog>
+    <dialog
+        android:id="@+id/sleepDialog"
+        android:name="com.ahuynh.muzimusicapp.ui.component.player.sleep.SleepDialog"
+        android:label="SleepDialog" />
 </navigation>

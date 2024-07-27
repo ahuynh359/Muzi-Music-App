@@ -40,7 +40,7 @@ class ManageCommentMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAda
         itemMenuList.add(
             ItemMenu(
                 "Delete comment",
-                R.drawable.ic_delete_comment,
+                R.drawable.ic_delete,
                 ItemMenuName.DELETE
             )
         )

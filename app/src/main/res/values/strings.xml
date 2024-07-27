@@ -144,4 +144,9 @@
     <string name="comment_count"> %d Comments</string>
     <string name="reply_of">Reply %1$s</string>
     <string name="new_type">New Type</string>
+    <string name="seek_bar_progress">%d secs</string>
+    <string name="reply_to">Reply to</string>
+    <string name="comment_of">Comment of %s</string>
+    <string name="add_new_playlist">Add New Playlist</string>
+    <string name="there_is_no_playlist">There is no playlist</string>
 </resources>

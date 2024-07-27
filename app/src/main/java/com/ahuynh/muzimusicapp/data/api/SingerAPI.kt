@@ -38,12 +38,11 @@ interface SingerAPI {
 
     @GET("${Constants.API_VERSION}/singer/love")
     suspend fun getLoveSinger(): Response<SingerResponseDataList>
-
-
-    @GET("${Constants.API_VERSION}/singer/love/{id}")
+    
+    @GET("${Constants.API_VERSION}/singer/is-love-singer/{id}")
     suspend fun isUserLoveSinger(@Path("id") id: Long): Response<LoveSingerResponse>
 
-    @POST("${Constants.API_VERSION}/singer/love-or-unlove/{id}")
+    @POST("${Constants.API_VERSION}/singer/love/{id}")
     suspend fun loveOrUnloveSinger(@Path("id") id: Long): Response<MessageResponse>
 
     @Multipart

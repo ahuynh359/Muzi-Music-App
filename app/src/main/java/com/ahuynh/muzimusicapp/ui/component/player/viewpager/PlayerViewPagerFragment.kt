@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.player.viewpager
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
@@ -16,7 +17,7 @@ import com.ahuynh.muzimusicapp.databinding.FragmentPlayerViewPagerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
-import com.ahuynh.muzimusicapp.ui.component.player.sleep.SleepTimerDialog
+import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils.toTimeFormat
@@ -29,15 +30,18 @@ class PlayerViewPagerFragment :
     BaseFragment<FragmentPlayerViewPagerBinding>(FragmentPlayerViewPagerBinding::inflate) {
     var isSliderPressed: Boolean = false
 
-    private val sleepTimerDialog: SleepTimerDialog by lazy {
-        SleepTimerDialog()
-    }
+
 
     private val viewModel by viewModels<PlayerViewModel>({ requireActivity() })
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleUI()
         observe()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
     }
 
@@ -102,14 +106,13 @@ class PlayerViewPagerFragment :
             )
         }
 
+
+
         viewModel.song.observe(viewLifecycleOwner) { song ->
-
-
             viewModel.isUserLoveSong(song.id)
-            binding.btnHeart.setOnClickListener {
-                viewModel.loveOrUnlove(song.id)
 
-            }
+            binding.tvSinger.text = song.singers.joinToString(", ") { it.name }
+            binding.tvType.text = song.types.joinToString(", ") { it.name }
         }
         viewModel.loveSong.observe(viewLifecycleOwner) {
             if (it) {
@@ -118,14 +121,14 @@ class PlayerViewPagerFragment :
         }
 
 
-        viewModel.sleepTime.observe(viewLifecycleOwner) {
-            binding.tvTimer.text = it
-            if (it.equals("00:00:00")) {
-                requireActivity().finishAffinity()
-                exitProcess(0)
 
-            }
+        binding.btnHeart.setOnClickListener {
+            viewModel.loveOrUnlove(viewModel.song.value?.id!!)
+
         }
+
+
+
 
         viewModel.duration.observe(viewLifecycleOwner) { d ->
             viewModel.timeMillis.observe(viewLifecycleOwner) { t ->
@@ -157,7 +160,10 @@ class PlayerViewPagerFragment :
 
         setUpViewPager()
         setUpSeekbar()
-
+        binding.tvSinger.setOnClickListener {
+            val action = PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToSingerMenu(viewModel.song.value!!)
+            findNavController().navigate(action)
+        }
         binding.btnShuffle.setOnClickListener {
             val value = viewModel.isShuffle.value ?: false
             viewModel.setShuffle(!value)
@@ -195,9 +201,15 @@ class PlayerViewPagerFragment :
                 sendMusic(MusicService.ACTION_PRE)
             }
         }
-        binding.btnDown.setOnClickListener {
-            requireActivity().finish()
 
+        binding.btnDown.setOnClickListener {
+            val options = ActivityOptions.makeCustomAnimation(
+                requireContext(),
+                R.anim.slide_in_top,
+                R.anim.slide_out_bottom
+            ).toBundle()
+            requireActivity().finish()
+            requireActivity().startActivity(Intent(requireContext(), UserActivity::class.java), options)
         }
         binding.btnNext.setOnClickListener {
             binding.viewPager.currentItem = 0
@@ -216,9 +228,8 @@ class PlayerViewPagerFragment :
         }
 
         binding.btnSleep.setOnClickListener {
-            if (!sleepTimerDialog.isAdded) {
-                sleepTimerDialog.show(childFragmentManager, null)
-            }
+            val action = PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToSleepDialog()
+            findNavController().navigate(action)
         }
 
         binding.btnHeadphone.setOnClickListener {
@@ -233,9 +244,18 @@ class PlayerViewPagerFragment :
 
         binding.btnComment.setOnClickListener {
             val action =
-                PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToCommentFragment(viewModel.song.value!!)
+                PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToCommentFragment(
+                    viewModel.song.value!!
+                )
             findNavController().navigate(action)
         }
+
+        binding.tvType.setOnClickListener {
+            val action =
+                PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToTypeMenu(viewModel.song.value!!)
+            findNavController().navigate(action)
+        }
+
 
 
     }

@@ -1,22 +1,27 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
+import com.ahuynh.muzimusicapp.service.BroadcastService
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.time.Instant
 
 
 @AndroidEntryPoint
@@ -28,12 +33,36 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     private val viewModel by viewModels<PlayerViewModel>()
     private lateinit var navController: NavController
 
+    private val countDownReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d("ABC", intent.toString())
+            if (intent?.action == BroadcastService.COUNT_DOWN) {
+                val millisUntilFinished = intent.getLongExtra(BroadcastService.COUNT_DOWN, 0L)
+                Log.d("ABC", "Millis until finished: $millisUntilFinished")
+                // Update your UI with the remaining time
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
         setUpNavigationGraph()
+        val filter = IntentFilter(BroadcastService.COUNT_DOWN)
+        val listenToBroadcastsFromOtherApps = false
+        val receiverFlags = if (listenToBroadcastsFromOtherApps) {
+            ContextCompat.RECEIVER_EXPORTED
+        } else {
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        }
+
+        ContextCompat.registerReceiver(this, countDownReceiver, filter, receiverFlags)
+
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
 
 
     override fun onStart() {
@@ -49,9 +78,22 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     }
 
 
-
     override fun getSnackbarView(): View {
         return binding.main
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val filter = IntentFilter(BroadcastService.COUNT_DOWN)
+        val listenToBroadcastsFromOtherApps = false
+        val receiverFlags = if (listenToBroadcastsFromOtherApps) {
+            ContextCompat.RECEIVER_EXPORTED
+        } else {
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        }
+
+        ContextCompat.registerReceiver(this, countDownReceiver, filter, receiverFlags)
+
     }
 
     override fun onStop() {
@@ -73,6 +115,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
             viewModel.song.postValue(it)
             viewModel.listen(it.id)
             viewModel.insertSong(it.toSongEntity())
+
         }
     }
 
@@ -96,7 +139,6 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
         viewModel.currentSongTime.postValue(0)
 
     }
-
 
 
 }

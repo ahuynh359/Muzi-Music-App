@@ -2,13 +2,16 @@ package com.ahuynh.muzimusicapp.ui.component.player.viewpager
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMainBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,17 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainBinding::inflate) {
 
     private val viewModel by viewModels<PlayerViewModel>({ requireActivity() })
-    private lateinit var rotateAnimation : ObjectAnimator
+    private lateinit var rotateAnimation: ObjectAnimator
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleUI()
         observeData()
     }
 
+    private fun handleUI() {
+
+    }
+
 
     private fun observeData() {
-        rotateAnimation = ObjectAnimator.ofFloat(binding.imvSong,"rotation",0f,360f)
-        viewModel.isPlaying.observe(requireActivity()){
+        rotateAnimation = ObjectAnimator.ofFloat(binding.imvSong, "rotation", 0f, 360f)
+        viewModel.isPlaying.observe(requireActivity()) {
             rotateImage(it)
         }
 
@@ -39,34 +46,32 @@ class SongMainFragment : BaseFragment<FragmentSongMainBinding>(FragmentSongMainB
 
             binding.tvSongName.text = song.name
 
-            binding.tvSinger.text = song.singers.joinToString(", ") { it.name }
 
-            Glide
-                .with(binding.imvSong.context)
-                .load(song.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvSong);
+
+            binding.imvSong.loadImage(song.avatar)
+
 
         }
     }
-    private fun rotateImage(rotate : Boolean){
-        if(rotate){
+
+    private fun rotateImage(rotate: Boolean) {
+        if (rotate) {
             rotateAnimation.cancel()
-            rotateAnimation = ObjectAnimator.ofFloat(binding.imvSong,"rotation",viewModel.currentRotate, viewModel.currentRotate + 360f)
-            val i = Utils.convertDpToPixel(350f,requireContext()).toFloat()
+            rotateAnimation = ObjectAnimator.ofFloat(
+                binding.imvSong, "rotation", viewModel.currentRotate, viewModel.currentRotate + 360f
+            )
+            val i = Utils.convertDpToPixel(350f, requireContext()).toFloat()
             rotateAnimation.duration = 10000
             binding.imvSong.pivotX = i / 2
             binding.imvSong.pivotY = i / 2
             rotateAnimation.repeatCount = ObjectAnimator.INFINITE
             rotateAnimation.interpolator = LinearInterpolator()
             rotateAnimation.start()
-        } else{
+        } else {
             rotateAnimation.pause()
             viewModel.currentRotate = rotateAnimation.animatedValue as Float
         }
     }
 
-    private fun handleUI() {
-    }
+
 }

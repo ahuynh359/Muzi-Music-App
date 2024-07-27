@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.user
 
+import android.app.ActivityOptions
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -59,7 +60,13 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
 
     private fun handleUI() {
         binding.player.setOnClickListener {
-            startActivity(Intent(this,PlayerActivity::class.java))
+            val intent = Intent(this, PlayerActivity::class.java)
+            val options = ActivityOptions.makeCustomAnimation(
+                this,
+                R.anim.slide_in_bottom,
+                R.anim.slide_out_top
+            )
+            startActivity(intent, options.toBundle())
         }
         binding.btnPlayPause.setOnClickListener {
             Utils.sendMusic(applicationContext, MusicService.ACTION_PLAY)
@@ -70,9 +77,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
         binding.btnPre.setOnClickListener {
             Utils.sendMusic(applicationContext, MusicService.ACTION_PRE)
         }
-//        binding.toolbar.btnSearch.setOnClickListener {
-//            startActivity(Intent(this, SearchActivity::class.java))
-//        }
+
     }
 
 
@@ -123,7 +128,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermission() {
         if (checkMultiplePermission(this, PERMISSION_REQUEST_ID)) {
-            makeToastPermissionGranted(this)
+
         }
     }
 
@@ -143,7 +148,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
                     }
                 }
                 if (isGrant) {
-                    makeToastPermissionGranted(this)
+
                 } else {
                     var someDenied = false
                     for (permission in permissions) {

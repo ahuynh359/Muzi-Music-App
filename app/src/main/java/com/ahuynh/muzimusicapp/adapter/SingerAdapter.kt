@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.ItemCircleRecentlyBinding
-import com.ahuynh.muzimusicapp.databinding.ItemSingerNoMoreBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.ahuynh.muzimusicapp.databinding.ItemSingerBinding
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
 enum class SingerViewType {
     HOME, LIST
@@ -29,17 +28,12 @@ class SingerAdapter(
         }
 
         fun bind(singer: Singer) {
-            Glide
-                .with(binding.imv.context)
-                .load(singer.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imv)
+           binding.imvSinger.loadImage(singer.avatar)
             binding.tvName.text = singer.name
         }
     }
 
-    inner class LISTViewHolder(private val binding: ItemSingerNoMoreBinding) :
+    inner class ListViewHolder(private val binding: ItemSingerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -48,12 +42,7 @@ class SingerAdapter(
         }
 
         fun bind(singer: Singer) {
-            Glide
-                .with(binding.imvSinger.context)
-                .load(singer.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvSinger)
+            binding.imvSinger.loadImage(singer.avatar)
             binding.tvSinger.text = singer.name
         }
     }
@@ -75,8 +64,8 @@ class SingerAdapter(
                 HomeViewHolder(binding)
             }
             SingerViewType.LIST -> {
-                val binding = ItemSingerNoMoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                LISTViewHolder(binding)
+                val binding = ItemSingerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ListViewHolder(binding)
             }
         }
     }
@@ -85,7 +74,7 @@ class SingerAdapter(
         val singer = currentList[position]
         when (holder) {
             is HomeViewHolder -> holder.bind(singer)
-            is LISTViewHolder -> holder.bind(singer)
+            is ListViewHolder -> holder.bind(singer)
         }
     }
 

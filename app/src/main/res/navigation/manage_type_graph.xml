@@ -64,7 +64,7 @@
     </fragment>
     <dialog
         android:id="@+id/manageTypeMenu"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.type.Type.ManageTypeMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.admin.type.menu.ManageTypeMenu"
         android:label="ManageTypeMenu" >
         <argument
             android:name="type"
