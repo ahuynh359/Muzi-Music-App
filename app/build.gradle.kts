@@ -56,6 +56,11 @@ android {
 }
 
 dependencies {
+    //Localization
+    implementation("com.akexorcist:localization:1.2.11") {
+        exclude(group = "androidx.core", module = "core")
+    }
+
     //Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-ktx:$room_version")

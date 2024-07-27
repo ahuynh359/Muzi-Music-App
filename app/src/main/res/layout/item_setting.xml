@@ -20,14 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="View Profile" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_next_item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,11 +25,21 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val SORT_ALBUM = "sort_album"
         const val SORT_SINGER = "sort_singer"
         const val SORT_COMMENT = "sort_comment"
+        const val LANGUAGE = "en"
 
     }
 
     private var pref = context.getSharedPreferences(APP_SHARE_KEY, Context.MODE_PRIVATE)
     private var editor = pref.edit()
+
+    fun getLanguage(): String {
+        return pref.getString(LANGUAGE, "en") ?: "en"
+    }
+
+    fun setLanguage(language: String) {
+        editor.putString(LANGUAGE, language)
+        editor.apply()
+    }
 
     fun isShuffle(): Boolean {
         return pref.getBoolean(SHUFFLE, false)
@@ -39,6 +49,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.putBoolean(SHUFFLE, isShuffle)
         editor.apply()
     }
+
     fun isSortSinger(): SortName {
         val sortString = pref.getString(SORT_SINGER, SortName.NEW.name) ?: SortName.NEW.name
         return try {
@@ -47,6 +58,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortSinger(sortName: SortName) {
         editor.putString(SORT_SINGER, sortName.name)
         editor.apply()
@@ -60,11 +72,11 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortComment(sortName: SortName) {
         editor.putString(SORT_COMMENT, sortName.name)
         editor.apply()
     }
-
 
 
     fun isSortUser(): SortName {
@@ -75,6 +87,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortUser(sortName: SortName) {
         editor.putString(SORT_USER, sortName.name)
         editor.apply()
@@ -88,10 +101,12 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortAlbum(sortName: SortName) {
         editor.putString(SORT_ALBUM, sortName.name)
         editor.apply()
     }
+
     fun isSortSong(): SortName {
         val sortString = pref.getString(SORT_SONG, SortName.NEW.name) ?: SortName.NEW.name
         return try {
@@ -100,6 +115,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortSong(sortName: SortName) {
         editor.putString(SORT_SONG, sortName.name)
         editor.apply()
@@ -114,6 +130,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
             SortName.NEW
         }
     }
+
     fun setSortType(sortName: SortName) {
         editor.putString(SORT_TYPE, sortName.name)
         editor.apply()

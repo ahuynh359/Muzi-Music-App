@@ -32,7 +32,6 @@ constructor(private val playlistRepository: PlaylistRepository,
 
     init {
         getAllPlaylist()
-        Log.d("ABC","New")
     }
 
     fun getAllPlaylist() {

@@ -33,7 +33,6 @@ class ManageAlbumFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getNewAlbums()
-        Log.d("ABC","On Create")
     }
 
 

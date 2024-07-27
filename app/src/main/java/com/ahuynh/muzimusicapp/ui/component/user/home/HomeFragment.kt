@@ -123,7 +123,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun handleNewTypeList() {
         binding.rcyNewType.adapter = newTypeAdapter
         viewModel.newTypeList.observe(viewLifecycleOwner) {
-            Log.d("ABC", it.toString())
             binding.rcyNewType.visibility = View.VISIBLE
             if (it != null) {
                 newTypeList = it as ArrayList<Type>

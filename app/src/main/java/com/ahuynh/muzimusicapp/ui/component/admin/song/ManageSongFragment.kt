@@ -60,7 +60,6 @@ class ManageSongFragment :
 
     private fun observe() {
         viewModel.songList.observe(viewLifecycleOwner) {
-            Log.d("ABC","List song")
             binding.rcySong.visibility = View.VISIBLE
             if (it != null) {
                 songList = it as ArrayList<Song>
@@ -75,7 +74,6 @@ class ManageSongFragment :
         viewModel.deleteSongStatus.observe(viewLifecycleOwner) {
             it?.let {
                 if(it){
-                    Log.d("ABC","DE")
                     viewModel.getAllSongs()
                 }
                 viewModel.mess?.let { mess ->

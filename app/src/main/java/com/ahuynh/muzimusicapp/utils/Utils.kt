@@ -5,13 +5,17 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.os.LocaleList
 import android.os.Parcelable
 import android.util.Patterns
 import android.util.TypedValue
@@ -31,6 +35,7 @@ import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDi
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.internal.ContextUtils
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -47,15 +52,17 @@ object Utils {
         else -> @Suppress("DEPRECATION") getParcelable(key) as? T
     }
 
-    inline fun <reified T : Parcelable> Bundle.parcelableArrayList(key: String): ArrayList<T>? = when {
-        SDK_INT >= 33 -> getParcelableArrayList(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getParcelableArrayList(key)
-    }
+    inline fun <reified T : Parcelable> Bundle.parcelableArrayList(key: String): ArrayList<T>? =
+        when {
+            SDK_INT >= 33 -> getParcelableArrayList(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getParcelableArrayList(key)
+        }
 
-    inline fun <reified T : Parcelable> Intent.parcelableArrayList(key: String): ArrayList<T>? = when {
-        SDK_INT >= 33 -> getParcelableArrayListExtra(key, T::class.java)
-        else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
-    }
+    inline fun <reified T : Parcelable> Intent.parcelableArrayList(key: String): ArrayList<T>? =
+        when {
+            SDK_INT >= 33 -> getParcelableArrayListExtra(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getParcelableArrayListExtra(key)
+        }
 
     fun Int.toTimeFormat(): String {
         val hour = this / 3600
@@ -85,8 +92,6 @@ object Utils {
     }
 
 
-
-
     fun convertDpToPixel(dp: Float, context: Context): Int {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
@@ -94,7 +99,6 @@ object Utils {
             context.resources.displayMetrics
         ).toInt()
     }
-
 
 
     fun sendNewMusic(
@@ -109,8 +113,8 @@ object Utils {
             putParcelableArrayList(Constants.SONG_LIST, songList)
         }
 
-        val intent = Intent(context , MusicService::class.java).apply {
-            putExtra(Constants.ACTION,action)
+        val intent = Intent(context, MusicService::class.java).apply {
+            putExtra(Constants.ACTION, action)
             putExtra(Constants.DATA, bundle)
         }
 
@@ -129,8 +133,8 @@ object Utils {
             putParcelableArrayList(Constants.SONG_LIST, songList)
         }
 
-        val intent = Intent(context , MusicService::class.java).apply {
-            putExtra(Constants.ACTION,action)
+        val intent = Intent(context, MusicService::class.java).apply {
+            putExtra(Constants.ACTION, action)
             putExtra(Constants.DATA, bundle)
         }
 
@@ -145,16 +149,17 @@ object Utils {
         }
 
     }
+
     fun startSleepService(
         context: Context,
-        time : Long
+        time: Long
     ) {
 
         val bundle = Bundle().apply {
             putLong(DURATION, time)
         }
 
-        val intent = Intent(context , BroadcastService::class.java).apply {
+        val intent = Intent(context, BroadcastService::class.java).apply {
             putExtra(Constants.DATA, bundle)
         }
 
@@ -162,7 +167,7 @@ object Utils {
     }
 
 
-     fun isValidEmail(email: String): Boolean {
+    fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
@@ -182,9 +187,6 @@ object Utils {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(this)
     }
-
-
-
 
 
 

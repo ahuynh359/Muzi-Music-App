@@ -275,7 +275,7 @@ class MusicService : Service() {
 
 
                     .setContentTitle(song.name)
-                    .setContentText("ABC")
+                    .setContentText(song.singers.joinToString(", "){it.name})
                     .setLargeIcon(bitmap)
                     .setAutoCancel(false)
                     .setOngoing(true)

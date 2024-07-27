@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.component.admin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -28,7 +29,6 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>(ActivityAdminBinding::i
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         handleUI()
 
     }
@@ -87,6 +87,8 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>(ActivityAdminBinding::i
     override fun getSnackbarView(): View {
         return binding.main
     }
+
+
 
 
 }

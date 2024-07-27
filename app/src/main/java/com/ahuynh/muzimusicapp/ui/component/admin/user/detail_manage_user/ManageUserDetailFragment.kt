@@ -178,7 +178,6 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
             }
         }
         binding.btnDone.setOnClickListener {
-            Log.d("ABC","Bam do")
             if (isUpdateOk) {
                 val updateUserRequest = UpdateUserRequest(
                     currentUser.id,

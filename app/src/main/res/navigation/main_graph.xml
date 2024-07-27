@@ -53,7 +53,11 @@
         android:id="@+id/settingFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.search.fragment.SearchFragment"
@@ -174,4 +178,9 @@
         android:id="@+id/chartFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.chart.ChartFragment"
         android:label="ChartFragment" />
+    <dialog
+        android:id="@+id/languageFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.language.LanguageFragment"
+        android:label="fragment_language"
+        tools:layout="@layout/fragment_language" />
 </navigation>

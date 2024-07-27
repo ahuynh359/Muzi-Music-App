@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.ui.base.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -9,10 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.utils.helper.NetworkConnectivityHelper
+import com.akexorcist.localizationactivity.ui.LocalizationActivity
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater) -> B) :
-    AppCompatActivity() {
+    LocalizationActivity() {
     lateinit var binding: B
     private lateinit var snackbar: Snackbar
     private val networkConnectivityObserver: NetworkConnectivityHelper by lazy {
@@ -42,7 +44,9 @@ abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater
             } else
                 snackbar.show()
         }
+
     }
+
 
     abstract fun getSnackbarView(): View
 }

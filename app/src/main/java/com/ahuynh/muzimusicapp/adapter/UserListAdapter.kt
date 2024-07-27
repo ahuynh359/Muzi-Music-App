@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ahuynh.muzimusicapp.data.model.SettingItem
 import com.ahuynh.muzimusicapp.data.model.UserList
-import com.ahuynh.muzimusicapp.data.model.UserListName
-import com.ahuynh.muzimusicapp.databinding.ItemSettingBinding
 import com.ahuynh.muzimusicapp.databinding.ItemUserListBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

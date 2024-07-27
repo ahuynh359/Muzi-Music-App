@@ -128,7 +128,6 @@ class DetailPlaylistFragment :
     }
 
     override fun openMenu(song: Song) {
-        Toast.makeText(requireContext(), "ABC", Toast.LENGTH_LONG).show()
     }
 
 

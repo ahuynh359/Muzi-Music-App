@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class MenuAdapter(private val listener: OnItemMenuAdapterClicked) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
+                Log.d("ABC","ahihi")
                 listener.onMenuClicked(currentList[layoutPosition])
             }
 
@@ -33,7 +35,7 @@ class MenuAdapter(private val listener: OnItemMenuAdapterClicked) :
 
     private class DiffCallback : DiffUtil.ItemCallback<ItemMenu>() {
         override fun areItemsTheSame(oldItem: ItemMenu, newItem: ItemMenu): Boolean {
-            return oldItem.type == newItem.type
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: ItemMenu, newItem: ItemMenu): Boolean {

@@ -149,4 +149,9 @@
     <string name="comment_of">Comment of %s</string>
     <string name="add_new_playlist">Add New Playlist</string>
     <string name="there_is_no_playlist">There is no playlist</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="vi">VN</string>
+    <string name="en">English</string>
+    <string name="koria">Koria</string>
 </resources>
