@@ -123,18 +123,18 @@
             tools:listitem="@layout/item_song" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@id/imv_type"
             android:id="@+id/tv_no_songs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/demi"
             android:text="@string/no_songs"
+            android:visibility="gone"
             android:textColor="@color/dusty_gray"
             android:textSize="36sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/rcy_songs"
-            app:layout_constraintTop_toTopOf="@id/rcy_songs"
-            app:layout_constraintEnd_toEndOf="@id/rcy_songs"
-            app:layout_constraintStart_toStartOf="@id/rcy_songs" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

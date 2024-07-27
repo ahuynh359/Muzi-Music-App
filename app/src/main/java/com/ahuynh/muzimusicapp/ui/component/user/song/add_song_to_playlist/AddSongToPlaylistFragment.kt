@@ -30,7 +30,7 @@ class AddSongToPlaylistFragment : BottomSheetDialogFragment(),
     }
 
     private lateinit var binding: FragmentAddSongToPlaylistBottomSheetBinding
-    private val playlistAdapter = PlaylistAdapter(this)
+    private val playlistAdapter = PlaylistAdapter(this,false)
 
     private val viewModel by viewModels<AddSongToPlaylistViewModel>({ requireActivity() })
     private lateinit var currentSong: Song

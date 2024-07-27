@@ -20,7 +20,6 @@ class MenuAdapter(private val listener: OnItemMenuAdapterClicked) :
                 listener.onMenuClicked(currentList[layoutPosition])
             }
 
-
         }
 
         fun bind(menu: ItemMenu) {

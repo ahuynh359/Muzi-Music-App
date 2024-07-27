@@ -1,4 +1,5 @@
-package com.ahuynh.muzimusicapp.ui.component.user.song
+package com.ahuynh.muzimusicapp.ui.component.user.song.menu
+
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,34 +15,43 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SongViewModel @Inject
+class SongMenuViewModel @Inject
 constructor(
     private val songRepository: SongRepository
 ) :
     BaseViewModel() {
-    var loveSong = MutableLiveData<List<Song>>()
-    var des = MutableLiveData<String>()
-    var addSongToPlaylistStatus = MutableLiveData<Boolean?>(null)
     var mess: String? = null
 
+    var loveSong = MutableLiveData<Boolean>()
 
 
-    fun getLoveSong() {
+    fun isUserLoveSong(songId: Long) {
         isLoading.postValue(true)
-        viewModelScope.launch {
-            val result = songRepository.getLoveSong()
-            if(result is Response.Success){
-                mess = result.data.message
-                loveSong.postValue(result.data.data.songs.toListSong())
-                des.postValue(result.data.data.total)
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+        parentJob = viewModelScope.launch {
+            val result = songRepository.isUserLoveSong(
+                songId
+            )
+
+            if (result is Response.Success) {
+                loveSong.postValue(
+                    result.data.data
+                )
             }
-            addSongToPlaylistStatus.postValue(result is Response.Success)
+
         }
         registerEventParentJobFinish()
     }
 
+    fun loveOrUnlove(songId: Long) {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            songRepository.loveSong(
+                songId
+            )
+            isUserLoveSong(songId)
 
+        }
+        registerEventParentJobFinish()
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +13,7 @@ import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class PlaylistAdapter(private val listener: OnPlaylistClicked) :
+class PlaylistAdapter(private val listener: OnPlaylistClicked,private val showMoreButton: Boolean = true) :
     ListAdapter<Playlist, PlaylistAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemPlaylistBinding) :
@@ -30,6 +31,7 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked) :
         fun bind(playlist: Playlist) {
             binding.imvPlaylist.loadImage(playlist.avatar)
             binding.tvPlaylistName.text = playlist.name
+            binding.btnMore.visibility = if (showMoreButton) View.VISIBLE else View.GONE
 
         }
 

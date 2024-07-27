@@ -33,35 +33,15 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     private val viewModel by viewModels<PlayerViewModel>()
     private lateinit var navController: NavController
 
-    private val countDownReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("ABC", intent.toString())
-            if (intent?.action == BroadcastService.COUNT_DOWN) {
-                val millisUntilFinished = intent.getLongExtra(BroadcastService.COUNT_DOWN, 0L)
-                Log.d("ABC", "Millis until finished: $millisUntilFinished")
-                // Update your UI with the remaining time
-            }
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EventBus.getDefault().post(EventBusModel.RequestSongEvent())
         setUpNavigationGraph()
-        val filter = IntentFilter(BroadcastService.COUNT_DOWN)
-        val listenToBroadcastsFromOtherApps = false
-        val receiverFlags = if (listenToBroadcastsFromOtherApps) {
-            ContextCompat.RECEIVER_EXPORTED
-        } else {
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        }
 
-        ContextCompat.registerReceiver(this, countDownReceiver, filter, receiverFlags)
 
-    }
 
-    override fun onResume() {
-        super.onResume()
     }
 
 
@@ -82,19 +62,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
         return binding.main
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val filter = IntentFilter(BroadcastService.COUNT_DOWN)
-        val listenToBroadcastsFromOtherApps = false
-        val receiverFlags = if (listenToBroadcastsFromOtherApps) {
-            ContextCompat.RECEIVER_EXPORTED
-        } else {
-            ContextCompat.RECEIVER_NOT_EXPORTED
-        }
 
-        ContextCompat.registerReceiver(this, countDownReceiver, filter, receiverFlags)
-
-    }
 
     override fun onStop() {
         super.onStop()

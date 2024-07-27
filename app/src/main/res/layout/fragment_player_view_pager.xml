@@ -217,7 +217,7 @@
         android:layout_width="67dp"
         android:layout_height="67dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_play"
+        android:src="@drawable/ic_pause"
         app:layout_constraintBottom_toBottomOf="@id/btn_shuffle"
         app:layout_constraintEnd_toStartOf="@id/btn_next"
         app:layout_constraintStart_toEndOf="@id/btn_pre"

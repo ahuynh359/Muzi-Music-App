@@ -11,8 +11,8 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.github.mikephil.charting.data.Entry
