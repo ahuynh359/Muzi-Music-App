@@ -1,6 +1,7 @@
 package com.ahuynh.muzimusicapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,7 +14,7 @@ import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class CommentAdapter(private val listener: OnCommentClicked) :
+class CommentAdapter(private val listener: OnCommentClicked,private val hideBtnReply: Boolean = false) :
     ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffCallback()) {
 
     inner class ViewHolder(private val binding: ItemCommentWithReplyBinding) :
@@ -35,8 +36,11 @@ class CommentAdapter(private val listener: OnCommentClicked) :
             binding.tvName.text = comment.user.username
             binding.tvContent.text = comment.content
             binding.tvTime.text = comment.time
+            if(hideBtnReply){
+                binding.btnReply.visibility = View.GONE
+            }
             
-            val replyAdapter = CommentAdapter(listener)
+            val replyAdapter = CommentAdapter(listener,true)
             binding.rcyCommentReply.adapter = replyAdapter
             replyAdapter.submitList(comment.replies)
             

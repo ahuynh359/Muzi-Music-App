@@ -4,6 +4,7 @@ import android.util.Log
 import com.ahuynh.muzimusicapp.data.api.AlbumAPI
 import com.ahuynh.muzimusicapp.data.api.AuthAPI
 import com.ahuynh.muzimusicapp.data.api.CommentAPI
+import com.ahuynh.muzimusicapp.data.api.NotificationAPI
 import com.ahuynh.muzimusicapp.data.api.PlaylistAPI
 import com.ahuynh.muzimusicapp.data.api.SingerAPI
 import com.ahuynh.muzimusicapp.data.api.SongAPI
@@ -126,5 +127,10 @@ class NetworkModule {
     @Provides
     fun provideCommentAPI(retrofit: Retrofit): CommentAPI {
         return retrofit.create(CommentAPI::class.java)
+    }
+
+    @Provides
+    fun provideNotificationAPI(retrofit: Retrofit): NotificationAPI {
+        return retrofit.create(NotificationAPI::class.java)
     }
 }

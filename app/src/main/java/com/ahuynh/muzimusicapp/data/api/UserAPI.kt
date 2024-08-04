@@ -53,5 +53,8 @@ interface UserAPI {
     @PUT("${Constants.API_VERSION}/user")
     suspend fun updateUser(@Body updateUserRequest: UpdateUserRequest): Response<UserResponseData>
 
+    @PUT("${Constants.API_VERSION}/user/token")
+    suspend fun updateToken(@Query("token") token: String): Response<UserResponseData>
+
 
 }

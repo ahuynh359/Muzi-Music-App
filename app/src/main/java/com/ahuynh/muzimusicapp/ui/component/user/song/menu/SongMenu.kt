@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClicked {
     companion object {
-        const val TAG = "SongModelBottomSheet"
+        const val TAG = "SongMenu"
     }
 
     private val itemMenuList = ArrayList<ItemMenu>()

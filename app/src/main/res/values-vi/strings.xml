@@ -24,7 +24,7 @@
     <string name="playlists">Danh sách phát</string>
     <string name="album_art_path">content://media/external/audio/albumart</string>
     <string name="lyrics">Lời bài hát</string>
-    <string name="notifications">Nhạc</string>
+    <string name="notifications">Thông báo</string>
     <string name="descriptionText">Cho thông báo nhạc và bộ điều khiển nhạc</string>
     <string name="group_name">Thông báo</string>
     <string name="a_z">A - Z</string>
@@ -154,4 +154,5 @@
     <string name="vi">Việt Nam</string>
     <string name="en">Tiếng Anh</string>
     <string name="koria">Tiếng Hàn</string>
+    <string name="no_notification">Không có thông báo</string>
 </resources>

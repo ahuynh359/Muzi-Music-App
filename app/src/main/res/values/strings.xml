@@ -24,7 +24,7 @@
     <string name="playlists">Playlists</string>
     <string name="album_art_path">content://media/external/audio/albumart</string>
     <string name="lyrics">Lyrics</string>
-    <string name="notifications">Music</string>
+    <string name="notifications">Notification</string>
     <string name="descriptionText">For music notification and music controller</string>
     <string name="group_name">Notification</string>
     <string name="a_z">A - Z</string>
@@ -154,4 +154,8 @@
     <string name="vi">VN</string>
     <string name="en">English</string>
     <string name="koria">Koria</string>
+    <string name="no_notification">No Notification</string>
+    <string name="delete_notification">Delete Notification</string>
+    <string name="mark_as_read">Mark As Read</string>
+    <string name="mark_as_unread">Mark As Unread</string>
 </resources>

@@ -105,7 +105,6 @@ class CommentFragment : BaseDialogBottomSheetFragment(), CommentAdapter.OnCommen
 
         viewModel.commentReply.observe(viewLifecycleOwner) {
             if(it != null){
-                binding.edtComment.setText("@"+ it.user.username + " ")
                 binding.tvName.text = it.user.username
                 binding.reply.visibility  = View.VISIBLE
                 binding.btnCancle.visibility = View.VISIBLE

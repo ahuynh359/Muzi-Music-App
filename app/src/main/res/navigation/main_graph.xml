@@ -92,6 +92,9 @@
         <action
             android:id="@+id/action_profileFragment_to_singerFragment"
             app:destination="@id/singerFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"
@@ -183,4 +186,22 @@
         android:name="com.ahuynh.muzimusicapp.ui.component.user.language.LanguageFragment"
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" />
+    <dialog
+        android:id="@+id/notificationFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.notification.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_notificationMenu"
+            app:destination="@id/notificationMenu" />
+    </dialog>
+    <dialog
+        android:id="@+id/notificationMenu"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.notification.menu.NotificationMenu"
+        android:label="fragment_notification_menu"
+        tools:layout="@layout/fragment_notification_menu" >
+        <argument
+            android:name="notification"
+            app:argType="com.ahuynh.muzimusicapp.data.model.Notification" />
+    </dialog>
 </navigation>

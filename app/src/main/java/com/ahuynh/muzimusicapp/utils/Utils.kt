@@ -150,21 +150,7 @@ object Utils {
 
     }
 
-    fun startSleepService(
-        context: Context,
-        time: Long
-    ) {
 
-        val bundle = Bundle().apply {
-            putLong(DURATION, time)
-        }
-
-        val intent = Intent(context, BroadcastService::class.java).apply {
-            putExtra(Constants.DATA, bundle)
-        }
-
-        startService(context, intent)
-    }
 
 
     fun isValidEmail(email: String): Boolean {
@@ -188,6 +174,6 @@ object Utils {
             .into(this)
     }
 
+    }
 
 
-}

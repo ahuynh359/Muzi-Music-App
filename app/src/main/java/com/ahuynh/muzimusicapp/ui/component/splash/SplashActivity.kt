@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -10,7 +11,10 @@ import com.ahuynh.muzimusicapp.databinding.ActivitySplashBinding
 import com.ahuynh.muzimusicapp.ui.component.admin.AdminActivity
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -31,6 +35,8 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         checkIfUserIsAuthenticated()
+
+
 
     }
 

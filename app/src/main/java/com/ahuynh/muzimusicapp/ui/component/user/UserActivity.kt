@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -18,6 +19,8 @@ import com.ahuynh.muzimusicapp.databinding.ActivityUserBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.component.splash.SplashActivity
+import com.ahuynh.muzimusicapp.ui.component.splash.SplashActivity.Companion
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -27,6 +30,9 @@ import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDi
 import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeToastPermissionGranted
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -53,7 +59,25 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
         getData()
         observe()
         handleUI()
+
+        getToken()
     }
+
+    private fun getToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val token = task.result
+                Log.d(TAG, "FCM Token: $token")
+                viewModel.saveDeviceToken(token)
+                viewModel.updateToken(token)
+            })
+    }
+
     private fun getData() {
         viewModel.restoreState()
     }
@@ -104,7 +128,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
             } else {
                 binding.player.visibility = View.VISIBLE
                 binding.tvSong.text = it.name
-                binding.tvSinger.text =it.singers.joinToString(", ") { it.name }
+                binding.tvSinger.text = it.singers.joinToString(", ") { it.name }
                 Glide
                     .with(binding.imvSong.context)
                     .load(it.avatar)
@@ -187,7 +211,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(binding.btmNavigation,navController)
+        NavigationUI.setupWithNavController(binding.btmNavigation, navController)
     }
 
 
@@ -210,7 +234,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
             binding.slider.visibility = View.VISIBLE
             binding.slider.value = event.timeMillis.toFloat()
             binding.slider.valueTo = event.duration.toFloat()
-        } else{
+        } else {
             binding.slider.valueTo = 0f
             binding.slider.visibility = View.GONE
             binding.slider.value = 0f

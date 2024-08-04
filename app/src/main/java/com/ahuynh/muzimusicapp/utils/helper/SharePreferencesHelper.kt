@@ -14,6 +14,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val UNREAD_NOTI = "unread_noti"
         const val IS_LOGGED_IN = "is_logged_in"
         const val TOKEN = "token"
+        const val DEVICE_TOKEN = "device_token"
         const val APP_SHARE_KEY = "com.ahuynh.muzimusicapp"
         const val EMAIL = "email"
         const val PASSWORD = "password"
@@ -25,7 +26,8 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         const val SORT_ALBUM = "sort_album"
         const val SORT_SINGER = "sort_singer"
         const val SORT_COMMENT = "sort_comment"
-        const val LANGUAGE = "en"
+        const val LANGUAGE = "language"
+
 
     }
 
@@ -191,6 +193,7 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
         editor.putString(EMAIL, "")
         editor.putString(PASSWORD, "")
         editor.putBoolean(IS_LOGGED_IN, false)
+        editor.putString(TOKEN,"")
         editor.apply()
     }
 
@@ -206,7 +209,16 @@ class SharePreferencesHelper @Inject constructor(context: Context) {
     }
 
     fun getAdminOrUser(): Boolean {
-        return pref.getBoolean(IS_ADMIN_OR_USER, true)
+        return pref.getBoolean(IS_ADMIN_OR_USER, false)
+    }
+
+    fun saveDeviceToken(token: String) {
+        editor.putString(DEVICE_TOKEN, token)
+        editor.apply()
+    }
+
+    fun getDeviceToken(): String {
+        return pref.getString(DEVICE_TOKEN, null) ?: ""
     }
 
 }

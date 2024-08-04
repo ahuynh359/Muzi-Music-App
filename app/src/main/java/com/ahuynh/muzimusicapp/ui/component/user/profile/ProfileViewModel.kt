@@ -3,6 +3,7 @@ package com.ahuynh.muzimusicapp.ui.component.user.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.User
+import com.ahuynh.muzimusicapp.data.repository.NotificationRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Response
@@ -16,16 +17,19 @@ import javax.inject.Inject
 class ProfileViewModel @Inject
 constructor(
     private val sharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val notificationRepository : NotificationRepository
 ) :
     BaseViewModel() {
 
-    var email = MutableLiveData<String>()
     var currentUser = MutableLiveData<User>()
     var avatar = MutableLiveData<String>()
-    var status = MutableLiveData<Boolean>(false)
+    var unreadCount = MutableLiveData<Int>()
     var mess: String? = null
 
+    init {
+        getUserById()
+    }
 
     fun getUserById() {
         isLoading.postValue(true)
@@ -51,6 +55,22 @@ constructor(
 
         }
 
+    }
+
+    fun getUnreadNotification() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            val result = notificationRepository.countUnreadNotification()
+            if (result is Response.Success) {
+                unreadCount.postValue(result.data.data.count)
+            } else if (result is Response.Failure) {
+                mess = result.errorMessage
+
+            }
+            registerEventParentJobFinish()
+
+
+        }
     }
 }
 

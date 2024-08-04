@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_bg_playlist_add"
+    android:background="@drawable/custom_bg_dark"
     android:orientation="vertical"
     android:paddingVertical="16dp"
     tools:context=".ui.base.bottom_sheet.SortBottomSheetFragment">

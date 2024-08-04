@@ -11,6 +11,7 @@ data class User(
     val username: String,
     val avatar: String,
     val locked : Boolean,
+     val deviceToken: String,
     val role : Role,
     val createdAt : String,
     val updatedAt : String

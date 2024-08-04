@@ -73,6 +73,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
             findNavController().popBackStack()
         }
 
+
 //        binding.viewProfile.setOnClickListener {
 //            val action = SettingFragmentDirections.actionSettingFragmentToProfileFragment()
 //            findNavController().navigate(action)
@@ -87,6 +88,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
                 val action = SettingFragmentDirections.actionSettingFragmentToLanguageFragment()
                 findNavController().navigate(action)
             }
+
 
             else -> {
 

@@ -15,6 +15,7 @@ import com.ahuynh.muzimusicapp.data.model.UserList
 import com.ahuynh.muzimusicapp.data.model.UserListName
 import com.ahuynh.muzimusicapp.databinding.FragmentProfileBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -48,8 +49,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getUserById()
         initData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUnreadNotification()
     }
 
 
@@ -63,23 +68,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     private fun observeData() {
         viewModel.currentUser.observe(viewLifecycleOwner) {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar);
-
+            binding.imvAvatar.loadImage(it.avatar)
 
         }
 
         viewModel.avatar.observe(viewLifecycleOwner) {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar);
+            binding.imvAvatar.loadImage(it)
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
@@ -91,6 +85,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 binding.imvAvatar.visibility = View.VISIBLE
                 binding.pgLoading.hide()
             }
+        }
+
+        viewModel.unreadCount.observe(viewLifecycleOwner){
+            if(it > 0){
+                binding.tvCountNotification.visibility = View.VISIBLE
+                binding.tvCountNotification.text = it.toString()
+            } else
+                binding.tvCountNotification.visibility = View.GONE
+            binding.refresh.isRefreshing = false
         }
 
     }
@@ -109,11 +112,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             findNavController().navigate(action)
         }
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.getUnreadNotification()
+        }
+
         binding.btnSetting.setOnClickListener {
             navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment())
         }
 
-
+        binding.btnNotification.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToNotificationFragment()
+            findNavController().navigate(action)
+        }
 
 
         binding.btnEdit.setOnClickListener {

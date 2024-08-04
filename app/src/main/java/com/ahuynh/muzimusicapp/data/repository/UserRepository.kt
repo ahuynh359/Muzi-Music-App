@@ -73,6 +73,12 @@ class UserRepository @Inject constructor(
         }
     }
 
+    suspend fun updateToken(token: String): Response<UserResponseData> {
+        return withContext(dispatcher) {
+            userRemoteService.updateToken(token)
+        }
+    }
+
 
 }
 

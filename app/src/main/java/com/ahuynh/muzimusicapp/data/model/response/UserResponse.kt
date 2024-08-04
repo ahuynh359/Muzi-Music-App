@@ -13,6 +13,7 @@ data class UserResponse(
     val username: String,
     val avatar: String,
     val locked: Boolean,
+    val deviceToken: String,
     val role: Role,
     val createdAt: String,
     val updatedAt: String
@@ -26,6 +27,7 @@ data class UserResponse(
             username = this.username,
             avatar = this.avatar,
             locked = this.locked,
+            deviceToken = this.deviceToken,
             role = this.role,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt

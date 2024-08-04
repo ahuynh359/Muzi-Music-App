@@ -82,4 +82,9 @@ class UserRemoteService @Inject constructor(
         return callApi { userAPI.updateUser(updateUserRequest) }
 
     }
+
+    suspend fun updateToken(token : String)  : Response<UserResponseData>{
+        return callApi { userAPI.updateToken(token) }
+
+    }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_bg_playlist_add"
+    android:background="@drawable/custom_bg_dark"
     tools:context=".ui.component.user.comment.CommentFragment">
 
 
@@ -12,10 +12,10 @@
         android:id="@+id/tv_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/demi"
         android:text="@string/comment"
         android:textSize="24sp"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,12 +42,12 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintBottom_toTopOf="@id/view_1"
         android:id="@+id/rcy_comment"
         android:layout_width="@dimen/_0dp"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/view_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view"
@@ -82,11 +82,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:layout_marginBottom="5dp"
-        app:layout_constraintEnd_toStartOf="@id/btn_send"
         android:id="@+id/edt_comment"
         android:layout_width="@dimen/_0dp"
         android:layout_height="@dimen/_50dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/bg_edt_search_black"
         android:drawablePadding="10dp"
         android:drawableTint="@color/white"
@@ -101,56 +100,60 @@
         android:textColorHint="@color/white"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_send"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_send"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="@dimen/_50dp"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@id/edt_comment"
+        android:src="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="@id/edt_comment"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_send"
-        android:layout_width="@dimen/_50dp"
-        android:layout_height="@dimen/_50dp"/>
+        app:layout_constraintTop_toTopOf="@id/edt_comment" />
 
     <LinearLayout
-android:visibility="gone"
-        android:orientation="horizontal"
         android:id="@+id/reply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/edittext_background"
+        android:orientation="horizontal"
+        android:padding="@dimen/_15dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/edt_comment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="0dp"
-        android:padding="@dimen/_15dp"
 
-        android:layout_height="wrap_content">
+        app:layout_constraintStart_toStartOf="parent">
+
         <TextView
-            android:fontFamily="@font/demi"
-            android:text="@string/reply_to"
-            android:textColor="@color/white"
             android:id="@+id/tv_reply"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/demi"
+            android:text="@string/reply_to"
+            android:textColor="@color/white" />
+
         <TextView
-            android:fontFamily="@font/regular"
-            android:layout_marginStart="20dp"
-            tools:text="ahuynh"
-            android:textColor="@color/white"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/white"
+            tools:text="ahuynh" />
     </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatImageButton
-        android:visibility="gone"
         android:id="@+id/btn_cancle"
+        android:layout_width="@dimen/_50dp"
+        android:layout_height="@dimen/_50dp"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@id/reply"
+        android:src="@drawable/ic_close"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/reply"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_close"
-        android:layout_width="@dimen/_50dp"
-        android:layout_height="@dimen/_50dp"/>
+        app:layout_constraintTop_toTopOf="@id/reply" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

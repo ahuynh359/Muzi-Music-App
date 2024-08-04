@@ -80,9 +80,9 @@
         android:layout_height="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_more_small"
-        app:layout_constraintBottom_toBottomOf="@id/tv_content"
+        app:layout_constraintBottom_toBottomOf="@id/imv_avatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_content" />
+        app:layout_constraintTop_toTopOf="@id/imv_avatar" />
 
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_bg_playlist_add"
+    android:background="@drawable/custom_bg_dark"
     android:padding="@dimen/_10dp"
     tools:context=".ui.component.user.comment.menu.CommentMenu">
 
