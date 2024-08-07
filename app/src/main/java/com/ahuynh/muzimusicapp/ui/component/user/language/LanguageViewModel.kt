@@ -20,7 +20,6 @@ class LanguageViewModel @Inject constructor(
 
     init {
         getLanguage()
-        Log.d("ABC",language.value.toString())
     }
 
     private fun getLanguage() {

@@ -24,6 +24,14 @@ class CommentRemoteService @Inject constructor(
         return callApi { commentAPI.getAllCommentsOfSong(id) }
     }
 
+    suspend fun getCommentById(id: Long): Comment? {
+        val result = callApi { commentAPI.getCommentById(id) }
+        return if (result is Response.Success) {
+            result.data.data.toComment()
+        } else {
+            null
+        }
+    }
 
     suspend fun createComment(commentRequest: AddCommentRequest): Response<CommentResponseData> {
         return callApi { commentAPI.createComment(commentRequest) }

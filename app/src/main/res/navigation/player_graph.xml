@@ -5,26 +5,12 @@
     android:id="@+id/player_graph"
     app:startDestination="@id/playerViewPagerFragment">
 
-    <dialog
-        android:id="@+id/commentFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.comment.CommentFragment"
-        android:label="fragment_comment"
-        tools:layout="@layout/fragment_comment">
-        <argument
-            android:name="song"
-            app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
-        <action
-            android:id="@+id/action_commentFragment_to_commentMenu"
-            app:destination="@id/commentMenu" />
 
-    </dialog>
     <fragment
         android:id="@+id/playerViewPagerFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.player.viewpager.PlayerViewPagerFragment"
         android:label="PlayerViewPagerFragment">
-        <action
-            android:id="@+id/action_playerViewPagerFragment_to_commentFragment"
-            app:destination="@id/commentFragment" />
+
         <action
             android:id="@+id/action_playerViewPagerFragment_to_typeMenu"
             app:destination="@id/typeMenu" />

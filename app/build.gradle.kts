@@ -61,6 +61,9 @@ dependencies {
         exclude(group = "androidx.core", module = "core")
     }
 
+    //Rounded Image View
+    implementation ("com.makeramen:roundedimageview:2.3.0")
+
     //Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-ktx:$room_version")

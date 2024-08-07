@@ -11,7 +11,7 @@ data class Notification (
     val status : String,
     val type : String,
     val songId : Long,
-    val commentId : Long,
+    val commentId : Long ?= null,
     val time : String,
     val user : User,
 

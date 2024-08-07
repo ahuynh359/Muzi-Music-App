@@ -1,44 +1,30 @@
 package com.ahuynh.muzimusicapp.utils
 
-import android.Manifest
-import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import android.content.ContextWrapper
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Bitmap
-import android.os.Build
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.os.LocaleList
 import android.os.Parcelable
 import android.util.Patterns
 import android.util.TypedValue
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.palette.graphics.Palette
+import androidx.annotation.DrawableRes
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.service.BroadcastService
-import com.ahuynh.muzimusicapp.service.BroadcastService.Companion.DURATION
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.internal.ContextUtils
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.google.android.gms.common.internal.ResourceUtils
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+
 
 object Utils {
 
@@ -174,6 +160,42 @@ object Utils {
             .into(this)
     }
 
+    fun stringToDate(day: String): Date {
+        val str = day.substring(0, 10)
+        val formatter = SimpleDateFormat("dd-MM-yyyy")
+        return formatter.parse(str)
+
+
     }
+
+    fun Drawable.toBitmap(): Bitmap {
+        if (this is BitmapDrawable) {
+            return this.bitmap
+        }
+
+        val bitmap = Bitmap.createBitmap(
+            this.intrinsicWidth,
+            this.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        this.setBounds(0, 0, canvas.width, canvas.height)
+        this.draw(canvas)
+        return bitmap
+    }
+
+    fun Bitmap.resize(width: Int, height: Int): Bitmap {
+        return Bitmap.createScaledBitmap(this, width, height, true)
+    }
+
+    fun Bitmap.toDrawable(context: Context): Drawable {
+        return BitmapDrawable(context.resources, this)
+    }
+
+    fun Drawable.resizeDrawable(context: Context, width: Int, height: Int): Drawable {
+        val bitmap = this.toBitmap().resize(width, height)
+        return bitmap.toDrawable(context)
+    }
+}
 
 

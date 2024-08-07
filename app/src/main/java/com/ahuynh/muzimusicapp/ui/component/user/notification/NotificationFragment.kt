@@ -34,7 +34,6 @@ class NotificationFragment : BaseDialogBottomSheetFragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("ABC", "onCreateView: ")
         binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
     }

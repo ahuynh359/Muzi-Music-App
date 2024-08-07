@@ -17,6 +17,7 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
+import com.ahuynh.muzimusicapp.ui.component.user.comment.CommentActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,25 +33,25 @@ class NotificationCommonActivity :
         super.onCreate(savedInstanceState)
 
         val type = intent?.getStringExtra(Constants.TYPE)
-        val referenceId = intent?.getLongExtra(Constants.REFERENCE_ID,-1)
-        Log.d("ABCD",type.toString())
-        Log.d("ABCD",referenceId.toString())
+        val songId = intent?.getLongExtra(Constants.SONG_ID, -1)
+        val commentId = intent?.getLongExtra(Constants.COMMENT_ID, -1)
 
         if (type == null) {
             gotoHome()
         } else {
             when (type) {
                 "COMMENT" -> {
-                    if (referenceId != null) {
-                        playSong(referenceId.toLong())
+                    if (commentId != null && songId != null) {
+                        showComment(songId, commentId)
                     }
                 }
 
                 "SONG" -> {
-                    if (referenceId != null) {
-                        playSong(referenceId.toLong())
+                    if (songId != null) {
+                        playSong(songId.toLong())
                     }
                 }
+
                 else -> gotoHome()
 
 
@@ -66,6 +67,26 @@ class NotificationCommonActivity :
     private fun gotoHome() {
         startActivity(Intent(this, UserActivity::class.java))
         finish()
+    }
+
+    private fun showComment(songId: Long, commentId: Long) {
+        lifecycleScope.launch {
+            val song = viewModel.getSong(songId)
+            val comment = viewModel.getComment(commentId)
+            if (song == null) {
+                gotoHome()
+            } else {
+                startActivity(
+                    Intent(
+                        this@NotificationCommonActivity,
+                        CommentActivity::class.java
+                    ).apply {
+                        putExtra(Constants.SONG, song)
+                        putExtra(Constants.COMMENT, comment)
+                    })
+                finish()
+            }
+        }
     }
 
     private fun playSong(idSong: Long) {

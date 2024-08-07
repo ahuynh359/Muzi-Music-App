@@ -7,6 +7,8 @@ import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongListen
+import com.ahuynh.muzimusicapp.data.model.response.SongListenResponseDataList
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
 import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
@@ -31,6 +33,9 @@ interface SongAPI {
 
     @GET("${Constants.API_VERSION}/song/top10")
     suspend fun getTop10(): Response<SongResponseDataList>
+
+    @GET("${Constants.API_VERSION}/song/top3")
+    suspend fun getTop3(): Response<SongListenResponseDataList>
 
     @GET("${Constants.API_VERSION}/song/{id}")
     suspend fun getSongById(@Path("id") id: Long): Response<SongResponseData>

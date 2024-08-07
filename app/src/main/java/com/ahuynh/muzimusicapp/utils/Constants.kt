@@ -1,10 +1,18 @@
 package com.ahuynh.muzimusicapp.utils
 
+import android.graphics.Color
+
 
 object Constants {
 
 
+    val colorsTopSong = listOf(
+        Color.rgb(47,148,240),
+        Color.rgb(56,202,147),
+        Color.rgb(227,121,68)
+    )
     const val TYPE: String = "type"
+    const val COMMENT: String = "comment"
     const val SONG_ID: String = "song_id"
     const val COMMENT_ID: String = "comment_id"
     const val NOTIFICATION: String = "notification"

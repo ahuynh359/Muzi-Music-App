@@ -32,6 +32,11 @@ interface CommentAPI {
         @Query("sort") sortName: SortName
     ): Response<CommentResponseDataList>
 
+    @GET("${Constants.API_VERSION}/comment/{id}")
+    suspend fun getCommentById(
+        @Path("id") id: Long
+    ): Response<CommentResponseData>
+
     @POST("${Constants.API_VERSION}/comment/create")
     suspend fun createComment(
         @Body commentRequest: AddCommentRequest

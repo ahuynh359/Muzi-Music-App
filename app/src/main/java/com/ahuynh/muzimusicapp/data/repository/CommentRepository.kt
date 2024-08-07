@@ -32,6 +32,12 @@ class CommentRepository @Inject constructor(
         }
     }
 
+    suspend fun getCommentById(id: Long): Comment? {
+        return withContext(dispatcher) {
+            commentRemoteService.getCommentById(id)
+        }
+    }
+
     suspend fun getAllComments(sortName: SortName): List<Comment> {
         return withContext(dispatcher) {
             commentRemoteService.getAllComments(sortName)

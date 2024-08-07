@@ -7,6 +7,7 @@ import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongListen
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
 import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
@@ -39,6 +40,12 @@ class SongRepository @Inject constructor(
     suspend fun getTop10(): List<Song> {
         return withContext(dispatcher) {
             songRemoteService.getTop10()
+        }
+    }
+
+    suspend fun getTop3(): List<SongListen> {
+        return withContext(dispatcher) {
+            songRemoteService.getTop3()
         }
     }
 

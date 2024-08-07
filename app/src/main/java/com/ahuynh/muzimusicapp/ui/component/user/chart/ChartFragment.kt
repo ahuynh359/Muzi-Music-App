@@ -3,161 +3,230 @@ package com.ahuynh.muzimusicapp.ui.component.user.chart
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ChartAdapter
+import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.model.response.ListenOfDayResponse
+import com.ahuynh.muzimusicapp.data.model.response.SongListen
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
+import com.ahuynh.muzimusicapp.databinding.FragmentPlayerViewPagerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.stringToDate
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.makeramen.roundedimageview.RoundedImageView
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Calendar
+import java.util.Date
+import java.util.Random
+import kotlin.math.abs
+import kotlin.math.min
 
 @AndroidEntryPoint
 class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::inflate),
-
-    ChartAdapter.OnChartClicked{
+    ChartAdapter.OnChartClicked {
 
     private val viewModel by viewModels<ChartViewModel>()
-    private val values : ArrayList<ArrayList<Entry>> = ArrayList()
-    private val colorsTopSong = listOf(
-        Color.rgb(47,148,240),
-        Color.rgb(56,202,147),
-        Color.rgb(227,121,68)
-    )
+    private lateinit var songAdapter: ChartAdapter
+    private val values: ArrayList<ArrayList<Entry>> = ArrayList()
 
-    companion object {
-        const val TAG = "ChartFragment"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getChartList()
     }
 
-    private val chartSongAdapter = ChartAdapter(this)
-    private var chartList: ArrayList<Song> = arrayListOf()
+    override fun onResume() {
+        super.onResume()
+        binding.shimmerSong.startShimmer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.shimmerSong.stopShimmer()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //setUpChart()
-        handleUI()
-        observe()
+        setupSwipeRefresh()
+        setupRecyclerView()
 
-
-    }
-
-
-//    private fun setUpChart() {
-//        val list = chartList.subList(0, min(3,chartList.size))
-//
-//
-//        binding.lineChart.visibility = View.VISIBLE
-//        // Create a list of data points for the first dataset
-//        val entries1 = mutableListOf<Entry>()
-//        var index = 0
-//        for (i in list[0].listens) {
-//            entries1.add(Entry(index.toFloat(), i.value.toFloat()))
-//            index++
-//        }
-//
-//
-//        // Create a LineDataSet for the first dataset
-//        val dataSet1 = LineDataSet(entries1, list[0].name)
-//        dataSet1.color = Color.RED
-//
-//        // Create a list of data points for the second dataset
-//        val entries2 = mutableListOf<Entry>()
-//        index = 0
-//        for (i in list[1].listens) {
-//            entries2.add(Entry(index.toFloat(), i.value.toFloat()))
-//            index++
-//        }
-//
-//        // Create a LineDataSet for the second dataset
-//        val dataSet2 = LineDataSet(entries2, list[1].name)
-//        dataSet2.color = Color.GREEN // Set color for the second dataset
-//
-//        // Create a list of data points for the third dataset
-//        val entries3 = mutableListOf<Entry>()
-//        index = 0
-//        for (i in list[2].listens) {
-//            entries3.add(Entry(index.toFloat(), i.value.toFloat()))
-//            index++
-//        }
-//
-//        // Create a LineDataSet for the third dataset
-//        val dataSet3 = LineDataSet(entries3, list[2].name)
-//        dataSet3.color = Color.YELLOW // Set color for the third dataset
-//
-//        // Create a LineData object with all LineDataSet objects
-//        val lineData = LineData(dataSet1, dataSet2, dataSet3)
-//
-//        // Set the LineData to the LineChart
-//        binding.lineChart.data = lineData
-//
-//        // Disable description, X axis, right Y axis, and enable legend
-//        binding.lineChart.description.isEnabled = false
-//        binding.lineChart.axisRight.isEnabled = false
-//        binding.lineChart.legend.isEnabled = true
-//        binding.lineChart.legend.textColor = Color.WHITE
-//
-//        binding.lineChart.xAxis.textColor = Color.WHITE
-//        binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-//        val days = listOf("24-04", "25-04", "26-04", "27-04","28-04","29-04")
-//        binding.barChart.xAxis.labelRotationAngle = 45f
-//        binding.lineChart.xAxis.valueFormatter = object : ValueFormatter() {
-//            override fun getFormattedValue(value: Float): String {
-//                if (value == 0f) {
-//                    return days[0]
-//                } else if (value == 1f) {
-//                    return days[1]
-//                } else if (value == 2f) {
-//                    return days[2]
-//                } else if (value == 3f) {
-//                    return days[3]
-//                }
-//                else if (value == 4f) {
-//                    return days[4]
-//                }
-//                return "...";
-//            }
-//        }
-//        // Animate the chart
-//        binding.lineChart.animateY(1000)
-//
-//        // Set axis and grid line colors to white
-//        binding.lineChart.axisLeft.textColor = Color.WHITE
-//        binding.lineChart.axisLeft.gridColor = Color.WHITE
-//
-//        // Invalidate and refresh the chart
-//        binding.lineChart.invalidate()
-//    }
-
-    private fun observe() {
-
-        binding.rcySong.adapter = chartSongAdapter
-        viewModel.chartList.observe(viewLifecycleOwner) {
-            binding.rcySong.visibility = View.VISIBLE
-            if (it != null) {
-                chartList = it as ArrayList<Song>
-                chartSongAdapter.submitList(it)
+        viewModel.top3List.observe(viewLifecycleOwner) {
+            values.clear()
+            for (topIndex in 0 until min(3, it.size)) {
+                values.add(ArrayList())
+                it[topIndex].listenDetail?.let { listListen ->
+                    val calendar = Calendar.getInstance()
+                    calendar.add(Calendar.DAY_OF_MONTH, -10)
+                    for (cnt in 0 until 10) {
+                        calendar.add(Calendar.DAY_OF_MONTH, 1)
+                        val numListen = getListenOfDay(calendar.time, listListen)
+                        values[topIndex].add(Entry(cnt.toFloat(), numListen.toFloat()))
+                    }
+                }
             }
-            binding.shimmerSong.stopShimmer()
-            binding.shimmerSong.visibility = View.INVISIBLE
 
-
+            setupChart()
         }
 
+        viewModel.chartList.observe(viewLifecycleOwner) {
+            binding.swipeRefresh.isRefreshing = false
+            binding.shimmerSong.stopShimmer()
+            binding.shimmerSong.visibility = View.GONE
+            binding.rcySong.visibility = View.VISIBLE
+            songAdapter.submitList(it)
+            viewModel.getTopSongDrawable(requireContext())
+        }
 
+        viewModel.songDrawables.observe(viewLifecycleOwner) {
+            binding.lineChart.data = generateDataLine()
+        }
+    }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getChartList()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        songAdapter = ChartAdapter(this)
+        binding.rcySong.adapter = songAdapter
     }
 
 
 
-    private fun handleUI() {
+
+    private fun getListenOfDay(checkDate: Date, listens: List<ListenOfDayResponse>): Int {
+        for (listenOfDay in listens) {
+            val date = Utils.stringToDate(listenOfDay.day)
+            val calendar1 = Calendar.getInstance()
+            val calendar2 = Calendar.getInstance()
+
+            calendar1.time = checkDate
+            date?.let {
+                calendar2.time = it
+                if (calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
+                    && calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)
+                ) return listenOfDay.listen
+            }
+        }
+        return 0
+    }
+
+    private fun setupChart() {
+        binding.lineChart.apply {
+            description.isEnabled = false
+            setDrawGridBackground(false)
+            isDragEnabled = false
+            setScaleEnabled(false)
+            setPinchZoom(false)
+            legend.isEnabled = false
+
+            xAxis.apply {
+                labelCount = 9
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+                textColor = ContextCompat.getColor(context, R.color.white)
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        val calendar = Calendar.getInstance()
+                        calendar.add(Calendar.DAY_OF_MONTH, value.toInt() - 9)
+                        return "${calendar.get(Calendar.DAY_OF_MONTH)}"
+                    }
+                }
+            }
+            axisLeft.apply {
+                isEnabled = false
+            }
+            axisRight.apply {
+                labelCount = 4
+                setDrawGridLines(false)
+                textColor = ContextCompat.getColor(context, R.color.white)
+            }
+
+            animateY(1500)
+            data = generateDataLine()
+
+            setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+                override fun onValueSelected(e: Entry?, h: Highlight?) {
+                    binding.lineChart.data = generateDataLine(h?.dataSetIndex ?: -1)
+                }
+
+                override fun onNothingSelected() {
+
+                }
+            })
+        }
+    }
 
 
+    private fun generateDataLine(whiteSetIndex: Int = -1): LineData {
+
+        val sets: ArrayList<ILineDataSet> = ArrayList()
+        val dataSets: ArrayList<LineDataSet> = ArrayList()
+
+        for (i in 0 until values.size) {
+            var lineDataSet: LineDataSet
+            if (whiteSetIndex == i) {
+                val whiteValue = values[i].toMutableList()
+                val randomIndex = abs(Random().nextInt() % 9 + 1)
+
+                val a = RoundedImageView(context)
+                a.setImageDrawable(viewModel.songDrawables.value?.get(i))
+                a.cornerRadius = 24f
+                a.borderWidth = Utils.convertDpToPixel(2f, requireContext()).toFloat()
+                a.borderColor = Constants.colorsTopSong[i]
+
+                whiteValue[randomIndex] = Entry(
+                    randomIndex.toFloat(),
+                    whiteValue[randomIndex].y,
+                    a.drawable
+                )
+
+                lineDataSet = LineDataSet(whiteValue, "Top ${i + 1}").apply {
+                    setDrawCircles(true)
+                    setDrawCircleHole(true)
+                    circleRadius = 3.5f
+                    setCircleColor(Constants.colorsTopSong[i])
+                }
+            } else {
+                lineDataSet = LineDataSet(values[i], "Top ${i + 1}").apply {
+                    setDrawCircles(false)
+                    setDrawCircleHole(false)
+                }
+            }
+
+            lineDataSet.apply {
+                lineWidth = 1.5f
+                color = Constants.colorsTopSong[i]
+                setDrawValues(false)
+            }
+            dataSets.add(lineDataSet)
+            sets.add(dataSets[i])
+        }
+
+        return LineData(sets)
     }
 
     override fun onSongClicked(song: Song) {
@@ -166,20 +235,11 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
             requireContext(),
             MusicService.ACTION_PLAY,
             song,
-            chartList
+            viewModel.chartList.value as ArrayList<Song>
         )
     }
 
     override fun openMenu(song: Song) {
-        val fragment = SongMenu()
-        fragment.arguments = Bundle().apply {
-            putParcelable(Constants.SONG,song)
-        }
-        fragment.show(requireActivity().supportFragmentManager,null)
+        // Implement song menu actions if needed
     }
-
-
-
-
-
 }

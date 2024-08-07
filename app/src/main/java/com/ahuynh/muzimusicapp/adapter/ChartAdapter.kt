@@ -32,11 +32,11 @@ class ChartAdapter(private val listener: OnChartClicked) :
             binding.tvSinger.text = song.singers.joinToString(", ") { it.name }
             binding.tvIndex.text = (layoutPosition + 1).toString()
             if(layoutPosition == 0){
-                binding.tvIndex.setTextColor(Color.RED)
+                binding.tvIndex.setTextColor( Color.rgb(47,148,240),)
             } else if(layoutPosition == 1){
-                binding.tvIndex.setTextColor(Color.YELLOW)
+                binding.tvIndex.setTextColor( Color.rgb(56,202,147))
             } else if(layoutPosition == 2){
-                binding.tvIndex.setTextColor(Color.GREEN)
+                binding.tvIndex.setTextColor(Color.rgb(227,121,68))
             }else
                 binding.tvIndex.setTextColor(Color.WHITE)
 
@@ -47,7 +47,7 @@ class ChartAdapter(private val listener: OnChartClicked) :
 
     private class DiffCallback : DiffUtil.ItemCallback<Song>() {
         override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {

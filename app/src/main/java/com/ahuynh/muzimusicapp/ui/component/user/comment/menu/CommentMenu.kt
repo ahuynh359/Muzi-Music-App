@@ -87,7 +87,6 @@ class CommentMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterCl
         when (menu.type) {
 
             ItemMenuName.COPY -> {
-                Log.d("ABC","Copy")
                 copyTextToClipboard(currentComment.content)
                 Toast.makeText(requireContext(), "Copy to clipboard", Toast.LENGTH_SHORT).show()
                 dismiss()

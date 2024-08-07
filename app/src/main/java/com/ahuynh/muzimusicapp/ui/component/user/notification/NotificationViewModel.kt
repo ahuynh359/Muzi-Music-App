@@ -99,8 +99,7 @@ class NotificationViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val result = notificationRepository.deleteAllNotifications()
             if (result is Response.Success) {
-                Log.d("ABC","Delete ALl")
-                getAllNotifications() // Refresh the list after deletion
+                getAllNotifications()
             } else if (result is Response.Failure) {
                 mess = result.errorMessage
             }

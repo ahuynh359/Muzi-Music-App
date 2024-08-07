@@ -10,7 +10,7 @@ data class NotificationResponse(
     val type: String,
     val time: String,
     val songId: Long,
-    val commentId: Long,
+    val commentId: Long?= null,
     val user: UserResponse,
 ) {
     fun toNotification(): Notification {

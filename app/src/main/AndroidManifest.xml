@@ -30,7 +30,7 @@
             android:name=".ui.component.notification_common.NotificationCommonActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.component.notification_common.NotificationCommon"
+            android:name=".ui.component.user.comment.CommentActivity"
             android:exported="false" />
         <activity
             android:name=".ui.component.admin.song.add_song.UploadSongActivity"

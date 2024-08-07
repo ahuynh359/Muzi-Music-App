@@ -18,6 +18,7 @@ import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerViewModel
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
+import com.ahuynh.muzimusicapp.ui.component.user.comment.CommentActivity
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.EventBusModel
@@ -110,7 +111,7 @@ class PlayerViewPagerFragment :
             btnDown.setOnClickListener { navigateToUserActivity() }
             btnSleep.setOnClickListener { navigateToSleepDialog() }
             btnHeadphone.setOnClickListener { openAudioEffectControlPanel() }
-            btnComment.setOnClickListener { navigateToCommentFragment() }
+            btnComment.setOnClickListener { navigateToCommentActivity() }
             tvSinger.setOnClickListener { navigateToSingerMenu() }
             tvType.setOnClickListener { navigateToTypeMenu() }
             btnHeart.setOnClickListener { toggleLoveSong() }
@@ -194,12 +195,10 @@ class PlayerViewPagerFragment :
         }
     }
 
-    private fun navigateToCommentFragment() {
-        val action =
-            PlayerViewPagerFragmentDirections.actionPlayerViewPagerFragmentToCommentFragment(
-                viewModel.song.value!!
-            )
-        findNavController().navigate(action)
+    private fun navigateToCommentActivity() {
+        startActivity(Intent(requireActivity(), CommentActivity::class.java).apply {
+            putExtra(Constants.SONG, viewModel.song.value)
+        })
     }
 
     private fun navigateToSingerMenu() {

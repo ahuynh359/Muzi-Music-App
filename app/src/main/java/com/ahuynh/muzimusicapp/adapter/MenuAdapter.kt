@@ -18,7 +18,6 @@ class MenuAdapter(private val listener: OnItemMenuAdapterClicked) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                Log.d("ABC","ahihi")
                 listener.onMenuClicked(currentList[layoutPosition])
             }
 

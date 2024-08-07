@@ -24,9 +24,8 @@ class NotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        Log.d("vinh", "onMessageReceived")
 
-        var pref: SharedPreferences =
+        val pref: SharedPreferences =
             applicationContext.getSharedPreferences(
                 SharePreferencesHelper.APP_SHARE_KEY,
                 Context.MODE_PRIVATE
@@ -34,13 +33,14 @@ class NotificationService : FirebaseMessagingService() {
         val isLoggedIn = pref.getBoolean(SharePreferencesHelper.IS_LOGGED_IN, false)
 
         if(isLoggedIn){
-            val title = message.notification?.title ?: message.data["title"]
-            val content = message.notification?.body ?: message.data["content"]
+            val title = message.notification?.title
+            val content = message.notification?.body
             val type = message.data["type"]
-            val referenceId = message.data["referenceId"]
+            val songId = message.data["songId"]
+            val commentId = message.data["commentId"]
 
-            sendNotification(title, content, type,referenceId)
-            Log.d("ABC", "Action: $title $content $type $referenceId")
+            sendNotification(title, content, type,songId,commentId)
+            Log.d("ABC", "Action: $title $content $type $songId $commentId")
         }
     }
 
@@ -52,10 +52,12 @@ class NotificationService : FirebaseMessagingService() {
     }
 
 
-    private fun sendNotification(title: String?, content: String?, type: String?,referenceId: String?) {
+    private fun sendNotification(title: String?, content: String?, type: String?,songId: String?,commentId : String?) {
         val intent = Intent(this, NotificationCommonActivity::class.java).apply {
             putExtra(Constants.TYPE, type)
-            putExtra(Constants.REFERENCE_ID, referenceId?.toLong())
+            putExtra(Constants.SONG_ID, songId?.toLong())
+            if(commentId != "-1")
+                putExtra(Constants.COMMENT_ID, commentId?.toLong())
         }
 
 
