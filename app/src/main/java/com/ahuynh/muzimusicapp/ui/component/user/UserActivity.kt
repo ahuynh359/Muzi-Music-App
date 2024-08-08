@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.material.animation.AnimationUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -83,6 +84,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
     }
 
     private fun handleUI() {
+        //binding.player.animation = AnimationUtils.loadAnimation(this, R.anim.bottom_to_top)
         binding.player.setOnClickListener {
             val intent = Intent(this, PlayerActivity::class.java)
             val options = ActivityOptions.makeCustomAnimation(

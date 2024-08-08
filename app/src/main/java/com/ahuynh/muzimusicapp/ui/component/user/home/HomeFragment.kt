@@ -2,23 +2,22 @@ package com.ahuynh.muzimusicapp.ui.component.user.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.AlbumViewType
+import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongEntityAdapter
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
 import com.ahuynh.muzimusicapp.adapter.TypeViewType
-import com.ahuynh.muzimusicapp.adapter.VerticalSongAdapter
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
@@ -39,7 +38,7 @@ import kotlin.math.min
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     AlbumAdapter.OnAlbumClicked,
     SongAdapter.OnSongClicked, SingerAdapter.OnSingerClicked,
-    SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked {
+    SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked, NewSongAdapter.NewSongClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
@@ -51,15 +50,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private val songEntityAdapter = SongEntityAdapter(this)
-    private lateinit var newSongAdapter: VerticalSongAdapter
+    private var newSongAdapter = NewSongAdapter(this)
     private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
     private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
-    private val newSingerAdapter = SingerAdapter(this,SingerViewType.HOME)
+    private val newSingerAdapter = SingerAdapter(this, SingerViewType.HOME)
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newTypeList: ArrayList<Type> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         return super.onCreateView(inflater, container, savedInstanceState)
 
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,6 +99,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         outState.putInt(SCROLL_POSITION_KEY, scrollPosition)
     }
 
+    private fun handleUI() {
+
+        binding.rcyNewSong.apply {
+            adapter = newSongAdapter
+            layoutManager = getGridLayoutHorizontal(3)
+            val snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(this)
+        }
+
+        binding.rcyNewSinger.adapter = newSingerAdapter
+        binding.rcyNewAlbum.adapter = newAlbumAdapter
+        binding.rcyRecentSongs.adapter = songEntityAdapter
+        binding.rcyNewType.adapter = newTypeAdapter
+
+    }
+
 
     private fun getData() {
         viewModel.getNewSongs()
@@ -105,12 +122,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewSingers()
         viewModel.getRecentSongs()
         viewModel.getNewTypes()
-
-
     }
 
     private fun observe() {
-
         handleRecentSong()
         handleNewSongList()
         handleNewAlbumList()
@@ -121,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleNewTypeList() {
-        binding.rcyNewType.adapter = newTypeAdapter
+
         viewModel.newTypeList.observe(viewLifecycleOwner) {
             binding.rcyNewType.visibility = View.VISIBLE
             if (it != null) {
@@ -136,7 +150,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleRecentSong() {
-        binding.rcyRecentSongs.adapter = songEntityAdapter
+
         viewModel.recentSong.observe(viewLifecycleOwner) {
             binding.rcyRecentSongs.visibility = View.VISIBLE
             songEntityAdapter.submitList(it)
@@ -149,16 +163,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     private fun handleNewSongList() {
+
         viewModel.newSongList.observe(viewLifecycleOwner) {
             binding.rcyNewSong.visibility = View.VISIBLE
             val list = it.subList(0, min(9, it.size))
             newSongList = it as ArrayList<Song>
-            val songLists = list.chunked(3)
-
-            newSongAdapter = VerticalSongAdapter(songLists, this)
-            binding.rcyNewSong.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rcyNewSong.adapter = newSongAdapter
+            newSongAdapter.submitList(it)
 
             binding.shimmerNewSong.stopShimmer()
             binding.shimmerNewSong.visibility = View.INVISIBLE
@@ -167,8 +177,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    private fun getGridLayoutHorizontal(spanCount: Int) =
+        GridLayoutManager(requireContext(), spanCount, GridLayoutManager.HORIZONTAL, false)
+
+
     private fun handleNewAlbumList() {
-        binding.rcyNewAlbum.adapter = newAlbumAdapter
         viewModel.newAlbumList.observe(viewLifecycleOwner) {
             binding.rcyNewAlbum.visibility = View.VISIBLE
             if (it != null) {
@@ -177,13 +190,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
             binding.shimmerNewAlbum.stopShimmer()
             binding.shimmerNewAlbum.visibility = View.INVISIBLE
-
-
         }
     }
 
     private fun handleNewSingerList() {
-        binding.rcyNewSinger.adapter = newSingerAdapter
+
         viewModel.newSingerList.observe(viewLifecycleOwner) {
             binding.rcyNewSinger.visibility = View.VISIBLE
             if (it != null) {
@@ -198,13 +209,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-    private fun handleUI() {
-
-        val snapHelper1 = LinearSnapHelper()
-        snapHelper1.attachToRecyclerView(binding.rcyNewSong)
-
-    }
-
     override fun onSongClicked(song: Song) {
         startActivity(Intent(context, PlayerActivity::class.java))
         Utils.sendMusic(
@@ -218,9 +222,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun openMenu(song: Song) {
         val fragment = SongMenu()
         fragment.arguments = Bundle().apply {
-            putParcelable(Constants.SONG,song)
+            putParcelable(Constants.SONG, song)
         }
-        fragment.show(requireActivity().supportFragmentManager,null)
+        fragment.show(requireActivity().supportFragmentManager, null)
     }
 
 
@@ -256,6 +260,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onMoreClicked(type: Type) {
+    }
+
+    override fun onSongClick(song: Song) {
+
+    }
+
+    override fun onOpenMenu(song: Song, position: Int) {
     }
 
 

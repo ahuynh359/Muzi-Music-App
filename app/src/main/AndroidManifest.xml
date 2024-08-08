@@ -27,6 +27,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.component.error.ErrorActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.component.notification_common.NotificationCommonActivity"
             android:exported="false" />
         <activity

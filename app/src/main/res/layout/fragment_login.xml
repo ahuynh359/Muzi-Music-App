@@ -78,7 +78,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_password" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.royrodriguez.transitionbutton.TransitionButton
+        app:loaderColor="@color/black"
+        app:defaultColor="@color/white"
         android:id="@+id/btn_log_in"
         android:layout_width="@dimen/_100dp"
         android:layout_height="wrap_content"

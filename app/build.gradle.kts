@@ -43,7 +43,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
 
     }
@@ -56,13 +56,24 @@ android {
 }
 
 dependencies {
+    //Input
+    implementation("com.github.glomadrian:material-code-input:Tag")
+    //Button Transition
+    implementation("com.github.roynx98:transition-button-android:69d3513640")
+    //Custom Activity On Crash
+    implementation("cat.ereza:customactivityoncrash:2.4.0")
+    //Swipe Layout
+    implementation("com.daimajia.swipelayout:library:1.2.0@aar")
     //Localization
     implementation("com.akexorcist:localization:1.2.11") {
         exclude(group = "androidx.core", module = "core")
     }
 
+    //Lottie animation
+    implementation("com.airbnb.android:lottie:6.3.0")
+
     //Rounded Image View
-    implementation ("com.makeramen:roundedimageview:2.3.0")
+    implementation("com.makeramen:roundedimageview:2.3.0")
 
     //Room
     val room_version = "2.6.1"
@@ -76,27 +87,27 @@ dependencies {
 
     //Chip
 
-    implementation (libs.androidx.core.ktx)
+    implementation(libs.androidx.core.ktx)
     //Gson
-    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation("com.google.code.gson:gson:2.8.8")
 
     //Retrofit
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.moshi)
-    implementation ("com.squareup.okhttp3:okhttp:4.9.2")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.2")
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.moshi)
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
     implementation(libs.moshi.kotlin)
 
     //Stepper
     implementation("com.github.acefalobi:android-stepper:0.3.0")
     //Pdf Reader
-    implementation (libs.itext7.core)
+    implementation(libs.itext7.core)
 
     //Visualizer
     implementation("io.github.gautamchibde:audiovisualizer:2.2.5")
 
     //Chart
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     //Coil
     implementation(libs.coil)
 
@@ -104,15 +115,15 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
 
     // Exoplayer
-    implementation (libs.androidx.media3.exoplayer)
-    implementation (libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.exoplayer.hls)
 
     //Eventbus
     implementation(libs.eventbus)
 
     //Shimmer
-    implementation (libs.shimmer)
+    implementation(libs.shimmer)
 
     //ViewModel and LiveData
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -131,13 +142,13 @@ dependencies {
     }
 
     //Glide
-    implementation (libs.glide)
+    implementation(libs.glide)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
 
 
 
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     //Navigation Graph
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -147,14 +158,13 @@ dependencies {
     implementation(libs.hilt.android)
 
     //Messaging
-    implementation ("com.github.DavidBarbaran:FCM-AndroidToOtherDevice:1.1.2")
-
+    implementation("com.github.DavidBarbaran:FCM-AndroidToOtherDevice:1.1.2")
 
 
     //Retrofit
-    implementation (libs.gson)
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.palette.ktx)
 
@@ -167,7 +177,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.androidx.media3.common)
-    implementation (libs.androidx.media)
+    implementation(libs.androidx.media)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)

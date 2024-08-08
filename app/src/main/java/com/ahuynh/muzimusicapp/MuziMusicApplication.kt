@@ -1,18 +1,19 @@
 package com.ahuynh.muzimusicapp
 
-import android.app.Application
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.ahuynh.muzimusicapp.ui.component.error.ErrorActivity
 import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
-import dagger.hilt.android.HiltAndroidApp
-import androidx.work.Configuration
-import androidx.work.WorkManager
 import com.akexorcist.localizationactivity.ui.LocalizationApplication
+import dagger.hilt.android.HiltAndroidApp
 import java.util.Locale
 
+
 @HiltAndroidApp
-class MuziMusicApplication :  LocalizationApplication(){
+class MuziMusicApplication : LocalizationApplication() {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "Muzi Channel"
@@ -23,8 +24,26 @@ class MuziMusicApplication :  LocalizationApplication(){
     }
 
     override fun onCreate() {
+
         super.onCreate()
+
         createNotificationChannel()
+        customActivityOnCrash()
+    }
+
+    private fun customActivityOnCrash() {
+        CaocConfig.Builder.create()
+            .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
+            .enabled(true) //default: true
+            .showErrorDetails(false) //default: true
+            .showRestartButton(false) //default: true
+            .logErrorOnRestart(false) //default: true
+            .trackActivities(true) //default: false
+            .minTimeBetweenCrashesMs(2000) //default: 3000
+            .errorDrawable(R.drawable.ic_spotify_a) //default: bug image
+            .restartActivity(ErrorActivity::class.java) //default: null (your app's launch activity)
+            .errorActivity(ErrorActivity::class.java) //default: null (default error activity)
+            .apply()
     }
 
 
@@ -41,7 +60,6 @@ class MuziMusicApplication :  LocalizationApplication(){
             notificationManager.createNotificationChannel(channel)
         }
     }
-
 
 
 }

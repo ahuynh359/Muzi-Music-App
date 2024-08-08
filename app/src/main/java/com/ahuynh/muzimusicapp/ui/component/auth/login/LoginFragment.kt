@@ -6,7 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
@@ -15,7 +15,10 @@ import com.ahuynh.muzimusicapp.databinding.FragmentLoginBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.admin.AdminActivity
 import com.ahuynh.muzimusicapp.ui.component.user.UserActivity
+import com.royrodriguez.transitionbutton.TransitionButton
+import com.royrodriguez.transitionbutton.TransitionButton.OnAnimationStopEndListener
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -41,6 +44,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     }
 
+
+
     companion object {
         const val TAG = "LoginFragment"
     }
@@ -61,23 +66,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                         startActivityAndFinishCurrent(AdminActivity::class.java)
                     else
                         startActivityAndFinishCurrent(UserActivity::class.java)
-                } else
+                } else {
                     viewModel.mess?.let { mess ->
                         Toast.makeText(requireContext(), mess, Toast.LENGTH_LONG).show()
                     }
+                    binding.btnLogIn.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null)
+                }
 
             }
             viewModel.loginStatus.postValue(null)
         }
 
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.btnLogIn.isEnabled = !it
-            if (it == true) {
-                binding.pbLoading.show()
-            } else
-                binding.pbLoading.hide()
-        }
+//        viewModel.isLoading.observe(viewLifecycleOwner) {
+//            binding.btnLogIn.isEnabled = !it
+//            if (it == true) {
+//                binding.pbLoading.show()
+//            } else
+//                binding.pbLoading.hide()
+//
+//        }
 
 
     }
@@ -96,6 +104,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 viewModel.login(loginRequest)
 
 
+                binding.btnLogIn.startAnimation()
             }
 
         }
@@ -113,9 +122,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun startActivityAndFinishCurrent(destinationActivity: Class<*>) {
-        val intent = Intent(requireActivity(), destinationActivity)
-        startActivity(intent)
-        requireActivity().finish()
+        binding.btnLogIn.stopAnimation(
+            TransitionButton.StopAnimationStyle.EXPAND
+        ) {
+            val intent = Intent(requireActivity(), destinationActivity)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
     }
 
 
