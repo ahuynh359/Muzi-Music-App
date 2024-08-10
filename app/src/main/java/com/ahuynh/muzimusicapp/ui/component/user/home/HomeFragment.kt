@@ -2,18 +2,18 @@ package com.ahuynh.muzimusicapp.ui.component.user.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.AlbumViewType
 import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerViewType
+import com.ahuynh.muzimusicapp.adapter.SliderAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongEntityAdapter
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
@@ -21,6 +21,7 @@ import com.ahuynh.muzimusicapp.adapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
+import com.ahuynh.muzimusicapp.data.model.SliderItem
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
@@ -30,48 +31,33 @@ import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.min
 
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
-    AlbumAdapter.OnAlbumClicked,
-    SongAdapter.OnSongClicked, SingerAdapter.OnSingerClicked,
+    AlbumAdapter.OnAlbumClicked, SongAdapter.OnSongClicked, SingerAdapter.OnSingerClicked,
     SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked, NewSongAdapter.NewSongClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
-    private var scrollPosition = 0
-
     companion object {
         const val TAG = "HomeFragment"
-        const val SCROLL_POSITION_KEY = "scroll_position_key"
     }
 
-    private val songEntityAdapter = SongEntityAdapter(this)
+    private val songEntityAdapter = SongEntityAdapter(this, SongEntityAdapter.TYPE_SONG_ENTITY_HOME)
     private var newSongAdapter = NewSongAdapter(this)
     private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
     private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
     private val newSingerAdapter = SingerAdapter(this, SingerViewType.HOME)
+    private val slideAdapter = SliderAdapter()
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newTypeList: ArrayList<Type> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        savedInstanceState?.let {
-            scrollPosition = it.getInt(SCROLL_POSITION_KEY, 0)
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
-
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,20 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onResume() {
         super.onResume()
-        binding.scrollView.post {
-            binding.scrollView.scrollTo(0, scrollPosition)
-        }
         getData()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        scrollPosition = binding.scrollView.scrollY
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SCROLL_POSITION_KEY, scrollPosition)
     }
 
     private fun handleUI() {
@@ -112,6 +85,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.rcyNewAlbum.adapter = newAlbumAdapter
         binding.rcyRecentSongs.adapter = songEntityAdapter
         binding.rcyNewType.adapter = newTypeAdapter
+        binding.imageSlider.apply {
+            setSliderAdapter(slideAdapter)
+            setIndicatorAnimation(IndicatorAnimationType.WORM);
+            setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+            startAutoCycle();
+        }
+
+
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.ic_notification -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToNotificationFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+
+                R.id.ic_setting -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToSettingFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            getData()
+        }
 
     }
 
@@ -122,6 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewSingers()
         viewModel.getRecentSongs()
         viewModel.getNewTypes()
+        viewModel.getUnreadNotification()
     }
 
     private fun observe() {
@@ -130,8 +133,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleNewAlbumList()
         handleNewSingerList()
         handleNewTypeList()
+        handleSliderList()
 
 
+    }
+
+    private fun handleSliderList() {
+        val sliderItems = arrayListOf(
+            SliderItem(
+                image = R.drawable.slider_1,
+                title = "Title 1",
+                description = "Sing Along"
+            ),
+            SliderItem(
+                image = R.drawable.slider_2,
+                title = "Title 2",
+                description = "Hits"
+            ),
+            SliderItem(
+                image = R.drawable.slider_3,
+                title = "Title 3",
+                description = "Favorite"
+            )
+        )
+        slideAdapter.submitData(sliderItems)
     }
 
     private fun handleNewTypeList() {
@@ -144,7 +169,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
             binding.shimmerNewType.stopShimmer()
             binding.shimmerNewType.visibility = View.INVISIBLE
-
+            binding.swipeRefresh.isRefreshing = false
 
         }
     }
@@ -156,8 +181,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             songEntityAdapter.submitList(it)
             binding.shimmerRecentSongs.stopShimmer()
             binding.shimmerRecentSongs.visibility = View.INVISIBLE
-
-
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -166,13 +190,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         viewModel.newSongList.observe(viewLifecycleOwner) {
             binding.rcyNewSong.visibility = View.VISIBLE
-            val list = it.subList(0, min(9, it.size))
             newSongList = it as ArrayList<Song>
             newSongAdapter.submitList(it)
 
             binding.shimmerNewSong.stopShimmer()
             binding.shimmerNewSong.visibility = View.INVISIBLE
-
+            binding.swipeRefresh.isRefreshing = false
 
         }
     }
@@ -190,6 +213,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
             binding.shimmerNewAlbum.stopShimmer()
             binding.shimmerNewAlbum.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -203,7 +227,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
             binding.shimmerNewSinger.stopShimmer()
             binding.shimmerNewSinger.visibility = View.INVISIBLE
-
+            binding.swipeRefresh.isRefreshing = false
 
         }
     }
@@ -212,10 +236,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onSongClicked(song: Song) {
         startActivity(Intent(context, PlayerActivity::class.java))
         Utils.sendMusic(
-            requireContext(),
-            MusicService.ACTION_PLAY,
-            song,
-            newSongList
+            requireContext(), MusicService.ACTION_PLAY, song, newSongList
         )
     }
 
@@ -229,7 +250,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     override fun onAlbumClicked(album: Album) {
-
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailAlbumFragment(album)
+        findNavController().navigate(action)
     }
 
     override fun onMoreItemAlbumClicked(album: Album) {
@@ -247,10 +269,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         startActivity(Intent(context, PlayerActivity::class.java))
         Utils.sendMusic(
-            requireContext(),
-            MusicService.ACTION_PLAY,
-            song,
-            arrayListOf(song)
+            requireContext(), MusicService.ACTION_PLAY, song, arrayListOf(song)
         )
     }
 
@@ -263,10 +282,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onSongClick(song: Song) {
-
+        startActivity(Intent(context, PlayerActivity::class.java))
+        Utils.sendMusic(
+            requireContext(), MusicService.ACTION_PLAY, song, newSongList
+        )
     }
 
     override fun onOpenMenu(song: Song, position: Int) {
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG, song)
+        }
+        fragment.show(requireActivity().supportFragmentManager, null)
     }
 
 

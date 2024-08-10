@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view"
@@ -8,271 +8,340 @@
     android:scrollbars="none"
     tools:context=".ui.component.user.home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top_app_bar_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!--    New Type-->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_new_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_30dp"
-            android:fontFamily="@font/bold"
-            android:text="@string/new_type"
-            android:textSize="@dimen/_24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.appbar.MaterialToolbar
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_new_type"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_type"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_type">
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:menu="@menu/top_app_bar_home"
+            app:subtitle="Good Evening"
+            app:subtitleTextAppearance="@style/TextMedium"
+            app:title="MuziMusic"
+            app:titleTextAppearance="@style/TextBold" />
 
-            <LinearLayout
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_app_bar_layout">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <include layout="@layout/item_shimmer_type_home" />
-                <include layout="@layout/item_shimmer_type_home" />
-                <include layout="@layout/item_shimmer_type_home" />
+                <!--    New Type-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_new_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/new_type"
+                    android:textSize="@dimen/_24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <include layout="@layout/item_shimmer_type_home" />
-                <include layout="@layout/item_shimmer_type_home" />
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_new_type"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_type"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_type">
 
-                <include layout="@layout/item_shimmer_type_home" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
+                        <include layout="@layout/item_shimmer_type_home" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_new_type"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_type"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_type"
-            tools:listitem="@layout/item_type_home" />
-        <!--    Recently played-->
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imv_recently_played"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
-            android:src="@drawable/new_song"
-            app:layout_constraintStart_toStartOf="@id/tv_new_type"
-            app:layout_constraintTop_toBottomOf="@id/shimmer_new_type" />
+                        <include layout="@layout/item_shimmer_type_home" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_wrap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/spotifywrapped"
-            android:textColor="#9C9C9C"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_recently_played"
-            app:layout_constraintStart_toEndOf="@id/imv_recently_played" />
+                        <include layout="@layout/item_shimmer_type_home" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_recently_played"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/_8dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
-            android:text="@string/recently_played"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@id/imv_recently_played"
-            app:layout_constraintStart_toEndOf="@id/imv_recently_played" />
+                        <include layout="@layout/item_shimmer_type_home" />
 
+                        <include layout="@layout/item_shimmer_type_home" />
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_recent_songs"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/imv_recently_played"
-            app:layout_constraintTop_toBottomOf="@id/imv_recently_played">
+                        <include layout="@layout/item_shimmer_type_home" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_new_type"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_type"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_type"
+                    tools:listitem="@layout/item_type_home" />
+               <!--Slider-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_slider"
+                    app:layout_constraintTop_toBottomOf="@id/shimmer_new_type"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:cardCornerRadius="6dp"
+                    android:layout_margin="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                    <com.smarteist.autoimageslider.SliderView
+                        android:id="@+id/imageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        app:sliderAnimationDuration="600"
+                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderAutoCycleEnabled="true"
+                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorGravity="center_horizontal|bottom"
+                        app:sliderIndicatorMargin="15dp"
+                        app:sliderIndicatorOrientation="horizontal"
+                        app:sliderIndicatorPadding="3dp"
+                        app:sliderIndicatorRadius="2dp"
+                        app:sliderIndicatorSelectedColor="#5A5A5A"
+                        app:sliderIndicatorUnselectedColor="#FFF"
+                        app:sliderScrollTimeInSec="5"
+                        app:sliderStartAutoCycle="true" />
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                </androidx.cardview.widget.CardView>
+                <!--    Recently played-->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imv_recently_played"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:src="@drawable/new_song"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_type"
+                    app:layout_constraintTop_toBottomOf="@id/card_slider" />
 
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_wrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/spotifywrapped"
+                    android:textColor="#9C9C9C"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_recently_played"
+                    app:layout_constraintStart_toEndOf="@id/imv_recently_played" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_recent_songs"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imv_recently_played"
-            tools:listitem="@layout/item_circle_recently" />
-
-        <!--    New song-->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_new_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:fontFamily="@font/bold"
-            android:text="@string/new_song"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shimmer_recent_songs" />
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_new_song"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_song"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_song">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <include layout="@layout/item_shimmer_circle_recently" />
-
-                <include layout="@layout/item_shimmer_circle_recently" />
-
-                <include layout="@layout/item_shimmer_circle_recently" />
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recently_played"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/_8dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/recently_played"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@id/imv_recently_played"
+                    app:layout_constraintStart_toEndOf="@id/imv_recently_played" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_new_song"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_song"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_song"
-            tools:listitem="@layout/item_song" />
-        <!--    New singer-->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_new_singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="@dimen/_30dp"
-            android:fontFamily="@font/bold"
-            android:text="@string/new_singer"
-            android:textSize="@dimen/_24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shimmer_new_song" />
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_recent_songs"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/imv_recently_played"
+                    app:layout_constraintTop_toBottomOf="@id/imv_recently_played">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_new_singer"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_singer"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_singer">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_circle_recently" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_recent_songs"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imv_recently_played"
+                    tools:listitem="@layout/item_circle" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_new_singer"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_singer"
-            tools:listitem="@layout/item_circle_recently" />
+                <!--    New song-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_new_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="@dimen/_20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/new_song"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shimmer_recent_songs" />
 
-        <!--    New album-->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_new_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/bold"
-            android:text="@string/new_album"
-            android:textSize="@dimen/_24sp"
-            app:fontFamily="@font/bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/shimmer_new_singer" />
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_new_song"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_song"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_song">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_new_album"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_new_album"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_album">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_round_recently" />
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_round_recently" />
+                        <include layout="@layout/item_shimmer_circle_big" />
 
-                <include layout="@layout/item_shimmer_round_recently" />
-
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcy_new_album"
-            android:layout_width="@dimen/_0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_new_album"
-            tools:listitem="@layout/item_circle_recently" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_new_song"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_song"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_song"
+                    tools:listitem="@layout/item_song" />
+                <!--    New singer-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_new_singer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="@dimen/_30dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/new_singer"
+                    android:textSize="@dimen/_24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shimmer_new_song" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_new_singer"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_singer"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_singer">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_new_singer"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_singer"
+                    tools:listitem="@layout/item_circle" />
+
+                <!--    New album-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_new_album"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/new_album"
+                    android:textSize="@dimen/_24sp"
+                    app:fontFamily="@font/bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shimmer_new_singer" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_new_album"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_new_album"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_album">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/item_shimmer_round_big" />
+
+                        <include layout="@layout/item_shimmer_round_big" />
+
+                        <include layout="@layout/item_shimmer_round_big" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_new_album"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_album"
+                    tools:listitem="@layout/item_circle" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.user.singer.detail
 
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
@@ -22,7 +24,9 @@ import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class DetailSingerFragment :
@@ -38,7 +42,7 @@ class DetailSingerFragment :
     private lateinit var songOfSinger: ArrayList<Song>
     private lateinit var currentSinger: Singer
     private lateinit var binding: FragmentDetailSingerBinding
-
+    private var gradientDrawable: GradientDrawable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentSinger = DetailSingerFragmentArgs.fromBundle(requireArguments()).singer
@@ -102,15 +106,26 @@ class DetailSingerFragment :
 
 
     private fun handleUI() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.apply {
             rcySongs.adapter = songAdapter
             imvSinger.loadImage(currentSinger.avatar)
-            tvSinger.text = currentSinger.name
+            topAppBar.title = currentSinger.name
         }
 
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.topAppBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val totalScrollRange = appBarLayout.totalScrollRange
+            if (totalScrollRange + verticalOffset == 0) {
+                binding.edtSearch.visibility = View.VISIBLE
+            } else {
+                binding.edtSearch.visibility = View.GONE
+            }
         }
+
+
+
 
 
         binding.btnPlay.setOnClickListener {

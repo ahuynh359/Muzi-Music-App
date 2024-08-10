@@ -5,20 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.databinding.ItemUserBinding
+import com.ahuynh.muzimusicapp.databinding.ItemBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class UserAdapter(private val listener: OnUserClicked) :
     ListAdapter<User, UserAdapter.ViewHolder>(DiffCallback()) {
 
-    inner class ViewHolder(private val binding: ItemUserBinding) :
+    inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.main.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener.onUserClicked(currentList[layoutPosition])
             }
             binding.btnMore.setOnClickListener {
@@ -28,9 +25,9 @@ class UserAdapter(private val listener: OnUserClicked) :
         }
 
         fun bind(user: User) {
-            binding.imvUser.loadImage(user.avatar)
-            binding.tvUserName.text = user.username
-            binding.tvEmail.text = user.email
+            binding.imv.loadImage(user.avatar)
+            binding.tvName.text = user.username
+            binding.tvDes.text = user.email
 
 
         }
@@ -49,7 +46,7 @@ class UserAdapter(private val listener: OnUserClicked) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

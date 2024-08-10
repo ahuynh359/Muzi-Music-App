@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
+import com.ahuynh.muzimusicapp.databinding.ItemBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
 class NewSongAdapter(
@@ -15,7 +15,7 @@ class NewSongAdapter(
 
     private var songs: List<Song> = arrayListOf()
 
-    class SongViewHolder(val itemBinding: ItemSongBinding) :
+    class SongViewHolder(val itemBinding: ItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root)
 
     @SuppressLint("NotifyDataSetChanged")
@@ -28,7 +28,7 @@ class NewSongAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         return SongViewHolder(
-            ItemSongBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -40,9 +40,9 @@ class NewSongAdapter(
 
         holder.itemBinding.apply {
 
-            imvSong.loadImage(song.avatar)
-            tvNameSong.text = song.name
-            tvSinger.text = song.singers.joinToString(", ") { it.name }
+            imv.loadImage(song.avatar)
+            tvName.text = song.name
+            tvDes.text = song.singers.joinToString(", ") { it.name }
 
         }
 

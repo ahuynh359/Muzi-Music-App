@@ -7,11 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.ItemSongBinding
 import com.ahuynh.muzimusicapp.databinding.ItemSongChartBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class ChartAdapter(private val listener: OnChartClicked) :
     ListAdapter<Song, ChartAdapter.ViewHolder>(DiffCallback()) {

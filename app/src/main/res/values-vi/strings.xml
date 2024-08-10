@@ -155,4 +155,9 @@
     <string name="en">Tiếng Anh</string>
     <string name="koria">Tiếng Hàn</string>
     <string name="no_notification">Không có thông báo</string>
+    <string name="delete_notification">Xoá Thông Báo</string>
+    <string name="mark_as_read">Đã đọc</string>
+    <string name="mark_as_unread">Chưa đọc</string>
+    <string name="notification">Thông báo</string>
+    <string name="song_and_singer_name">Bài hát • %s</string>
 </resources>

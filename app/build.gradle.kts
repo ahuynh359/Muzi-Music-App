@@ -56,9 +56,10 @@ android {
 }
 
 dependencies {
-    //Input
-    implementation("com.github.glomadrian:material-code-input:Tag")
-    //Button Transition
+    //Slider Image
+    implementation ("com.github.smarteist:autoimageslider:1.4.0")
+    //Edittext Pin
+    implementation ("com.github.aabhasr1:OtpView:v1.1.2-ktx") // kotlin
     implementation("com.github.roynx98:transition-button-android:69d3513640")
     //Custom Activity On Crash
     implementation("cat.ereza:customactivityoncrash:2.4.0")

@@ -110,55 +110,23 @@ class ResetPasswordFragment :
     private fun handleUI() {
         binding.edtPassword.addTextChangedListener(sendTextWatcher)
         binding.edtConfirmPassword.addTextChangedListener(sendTextWatcher)
-        setupOtpEditTexts()
         setupClickListeners()
     }
 
-    private fun setupOtpEditTexts() {
-        val editTexts = arrayOf(
-            binding.edtOne,
-            binding.edtTwo,
-            binding.edtThree,
-            binding.edtFour,
-            binding.edtFive,
-            binding.edtSix
-        )
-
-        editTexts.forEachIndexed { index, editText ->
-            editText.addTextChangedListener(object : TextWatcher {
-                private var beforeText: String = ""
-
-                override fun beforeTextChanged(
-                    s: CharSequence?, start: Int, count: Int, after: Int
-                ) {
-                    beforeText = s.toString()
-                }
-
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s?.length == 1 && index < editTexts.size - 1) {
-                        editTexts[index + 1].requestFocus()
-                    } else if (s?.length == 0 && beforeText.isNotEmpty() && index > 0) {
-                        editTexts[index - 1].requestFocus()
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-            })
-        }
-    }
 
     private fun setupClickListeners() {
         binding.btnOk.setOnClickListener {
             if (isSendEnable) {
                 val otp = collectOtp()
-                viewModel.changePassword(
-                    ResetPasswordRequest(
-                        otp,
-                        binding.edtPassword.text.toString().trim(),
-                        binding.edtConfirmPassword.text.toString().trim()
+                otp?.let {
+                    viewModel.changePassword(
+                        ResetPasswordRequest(
+                            otp,
+                            binding.edtPassword.text.toString().trim(),
+                            binding.edtConfirmPassword.text.toString().trim()
+                        )
                     )
-                )
+                }
             }
         }
 
@@ -168,15 +136,10 @@ class ResetPasswordFragment :
         }
     }
 
-    private fun collectOtp(): String {
-        val editTexts = arrayOf(
-            binding.edtOne,
-            binding.edtTwo,
-            binding.edtThree,
-            binding.edtFour,
-            binding.edtFive,
-            binding.edtSix
-        )
-        return editTexts.joinToString(separator = "") { it.text.toString() }
+    private fun collectOtp(): String? {
+        return binding.otpView.otp
+
     }
+
+
 }

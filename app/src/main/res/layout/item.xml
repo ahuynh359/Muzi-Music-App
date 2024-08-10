@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/_10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="ABC"
-    android:padding="16dp"
-    android:ellipsize="end"
-    android:maxLines="1"
-    android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/rounded_corner"
+        android:src="@drawable/note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toTopOf="@+id/tv_des"
+        app:layout_constraintTop_toTopOf="@id/imv"
+        android:layout_marginStart="@dimen/_15dp"
+        android:id="@+id/tv_name"
+        style="@style/TextMedium"
+        tools:text="My Drug"
+        app:layout_constraintStart_toEndOf="@id/imv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="@color/nobel"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        android:id="@+id/tv_des"
+        style="@style/TextMedium"
+        android:text="@string/playlist"
+        app:layout_constraintBottom_toBottomOf="@id/imv"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+   <androidx.appcompat.widget.AppCompatImageButton
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_more_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imv"
+        app:layout_constraintTop_toTopOf="@id/imv"
+        android:id="@+id/btn_more"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

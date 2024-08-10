@@ -23,12 +23,18 @@
         <action
             android:id="@+id/action_homeFragment_to_detailTypeFragment"
             app:destination="@id/detailTypeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
 
 
     <fragment
         android:id="@+id/detailAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.album.AlbumFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.album.detail.DetailAlbumFragment"
         android:label="fragment_detail_album"
         tools:layout="@layout/fragment_detail_album" >
         <argument
@@ -49,7 +55,7 @@
             app:destination="@id/addSongToPlaylistFragment" />
 
     </dialog>
-    <fragment
+    <dialog
         android:id="@+id/settingFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.setting.SettingFragment"
         android:label="fragment_setting"
@@ -57,7 +63,7 @@
         <action
             android:id="@+id/action_settingFragment_to_languageFragment"
             app:destination="@id/languageFragment" />
-    </fragment>
+    </dialog>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.search.fragment.SearchFragment"
@@ -76,13 +82,6 @@
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
         <action
-            app:popExitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_right"
-            android:id="@+id/action_profileFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
-        <action
 
             android:id="@+id/action_profileFragment_to_playlistFragment"
             app:destination="@id/playlistFragment" />
@@ -92,9 +91,6 @@
         <action
             android:id="@+id/action_profileFragment_to_singerFragment"
             app:destination="@id/singerFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"

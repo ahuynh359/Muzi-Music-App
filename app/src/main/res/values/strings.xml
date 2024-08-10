@@ -158,4 +158,6 @@
     <string name="delete_notification">Delete Notification</string>
     <string name="mark_as_read">Mark As Read</string>
     <string name="mark_as_unread">Mark As Unread</string>
+    <string name="notification">Notification</string>
+    <string name="song_and_singer_name">Song • %s</string>
 </resources>

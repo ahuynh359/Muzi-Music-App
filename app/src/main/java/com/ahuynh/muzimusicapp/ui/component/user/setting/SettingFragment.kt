@@ -2,21 +2,25 @@ package com.ahuynh.muzimusicapp.ui.component.user.setting
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.MenuAdapter
 import com.ahuynh.muzimusicapp.data.model.ItemMenu
 import com.ahuynh.muzimusicapp.data.model.ItemMenuName
+import com.ahuynh.muzimusicapp.databinding.FragmentNotificationBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentSettingBinding
+import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.auth.AuthActivity
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate),
+class SettingFragment : BaseDialogBottomSheetFragment(),
     MenuAdapter.OnItemMenuAdapterClicked {
     companion object {
         const val TAG = "SettingFragment"
@@ -25,12 +29,22 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(FragmentSettingBind
     private val settingList = ArrayList<ItemMenu>()
     private val settingAdapter = MenuAdapter(this)
 
-
+    private lateinit var binding: FragmentSettingBinding
     private val viewModel by viewModels<SettingViewModel>({ requireActivity() })
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initSettingItem()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSettingBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

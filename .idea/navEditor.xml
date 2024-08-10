@@ -582,6 +582,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_homeFragment_to_notificationFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_homeFragment_to_singerDetailFragment">
                               <value>
                                 <LayoutPositions />
@@ -597,8 +602,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1419" />
-                            <option name="y" value="178" />
+                            <option name="x" value="704" />
+                            <option name="y" value="-277" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -609,8 +614,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="509" />
-                            <option name="y" value="-462" />
+                            <option name="x" value="121" />
+                            <option name="y" value="-476" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -729,17 +734,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_profileFragment_to_notificationFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                             <entry key="action_profileFragment_to_playlistFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_profileFragment_to_settingFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -785,8 +780,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1189" />
-                            <option name="y" value="103" />
+                            <option name="x" value="474" />
+                            <option name="y" value="-352" />
                           </Point>
                         </option>
                         <option name="myPositions">

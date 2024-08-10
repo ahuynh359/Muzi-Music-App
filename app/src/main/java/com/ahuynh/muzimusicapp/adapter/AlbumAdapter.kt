@@ -1,13 +1,16 @@
 package com.ahuynh.muzimusicapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Album
+import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.ItemAlbumBinding
-import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
+import com.ahuynh.muzimusicapp.databinding.ItemRoundBigBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -19,19 +22,30 @@ enum class AlbumViewType {
 class AlbumAdapter(
     private val listener: OnAlbumClicked,
     private val viewType: AlbumViewType
-) : ListAdapter<Album, RecyclerView.ViewHolder>(DiffCallback()) {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var albums: List<Album> = arrayListOf()
 
-    inner class HomeViewHolder(private val binding: ItemRoundRecentlyBinding) :
+    @SuppressLint("NotifyDataSetChanged")
+    fun submitList(data: List<Album>) {
+        albums = data
+        notifyDataSetChanged()
+    }
+
+    inner class HomeViewHolder(private val binding: ItemRoundBigBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onAlbumClicked(currentList[layoutPosition])
+                listener.onAlbumClicked(albums[bindingAdapterPosition])
             }
         }
 
         fun bind(album: Album) {
-            binding.imvAlbum.loadImage(album.avatar)
+            binding.imv.loadImage(album.avatar)
             binding.tvName.text = album.name
+            binding.tvName.isSelected = true
+            binding.tvDes.text = binding.root.context.getString(
+                R.string.album
+            )
         }
     }
 
@@ -39,16 +53,15 @@ class AlbumAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onAlbumClicked(currentList[layoutPosition])
+                listener.onAlbumClicked(albums[bindingAdapterPosition])
             }
             binding.btnMore.setOnClickListener {
-                listener.onMoreItemAlbumClicked(currentList[layoutPosition])
+                listener.onMoreItemAlbumClicked(albums[bindingAdapterPosition])
             }
         }
 
         fun bind(album: Album) {
-            Glide
-                .with(binding.imvAlbum.context)
+            Glide.with(binding.imvAlbum.context)
                 .load(album.avatar)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -57,23 +70,15 @@ class AlbumAdapter(
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<Album>() {
-        override fun areItemsTheSame(oldItem: Album, newItem: Album): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Album, newItem: Album): Boolean {
-            return oldItem == newItem
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (this.viewType) {
             AlbumViewType.HOME -> {
                 val binding =
-                    ItemRoundRecentlyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    ItemRoundBigBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 HomeViewHolder(binding)
             }
+
             AlbumViewType.LIST -> {
                 val binding =
                     ItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -83,7 +88,7 @@ class AlbumAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val album = currentList[position]
+        val album = albums[position]
         when (holder) {
             is HomeViewHolder -> holder.bind(album)
             is ListViewHolder -> holder.bind(album)
@@ -91,7 +96,7 @@ class AlbumAdapter(
     }
 
     override fun getItemCount(): Int {
-        return currentList.size
+        return albums.size
     }
 
     interface OnAlbumClicked {

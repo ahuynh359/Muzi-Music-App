@@ -6,17 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Playlist
-import com.ahuynh.muzimusicapp.databinding.ItemPlaylistBinding
+import com.ahuynh.muzimusicapp.databinding.ItemBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class PlaylistAdapter(private val listener: OnPlaylistClicked,private val showMoreButton: Boolean = true) :
     ListAdapter<Playlist, PlaylistAdapter.ViewHolder>(DiffCallback()) {
 
-    inner class ViewHolder(private val binding: ItemPlaylistBinding) :
+    inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -29,8 +26,8 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked,private val showMo
         }
 
         fun bind(playlist: Playlist) {
-            binding.imvPlaylist.loadImage(playlist.avatar)
-            binding.tvPlaylistName.text = playlist.name
+            binding.imv.loadImage(playlist.avatar)
+            binding.tvName.text = playlist.name
             binding.btnMore.visibility = if (showMoreButton) View.VISIBLE else View.GONE
 
         }
@@ -50,7 +47,7 @@ class PlaylistAdapter(private val listener: OnPlaylistClicked,private val showMo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ItemPlaylistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

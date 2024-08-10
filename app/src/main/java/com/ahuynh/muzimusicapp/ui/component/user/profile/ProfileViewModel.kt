@@ -24,7 +24,7 @@ constructor(
 
     var currentUser = MutableLiveData<User>()
     var avatar = MutableLiveData<String>()
-    var unreadCount = MutableLiveData<Int>()
+
     var mess: String? = null
 
     init {
@@ -57,20 +57,6 @@ constructor(
 
     }
 
-    fun getUnreadNotification() {
-        isLoading.postValue(true)
-        parentJob = viewModelScope.launch {
-            val result = notificationRepository.countUnreadNotification()
-            if (result is Response.Success) {
-                unreadCount.postValue(result.data.data.count)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
 
-            }
-            registerEventParentJobFinish()
-
-
-        }
-    }
 }
 

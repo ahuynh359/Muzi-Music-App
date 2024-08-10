@@ -54,7 +54,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun onResume() {
         super.onResume()
-        viewModel.getUnreadNotification()
+
     }
 
 
@@ -87,14 +87,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             }
         }
 
-        viewModel.unreadCount.observe(viewLifecycleOwner){
-            if(it > 0){
-                binding.tvCountNotification.visibility = View.VISIBLE
-                binding.tvCountNotification.text = it.toString()
-            } else
-                binding.tvCountNotification.visibility = View.GONE
-            binding.refresh.isRefreshing = false
-        }
+//        viewModel.unreadCount.observe(viewLifecycleOwner){
+//            if(it > 0){
+//                binding.tvCountNotification.visibility = View.VISIBLE
+//                binding.tvCountNotification.text = it.toString()
+//            } else
+//                binding.tvCountNotification.visibility = View.GONE
+//            binding.refresh.isRefreshing = false
+//        }
 
     }
 
@@ -112,18 +112,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             findNavController().navigate(action)
         }
 
-        binding.refresh.setOnRefreshListener {
-            viewModel.getUnreadNotification()
-        }
+//        binding.refresh.setOnRefreshListener {
+//            viewModel.getUnreadNotification()
+//        }
 
-        binding.btnSetting.setOnClickListener {
-            navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment())
-        }
-
-        binding.btnNotification.setOnClickListener {
-            val action = ProfileFragmentDirections.actionProfileFragmentToNotificationFragment()
-            findNavController().navigate(action)
-        }
+//        binding.btnSetting.setOnClickListener {
+//            navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment())
+//        }
+//
+//        binding.btnNotification.setOnClickListener {
+//            val action = ProfileFragmentDirections.actionProfileFragmentToNotificationFragment()
+//            findNavController().navigate(action)
+//        }
 
 
         binding.btnEdit.setOnClickListener {

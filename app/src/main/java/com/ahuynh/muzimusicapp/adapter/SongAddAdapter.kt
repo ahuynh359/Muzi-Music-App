@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.ItemRoundRecentlyBinding
 import com.ahuynh.muzimusicapp.databinding.ItemSongAddBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
