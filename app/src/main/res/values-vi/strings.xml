@@ -160,4 +160,10 @@
     <string name="mark_as_unread">Chưa đọc</string>
     <string name="notification">Thông báo</string>
     <string name="song_and_singer_name">Bài hát • %s</string>
+    <string name="recent_songs">Bài hát gần đây</string>
+    <string name="search_comment_or_username">Tìm kiếm Bình luận hoặc Tên người dùng</string>
+    <string name="search_song_name">Tìm kiếm tên bài hát</string>
+    <string name="search_album_name">Tìm kiếm Tên Album</string>
+    <string name="search_singer_name">Tìm kiếm tên ca sĩ</string>
+    <string name="search_type_name">Loại tìm kiếm thể loại</string>
 </resources>

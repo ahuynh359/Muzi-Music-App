@@ -35,15 +35,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        val file: File? = FileHelper.from(requireContext(), uri!!)
-        file?.let {
-            viewModel.currentUser.value?.id?.let { it1 ->
-                viewModel.changeAvatar(
-                    it1,
-                    file
-                )
+        uri?.let {
+            val file: File? = FileHelper.from(requireContext(), it)
+            file?.let { fileObj ->
+                viewModel.currentUser.value?.id?.let { userId ->
+                    viewModel.changeAvatar(
+                        userId,
+                        fileObj
+                    )
+                }
             }
-
         }
     }
 

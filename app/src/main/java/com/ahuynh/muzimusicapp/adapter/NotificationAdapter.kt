@@ -28,8 +28,10 @@ class NotificationAdapter(private val listener: OnNotificationClicked) :
             binding.imvAvatar.setImageResource(R.drawable.ic_spotify_white)
 
             binding.tvTitle.text = notification.title
+            binding.tvTitle.isSelected = true
             binding.tvContent.text = notification.content
             binding.tvTime.text = notification.time
+            binding.tvTime.isSelected = true
             if(notification.status == "NOT_READ")
                 binding.circle.setTextColor(Color.RED)
             else

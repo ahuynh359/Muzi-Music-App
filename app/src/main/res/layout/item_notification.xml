@@ -22,7 +22,13 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
         android:layout_marginStart="@dimen/_12dp"
         android:fontFamily="@font/bold"
         android:textSize="18sp"
@@ -61,8 +67,16 @@
         app:layout_constraintTop_toTopOf="@id/tv_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        app:layout_constraintEnd_toStartOf="@id/btn_more"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
         android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/medium"

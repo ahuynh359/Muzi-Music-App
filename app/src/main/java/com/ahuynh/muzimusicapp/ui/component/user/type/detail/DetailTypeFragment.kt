@@ -82,6 +82,7 @@ class DetailTypeFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongCl
         binding.rcySongs.adapter = songAdapter
         binding.imvType.loadImage(currentType.avatar)
         binding.tvTypeName.text = currentType.name
+        binding.tvTypeName1.text = currentType.name
         binding.btnBack.setOnClickListener {
             dismiss()
         }

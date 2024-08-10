@@ -135,4 +135,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
             this, MusicService.ACTION_PLAY, song, arrayListOf(song)
         )
     }
+
+    override fun openMenu(songEntity: SongEntity) {
+
+    }
 }

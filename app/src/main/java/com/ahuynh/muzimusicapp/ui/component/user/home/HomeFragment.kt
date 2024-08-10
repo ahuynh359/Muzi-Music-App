@@ -2,7 +2,10 @@ package com.ahuynh.muzimusicapp.ui.component.user.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import android.widget.TextView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -106,6 +109,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     findNavController().navigate(action)
                     true
                 }
+                R.id.ic_history -> {
+                    val action = HomeFragmentDirections.actionHomeFragmentToRecentFragment()
+                    findNavController().navigate(action)
+                    true
+                }
+
 
                 else -> false
             }
@@ -273,6 +282,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         )
     }
 
+    override fun openMenu(songEntity: SongEntity) {
+
+    }
+
     override fun onTypeClicked(type: Type) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailTypeFragment(type)
         findNavController().navigate(action)
@@ -295,6 +308,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
         fragment.show(requireActivity().supportFragmentManager, null)
     }
+
 
 
 }

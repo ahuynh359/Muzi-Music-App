@@ -57,6 +57,10 @@ class NotificationFragment : BaseDialogBottomSheetFragment(),
         viewModel.notificationList.observe(viewLifecycleOwner) {
             notificationAdapter.submitList(it)
             notificationsList = it as ArrayList<Notification>
+            if(it.isEmpty()){
+                binding.btnDeleteAllNotification.visibility = View.GONE
+            } else
+                binding.btnDeleteAllNotification.visibility = View.VISIBLE
             binding.rcyNotification.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
             binding.tvNoNotification.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             binding.shimmer.stopShimmer()

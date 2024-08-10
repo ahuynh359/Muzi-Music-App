@@ -17,24 +17,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="13dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/bg_edt_search_white"
-        android:drawableStart="@drawable/ic_search_big"
-        android:drawablePadding="@dimen/_11dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/_14dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_edt_search_black"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
         android:fontFamily="@font/medium"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="20dp"
-        android:text="@string/find_in_liked_songs"
-        android:textColor="#131313"
-        android:textSize="16sp"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back" />
+
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -59,26 +66,7 @@
         app:layout_constraintStart_toStartOf="@id/tv_song"
         app:layout_constraintTop_toBottomOf="@id/tv_song" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_download"
-        app:layout_constraintStart_toStartOf="@id/tv_song"
-        app:layout_constraintTop_toBottomOf="@id/tv_des" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_more_small"
-        app:layout_constraintBottom_toBottomOf="@id/btn_download"
-        app:layout_constraintStart_toEndOf="@id/btn_download"
-        app:layout_constraintTop_toTopOf="@id/btn_download" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_play"
@@ -87,9 +75,8 @@
         android:layout_marginEnd="18dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_play_green"
-        app:layout_constraintBottom_toBottomOf="@id/btn_download"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_download" />
+        app:layout_constraintTop_toTopOf="@id/tv_song" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer"

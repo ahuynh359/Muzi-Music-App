@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.admin.song
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,6 +27,7 @@ import com.ahuynh.muzimusicapp.ui.component.admin.song.add_song.UploadSongActivi
 import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserFragmentDirections
 import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.userAgent
 
 @AndroidEntryPoint
 class ManageSongFragment :
@@ -73,7 +76,7 @@ class ManageSongFragment :
 
         viewModel.deleteSongStatus.observe(viewLifecycleOwner) {
             it?.let {
-                if(it){
+                if (it) {
                     viewModel.getAllSongs()
                 }
                 viewModel.mess?.let { mess ->
@@ -104,11 +107,6 @@ class ManageSongFragment :
         binding.rcySong.adapter = songAdapter
 
 
-        binding.edtSearch.setOnClickListener {
-            val action =
-                ManageSongFragmentDirections.actionManageSongFragmentToSearchManageSongFragment()
-            findNavController().navigate(action)
-        }
 
         binding.btnAdd.setOnClickListener {
             startActivity(Intent(activity, UploadSongActivity::class.java))
@@ -120,7 +118,30 @@ class ManageSongFragment :
             sortBottomSheet.show(parentFragmentManager, null)
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoSong.visibility = View.GONE
+                    songAdapter.submitList(songList)
+                } else {
+                    filterSongs(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+    }
+
+    private fun filterSongs(query: String) {
+        val filteredList = songList.filter { song ->
+            song.name.contains(query, ignoreCase = true)
+        }
+        binding.tvNoSong.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        songAdapter.submitList(filteredList)
     }
 
 

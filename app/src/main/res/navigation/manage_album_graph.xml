@@ -11,9 +11,6 @@
         android:label="fragment_manage_album"
         tools:layout="@layout/fragment_manage_album" >
         <action
-            android:id="@+id/action_manageAlbumFragment_to_searchManageAlbumFragment"
-            app:destination="@id/searchManageAlbumFragment" />
-        <action
             app:popExitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
@@ -31,11 +28,6 @@
             android:id="@+id/action_manageAlbumFragment_to_manageAlbumMenu"
             app:destination="@id/manageAlbumMenu" />
     </fragment>
-    <fragment
-        android:id="@+id/searchManageAlbumFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.search.SearchManageAlbumFragment"
-        android:label="fragment_search_manage_album"
-        tools:layout="@layout/fragment_search_manage_album" />
     <fragment
         android:id="@+id/addAlbumFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.album.add_album.AddAlbumFragment"

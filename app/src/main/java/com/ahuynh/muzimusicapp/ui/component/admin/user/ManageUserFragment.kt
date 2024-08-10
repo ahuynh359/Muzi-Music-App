@@ -81,12 +81,6 @@ class ManageUserFragment :
         binding.rcyUser.adapter = userAdapter
 
 
-        binding.edtSearch.setOnClickListener {
-            val action =
-                ManageUserFragmentDirections.actionManageUserFragmentToSearchManageUserFragment()
-            findNavController().navigate(action)
-        }
-
         binding.btnAdd.setOnClickListener {
             val action = ManageUserFragmentDirections.actionManageUserFragmentToAddUserFragment()
             findNavController().navigate(action)
@@ -101,7 +95,32 @@ class ManageUserFragment :
             sortBottomSheet.show(parentFragmentManager, null)
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoUser.visibility = View.GONE
+                    userAdapter.submitList(userList)
+                } else {
+                    filterUsers(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+
+
+
+    }
+    private fun filterUsers(query: String) {
+        val filteredList = userList.filter { user ->
+            user.username.contains(query, ignoreCase = true) || user.email.contains(query, ignoreCase = true)
+        }
+        binding.tvNoUser.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        userAdapter.submitList(filteredList)
     }
 
     override fun onUserClicked(user: User) {

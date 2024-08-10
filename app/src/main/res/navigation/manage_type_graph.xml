@@ -14,13 +14,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:enterAnim="@anim/slide_in_right"
-            android:id="@+id/action_manageTypeFragment_to_searchManageTypeFragment"
-            app:destination="@id/searchManageTypeFragment" />
-        <action
-            app:popExitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_right"
             android:id="@+id/action_manageTypeFragment_to_addTypeFragment"
             app:destination="@id/addTypeFragment" />
         <action
@@ -38,15 +31,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/searchManageTypeFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.type.search.SearchManageTypeFragment"
-        android:label="fragment_search_manage_type"
-        tools:layout="@layout/fragment_search_manage_type" >
-        <action
-            android:id="@+id/action_searchManageTypeFragment_to_manageTypeDetailFragment"
-            app:destination="@id/manageTypeDetailFragment" />
-    </fragment>
     <fragment
         android:id="@+id/addTypeFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.type.add_type.AddTypeFragment"

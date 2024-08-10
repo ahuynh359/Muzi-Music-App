@@ -1,6 +1,8 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.type
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -26,7 +28,7 @@ class ManageTypeFragment :
         const val TAG = "ManageTypeFragment"
     }
 
-    private val typeAdapter = TypeAdapter(this,TypeViewType.FULL)
+    private val typeAdapter = TypeAdapter(this, TypeViewType.FULL)
 
     private var typeList: ArrayList<Type> = arrayListOf()
 
@@ -59,11 +61,10 @@ class ManageTypeFragment :
 
 
         }
-        viewModel.sortType.observe(viewLifecycleOwner){
+        viewModel.sortType.observe(viewLifecycleOwner) {
             binding.btnSort.text = it.name
             viewModel.getAllTypes()
         }
-
 
 
     }
@@ -73,11 +74,6 @@ class ManageTypeFragment :
         binding.rcyType.adapter = typeAdapter
 
 
-        binding.edtSearch.setOnClickListener {
-            val action =
-                ManageTypeFragmentDirections.actionManageTypeFragmentToSearchManageTypeFragment()
-            findNavController().navigate(action)
-        }
 
         binding.btnAdd.setOnClickListener {
             val action = ManageTypeFragmentDirections.actionManageTypeFragmentToAddTypeFragment()
@@ -89,7 +85,30 @@ class ManageTypeFragment :
             sortBottomSheet.show(parentFragmentManager, null)
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoType.visibility = View.GONE
+                    typeAdapter.submitList(typeList)
+                } else {
+                    filterType(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+    }
+
+    private fun filterType(query: String) {
+        val filteredList = typeList.filter { user ->
+            user.name.contains(query, ignoreCase = true)
+        }
+        binding.tvNoType.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        typeAdapter.submitList(filteredList)
     }
 
     override fun onTypeClicked(type: Type) {
@@ -123,7 +142,9 @@ class ManageTypeFragment :
                 viewModel.setSortType(SortName.Z_A)
             }
 
-            else -> { viewModel.setSortType(SortName.NEW)}
+            else -> {
+                viewModel.setSortType(SortName.NEW)
+            }
 
 
         }

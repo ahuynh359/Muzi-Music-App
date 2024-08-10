@@ -1,6 +1,8 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.comment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -70,11 +72,20 @@ class ManageCommentFragment :
         binding.rcyComment.adapter = commentAdapter
 
 
-        binding.edtSearch.setOnClickListener {
-            val action =
-                ManageCommentFragmentDirections.actionManageCommentFragmentToSearchManageCommentFragment()
-            findNavController().navigate(action)
-        }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoComment.visibility = View.GONE
+                    commentAdapter.submitList(commentList)
+                } else {
+                    filterComment(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
 
 
@@ -88,10 +99,14 @@ class ManageCommentFragment :
 
     }
 
+    private fun filterComment(query: String) {
+        val filteredList = commentList.filter { comment ->
+            comment.content.contains(query, ignoreCase = true) || comment.user.username.contains(query, ignoreCase = true)
+        }
+        binding.tvNoComment.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        commentAdapter.submitList(filteredList)
 
-
-
-
+    }
 
 
     override fun openMenu(comment: Comment) {

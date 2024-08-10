@@ -40,22 +40,6 @@
             android:id="@+id/action_manageSongFragment_to_manageSongMenu"
             app:destination="@id/manageSongMenu" />
 
-        <action
-            app:popExitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:enterAnim="@anim/slide_in_right"
-            android:id="@+id/action_manageSongFragment_to_searchManageSongFragment"
-            app:destination="@id/searchManageSongFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchManageSongFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.song.search.SearchManageSongFragment"
-        android:label="fragment_search_manage_song"
-        tools:layout="@layout/fragment_search_manage_song" >
-        <action
-            android:id="@+id/action_searchManageSongFragment_to_manageSongDetailFragment"
-            app:destination="@id/manageSongDetailFragment" />
     </fragment>
 
 

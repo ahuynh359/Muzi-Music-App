@@ -58,7 +58,7 @@ class TypeAdapter(
         fun bind(type: Type) {
             binding.imvType.load(type.avatar)
             binding.tvTypeName.text = type.name
-            if(!hideBtnMore){
+            if(hideBtnMore){
                 binding.btnMore.visibility = View.GONE
             } else
                 binding.btnMore.visibility = View.VISIBLE

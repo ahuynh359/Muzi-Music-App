@@ -1,6 +1,8 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.album
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -72,13 +74,6 @@ class ManageAlbumFragment :
     private fun handleUI() {
         binding.rcyAlbum.adapter = albumAdapter
 
-
-        binding.edtSearch.setOnClickListener {
-            val action =
-                ManageAlbumFragmentDirections.actionManageAlbumFragmentToSearchManageAlbumFragment()
-            findNavController().navigate(action)
-        }
-
         binding.btnAdd.setOnClickListener {
             val action = ManageAlbumFragmentDirections.actionManageAlbumFragmentToAddAlbumFragment()
             findNavController().navigate(action)
@@ -89,7 +84,30 @@ class ManageAlbumFragment :
             sortBottomSheet.show(parentFragmentManager, null)
         }
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoAlbum.visibility = View.GONE
+                    albumAdapter.submitList(albumList)
+                } else {
+                    filterAlbum(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+    }
+
+    private fun filterAlbum(query: String) {
+        val filteredList = albumList.filter { album ->
+            album.name.contains(query, ignoreCase = true)
+        }
+        binding.tvNoAlbum.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        albumAdapter.submitList(filteredList)
     }
 
     override fun onAlbumClicked(album: Album) {

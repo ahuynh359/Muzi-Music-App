@@ -160,4 +160,10 @@
     <string name="mark_as_unread">Mark As Unread</string>
     <string name="notification">Notification</string>
     <string name="song_and_singer_name">Song • %s</string>
+    <string name="recent_songs">Recent Songs</string>
+    <string name="search_comment_or_username">Search Comment Or Username</string>
+    <string name="search_song_name">Search Song Name</string>
+    <string name="search_album_name">Search Album Name</string>
+    <string name="search_singer_name">Search Singer Name</string>
+    <string name="search_type_name">Search Type Name</string>
 </resources>

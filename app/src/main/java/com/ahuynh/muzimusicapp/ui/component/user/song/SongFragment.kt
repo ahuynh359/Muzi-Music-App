@@ -2,6 +2,8 @@ package com.ahuynh.muzimusicapp.ui.component.user.song
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +79,34 @@ class SongFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongClicked 
         binding.btnPlay.setOnClickListener {
             startPlayerActivity(songOfType[0], songOfType)
         }
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.isNullOrEmpty()) {
+                    binding.tvNoSongs.visibility = View.GONE
+                    songAdapter.submitList(songOfType)
+                } else {
+                    filterSongs(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.btnPlay.setOnClickListener {
+            startPlayerActivity(songOfType[0], songOfType)
+        }
     }
+    private fun filterSongs(query: String) {
+        val filteredList = songOfType.filter { song ->
+            song.name.contains(query, ignoreCase = true)
+        }
+        binding.tvNoSongs.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        binding.btnPlay.visibility = if (filteredList.isEmpty()) View.GONE else View.VISIBLE
+        songAdapter.submitList(filteredList)
+    }
+
 
     private fun startPlayerActivity(song: Song, songList: ArrayList<Song>) {
         startActivity(Intent(requireContext(), PlayerActivity::class.java))

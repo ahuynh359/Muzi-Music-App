@@ -73,7 +73,11 @@ class SongSearchFragment : Fragment(), SongAdapter.OnSongClicked {
     }
 
     override fun openMenu(song: Song) {
-
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG, song)
+        }
+        fragment.show(requireActivity().supportFragmentManager, null)
     }
 
 }

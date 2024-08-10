@@ -7,27 +7,30 @@
     tools:context=".ui.component.admin.type.ManageTypeFragment">
 
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:imeOptions="actionSearch"
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="13dp"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/bg_edt_search_white"
-        android:drawableStart="@drawable/ic_search_big"
-        android:drawablePadding="@dimen/_11dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/_14dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_edt_search_black"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
         android:fontFamily="@font/medium"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="20dp"
-        android:hint="@string/search_comment"
-        android:textColor="#131313"
-        android:textSize="16sp"
+        android:hint="@string/search_comment_or_username"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginTop="20dp"
@@ -85,5 +88,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_sort"
         tools:listitem="@layout/item_type_full" />
-
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_no_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/demi"
+        android:text="@string/no_comments"
+        android:textColor="@color/dusty_gray"
+        android:textSize="36sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

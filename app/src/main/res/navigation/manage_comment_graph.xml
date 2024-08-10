@@ -9,16 +9,10 @@
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.comment.ManageCommentFragment"
         android:label="ManageCommentFragment" >
         <action
-            android:id="@+id/action_manageCommentFragment_to_searchManageCommentFragment"
-            app:destination="@id/searchManageCommentFragment" />
-        <action
             android:id="@+id/action_manageCommentFragment_to_manageCommentMenu"
             app:destination="@id/manageCommentMenu" />
     </fragment>
-    <fragment
-        android:id="@+id/searchManageCommentFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.comment.search.SearchManageCommentFragment"
-        android:label="SearchManageCommentFragment" />
+
     <dialog
         android:id="@+id/manageCommentMenu"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.comment.menu.ManageCommentMenu"

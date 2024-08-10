@@ -1,0 +1,24 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/notification_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_noti" />
+
+    <TextView
+        android:padding="2dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/medium"
+        android:id="@+id/notification_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dot_green"
+        android:gravity="center"
+        android:text="9"
+        android:textColor="@android:color/white"
+        android:textSize="7sp"
+       /> <!-- Ban đầu badge ẩn đi -->
+</FrameLayout>

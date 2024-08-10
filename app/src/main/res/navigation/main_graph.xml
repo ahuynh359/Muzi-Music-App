@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recentFragment"
+            app:destination="@id/recentFragment" />
     </fragment>
 
 
@@ -200,4 +203,9 @@
             android:name="notification"
             app:argType="com.ahuynh.muzimusicapp.data.model.Notification" />
     </dialog>
+    <dialog
+        android:id="@+id/recentFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.recent.RecentFragment"
+        android:label="fragment_recent"
+        tools:layout="@layout/fragment_recent" />
 </navigation>

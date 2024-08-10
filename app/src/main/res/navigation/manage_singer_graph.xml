@@ -8,9 +8,7 @@
         android:id="@+id/manageSingerFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.singer.ManageSingerFragment"
         android:label="ManageSingerFragment" >
-        <action
-            android:id="@+id/action_manageSingerFragment_to_searchManageSingerFragment"
-            app:destination="@id/searchManageSingerFragment" />
+
         <action
             android:id="@+id/action_manageSingerFragment_to_manageSingerDetailFragment"
             app:destination="@id/manageSingerDetailFragment" />
@@ -21,14 +19,7 @@
             android:id="@+id/action_manageSingerFragment_to_manageSingerMenu"
             app:destination="@id/manageSingerMenu" />
     </fragment>
-    <fragment
-        android:id="@+id/searchManageSingerFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.admin.singer.search.SearchManageSingerFragment"
-        android:label="SearchManageSingerFragment" >
-        <action
-            android:id="@+id/action_searchManageSingerFragment_to_manageSingerDetailFragment"
-            app:destination="@id/manageSingerDetailFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/manageSingerDetailFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.admin.singer.detail_manage_singer.ManageSingerDetailFragment"

@@ -34,6 +34,7 @@ class SongEntityAdapter(
             binding.root.setOnClickListener {
                 listener.onSongEntityClick(songs[bindingAdapterPosition])
             }
+
         }
 
         fun bind(song: SongEntity) {
@@ -51,6 +52,9 @@ class SongEntityAdapter(
         init {
             binding.root.setOnClickListener {
                 listener.onSongEntityClick(songs[bindingAdapterPosition])
+            }
+            binding.btnMore.setOnClickListener {
+                listener.openMenu(songs[bindingAdapterPosition])
             }
         }
 
@@ -105,6 +109,7 @@ class SongEntityAdapter(
 
     interface OnSongEntityClick {
         fun onSongEntityClick(songEntity: SongEntity)
+        fun openMenu(songEntity: SongEntity)
     }
 
     companion object {
