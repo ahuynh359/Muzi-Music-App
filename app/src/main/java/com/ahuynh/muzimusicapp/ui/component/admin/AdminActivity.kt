@@ -37,12 +37,14 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>(ActivityAdminBinding::i
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         val navGraphIds = listOf(
+            R.navigation.dashboard,
             R.navigation.manage_user_graph,
             R.navigation.manage_song_graph,
             R.navigation.manage_type_graph,
             R.navigation.manage_album_graph,
             R.navigation.manage_singer_graph,
             R.navigation.manage_comment_graph,
+
 
             )
 
@@ -51,29 +53,33 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>(ActivityAdminBinding::i
         binding.viewPager.adapter = pagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
-                0 -> {
+                0->{
+                    tab.text = "Dashboard"
+                }
+                1 -> {
                     tab.text = "Users"
                 }
 
-                1 -> {
+                2 -> {
                     tab.text = "Songs"
                 }
 
-                2 -> {
+                3 -> {
                     tab.text = "Types"
                 }
 
-                3 -> {
+                4 -> {
                     tab.text = "Albums"
                 }
 
-                4 -> {
+                5 -> {
                     tab.text = "Singers"
                 }
 
-                5 -> {
+                6 -> {
                     tab.text = "Comments"
                 }
+
             }
         }.attach()
         binding.btnLogOut.setOnClickListener {
