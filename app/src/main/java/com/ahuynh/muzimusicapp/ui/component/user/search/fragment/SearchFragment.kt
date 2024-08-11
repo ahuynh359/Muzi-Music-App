@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
-import com.ahuynh.muzimusicapp.adapter.TypeViewType
+import com.ahuynh.muzimusicapp.adapter.TypeAdapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentSearchBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment

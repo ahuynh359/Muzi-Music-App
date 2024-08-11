@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class ChartAdapter(private val listener: OnChartClicked) :
 
     private var songs: List<Song> = emptyList()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(data: List<Song>) {
         songs = data
         notifyDataSetChanged()
@@ -32,19 +34,21 @@ class ChartAdapter(private val listener: OnChartClicked) :
         }
 
         fun bind(song: Song) {
-            binding.imvSong.loadImage(song.avatar)
-            binding.tvNameSong.text = song.name
-            binding.tvSinger.text = song.singers.joinToString(", ") { it.name }
-            binding.tvIndex.text = (bindingAdapterPosition + 1).toString()
-
-            binding.tvIndex.setTextColor(
-                when (bindingAdapterPosition) {
-                    0 -> Constants.colorsTopSong[0]
-                    1 -> Constants.colorsTopSong[1]
-                    2 -> Constants.colorsTopSong[2]
-                    else -> Color.WHITE
-                }
-            )
+            binding.apply {
+                imvSong.loadImage(song.avatar)
+                tvNameSong.text = song.name
+                tvNameSong.isSelected = true
+                tvSinger.text = song.singers.joinToString(", ") { it.name }
+                tvIndex.text = (bindingAdapterPosition + 1).toString()
+                tvIndex.setTextColor(
+                    when (bindingAdapterPosition) {
+                        0 -> Constants.colorsTopSong[0]
+                        1 -> Constants.colorsTopSong[1]
+                        2 -> Constants.colorsTopSong[2]
+                        else -> Color.WHITE
+                    }
+                )
+            }
         }
     }
 

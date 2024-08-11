@@ -3,13 +3,11 @@ package com.ahuynh.muzimusicapp.ui.component.admin.type
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
-import com.ahuynh.muzimusicapp.adapter.TypeViewType
+import com.ahuynh.muzimusicapp.adapter.TypeAdapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentManageTypeBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment

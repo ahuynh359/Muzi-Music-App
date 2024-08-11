@@ -5,65 +5,61 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10dp"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/green"
+        android:textSize="@dimen/_20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_more"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imv_song"
+        android:layout_width="@dimen/_60dp"
+        android:layout_height="@dimen/_60dp"
+        android:layout_marginStart="@dimen/_10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/note"
+        app:layout_constraintStart_toEndOf="@id/tv_index"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/rounded_corner" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_index"
-            style="@style/TextBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10dp"
-            android:textColor="@color/green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name_song"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/medium"
+        android:freezesText="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/tv_singer"
+        app:layout_constraintEnd_toStartOf="@id/btn_more"
+        app:layout_constraintStart_toEndOf="@id/imv_song"
+        app:layout_constraintTop_toTopOf="@id/imv_song"
+        tools:text="One Last Time" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imv_song"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/note"
-            app:layout_constraintStart_toEndOf="@id/tv_index"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/rounded_corner" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_name_song"
-            style="@style/TextMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintBottom_toTopOf="@+id/tv_singer"
-            app:layout_constraintStart_toEndOf="@id/imv_song"
-            app:layout_constraintTop_toTopOf="@id/imv_song"
-            tools:text="Lama Del Rey" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_singer"
-            style="@style/TextMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/nobel"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@id/imv_song"
-            app:layout_constraintStart_toStartOf="@id/tv_name_song"
-            app:layout_constraintTop_toBottomOf="@id/tv_name_song"
-            tools:text="Artist" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_singer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:textColor="@color/nobel"
+        android:textSize="@dimen/_13sp"
+        app:layout_constraintBottom_toBottomOf="@id/imv_song"
+        app:layout_constraintStart_toStartOf="@id/tv_name_song"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_song"
+        tools:text="One Direction" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_more"
@@ -74,5 +70,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

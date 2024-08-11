@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.LyricAdapter
-import com.ahuynh.muzimusicapp.adapter.LyricsClickListener
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.FragmentLyricsBinding
 import com.ahuynh.muzimusicapp.service.MusicService
@@ -26,7 +25,7 @@ import org.greenrobot.eventbus.EventBus
 
 @AndroidEntryPoint
 class LyricsFragment : BaseFragment<FragmentLyricsBinding>(FragmentLyricsBinding::inflate),
-    LyricsClickListener {
+    LyricAdapter.LyricsClickListener {
     private val viewModel by viewModels<PlayerViewModel>({requireActivity()})
     private lateinit var playerAdapter: LyricAdapter
     private lateinit var centerLayoutManager: CenterLayoutManager

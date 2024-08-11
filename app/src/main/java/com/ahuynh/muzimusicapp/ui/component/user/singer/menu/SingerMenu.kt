@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
-import com.ahuynh.muzimusicapp.adapter.SingerViewType
+import com.ahuynh.muzimusicapp.adapter.SingerAdapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSingerMenuBinding

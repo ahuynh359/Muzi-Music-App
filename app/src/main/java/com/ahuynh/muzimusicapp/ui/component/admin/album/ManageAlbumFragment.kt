@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
-import com.ahuynh.muzimusicapp.adapter.AlbumViewType
+import com.ahuynh.muzimusicapp.adapter.AlbumAdapter.AlbumViewType
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.databinding.FragmentManageAlbumBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment

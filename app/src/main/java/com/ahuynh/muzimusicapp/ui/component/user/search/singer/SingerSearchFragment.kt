@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
-import com.ahuynh.muzimusicapp.adapter.SingerViewType
+import com.ahuynh.muzimusicapp.adapter.SingerAdapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentSingerSearchBinding
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel

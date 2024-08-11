@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Album
-import com.ahuynh.muzimusicapp.databinding.ItemAlbumBinding
+import com.ahuynh.muzimusicapp.databinding.ItemBinding
 import com.ahuynh.muzimusicapp.databinding.ItemRoundBigBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
-
 
 
 class AlbumAdapter(
@@ -35,14 +34,16 @@ class AlbumAdapter(
         }
 
         fun bind(album: Album) {
-            binding.imv.loadImage(album.avatar)
-            binding.tvName.text = album.name
-            binding.tvName.isSelected = true
-            binding.tvDes.text = binding.root.context.getString(R.string.album)
+            binding.apply {
+                imv.loadImage(album.avatar)
+                tvName.text = album.name
+                tvName.isSelected = true
+                tvDes.text = binding.root.context.getString(R.string.album)
+            }
         }
     }
 
-    inner class ListViewHolder(private val binding: ItemAlbumBinding) :
+    inner class ListViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -55,8 +56,12 @@ class AlbumAdapter(
         }
 
         fun bind(album: Album) {
-            binding.imvAlbum.loadImage(album.avatar)
-            binding.tvAlbumName.text = album.name
+            binding.apply {
+                imv.loadImage(album.avatar)
+                tvName.text = album.name
+                tvName.isSelected = true
+                tvDes.text = binding.root.context.getString(R.string.album)
+            }
         }
     }
 
@@ -70,7 +75,7 @@ class AlbumAdapter(
             }
 
             AlbumViewType.LIST -> {
-                val binding = ItemAlbumBinding.inflate(
+                val binding = ItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
                 ListViewHolder(binding)

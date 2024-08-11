@@ -2,23 +2,13 @@ package com.ahuynh.muzimusicapp.ui.component.player.sleep
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
-import com.ahuynh.muzimusicapp.adapter.SingerAdapter
-import com.ahuynh.muzimusicapp.adapter.SingerViewType
-import com.ahuynh.muzimusicapp.data.model.Singer
-import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.databinding.FragmentSingerMenuBinding
 import com.ahuynh.muzimusicapp.databinding.FragmentSleepDialogBinding
 import com.ahuynh.muzimusicapp.service.BroadcastService
 import com.ahuynh.muzimusicapp.service.BroadcastService.Companion.DURATION
-import com.ahuynh.muzimusicapp.ui.component.user.singer.menu.SingerMenuArgs
-import com.ahuynh.muzimusicapp.ui.component.user.singer.menu.SingerMenuDirections
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,9 +29,7 @@ class SleepDialog : BottomSheetDialogFragment() {
             inflater, container, false
         )
 
-
         handleUI()
-
         return binding.root
     }
 

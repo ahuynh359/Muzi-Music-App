@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
-import com.ahuynh.muzimusicapp.adapter.AlbumViewType
+import com.ahuynh.muzimusicapp.adapter.AlbumAdapter.AlbumViewType
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
-import com.ahuynh.muzimusicapp.adapter.SingerViewType
+import com.ahuynh.muzimusicapp.adapter.SingerAdapter.SingerViewType
 import com.ahuynh.muzimusicapp.adapter.SliderAdapter
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.adapter.SongEntityAdapter
 import com.ahuynh.muzimusicapp.adapter.TypeAdapter
-import com.ahuynh.muzimusicapp.adapter.TypeViewType
+import com.ahuynh.muzimusicapp.adapter.TypeAdapter.TypeViewType
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
@@ -105,6 +105,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     findNavController().navigate(action)
                     true
                 }
+
                 R.id.ic_history -> {
                     val action = HomeFragmentDirections.actionHomeFragmentToRecentFragment()
                     findNavController().navigate(action)
@@ -289,10 +290,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onMoreClicked(type: Type) {
     }
-
-
-
-
 
 
 }

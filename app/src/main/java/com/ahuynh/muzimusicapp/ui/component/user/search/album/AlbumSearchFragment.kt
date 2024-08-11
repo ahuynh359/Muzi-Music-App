@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
-import com.ahuynh.muzimusicapp.adapter.AlbumViewType
+import com.ahuynh.muzimusicapp.adapter.AlbumAdapter.AlbumViewType
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.databinding.FragmentAlbumSearchBinding
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
