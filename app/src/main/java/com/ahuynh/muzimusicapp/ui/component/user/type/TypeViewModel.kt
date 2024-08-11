@@ -14,13 +14,7 @@ class TypeViewModel @Inject constructor(
     private val typeRepository: TypeRepository,
 ) : BaseViewModel() {
 
-
     var songOfType = MutableLiveData<List<Song>>()
-
-
-
-
-
 
     fun getSongOfType(id: Long) {
         isLoading.postValue(true)

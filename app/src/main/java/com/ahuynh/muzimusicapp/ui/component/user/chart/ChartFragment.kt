@@ -1,31 +1,21 @@
 package com.ahuynh.muzimusicapp.ui.component.user.chart
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.ChartAdapter
-import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.response.ListenOfDayResponse
-import com.ahuynh.muzimusicapp.data.model.response.SongListen
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.databinding.FragmentChartBinding
-import com.ahuynh.muzimusicapp.databinding.FragmentPlayerViewPagerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
-import com.ahuynh.muzimusicapp.utils.Utils.stringToDate
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -240,6 +230,10 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     }
 
     override fun openMenu(song: Song) {
-        // Implement song menu actions if needed
+        val fragment = SongMenu()
+        fragment.arguments = Bundle().apply {
+            putParcelable(Constants.SONG,song)
+        }
+        fragment.show(requireActivity().supportFragmentManager,null)
     }
 }

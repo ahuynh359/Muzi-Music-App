@@ -2,46 +2,38 @@ package com.ahuynh.muzimusicapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.ItemBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
-
 class SongAdapter(private val listener: OnSongClicked) :
-    ListAdapter<Song, SongAdapter.ViewHolder>(DiffCallback()) {
+    RecyclerView.Adapter<SongAdapter.ViewHolder>() {
+
+    private var songs: List<Song> = arrayListOf()
+
+    fun submitList(data: List<Song>) {
+        songs = data
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.root.setOnClickListener {
-                listener.onSongClicked(currentList[layoutPosition])
+                listener.onSongClicked(songs[bindingAdapterPosition])
             }
             binding.btnMore.setOnClickListener {
-                listener.openMenu(currentList[layoutPosition])
+                listener.openMenu(songs[bindingAdapterPosition])
             }
         }
+
         fun bind(song: Song) {
             binding.imv.loadImage(song.avatar)
             binding.tvName.text = song.name
             binding.tvDes.text = song.singers.joinToString(", ") { it.name }
-
-
         }
-
-    }
-
-    private class DiffCallback : DiffUtil.ItemCallback<Song>() {
-        override fun areItemsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Song, newItem: Song): Boolean {
-            return oldItem == newItem
-        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,19 +41,16 @@ class SongAdapter(private val listener: OnSongClicked) :
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position])
-    }
-
     override fun getItemCount(): Int {
-        return currentList.size
+        return songs.size
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(songs[position])
+    }
 
     interface OnSongClicked {
         fun onSongClicked(song: Song)
-        fun openMenu(song : Song)
+        fun openMenu(song: Song)
     }
-
 }
-

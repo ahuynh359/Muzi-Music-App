@@ -1,45 +1,38 @@
 package com.ahuynh.muzimusicapp.adapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.ItemTypeBinding
 import com.ahuynh.muzimusicapp.databinding.ItemTypeFullBinding
 import com.ahuynh.muzimusicapp.databinding.ItemTypeHomeBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-
-enum class TypeViewType {
-    SIMPLE, FULL, HOME
-}
 
 class TypeAdapter(
     private val listener: OnTypeClicked,
     private val viewType: TypeViewType,
-    private val hideBtnMore : Boolean = false
-) : ListAdapter<Type, RecyclerView.ViewHolder>(DiffCallback()) {
+    private val hideBtnMore: Boolean = false
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var types: List<Type> = emptyList()
+
+    fun submitList(data: List<Type>) {
+        types = data
+        notifyDataSetChanged()
+    }
 
     inner class SimpleViewHolder(private val binding: ItemTypeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onTypeClicked(currentList[layoutPosition])
+                listener.onTypeClicked(types[bindingAdapterPosition])
             }
         }
 
         fun bind(type: Type) {
-            Glide
-                .with(binding.imvType.context)
-                .load(type.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvType)
+            binding.imvType.load(type.avatar)
             binding.tvName.text = type.name
         }
     }
@@ -48,20 +41,17 @@ class TypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onTypeClicked(currentList[layoutPosition])
+                listener.onTypeClicked(types[bindingAdapterPosition])
             }
             binding.btnMore.setOnClickListener {
-                listener.onMoreClicked(currentList[layoutPosition])
+                listener.onMoreClicked(types[bindingAdapterPosition])
             }
         }
 
         fun bind(type: Type) {
             binding.imvType.load(type.avatar)
             binding.tvTypeName.text = type.name
-            if(hideBtnMore){
-                binding.btnMore.visibility = View.GONE
-            } else
-                binding.btnMore.visibility = View.VISIBLE
+            binding.btnMore.visibility = if (hideBtnMore) View.GONE else View.VISIBLE
         }
     }
 
@@ -69,23 +59,12 @@ class TypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                listener.onTypeClicked(currentList[layoutPosition])
+                listener.onTypeClicked(types[bindingAdapterPosition])
             }
-
         }
 
         fun bind(type: Type) {
             binding.tvTypeName.text = type.name
-        }
-    }
-
-    private class DiffCallback : DiffUtil.ItemCallback<Type>() {
-        override fun areItemsTheSame(oldItem: Type, newItem: Type): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Type, newItem: Type): Boolean {
-            return oldItem == newItem
         }
     }
 
@@ -112,7 +91,7 @@ class TypeAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val type = currentList[position]
+        val type = types[position]
         when (holder) {
             is SimpleViewHolder -> holder.bind(type)
             is FullViewHolder -> holder.bind(type)
@@ -120,12 +99,14 @@ class TypeAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return currentList.size
-    }
+    override fun getItemCount(): Int = types.size
 
     interface OnTypeClicked {
         fun onTypeClicked(type: Type)
         fun onMoreClicked(type: Type)
+    }
+
+    enum class TypeViewType {
+        SIMPLE, FULL, HOME
     }
 }

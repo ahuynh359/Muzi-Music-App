@@ -2,10 +2,7 @@ package com.ahuynh.muzimusicapp.ui.component.user.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import android.widget.TextView
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,7 +10,6 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.AlbumViewType
-import com.ahuynh.muzimusicapp.adapter.NewSongAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter
 import com.ahuynh.muzimusicapp.adapter.SingerViewType
 import com.ahuynh.muzimusicapp.adapter.SliderAdapter
@@ -42,7 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     AlbumAdapter.OnAlbumClicked, SongAdapter.OnSongClicked, SingerAdapter.OnSingerClicked,
-    SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked, NewSongAdapter.NewSongClicked {
+    SongEntityAdapter.OnSongEntityClick, TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<HomeViewModel>({ requireActivity() })
 
@@ -51,7 +47,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private val songEntityAdapter = SongEntityAdapter(this, SongEntityAdapter.TYPE_SONG_ENTITY_HOME)
-    private var newSongAdapter = NewSongAdapter(this)
+    private var newSongAdapter = SongAdapter(this)
     private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
     private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
     private val newSingerAdapter = SingerAdapter(this, SingerViewType.HOME)
@@ -294,20 +290,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onMoreClicked(type: Type) {
     }
 
-    override fun onSongClick(song: Song) {
-        startActivity(Intent(context, PlayerActivity::class.java))
-        Utils.sendMusic(
-            requireContext(), MusicService.ACTION_PLAY, song, newSongList
-        )
-    }
 
-    override fun onOpenMenu(song: Song, position: Int) {
-        val fragment = SongMenu()
-        fragment.arguments = Bundle().apply {
-            putParcelable(Constants.SONG, song)
-        }
-        fragment.show(requireActivity().supportFragmentManager, null)
-    }
+
 
 
 

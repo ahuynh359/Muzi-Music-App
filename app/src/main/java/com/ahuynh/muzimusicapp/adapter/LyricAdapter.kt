@@ -11,64 +11,58 @@ import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.databinding.ItemLyricsBinding
 
 class LyricAdapter(
-    private var lyrics: ArrayList<Lyric>,
-    val context: Context,
-    val listener: LyricsClickListener
-) :
-    RecyclerView.Adapter<LyricAdapter.LyricViewHolder>() {
+    private var lyrics: List<Lyric>,
+    private val context: Context,
+    private val listener: LyricsClickListener
+) : RecyclerView.Adapter<LyricAdapter.LyricViewHolder>() {
 
-    private var current: Int = -1;
+    private var current: Int = -1
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(lyrics: ArrayList<Lyric>) {
-        this.lyrics.clear()
-        this.lyrics.addAll(lyrics)
+    fun setData(newLyrics: List<Lyric>) {
+        lyrics = newLyrics
         notifyDataSetChanged()
     }
 
     fun currentLine(position: Int) {
-        if (position != current && position >= 0 && position < itemCount) {
+        if (position != current && position in 0 until itemCount) {
             notifyItemChanged(current)
             current = position
             notifyItemChanged(current)
         }
     }
-    fun resetCurrent(){
+
+    fun resetCurrent() {
         current = -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LyricViewHolder {
-        return LyricViewHolder(
-            ItemLyricsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        val binding = ItemLyricsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LyricViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: LyricViewHolder, position: Int) {
         val line = lyrics[position]
-
-        holder.itemBinding.apply {
-            tvLyric.text = line.text
-
-            if (current == position) {
-                tvLyric.setTextColor(ContextCompat.getColor(context, R.color.white))
-            } else {
-                tvLyric.setTextColor(ContextCompat.getColor(context, R.color.black))
-            }
-
-        }
-
-        holder.itemView.setOnClickListener {
-            listener.onLineLyricsClick(line)
-        }
+        holder.bind(line, position)
     }
 
     override fun getItemCount(): Int = lyrics.size
 
-    inner class LyricViewHolder(val itemBinding: ItemLyricsBinding) :
-        RecyclerView.ViewHolder(itemBinding.root)
+    inner class LyricViewHolder(private val binding: ItemLyricsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-}
+        fun bind(line: Lyric, position: Int) {
+            binding.tvLyric.text = line.text
+            val colorResId = if (current == position) R.color.white else R.color.black
+            binding.tvLyric.setTextColor(ContextCompat.getColor(context, colorResId))
 
-interface LyricsClickListener {
-    fun onLineLyricsClick(line: Lyric)
+            itemView.setOnClickListener {
+                listener.onLineLyricsClick(line)
+            }
+        }
+    }
+
+    interface LyricsClickListener {
+        fun onLineLyricsClick(line: Lyric)
+    }
 }

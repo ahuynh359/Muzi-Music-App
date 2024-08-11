@@ -9,7 +9,6 @@ import com.ahuynh.muzimusicapp.adapter.SingerAdapter.HomeViewHolder
 import com.ahuynh.muzimusicapp.adapter.SingerAdapter.ListViewHolder
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.databinding.ItemCircleBigBinding
-import com.ahuynh.muzimusicapp.databinding.ItemRoundBigBinding
 import com.ahuynh.muzimusicapp.databinding.ItemSongRecentBinding
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
