@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    //Kalaxon
+    implementation ("com.beust:klaxon:5.5")
     //Slider Image
     implementation ("com.github.smarteist:autoimageslider:1.4.0")
     //Edittext Pin

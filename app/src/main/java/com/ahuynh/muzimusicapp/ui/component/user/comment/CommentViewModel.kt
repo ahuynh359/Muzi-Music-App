@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.user.comment
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Comment
@@ -10,7 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.request.ReplyCommentRequest
 import com.ahuynh.muzimusicapp.data.model.response.toCommentList
 import com.ahuynh.muzimusicapp.data.repository.CommentRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -45,7 +44,7 @@ class CommentViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = commentRepository.getAllCommentsOfSong(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 commentList.postValue(result.data.data.comments.toCommentList())
                 totalComments.postValue(result.data.data.totalComments)
             }
@@ -59,13 +58,13 @@ class CommentViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val commentRequest = AddCommentRequest(id, str)
             val result = commentRepository.createComment(commentRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+            } else if(result is NetworkResult.Failure){
+                mess = result.errorMessage.message
             }
-            addCommentStatus.postValue(result is Response.Success)
+            addCommentStatus.postValue(result is NetworkResult.Success)
 
         }
         registerEventParentJobFinish()
@@ -75,13 +74,13 @@ class CommentViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = commentRepository.deleteComment(commentId)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+            } else if(result is NetworkResult.Failure){
+                mess = result.errorMessage.message
             }
-            deleteCommentStatus.postValue(result is Response.Success)
+            deleteCommentStatus.postValue(result is NetworkResult.Success)
 
         }
         registerEventParentJobFinish()
@@ -92,13 +91,13 @@ class CommentViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = commentRepository.editComment(editCommentRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+            } else if(result is NetworkResult.Failure){
+                mess = result.errorMessage.message
             }
-            updateCommentStatus.postValue(result is Response.Success)
+            updateCommentStatus.postValue(result is NetworkResult.Success)
 
         }
         registerEventParentJobFinish()
@@ -109,13 +108,13 @@ class CommentViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val replyComment = ReplyCommentRequest(songId, parentId,str)
             val result = commentRepository.replyComment(replyComment)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+            } else if(result is NetworkResult.Failure){
+                mess = result.errorMessage.message
             }
-            replyCommentStatus.postValue(result is Response.Success)
+            replyCommentStatus.postValue(result is NetworkResult.Success)
 
         }
         registerEventParentJobFinish()

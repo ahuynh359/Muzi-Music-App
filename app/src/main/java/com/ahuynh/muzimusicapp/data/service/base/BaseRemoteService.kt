@@ -1,32 +1,33 @@
 package com.ahuynh.muzimusicapp.data.service.base
 
-import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
+
+import com.ahuynh.muzimusicapp.utils.NetworkResult
+import com.ahuynh.muzimusicapp.utils.ResponseError
 import retrofit2.Response
 
 open class BaseRemoteService {
 
-    protected suspend fun <T : Any> callApi(call: suspend () -> Response<T>): com.ahuynh.muzimusicapp.utils.Response<T> {
+    protected suspend fun <T : Any> callApi(call: suspend () -> Response<T>): NetworkResult<T> {
         val response: Response<T>
         try {
             response = call.invoke()
         } catch (t: Throwable) {
             t.printStackTrace()
-            return com.ahuynh.muzimusicapp.utils.Response.Failure("Server Error 500")
+            return NetworkResult.Failure(ResponseError("Server Error 500"))
         }
 
         return if (response.isSuccessful) {
             if (response.body() == null)
-                com.ahuynh.muzimusicapp.utils.Response.Failure(
-                    "Response without body 200"
+                NetworkResult.Failure(
+                    ResponseError("Server Without Body")
                 )
-            else com.ahuynh.muzimusicapp.utils.Response.Success(response.body()!!)
+            else NetworkResult.Success(response.body()!!)
         } else {
             if (response.code() >= 500) {
-                com.ahuynh.muzimusicapp.utils.Response.Failure("Server Error " + response.code())
+                NetworkResult.Failure(ResponseError("Server Error " + response.code()))
             } else {
                 val errorBody = response.errorBody()?.string() ?: ""
-
-                com.ahuynh.muzimusicapp.utils.Response.Failure(errorBody)
+                NetworkResult.Failure(ResponseError.fromJson(errorBody))
             }
         }
     }

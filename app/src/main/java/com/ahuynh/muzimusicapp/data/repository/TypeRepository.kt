@@ -8,7 +8,7 @@ import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.service.remote.TypeRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -39,28 +39,28 @@ class TypeRepository @Inject constructor(
         }
     }
 
-    suspend fun createType(name: String, avatar: File): Response<TypeResponseData> {
+    suspend fun createType(name: String, avatar: File): NetworkResult<TypeResponseData> {
 
         return withContext(dispatcher) {
             typeRemoteService.createType(name, avatar)
         }
     }
 
-    suspend fun deleteType(id : Long): Response<MessageResponse> {
+    suspend fun deleteType(id : Long): NetworkResult<MessageResponse> {
 
         return withContext(dispatcher) {
             typeRemoteService.deleteType(id)
         }
     }
 
-    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): Response<TypeResponseData> {
+    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): NetworkResult<TypeResponseData> {
 
         return withContext(dispatcher) {
             typeRemoteService.updateType(updateTypeRequest)
         }
     }
 
-    suspend fun changeAvatar(id: Long, file: File): Response<TypeResponseData> {
+    suspend fun changeAvatar(id: Long, file: File): NetworkResult<TypeResponseData> {
         return withContext(dispatcher) {
             typeRemoteService.changeAvatar(id , file)
         }

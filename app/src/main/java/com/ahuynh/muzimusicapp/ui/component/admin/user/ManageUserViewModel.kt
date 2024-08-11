@@ -1,17 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.user
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.request.UpdateUserRequest
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -69,12 +66,12 @@ class ManageUserViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = userRepository.createUser(addUserRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            createUserStatus.postValue(result is Response.Success)
+            createUserStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 
@@ -83,12 +80,12 @@ class ManageUserViewModel @Inject constructor(
     fun deleteUser(id: Long) {
         viewModelScope.launch {
             val result = userRepository.deleteUser(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            deleteUserStatus.postValue(result is Response.Success)
+            deleteUserStatus.postValue(result is NetworkResult.Success)
         }
     }
 
@@ -96,10 +93,10 @@ class ManageUserViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = userRepository.changeAvatar(id, file)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 avatar.postValue(result.data.data.avatar)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
             registerEventParentJobFinish()
@@ -112,13 +109,13 @@ class ManageUserViewModel @Inject constructor(
     fun lockOrUnlockUser(id: Long) {
         viewModelScope.launch {
             val result = userRepository.lockOrUnlockUser(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
-            lockOrUnlockStatus.postValue(result is Response.Success)
+            lockOrUnlockStatus.postValue(result is NetworkResult.Success)
         }
 
     }
@@ -127,13 +124,13 @@ class ManageUserViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = userRepository.updateUser(updateUserRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
-            updateUserStatus.postValue(result is Response.Success)
+            updateUserStatus.postValue(result is NetworkResult.Success)
             registerEventParentJobFinish()
 
 

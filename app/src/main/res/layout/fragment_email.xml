@@ -20,6 +20,17 @@
         app:srcCompat="@drawable/ic_back" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_enter_your_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold"
+        android:text="@string/enter_your_email"
+        android:textSize="@dimen/_25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -7,7 +7,7 @@ import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class SingerViewModel @Inject constructor(
             val result = singerRepository.isUserLoveSinger(
                 id
             )
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 loveSinger.postValue(
                     result.data.data
                 )
@@ -55,10 +55,10 @@ class SingerViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = singerRepository.loveOrUnloveSinger(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 isUserLoveSinger(id)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
 
 

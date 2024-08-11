@@ -9,7 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.data.service.remote.AuthRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,26 +21,26 @@ class AuthRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun signup(signUpRequest: SignUpRequest): Response<UserResponseData> {
+    suspend fun signup(signUpRequest: SignUpRequest): NetworkResult<UserResponseData> {
         return withContext(dispatcher) {
             authRemoteService.signup(signUpRequest)
         }
     }
 
 
-    suspend fun login(loginRequest: LoginRequest): Response<LoginResponse> {
+    suspend fun login(loginRequest: LoginRequest): NetworkResult<LoginResponse> {
         return withContext(dispatcher) {
             authRemoteService.login(loginRequest)
         }
     }
 
-    suspend fun sendEmail(emailRequest: EmailRequest): Response<MessageResponse> {
+    suspend fun sendEmail(emailRequest: EmailRequest): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             authRemoteService.sendEmail(emailRequest)
         }
     }
 
-    suspend fun changePassword(resetPasswordRequest: ResetPasswordRequest): Response<MessageResponse> {
+    suspend fun changePassword(resetPasswordRequest: ResetPasswordRequest): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             authRemoteService.changePassword(resetPasswordRequest)
         }

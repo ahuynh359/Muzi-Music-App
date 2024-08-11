@@ -10,7 +10,7 @@ import com.ahuynh.muzimusicapp.data.model.response.toListNotification
 import com.ahuynh.muzimusicapp.data.repository.NotificationRepository
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,10 +31,10 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.getAllNotifications()
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 notificationList.postValue(result.data.data.toListNotification())
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
         }
         registerEventParentJobFinish()
@@ -44,10 +44,10 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.getNotificationById(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 currentNotification.postValue(result.data.data.toNotification())
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
         }
         registerEventParentJobFinish()
@@ -57,12 +57,12 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.markNotificationAsRead(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 getAllNotifications()
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            markNotificationAsReadStatus.postValue(result is Response.Success)
+            markNotificationAsReadStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }
@@ -71,10 +71,10 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.markAllNotificationsAsRead()
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 getAllNotifications()
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
         }
         registerEventParentJobFinish()
@@ -84,12 +84,12 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.deleteNotification(id)
-            if (result is Response.Success) {
-                getAllNotifications() // Refresh the list after deletion
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            if (result is NetworkResult.Success) {
+                getAllNotifications()
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            deleteNotificationStatus.postValue(result is Response.Success)
+            deleteNotificationStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }
@@ -98,10 +98,10 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.deleteAllNotifications()
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 getAllNotifications()
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
         }
         registerEventParentJobFinish()
@@ -111,10 +111,10 @@ class NotificationViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.countUnreadNotification()
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 unreadCount.postValue(result.data.data.count)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
         }
         registerEventParentJobFinish()

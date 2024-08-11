@@ -9,12 +9,10 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongListen
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -27,7 +25,7 @@ class SongRemoteService @Inject constructor(
 
     suspend fun getAllSongs(sortName: SortName): List<Song> {
         val result = callApi { songAPI.getAllSongs(sortName) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -36,7 +34,7 @@ class SongRemoteService @Inject constructor(
 
     suspend fun getTop10(): List<Song> {
         val result = callApi { songAPI.getTop10() }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -45,7 +43,7 @@ class SongRemoteService @Inject constructor(
 
     suspend fun getTop3(): List<SongListen> {
         val result = callApi { songAPI.getTop3() }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data
         } else {
             arrayListOf()
@@ -54,7 +52,7 @@ class SongRemoteService @Inject constructor(
 
     suspend fun getSongById(id: Long): Song? {
         val result = callApi { songAPI.getSongById(id) }
-        if (result is Response.Success) {
+        if (result is NetworkResult.Success) {
             return result.data.data.toSong()
         } else {
             return null
@@ -62,34 +60,34 @@ class SongRemoteService @Inject constructor(
     }
 
 
-    suspend fun loveSong(songId: Long): Response<MessageResponse> {
+    suspend fun loveSong(songId: Long): NetworkResult<MessageResponse> {
         return callApi { songAPI.loveSong(songId) }
     }
 
-    suspend fun listen(songId: Long): Response<MessageResponse> {
+    suspend fun listen(songId: Long): NetworkResult<MessageResponse> {
         return callApi { songAPI.listen(songId) }
     }
 
-    suspend fun isUserLoveSong(songId: Long): Response<IsLoveSongResponse> {
+    suspend fun isUserLoveSong(songId: Long): NetworkResult<IsLoveSongResponse> {
         return callApi { songAPI.isUserLoveSong(songId) }
     }
 
     suspend fun searchSong(str: String): SearchResponse? {
         val result = callApi { songAPI.searchSong(str) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data
         } else {
             null
         }
     }
 
-    suspend fun getLoveSong(): Response<LoveSongResponse> {
+    suspend fun getLoveSong(): NetworkResult<LoveSongResponse> {
         return callApi { songAPI.getLoveSong() }
     }
 
     suspend fun getSongByListen(): List<Song> {
         val result = callApi { songAPI.getSongByListen() }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -104,7 +102,7 @@ class SongRemoteService @Inject constructor(
         albumId: Long,
         singerId: Set<Long>,
         typeId: Set<Long>
-    ): Response<SongResponseData> {
+    ): NetworkResult<SongResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
         val mp3FileRequestBody =
@@ -129,7 +127,7 @@ class SongRemoteService @Inject constructor(
         }
     }
 
-    suspend fun changeAvatar(id: Long, file: File): Response<SongResponseData> {
+    suspend fun changeAvatar(id: Long, file: File): NetworkResult<SongResponseData> {
         val imageFileRequestBody =
             file.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {
@@ -143,7 +141,7 @@ class SongRemoteService @Inject constructor(
         }
     }
 
-    suspend fun uploadMusic(id: Long, file: File): Response<SongResponseData> {
+    suspend fun uploadMusic(id: Long, file: File): NetworkResult<SongResponseData> {
         val mp3FileRequestBody =
             file.asRequestBody("audio/*".toMediaTypeOrNull())
         return callApi {
@@ -157,12 +155,12 @@ class SongRemoteService @Inject constructor(
         }
     }
 
-    suspend fun updateSong(updateSongRequest: UpdateSongRequest): Response<SongResponseData> {
+    suspend fun updateSong(updateSongRequest: UpdateSongRequest): NetworkResult<SongResponseData> {
         return callApi { songAPI.updateSong(updateSongRequest) }
 
     }
 
-    suspend fun deleteSong(id: Long): Response<MessageResponse> {
+    suspend fun deleteSong(id: Long): NetworkResult<MessageResponse> {
         return callApi { songAPI.deleteSong(id) }
 
     }

@@ -6,7 +6,7 @@ import com.ahuynh.muzimusicapp.data.model.Comment
 import com.ahuynh.muzimusicapp.data.repository.CommentRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -54,12 +54,12 @@ class ManageCommentViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = commentRepository.deleteComment(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            deleteCommentStatus.postValue(result is Response.Success)
+            deleteCommentStatus.postValue(result is NetworkResult.Success)
         }
 
         registerEventParentJobFinish()

@@ -2,22 +2,19 @@ package com.ahuynh.muzimusicapp.ui.component.admin.song
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.ListenableWorker.Result.Success
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.model.User
-import com.ahuynh.muzimusicapp.data.model.request.AddUserRequest
 import com.ahuynh.muzimusicapp.data.model.request.UpdateSongRequest
 import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
-import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -79,10 +76,11 @@ class ManageSongViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = songRepository.changeAvatar(id, file)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 avatar.postValue(result.data.data.avatar)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
+
 
             }
             registerEventParentJobFinish()
@@ -108,10 +106,10 @@ class ManageSongViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = songRepository.uploadMusic(id, file)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mp3File.postValue(result.data.data.avatar)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
             registerEventParentJobFinish()
@@ -125,13 +123,13 @@ class ManageSongViewModel @Inject constructor(
             val updateSongRequest =
                 UpdateSongRequest(id, nameSong, lyricsSong, albumId!!, singerIds, typeIds)
             val result = songRepository.updateSong(updateSongRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
-            updateSongStatus.postValue(result is Response.Success)
+            updateSongStatus.postValue(result is NetworkResult.Success)
             registerEventParentJobFinish()
 
 
@@ -165,12 +163,12 @@ class ManageSongViewModel @Inject constructor(
     fun deleteSong(id: Long) {
         viewModelScope.launch {
             val result = songRepository.deleteSong(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            deleteSongStatus.postValue(result is Response.Success)
+            deleteSongStatus.postValue(result is NetworkResult.Success)
         }
     }
 

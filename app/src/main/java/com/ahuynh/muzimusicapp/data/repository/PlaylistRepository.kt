@@ -7,7 +7,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseJson
 import com.ahuynh.muzimusicapp.data.service.remote.PlaylistRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,13 +26,13 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
-    suspend fun addPlaylist(playlistRequest: PlaylistRequest) : Response<PlaylistResponseJson>{
+    suspend fun addPlaylist(playlistRequest: PlaylistRequest) : NetworkResult<PlaylistResponseJson>{
         return withContext(dispatcher) {
             playlistRemoteService.addPlaylist(playlistRequest)
         }
     }
 
-    suspend fun deletePlaylist(id: Long): Response<MessageResponse> {
+    suspend fun deletePlaylist(id: Long): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             playlistRemoteService.deletePlaylist(id)
         }
@@ -50,13 +50,13 @@ class PlaylistRepository @Inject constructor(
         }
     }
 
-    suspend fun updatePlaylist(playlistRequest: PlaylistRequest, id: Long): Response<PlaylistResponseJson> {
+    suspend fun updatePlaylist(playlistRequest: PlaylistRequest, id: Long): NetworkResult<PlaylistResponseJson> {
         return withContext(dispatcher) {
             playlistRemoteService.updatePlaylist(playlistRequest,id)
         }
     }
 
-    suspend fun addSongToPlaylist(playlistId: Long, songId: Long): Response<MessageResponse>{
+    suspend fun addSongToPlaylist(playlistId: Long, songId: Long): NetworkResult<MessageResponse>{
         return withContext(dispatcher) {
             playlistRemoteService.addSongToPlaylist(playlistId,songId)
         }

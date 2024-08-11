@@ -167,4 +167,10 @@
     <string name="search_singer_name">Search Singer Name</string>
     <string name="search_type_name">Search Type Name</string>
     <string name="millions_of_songs_free_on_muzi_music">Millions of songs free on Muzi Music</string>
+    <string name="can_not_be_empty">Can\'t be empty</string>
+    <string name="invalid_email">Invalid Email Addres</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="password_must_be_at_least_6_characters"><![CDATA[Password >= 6 characters]]></string>
+    <string name="password_does_not_match">Password does not match</string>
+    <string name="reset_your_password">Reset Your Password</string>
 </resources>

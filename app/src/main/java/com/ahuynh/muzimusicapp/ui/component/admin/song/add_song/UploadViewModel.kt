@@ -4,16 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
-import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.repository.AlbumRepository
 import com.ahuynh.muzimusicapp.data.repository.SingerRepository
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,7 +24,6 @@ class UploadViewModel @Inject constructor(
     private val albumRepository: AlbumRepository,
     private val singerRepository: SingerRepository,
     private val typeRepository: TypeRepository,
-    private val sharePreferencesHelper: SharePreferencesHelper
 ) : BaseViewModel() {
     var name = ""
     var lyrics  = ""
@@ -51,13 +48,13 @@ class UploadViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val result =
                 songRepository.createSong(name, avatar!!, file!!, lyrics, albumId!!, singerIds, typeIds)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            addSongStatus.postValue(result is Response.Success)
+            addSongStatus.postValue(result is NetworkResult.Success)
 
 
         }

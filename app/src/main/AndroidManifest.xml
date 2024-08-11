@@ -60,6 +60,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".ui.component.auth.AuthActivity"
             android:exported="false" />
 

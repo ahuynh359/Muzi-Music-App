@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.ChangePasswordRequest
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,13 +26,13 @@ class ChangePasswordViewModel @Inject constructor(
                 sharePreferencesHelper.getId(), oldPassword, newPassword, confirmPassword
             )
             val result = userRepository.changePassword(changePasswordRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            status.postValue(result is Response.Success)
+            status.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 

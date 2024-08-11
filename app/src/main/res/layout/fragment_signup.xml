@@ -1,163 +1,169 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--Push up layout-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:fillViewport="true"
     tools:context=".ui.component.auth.signup.SignupFragment">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="@dimen/_32dp"
-        android:layout_height="@dimen/_32dp"
-        android:layout_marginStart="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_34dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/bold"
-        android:text="@string/email"
-        android:textSize="@dimen/_26sp"
-        app:layout_constraintStart_toStartOf="@id/btn_back"
-        app:layout_constraintTop_toBottomOf="@id/btn_back" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/_32dp"
+            android:layout_height="@dimen/_32dp"
+            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginTop="@dimen/_34dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="@string/sign_up"
+            android:textSize="@dimen/_25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_back" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:inputType="textEmailAddress"
-        android:textSize="@dimen/_16sp"
-        android:fontFamily="@font/regular"
-        android:id="@+id/edt_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/edittext_background"
-        android:padding="@dimen/_12dp"
-        android:textColor="@color/white"
-        android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_email" />
+        <androidx.appcompat.widget.AppCompatTextView
+
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/email"
+            android:textSize="@dimen/_26sp"
+            app:layout_constraintStart_toStartOf="@id/btn_back"
+            app:layout_constraintTop_toBottomOf="@id/btn_back" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/bold"
-        android:text="@string/password"
-        android:textSize="@dimen/_26sp"
-        app:layout_constraintStart_toStartOf="@id/btn_back"
-        app:layout_constraintTop_toBottomOf="@id/edt_email" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_email"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/regular"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:fontFamily="@font/regular"
-        android:textSize="16sp"
-        android:id="@+id/edt_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/edittext_background"
-        android:padding="@dimen/_12dp"
-        android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_password" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_confirm_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/bold"
-        android:text="@string/confirm_password"
-        android:textSize="@dimen/_26sp"
-        app:layout_constraintStart_toStartOf="@id/btn_back"
-        app:layout_constraintTop_toBottomOf="@id/edt_password" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/password"
+            android:textSize="@dimen/_26sp"
+            app:layout_constraintStart_toStartOf="@id/btn_back"
+            app:layout_constraintTop_toBottomOf="@id/edt_email" />
 
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:fontFamily="@font/regular"
-        android:textSize="16sp"
-        android:id="@+id/edt_confirm_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/edittext_background"
-        android:padding="@dimen/_12dp"
-        android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_confirm_password" />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/bold"
-        android:text="@string/user"
-        android:textSize="@dimen/_26sp"
-        app:layout_constraintStart_toStartOf="@id/btn_back"
-        app:layout_constraintTop_toBottomOf="@id/edt_confirm_password" />
+        <com.ahuynh.muzimusicapp.custom.CustomPasswordEditText
+            android:id="@+id/edt_password"
+            android:layout_width="@dimen/_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/regular"
+            android:inputType="textPassword"
+            android:padding="@dimen/_12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintEnd_toEndOf="@id/edt_email"
+            app:layout_constraintStart_toStartOf="@id/edt_email"
+            app:layout_constraintTop_toBottomOf="@id/tv_password" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_confirm_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/confirm_password"
+            android:textSize="@dimen/_26sp"
+            app:layout_constraintStart_toStartOf="@id/btn_back"
+            app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:textColor="@color/white"
-        android:fontFamily="@font/regular"
-        android:textSize="16sp"
-        android:id="@+id/edt_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25dp"
-        android:layout_marginTop="@dimen/_10dp"
-        android:background="@drawable/edittext_background"
-        android:padding="@dimen/_12dp"
-        android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_user" />
+        <com.ahuynh.muzimusicapp.custom.CustomPasswordEditText
+            android:id="@+id/edt_confirm_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/regular"
+            android:inputType="textPassword"
+            android:padding="@dimen/_12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/edt_email"
+            app:layout_constraintStart_toStartOf="@id/edt_email"
+            app:layout_constraintTop_toBottomOf="@id/tv_confirm_password" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sign_up"
-        android:layout_width="@dimen/_100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_54dp"
-        android:background="@drawable/btn_disable"
-        android:fontFamily="@font/bold"
-        android:text="@string/sign_up"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/edt_email"
-        app:layout_constraintStart_toStartOf="@id/edt_email"
-        app:layout_constraintTop_toBottomOf="@id/edt_user" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/user"
+            android:textSize="@dimen/_26sp"
+            app:layout_constraintStart_toStartOf="@id/btn_back"
+            app:layout_constraintTop_toBottomOf="@id/edt_confirm_password" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        app:layout_constraintBottom_toBottomOf="@id/btn_sign_up"
-        android:id="@+id/pb_loading"
-        style="@style/Widget.Material3.CircularProgressIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible"
-        app:indicatorColor="@color/white"
-        android:layout_marginStart="@dimen/_20dp"
-        app:layout_constraintStart_toEndOf="@id/btn_sign_up"
-       app:layout_constraintTop_toTopOf="@id/btn_sign_up" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edt_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/edittext_background"
+            android:fontFamily="@font/regular"
+            android:padding="@dimen/_12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/edt_email"
+            app:layout_constraintStart_toStartOf="@id/edt_email"
+            app:layout_constraintTop_toBottomOf="@id/tv_user" />
+
+        <com.royrodriguez.transitionbutton.TransitionButton
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btn_sign_up"
+            android:layout_width="@dimen/_100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20dp"
+            android:fontFamily="@font/bold"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:defaultColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/edt_email"
+            app:layout_constraintStart_toStartOf="@id/edt_email"
+            app:layout_constraintTop_toBottomOf="@id/edt_user"
+            app:loaderColor="@color/black" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

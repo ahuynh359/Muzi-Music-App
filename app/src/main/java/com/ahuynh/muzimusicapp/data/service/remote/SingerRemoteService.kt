@@ -3,18 +3,15 @@ package com.ahuynh.muzimusicapp.data.service.remote
 import com.ahuynh.muzimusicapp.data.api.SingerAPI
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
-import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.model.request.UpdateSingerRequest
-import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
 import com.ahuynh.muzimusicapp.data.model.response.LoveSingerResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListSinger
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -26,7 +23,7 @@ class SingerRemoteService @Inject constructor(
 ) : BaseRemoteService() {
     suspend fun getAllSingers(sortName: SortName): List<Singer> {
         val result = callApi { singerAPI.getAllSingers(sortName) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSinger()
         } else {
             arrayListOf()
@@ -37,7 +34,7 @@ class SingerRemoteService @Inject constructor(
 
     suspend fun getSongsOfSinger(id : Long): List<Song> {
         val result = callApi { singerAPI.getSongsOfSinger(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -46,22 +43,22 @@ class SingerRemoteService @Inject constructor(
 
     suspend fun getLoveSinger(): List<Singer> {
         val result = callApi { singerAPI.getLoveSinger() }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSinger()
         } else {
             arrayListOf()
         }
     }
-    suspend fun isUserLoveSinger(id : Long): Response<LoveSingerResponse> {
+    suspend fun isUserLoveSinger(id : Long): NetworkResult<LoveSingerResponse> {
        return callApi { singerAPI.isUserLoveSinger(id) }
     }
 
-    suspend fun loveOrUnloveSinger(id: Long) :  Response<MessageResponse> {
+    suspend fun loveOrUnloveSinger(id: Long) :  NetworkResult<MessageResponse> {
         return callApi { singerAPI.loveOrUnloveSinger(id) }
 
     }
 
-    suspend fun createSinger(name: String, avatar: File): Response<SingerResponseData> {
+    suspend fun createSinger(name: String, avatar: File): NetworkResult<SingerResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {
@@ -75,15 +72,15 @@ class SingerRemoteService @Inject constructor(
         }
     }
 
-    suspend fun updateSinger(updateSingerRequest: UpdateSingerRequest): Response<SingerResponseData> {
+    suspend fun updateSinger(updateSingerRequest: UpdateSingerRequest): NetworkResult<SingerResponseData> {
         return callApi { singerAPI.updateSinger(updateSingerRequest) }
     }
 
-    suspend fun deleteSinger(id: Long): Response<MessageResponse> {
+    suspend fun deleteSinger(id: Long): NetworkResult<MessageResponse> {
         return callApi { singerAPI.deleteSinger(id) }
     }
 
-    suspend fun changeAvatar(id: Long, file: File) : Response<SingerResponseData> {
+    suspend fun changeAvatar(id: Long, file: File) : NetworkResult<SingerResponseData> {
         val imageFileRequestBody =
             file.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {
@@ -100,7 +97,7 @@ class SingerRemoteService @Inject constructor(
 
     suspend fun getSingerById(id: Long): Singer? {
         val result = callApi { singerAPI.getSingerById(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toSinger()
         } else {
             null

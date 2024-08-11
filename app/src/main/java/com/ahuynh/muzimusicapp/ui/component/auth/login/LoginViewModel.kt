@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = authRepository.login(loginRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
                 sharePreferencesHelper.saveLoggedIn(
                     loginRequest.userNameOrEmail,
@@ -37,10 +37,10 @@ class LoginViewModel @Inject constructor(
                     result.data.data.jwt
                 )
                 sharePreferencesHelper.setIsAdminOrUser(result.data.data.admin)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            loginStatus.postValue(result is Response.Success)
+            loginStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 

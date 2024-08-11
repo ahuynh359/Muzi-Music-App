@@ -9,7 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.response.PlaylistResponseJson
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toPlaylistResponse
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import javax.inject.Inject
 
 class PlaylistRemoteService @Inject constructor(
@@ -17,20 +17,20 @@ class PlaylistRemoteService @Inject constructor(
 ) : BaseRemoteService() {
     suspend fun getAllPlaylist(): List<Playlist> {
         val result = callApi { playlistAPI.getAllPlaylist() }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toPlaylistResponse()
         } else {
             arrayListOf()
         }
     }
 
-    suspend fun addPlaylist(playlistRequest: PlaylistRequest): Response<PlaylistResponseJson> {
+    suspend fun addPlaylist(playlistRequest: PlaylistRequest): NetworkResult<PlaylistResponseJson> {
         return callApi { playlistAPI.addPlaylist(playlistRequest) }
     }
 
     suspend fun getAllSongFromPlaylist(id: Long): List<Song> {
         val result = callApi { playlistAPI.getAllSongFromPlaylist(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -39,7 +39,7 @@ class PlaylistRemoteService @Inject constructor(
 
     suspend fun getAllSongsNotFromPlaylist(id: Long): List<Song> {
         val result = callApi { playlistAPI.getAllSongsNotFromPlaylist(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -47,19 +47,19 @@ class PlaylistRemoteService @Inject constructor(
     }
 
 
-    suspend fun deletePlaylist(id: Long): Response<MessageResponse> {
+    suspend fun deletePlaylist(id: Long): NetworkResult<MessageResponse> {
         return callApi { playlistAPI.deletePlaylist(id) }
     }
 
     suspend fun updatePlaylist(
         playlistRequest: PlaylistRequest,
         id: Long
-    ): Response<PlaylistResponseJson> {
+    ): NetworkResult<PlaylistResponseJson> {
         return callApi { playlistAPI.updatePlaylist(playlistRequest, id) }
 
     }
 
-    suspend fun addSongToPlaylist(playlistId: Long, songId: Long): Response<MessageResponse> {
+    suspend fun addSongToPlaylist(playlistId: Long, songId: Long): NetworkResult<MessageResponse> {
         return callApi { playlistAPI.addSongToPlaylist(playlistId, songId) }
     }
 

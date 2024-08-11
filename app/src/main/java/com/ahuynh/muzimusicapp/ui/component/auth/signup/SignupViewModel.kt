@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.SignUpRequest
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,18 +15,18 @@ class SignupViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : BaseViewModel() {
     var mess: String? = null
-    var status = MutableLiveData<Boolean?>(null)
+    var loginStatus = MutableLiveData<Boolean?>(null)
 
     fun signup(signUpRequest: SignUpRequest) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = authRepository.signup(signUpRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            status.postValue(result is Response.Success)
+            loginStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 

@@ -14,8 +14,7 @@ import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,14 +33,15 @@ class HomeViewModel @Inject constructor(
     var newSongList = MutableLiveData<List<Song>>()
     var newTypeList = MutableLiveData<List<Type>>()
     var unreadCount = MutableLiveData<Int>()
+    var mess : String ?= null
     fun getUnreadNotification() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = notificationRepository.countUnreadNotification()
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 unreadCount.postValue(result.data.data.count)
-            } else if (result is Response.Failure) {
-                //mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
             registerEventParentJobFinish()

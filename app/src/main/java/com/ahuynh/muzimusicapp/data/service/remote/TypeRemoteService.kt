@@ -10,7 +10,7 @@ import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.model.response.toListType
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -23,7 +23,7 @@ class TypeRemoteService @Inject constructor(
 ) : BaseRemoteService() {
     suspend fun getAllTypes(sortName: SortName): List<Type> {
         val result = callApi { typeAPI.getAllTypes(sortName) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListType()
         } else {
             arrayListOf()
@@ -32,7 +32,7 @@ class TypeRemoteService @Inject constructor(
 
     suspend fun getSongFromType(id: Long): List<Song> {
         val result = callApi { typeAPI.getSongFromType(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListSong()
         } else {
             arrayListOf()
@@ -41,7 +41,7 @@ class TypeRemoteService @Inject constructor(
 
     suspend fun getTypeById(id: Long): Type? {
         val result = callApi { typeAPI.getTypeById(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toType()
         } else {
             null
@@ -49,7 +49,7 @@ class TypeRemoteService @Inject constructor(
     }
 
 
-    suspend fun createType(name: String, avatar: File): Response<TypeResponseData> {
+    suspend fun createType(name: String, avatar: File): NetworkResult<TypeResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {
@@ -63,15 +63,15 @@ class TypeRemoteService @Inject constructor(
         }
     }
 
-    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): Response<TypeResponseData> {
+    suspend fun updateType(updateTypeRequest: UpdateTypeRequest): NetworkResult<TypeResponseData> {
         return callApi { typeAPI.updateType(updateTypeRequest) }
     }
 
-    suspend fun deleteType(id: Long): Response<MessageResponse> {
+    suspend fun deleteType(id: Long): NetworkResult<MessageResponse> {
         return callApi { typeAPI.deleteType(id) }
     }
 
-    suspend fun changeAvatar(id: Long, file: File): Response<TypeResponseData> {
+    suspend fun changeAvatar(id: Long, file: File): NetworkResult<TypeResponseData> {
         val imageFileRequestBody =
             file.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {

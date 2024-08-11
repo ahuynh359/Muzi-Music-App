@@ -1,14 +1,13 @@
 package com.ahuynh.muzimusicapp.ui.component.auth.changepassword
 
 import android.os.CountDownTimer
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.EmailRequest
 import com.ahuynh.muzimusicapp.data.model.request.ResetPasswordRequest
 import com.ahuynh.muzimusicapp.data.repository.AuthRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -63,12 +62,12 @@ class ResetPasswordViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = authRepository.changePassword(resetPasswordRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            changePasswordStatus.postValue(result is Response.Success)
+            changePasswordStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 
@@ -79,12 +78,12 @@ class ResetPasswordViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val emailRequest = EmailRequest(email)
             val result = authRepository.sendEmail(emailRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            sendEmailStatus.postValue(result is Response.Success)
+            sendEmailStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }

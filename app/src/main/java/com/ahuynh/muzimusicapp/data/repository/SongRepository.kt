@@ -8,18 +8,15 @@ import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongListen
-import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
 import com.ahuynh.muzimusicapp.data.service.local.SongLocalService
 import com.ahuynh.muzimusicapp.data.service.remote.SongRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MultipartBody
 import java.io.File
 import javax.inject.Inject
 
@@ -56,20 +53,20 @@ class SongRepository @Inject constructor(
     }
 
 
-    suspend fun loveSong(songId: Long): Response<MessageResponse> {
+    suspend fun loveSong(songId: Long): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             songRemoteService.loveSong(songId)
         }
     }
 
 
-    suspend fun listen(songId: Long): Response<MessageResponse> {
+    suspend fun listen(songId: Long): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             songRemoteService.listen(songId)
         }
     }
 
-    suspend fun isUserLoveSong(songId: Long): Response<IsLoveSongResponse> {
+    suspend fun isUserLoveSong(songId: Long): NetworkResult<IsLoveSongResponse> {
         return withContext(dispatcher) {
             songRemoteService.isUserLoveSong(songId)
         }
@@ -81,7 +78,7 @@ class SongRepository @Inject constructor(
         }
     }
 
-    suspend fun getLoveSong(): Response<LoveSongResponse> {
+    suspend fun getLoveSong(): NetworkResult<LoveSongResponse> {
         return withContext(dispatcher) {
             songRemoteService.getLoveSong()
         }
@@ -118,31 +115,31 @@ class SongRepository @Inject constructor(
         albumId: Long,
         singerId: Set<Long>,
         typeId: Set<Long>
-    ) : Response<SongResponseData> {
+    ) : NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
             songRemoteService.createSong(name, avatar, file, lyrics, albumId, singerId, typeId)
         }
     }
 
-    suspend fun changeAvatar(id: Long, file: File): Response<SongResponseData> {
+    suspend fun changeAvatar(id: Long, file: File): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
             songRemoteService.changeAvatar(id , file)
         }
     }
 
-    suspend fun uploadMusic(id: Long, file: File): Response<SongResponseData> {
+    suspend fun uploadMusic(id: Long, file: File): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
             songRemoteService.uploadMusic(id , file)
         }
     }
 
-    suspend fun updateSong(updateSongRequest: UpdateSongRequest): Response<SongResponseData> {
+    suspend fun updateSong(updateSongRequest: UpdateSongRequest): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
             songRemoteService.updateSong(updateSongRequest)
         }
     }
 
-    suspend fun deleteSong(id: Long): Response<MessageResponse> {
+    suspend fun deleteSong(id: Long): NetworkResult<MessageResponse> {
         return withContext(dispatcher) {
             songRemoteService.deleteSong(id)
         }

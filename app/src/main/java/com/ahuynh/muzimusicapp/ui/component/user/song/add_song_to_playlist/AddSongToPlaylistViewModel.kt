@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Playlist
 import com.ahuynh.muzimusicapp.data.repository.PlaylistRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,12 +33,12 @@ constructor(
         isLoading.postValue(true)
         viewModelScope.launch {
             val result = playlistRepository.addSongToPlaylist(playlistId,songId)
-            if(result is Response.Success){
+            if(result is NetworkResult.Success){
                 mess = result.data.message
-            } else if(result is Response.Failure){
-                mess = result.errorMessage
+            } else if(result is NetworkResult.Failure){
+                mess = result.errorMessage.message
             }
-            addSongToPlaylistStatus.postValue(result is Response.Success)
+            addSongToPlaylistStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }

@@ -10,7 +10,7 @@ import com.ahuynh.muzimusicapp.data.model.response.UserResponseData
 import com.ahuynh.muzimusicapp.data.model.response.toListUser
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -23,7 +23,7 @@ class UserRemoteService @Inject constructor(
 
 
 
-    suspend fun changeAvatar(id : Long, file: File): Response<UserResponseData> {
+    suspend fun changeAvatar(id : Long, file: File): NetworkResult<UserResponseData> {
         return callApi {
             val imageFileRequestBody =
                 file.asRequestBody("image/*".toMediaTypeOrNull())
@@ -41,13 +41,13 @@ class UserRemoteService @Inject constructor(
 
     }
 
-    suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): Response<MessageResponse> {
+    suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): NetworkResult<MessageResponse> {
         return callApi { userAPI.changePassword(changePasswordRequest) }
     }
 
     suspend fun getAllUsers(sortName: SortName): List<User> {
         val result = callApi { userAPI.getAllUsers(sortName) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toListUser()
         } else {
             arrayListOf()
@@ -56,7 +56,7 @@ class UserRemoteService @Inject constructor(
 
     suspend fun getUserById(id: Long) : User? {
         val result = callApi { userAPI.getUserById(id) }
-        return if (result is Response.Success) {
+        return if (result is NetworkResult.Success) {
             result.data.data.toUser()
         } else {
           null
@@ -64,26 +64,26 @@ class UserRemoteService @Inject constructor(
 
     }
 
-    suspend fun createUser(addUserRequest: AddUserRequest): Response<UserResponseData> {
+    suspend fun createUser(addUserRequest: AddUserRequest): NetworkResult<UserResponseData> {
         return callApi { userAPI.createUser(addUserRequest) }
     }
 
-    suspend fun deleteUser(id: Long)  : Response<MessageResponse>{
+    suspend fun deleteUser(id: Long)  : NetworkResult<MessageResponse>{
         return callApi { userAPI.deleteUser(id) }
 
     }
 
-    suspend fun lockOrUnlockUser(id: Long)  : Response<UserResponseData>{
+    suspend fun lockOrUnlockUser(id: Long)  : NetworkResult<UserResponseData>{
         return callApi { userAPI.lockOrUnlockUser(id) }
 
     }
 
-    suspend fun updateUser(updateUserRequest: UpdateUserRequest)  : Response<UserResponseData>{
+    suspend fun updateUser(updateUserRequest: UpdateUserRequest)  : NetworkResult<UserResponseData>{
         return callApi { userAPI.updateUser(updateUserRequest) }
 
     }
 
-    suspend fun updateToken(token : String)  : Response<UserResponseData>{
+    suspend fun updateToken(token : String)  : NetworkResult<UserResponseData>{
         return callApi { userAPI.updateToken(token) }
 
     }

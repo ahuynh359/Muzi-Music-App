@@ -6,10 +6,9 @@ import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
-import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ManageTypeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
     private val typeRepository: TypeRepository,
     private val sharePreferencesHelper: SharePreferencesHelper
 ) : BaseViewModel() {
@@ -62,13 +60,13 @@ class ManageTypeViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = typeRepository.createType(name, avatar)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            createTypeStatus.postValue(result is Response.Success)
+            createTypeStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }
@@ -90,13 +88,13 @@ class ManageTypeViewModel @Inject constructor(
         parentJob = viewModelScope.launch {
             val updateTypeRequest = UpdateTypeRequest(id,str)
             val result = typeRepository.updateType(updateTypeRequest)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            updateTypeStatus.postValue(result is Response.Success)
+            updateTypeStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
     }
@@ -105,13 +103,13 @@ class ManageTypeViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = typeRepository.deleteType(id)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 mess = result.data.message
 
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
             }
-            deleteTypeStatus.postValue(result is Response.Success)
+            deleteTypeStatus.postValue(result is NetworkResult.Success)
         }
 
         registerEventParentJobFinish()
@@ -121,10 +119,10 @@ class ManageTypeViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             val result = typeRepository.changeAvatar(id, file)
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 avatar.postValue(result.data.data.avatar)
-            } else if (result is Response.Failure) {
-                mess = result.errorMessage
+            } else if (result is NetworkResult.Failure) {
+                mess = result.errorMessage.message
 
             }
             registerEventParentJobFinish()

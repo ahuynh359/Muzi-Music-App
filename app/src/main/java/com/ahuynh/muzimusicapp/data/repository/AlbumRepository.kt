@@ -8,7 +8,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.service.remote.AlbumRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,28 +40,28 @@ class AlbumRepository @Inject constructor(
         }
     }
 
-    suspend fun createAlbum(name: String, avatar: File): Response<AlbumResponseData> {
+    suspend fun createAlbum(name: String, avatar: File): NetworkResult<AlbumResponseData> {
 
         return withContext(dispatcher) {
             albumRemoteService.createAlbum(name, avatar)
         }
     }
 
-    suspend fun deleteAlbum(id: Long): Response<MessageResponse> {
+    suspend fun deleteAlbum(id: Long): NetworkResult<MessageResponse> {
 
         return withContext(dispatcher) {
             albumRemoteService.deleteAlbum(id)
         }
     }
 
-    suspend fun updateAlbum(updateAlbumRequest: UpdateAlbumRequest): Response<AlbumResponseData> {
+    suspend fun updateAlbum(updateAlbumRequest: UpdateAlbumRequest): NetworkResult<AlbumResponseData> {
 
         return withContext(dispatcher) {
             albumRemoteService.updateAlbum(updateAlbumRequest)
         }
     }
 
-    suspend fun updateAvatar(id: Long, avatar: File): Response<AlbumResponseData> {
+    suspend fun updateAvatar(id: Long, avatar: File): NetworkResult<AlbumResponseData> {
 
         return withContext(dispatcher) {
             albumRemoteService.updateAvatar(id, avatar)

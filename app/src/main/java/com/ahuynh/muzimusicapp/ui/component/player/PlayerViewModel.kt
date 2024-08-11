@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
@@ -8,10 +7,9 @@ import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
-import com.ahuynh.muzimusicapp.utils.Response
+import com.ahuynh.muzimusicapp.utils.NetworkResult
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -77,7 +75,7 @@ class PlayerViewModel @Inject constructor(
                 songId
             )
 
-            if (result is Response.Success) {
+            if (result is NetworkResult.Success) {
                 loveSong.postValue(
                     result.data.data
                 )
