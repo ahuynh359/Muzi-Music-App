@@ -6,25 +6,33 @@
     android:background="@color/black"
     tools:context=".ui.component.auth.intro.IntroFragment">
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imv_root"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_root"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imv_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_spotify_white" />
+        app:layout_constraintBottom_toBottomOf="@id/imv_root"
+        app:srcCompat="@drawable/ic_logo" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_91dp"
-        android:layout_marginTop="@dimen/_50dp"
+        android:layout_marginTop="@dimen/_20dp"
         android:fontFamily="@font/bold"
         android:gravity="center"
-        android:text="@string/millions_of_songs_free_on_spotify"
+        android:text="@string/millions_of_songs_free_on_muzi_music"
         android:textSize="@dimen/_30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +42,7 @@
         android:id="@+id/btn_sign_up_free"
         android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="46dp"
+        android:layout_marginHorizontal="@dimen/_46dp"
         android:layout_marginTop="@dimen/_50dp"
         android:background="@drawable/btn_round_green"
         android:fontFamily="@font/bold"
@@ -48,7 +56,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_log_in"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/_0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12dp"
         android:background="@drawable/btn_round_transparent"
@@ -67,7 +75,7 @@
         style="@style/Widget.Material3.CircularProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="@dimen/_20dp"
         android:indeterminate="true"
         android:visibility="invisible"
         app:indicatorColor="@color/white"

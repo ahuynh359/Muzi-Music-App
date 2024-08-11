@@ -34,13 +34,12 @@ class MuziMusicApplication : LocalizationApplication() {
     private fun customActivityOnCrash() {
         CaocConfig.Builder.create()
             .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
-            .enabled(true) //default: true
+            .enabled(true)
             .showErrorDetails(false) //default: true
             .showRestartButton(false) //default: true
             .logErrorOnRestart(false) //default: true
             .trackActivities(true) //default: false
             .minTimeBetweenCrashesMs(2000) //default: 3000
-            .errorDrawable(R.drawable.ic_spotify_a) //default: bug image
             .restartActivity(ErrorActivity::class.java) //default: null (your app's launch activity)
             .errorActivity(ErrorActivity::class.java) //default: null (default error activity)
             .apply()

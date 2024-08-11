@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.auth.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.request.LoginRequest
@@ -49,7 +48,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun isAdmin(): Boolean {
-        Log.d("ACB",sharePreferencesHelper.getAdminOrUser().toString())
         return sharePreferencesHelper.getAdminOrUser()
     }
 

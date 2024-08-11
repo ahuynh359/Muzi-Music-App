@@ -25,7 +25,7 @@ class NotificationAdapter(private val listener: OnNotificationClicked) :
             }
         }
         fun bind(notification: Notification) {
-            binding.imvAvatar.setImageResource(R.drawable.ic_spotify_white)
+            binding.imvAvatar.setImageResource(R.drawable.ic_logo)
 
             binding.tvTitle.text = notification.title
             binding.tvTitle.isSelected = true

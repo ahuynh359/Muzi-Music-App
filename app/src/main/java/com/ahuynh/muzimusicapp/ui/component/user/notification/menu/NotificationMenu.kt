@@ -64,7 +64,7 @@ class NotificationMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdap
         binding.rcyMenu.adapter = menuAdapter
         binding.tvTitle.text = currentNotification.title
         binding.tvContent.text = currentNotification.content
-        binding.imvAvatar.setImageResource(R.drawable.ic_spotify_white)
+        binding.imvAvatar.setImageResource(R.drawable.ic_logo)
         viewModel.currentNotification.observe(viewLifecycleOwner) {
             initData(it.status == "READ")
         }
