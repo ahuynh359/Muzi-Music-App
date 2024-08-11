@@ -12,6 +12,7 @@ import android.os.Parcelable
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.Toast
+import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Lyric
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.service.MusicService
@@ -19,11 +20,22 @@ import com.ahuynh.muzimusicapp.utils.helper.VersionHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 
 object Utils {
+
+    fun getGreetingMessage(context: Context): String {
+        val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+
+        return when (currentHour) {
+            in 5..11 -> context.resources.getString(R.string.good_morning)
+            in 12..18 -> context.resources.getString(R.string.good_afternoon)
+            else -> context.resources.getString(R.string.good_evening)
+        }
+    }
 
     fun makeToast(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, duration).show()

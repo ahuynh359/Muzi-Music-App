@@ -19,10 +19,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/main_graph">
+        app:navGraph="@navigation/user_graph">
 
     </androidx.fragment.app.FragmentContainerView>
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/btm_navigation"
@@ -38,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/btm_menu_user" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:visibility="gone"
         android:id="@+id/player"
@@ -47,6 +45,7 @@
         android:layout_marginHorizontal="5dp"
         android:background="@drawable/custom_bg_square"
         android:padding="@dimen/_10dp"
+        android:elevation="8dp"
         app:layout_constraintBottom_toTopOf="@id/btm_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

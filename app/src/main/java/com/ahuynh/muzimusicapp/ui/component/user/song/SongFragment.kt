@@ -109,7 +109,7 @@ class SongFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongClicked 
 
 
     private fun startPlayerActivity(song: Song, songList: ArrayList<Song>) {
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+
         Utils.sendNewMusic(requireActivity(), MusicService.ACTION_PLAY, song, songList)
     }
 

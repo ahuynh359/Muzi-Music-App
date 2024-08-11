@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.player.viewpager
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
@@ -171,13 +170,13 @@ class PlayerViewPagerFragment :
     }
 
     private fun navigateToUserActivity() {
-        val options = ActivityOptions.makeCustomAnimation(
-            requireContext(),
-            R.anim.slide_in_top,
-            R.anim.slide_out_bottom
-        ).toBundle()
+//        val options = ActivityOptions.makeCustomAnimation(
+//            requireContext(),
+//            R.anim.slide_in_top,
+//            R.anim.slide_out_bottom
+//        ).toBundle()
         requireActivity().finish()
-        requireActivity().startActivity(Intent(requireContext(), UserActivity::class.java), options)
+        requireActivity().startActivity(Intent(requireContext(), UserActivity::class.java))
     }
 
     private fun navigateToSleepDialog() {

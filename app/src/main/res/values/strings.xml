@@ -173,4 +173,7 @@
     <string name="password_must_be_at_least_6_characters"><![CDATA[Password >= 6 characters]]></string>
     <string name="password_does_not_match">Password does not match</string>
     <string name="reset_your_password">Reset Your Password</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="good_afternoon">Good Afternoon</string>
+    <string name="good_evening">Good Evening</string>
 </resources>

@@ -2,22 +2,20 @@ package com.ahuynh.muzimusicapp.ui.component.user.notification
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.NotificationAdapter
 import com.ahuynh.muzimusicapp.data.model.Notification
 import com.ahuynh.muzimusicapp.databinding.FragmentNotificationBinding
-import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.notification_common.NotificationCommonActivity
 import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationFragment : BaseDialogBottomSheetFragment(),
+class NotificationFragment :
+    BaseFragment<FragmentNotificationBinding>(FragmentNotificationBinding::inflate),
     NotificationAdapter.OnNotificationClicked {
 
     companion object {
@@ -27,16 +25,7 @@ class NotificationFragment : BaseDialogBottomSheetFragment(),
     private val notificationAdapter = NotificationAdapter(this)
     private val viewModel by viewModels<NotificationViewModel>({ requireActivity() })
     private lateinit var notificationsList: ArrayList<Notification>
-    private lateinit var binding: FragmentNotificationBinding
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentNotificationBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onResume() {
         super.onResume()
@@ -57,7 +46,7 @@ class NotificationFragment : BaseDialogBottomSheetFragment(),
         viewModel.notificationList.observe(viewLifecycleOwner) {
             notificationAdapter.submitList(it)
             notificationsList = it as ArrayList<Notification>
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 binding.btnDeleteAllNotification.visibility = View.GONE
             } else
                 binding.btnDeleteAllNotification.visibility = View.VISIBLE
@@ -73,7 +62,7 @@ class NotificationFragment : BaseDialogBottomSheetFragment(),
     private fun setupUI() {
         binding.rcyNotification.adapter = notificationAdapter
         binding.btnBack.setOnClickListener {
-            dismiss()
+            findNavController().popBackStack()
         }
         binding.btnDeleteAllNotification.setOnClickListener {
             viewModel.deleteAllNotifications()

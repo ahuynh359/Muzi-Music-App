@@ -1,20 +1,17 @@
 package com.ahuynh.muzimusicapp.ui.component.user.type.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.adapter.SongAdapter
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailTypeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.ui.component.user.type.TypeViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
@@ -23,7 +20,7 @@ import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailTypeFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongClicked {
+class DetailTypeFragment :  BaseFragment<FragmentDetailTypeBinding>(FragmentDetailTypeBinding::inflate), SongAdapter.OnSongClicked {
 
     companion object {
         const val TAG = "DetailTypeFragment"
@@ -33,20 +30,12 @@ class DetailTypeFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongCl
     private val viewModel by viewModels<TypeViewModel>()
     private lateinit var songOfType: ArrayList<Song>
     private lateinit var currentType: Type
-    private lateinit var binding: FragmentDetailTypeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentType = DetailTypeFragmentArgs.fromBundle(requireArguments()).type
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentDetailTypeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onResume() {
         super.onResume()
@@ -81,7 +70,7 @@ class DetailTypeFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongCl
         binding.tvTypeName.text = currentType.name
         binding.tvTypeName1.text = currentType.name
         binding.btnBack.setOnClickListener {
-            dismiss()
+            findNavController().popBackStack()
         }
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -107,13 +96,13 @@ class DetailTypeFragment : BaseDialogBottomSheetFragment(), SongAdapter.OnSongCl
         val filteredList = songOfType.filter { song ->
             song.name.contains(query, ignoreCase = true)
         }
-        binding.tvNoSongs.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
-        binding.btnPlay.visibility = if (filteredList.isEmpty()) View.GONE else View.VISIBLE
+        binding.tvNoSongs.visibility = if (filteredList.isEmpty() || songOfType.isEmpty()) View.VISIBLE else View.GONE
+        binding.btnPlay.visibility = if (filteredList.isEmpty()) View.INVISIBLE else View.VISIBLE
         songAdapter.submitList(filteredList)
     }
 
     private fun startPlayerActivity(song: Song, songList: ArrayList<Song>) {
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+        // startActivity(Intent(requireContext(), PlayerActivity::class.java))
         Utils.sendNewMusic(requireActivity(), MusicService.ACTION_PLAY, song, songList)
     }
 

@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.user
 
-import android.app.ActivityOptions
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,20 +18,14 @@ import com.ahuynh.muzimusicapp.databinding.ActivityUserBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
-import com.ahuynh.muzimusicapp.ui.component.splash.SplashActivity
-import com.ahuynh.muzimusicapp.ui.component.splash.SplashActivity.Companion
 import com.ahuynh.muzimusicapp.utils.Constants.PERMISSION_REQUEST_ID
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.appSettingOpen
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.checkMultiplePermission
 import com.ahuynh.muzimusicapp.utils.helper.PermissionHelper.warningPermissionDialog
-import com.ahuynh.muzimusicapp.utils.helper.ToastHelper.makeToastPermissionGranted
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.android.material.animation.AnimationUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -84,15 +77,9 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
     }
 
     private fun handleUI() {
-        //binding.player.animation = AnimationUtils.loadAnimation(this, R.anim.bottom_to_top)
         binding.player.setOnClickListener {
             val intent = Intent(this, PlayerActivity::class.java)
-            val options = ActivityOptions.makeCustomAnimation(
-                this,
-                R.anim.slide_in_bottom,
-                R.anim.slide_out_top
-            )
-            startActivity(intent, options.toBundle())
+            startActivity(intent)
         }
         binding.btnPlayPause.setOnClickListener {
             Utils.sendMusic(applicationContext, MusicService.ACTION_PLAY)
@@ -131,12 +118,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
                 binding.player.visibility = View.VISIBLE
                 binding.tvSong.text = it.name
                 binding.tvSinger.text = it.singers.joinToString(", ") { it.name }
-                Glide
-                    .with(binding.imvSong.context)
-                    .load(it.avatar)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.imvSong)
+                binding.imvSong.loadImage(it.avatar)
             }
         }
 

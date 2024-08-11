@@ -107,7 +107,7 @@ class DetailPlaylistFragment :
 
 
         binding.btnPlay.setOnClickListener {
-            startActivity(Intent(requireContext(), PlayerActivity::class.java))
+
             Utils.sendNewMusic(
                 requireActivity(),
                 MusicService.ACTION_PLAY,
@@ -119,7 +119,7 @@ class DetailPlaylistFragment :
     }
 
     override fun onSongClicked(song: Song) {
-        startActivity(Intent(requireContext(), PlayerActivity::class.java))
+
         Utils.sendNewMusic(
             requireActivity(),
             MusicService.ACTION_PLAY,

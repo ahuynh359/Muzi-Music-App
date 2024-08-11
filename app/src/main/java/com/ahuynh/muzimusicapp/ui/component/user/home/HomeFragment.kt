@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.user.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -26,7 +25,6 @@ import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentHomeBinding
 import com.ahuynh.muzimusicapp.service.MusicService
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
@@ -91,7 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             startAutoCycle();
         }
 
-
+        binding.topAppBar.setTitle(Utils.getGreetingMessage(requireContext()))
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_notification -> {
@@ -240,7 +238,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     override fun onSongClicked(song: Song) {
-        startActivity(Intent(context, PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(), MusicService.ACTION_PLAY, song, newSongList
         )
@@ -272,8 +269,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onSongEntityClick(songEntity: SongEntity) {
         val song = songEntity.toSong()
-
-        startActivity(Intent(context, PlayerActivity::class.java))
         Utils.sendMusic(
             requireContext(), MusicService.ACTION_PLAY, song, arrayListOf(song)
         )

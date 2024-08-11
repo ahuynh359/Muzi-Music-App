@@ -24,7 +24,7 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:menu="@menu/top_app_bar_home"
-            app:subtitle="Good Evening"
+            tools:subtitle="Good Evening"
             app:subtitleTextAppearance="@style/TextMedium"
             app:title="MuziMusic"
             app:titleTextAppearance="@style/TextBold" />
@@ -41,6 +41,7 @@
         app:layout_constraintTop_toBottomOf="@id/top_app_bar_layout">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nest_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -96,7 +97,7 @@
                     android:visibility="invisible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tv_new_type"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_new_type"
                     tools:listitem="@layout/item_type_home" />
                <!--Slider-->

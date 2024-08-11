@@ -220,7 +220,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
     }
 
     override fun onSongClicked(song: Song) {
-        startActivity(Intent(context, PlayerActivity::class.java))
+
         Utils.sendMusic(
             requireContext(),
             MusicService.ACTION_PLAY,

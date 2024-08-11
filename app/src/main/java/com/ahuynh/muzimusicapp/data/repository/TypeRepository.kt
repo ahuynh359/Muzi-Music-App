@@ -18,8 +18,6 @@ import javax.inject.Inject
 class TypeRepository @Inject constructor(
     private val typeRemoteService: TypeRemoteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-
-
 ) {
 
     suspend fun getAllTypes(sortName: SortName): List<Type> {
@@ -28,11 +26,12 @@ class TypeRepository @Inject constructor(
         }
     }
 
-    suspend fun getTypeById(id : Long): Type? {
+    suspend fun getTypeById(id: Long): Type? {
         return withContext(dispatcher) {
             typeRemoteService.getTypeById(id)
         }
     }
+
     suspend fun getSongFromType(id: Long): List<Song> {
         return withContext(dispatcher) {
             typeRemoteService.getSongFromType(id)
@@ -46,7 +45,7 @@ class TypeRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteType(id : Long): NetworkResult<MessageResponse> {
+    suspend fun deleteType(id: Long): NetworkResult<MessageResponse> {
 
         return withContext(dispatcher) {
             typeRemoteService.deleteType(id)
@@ -62,7 +61,7 @@ class TypeRepository @Inject constructor(
 
     suspend fun changeAvatar(id: Long, file: File): NetworkResult<TypeResponseData> {
         return withContext(dispatcher) {
-            typeRemoteService.changeAvatar(id , file)
+            typeRemoteService.changeAvatar(id, file)
         }
     }
 
