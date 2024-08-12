@@ -2,13 +2,13 @@ package com.ahuynh.muzimusicapp.ui.component.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Song
+import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
-import com.ahuynh.muzimusicapp.data.service.remote.UserRemoteService
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
-import com.itextpdf.styledxmlparser.css.parse.CssDeclarationValueTokenizer.Token
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +16,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val appSharePreferencesHelper: SharePreferencesHelper,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val songRepository: SongRepository,
+
 )
     : BaseViewModel() {
 
@@ -41,6 +43,19 @@ class UserViewModel @Inject constructor(
             userRepository.updateToken(token)
         }
     }
+    fun insertSong(song: SongEntity) {
+        viewModelScope.launch {
+            songRepository.insertSong(song)
+        }
+    }
+    fun listen(id: Long) {
+        viewModelScope.launch {
+            songRepository.listen(id)
+        }
+    }
+
+
+
 
 
 }

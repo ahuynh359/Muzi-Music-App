@@ -1,6 +1,8 @@
 package com.ahuynh.muzimusicapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
@@ -14,10 +16,12 @@ import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
 class SingerAdapter(
     private val listener: OnSingerClicked,
-    private val viewType: SingerViewType
+    private val viewType: SingerViewType,
+    private val hideBtnMore: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var singers: List<Singer> = arrayListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(data: List<Singer>) {
         singers = data
         notifyDataSetChanged()
@@ -38,6 +42,7 @@ class SingerAdapter(
                 R.string.singer
             )
             binding.tvName.isSelected = true
+
         }
     }
 
@@ -55,6 +60,7 @@ class SingerAdapter(
             binding.tvDes.text = binding.root.context.getString(
                 R.string.singer
             )
+            binding.btnMore.visibility = if (hideBtnMore) View.GONE else View.VISIBLE
         }
     }
 

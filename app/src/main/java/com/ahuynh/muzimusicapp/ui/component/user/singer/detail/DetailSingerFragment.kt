@@ -1,14 +1,9 @@
 package com.ahuynh.muzimusicapp.ui.component.user.singer.detail
 
-import android.content.Intent
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
@@ -17,20 +12,17 @@ import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentDetailSingerBinding
 import com.ahuynh.muzimusicapp.service.MusicService
-import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.BaseDialogBottomSheetFragment
-import com.ahuynh.muzimusicapp.ui.component.player.PlayerActivity
+import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.user.singer.SingerViewModel
 import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenu
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
-import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class DetailSingerFragment :
-    BaseDialogBottomSheetFragment(),
+    BaseFragment<FragmentDetailSingerBinding>(FragmentDetailSingerBinding::inflate),
     SongAdapter.OnSongClicked {
 
     companion object {
@@ -39,24 +31,15 @@ class DetailSingerFragment :
 
     private val songAdapter = SongAdapter(this)
     private val viewModel by viewModels<SingerViewModel>({ requireActivity() })
-    private lateinit var songOfSinger: ArrayList<Song>
+    private var songOfSinger: ArrayList<Song> = arrayListOf()
     private lateinit var currentSinger: Singer
-    private lateinit var binding: FragmentDetailSingerBinding
-    private var gradientDrawable: GradientDrawable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentSinger = DetailSingerFragmentArgs.fromBundle(requireArguments()).singer
 
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDetailSingerBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onResume() {
         super.onResume()
@@ -76,15 +59,20 @@ class DetailSingerFragment :
     }
 
     private fun observe() {
+        binding.apply {
+            imvSinger.loadImage(currentSinger.avatar)
+            topAppBar.title = currentSinger.name
+            tvDescription.originalText =
+                if (currentSinger.description == null) getString(R.string.no_description) else currentSinger.description.toString()
+        }
+
         viewModel.songOfSinger.observe(viewLifecycleOwner) {
             songAdapter.submitList(it)
             songOfSinger = it as ArrayList<Song>
             binding.rcySongs.visibility = View.VISIBLE
             if (it.isEmpty()) {
                 binding.tvNoSongs.visibility = View.VISIBLE
-                binding.btnPlay.visibility = View.INVISIBLE
             } else {
-                binding.btnPlay.visibility = View.VISIBLE
                 binding.tvNoSongs.visibility = View.GONE
             }
             binding.shimmer.stopShimmer()
@@ -111,8 +99,7 @@ class DetailSingerFragment :
         }
         binding.apply {
             rcySongs.adapter = songAdapter
-            imvSinger.loadImage(currentSinger.avatar)
-            topAppBar.title = currentSinger.name
+
         }
 
         binding.topAppBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -124,19 +111,6 @@ class DetailSingerFragment :
             }
         }
 
-
-
-
-
-        binding.btnPlay.setOnClickListener {
-
-            Utils.sendNewMusic(
-                requireActivity(),
-                MusicService.ACTION_PLAY,
-                songOfSinger[0], songOfSinger
-            )
-        }
-
         binding.btnFollow.setOnClickListener {
             viewModel.loveOrUnloveSinger(currentSinger.id)
         }
@@ -146,7 +120,8 @@ class DetailSingerFragment :
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
-                    binding.tvNoSongs.visibility = View.GONE
+                    binding.tvNoSongs.visibility =
+                        if (songOfSinger.isEmpty()) View.VISIBLE else View.GONE
                     songAdapter.submitList(songOfSinger)
                 } else {
                     filterSongs(s.toString())
@@ -160,19 +135,19 @@ class DetailSingerFragment :
     }
 
     private fun filterSongs(query: String) {
-        val filteredList = songOfSinger.filter { song ->
-            song.name.contains(query, ignoreCase = true)
+        val filteredList = if (query.isEmpty()) {
+            songOfSinger
+        } else {
+            songOfSinger.filter { song ->
+                song.name.contains(query, ignoreCase = true)
+            }
         }
-        if (filteredList.isEmpty()) {
-            binding.tvNoSongs.visibility = View.VISIBLE
-        } else
-            binding.tvNoSongs.visibility = View.GONE
+        binding.tvNoSongs.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
         songAdapter.submitList(filteredList)
     }
 
 
     override fun onSongClicked(song: Song) {
-
         Utils.sendNewMusic(
             requireActivity(),
             MusicService.ACTION_PLAY,
@@ -183,9 +158,9 @@ class DetailSingerFragment :
     override fun openMenu(song: Song) {
         val fragment = SongMenu()
         fragment.arguments = Bundle().apply {
-            putParcelable(Constants.SONG,song)
+            putParcelable(Constants.SONG, song)
         }
-        fragment.show(requireActivity().supportFragmentManager,null)
+        fragment.show(requireActivity().supportFragmentManager, null)
     }
 
 

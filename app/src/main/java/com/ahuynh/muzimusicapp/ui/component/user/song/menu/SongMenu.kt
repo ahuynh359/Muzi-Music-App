@@ -11,7 +11,6 @@ import com.ahuynh.muzimusicapp.data.model.ItemMenuName
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.databinding.FragmentSongMenuBinding
 import com.ahuynh.muzimusicapp.ui.component.user.song.add_song_to_playlist.AddSongToPlaylistFragment
-import com.ahuynh.muzimusicapp.ui.component.user.song.menu.SongMenuViewModel
 import com.ahuynh.muzimusicapp.utils.Constants
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.Utils.parcelable
@@ -96,6 +95,7 @@ class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClick
     private fun observeViewModel() {
         viewModel.loveSong.observe(viewLifecycleOwner) { isLoved ->
             initData(isLoved)
+
         }
     }
 
@@ -112,7 +112,7 @@ class SongMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterClick
 
             ItemMenuName.LOVE -> {
                 viewModel.loveOrUnlove(currentSong.id)
-                dismiss()
+
             }
 
             else -> {

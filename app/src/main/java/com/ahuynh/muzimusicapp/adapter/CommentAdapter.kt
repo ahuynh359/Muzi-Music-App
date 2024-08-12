@@ -38,6 +38,7 @@ class CommentAdapter(
                 tvName.text = comment.user.username
                 tvContent.text = comment.content
                 tvTime.text = comment.time
+                tvTime.isSelected = true
                 btnReply.visibility = if (hideBtnReply) View.GONE else View.VISIBLE
 
                 val replyAdapter = CommentAdapter(listener, hideBtnReply = true)

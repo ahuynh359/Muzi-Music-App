@@ -49,12 +49,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
     private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
     private val newSingerAdapter = SingerAdapter(this, SingerViewType.HOME)
+    private val singerYouFollowedAdapter =SingerAdapter(this,SingerViewType.HOME)
     private val slideAdapter = SliderAdapter()
 
     private var newSongList: ArrayList<Song> = arrayListOf()
     private var newTypeList: ArrayList<Type> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
+    private var singerYouFollowedList: ArrayList<Singer> = arrayListOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,6 +81,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
 
         binding.rcyNewSinger.adapter = newSingerAdapter
+        binding.rcySingerYouFollowed.adapter = singerYouFollowedAdapter
         binding.rcyNewAlbum.adapter = newAlbumAdapter
         binding.rcyRecentSongs.adapter = songEntityAdapter
         binding.rcyNewType.adapter = newTypeAdapter
@@ -89,7 +92,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             startAutoCycle();
         }
 
-        binding.topAppBar.setTitle(Utils.getGreetingMessage(requireContext()))
+        binding.topAppBar.setSubtitle(Utils.getGreetingMessage(requireContext()))
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_notification -> {
@@ -129,6 +132,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getRecentSongs()
         viewModel.getNewTypes()
         viewModel.getUnreadNotification()
+        viewModel.getLoveSingers()
     }
 
     private fun observe() {
@@ -138,7 +142,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         handleNewSingerList()
         handleNewTypeList()
         handleSliderList()
-
+        handleLoveSingerList()
 
     }
 
@@ -235,6 +239,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         }
     }
+
+    private fun handleLoveSingerList() {
+
+        viewModel.loveSingerList.observe(viewLifecycleOwner) {
+            binding.rcySingerYouFollowed.visibility = View.VISIBLE
+            if (it != null) {
+                singerYouFollowedList = it as ArrayList<Singer>
+                singerYouFollowedAdapter.submitList(it)
+            }
+            binding.shimmerSingleYouFollowed.stopShimmer()
+            binding.shimmerSingleYouFollowed.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
+
+        }
+    }
+
 
 
     override fun onSongClicked(song: Song) {

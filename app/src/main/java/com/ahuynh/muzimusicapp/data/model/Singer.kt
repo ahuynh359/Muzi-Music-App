@@ -8,6 +8,7 @@ data class Singer(
     val id: Long,
     val name: String,
     val avatar: String,
+    val description: String ?= null,
     val createdAt: String,
     val updatedAt: String
 ) :

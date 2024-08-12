@@ -4,13 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.MenuAdapter
 import com.ahuynh.muzimusicapp.data.model.Comment
@@ -19,6 +17,8 @@ import com.ahuynh.muzimusicapp.data.model.ItemMenuName
 import com.ahuynh.muzimusicapp.databinding.FragmentCommentMenuBinding
 import com.ahuynh.muzimusicapp.ui.base.dialog.ConfirmDialog
 import com.ahuynh.muzimusicapp.ui.component.user.comment.CommentViewModel
+import com.ahuynh.muzimusicapp.ui.component.user.comment.edit.EditCommentFragment
+import com.ahuynh.muzimusicapp.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,6 +72,7 @@ class CommentMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterCl
     private fun observeViewModel() {
         viewModel.updateCommentStatus.observe(viewLifecycleOwner) {
             if (it == true) dismiss()
+            viewModel.updateCommentStatus.postValue(null)
         }
     }
 
@@ -92,8 +93,11 @@ class CommentMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterCl
                 dismiss()
             }
             ItemMenuName.EDIT -> {
-                val action = CommentMenuDirections.actionCommentMenuToEditCommentFragment(currentComment)
-                findNavController().navigate(action)
+                val editCommentFragment = EditCommentFragment()
+                editCommentFragment.arguments = Bundle().apply {
+                    putParcelable(Constants.COMMENT, currentComment)
+                }
+                editCommentFragment.show(parentFragmentManager, null)
             }
             ItemMenuName.DELETE -> {
                 ConfirmDialog(
@@ -112,6 +116,7 @@ class CommentMenu : BottomSheetDialogFragment(), MenuAdapter.OnItemMenuAdapterCl
                             viewModel.deleteCommentStatus.observe(viewLifecycleOwner) {
                                 Toast.makeText(requireContext(), viewModel.mess, Toast.LENGTH_SHORT).show()
                                 if (it == true) dismiss()
+                                viewModel.deleteCommentStatus.postValue(null)
                             }
                         }
                     }

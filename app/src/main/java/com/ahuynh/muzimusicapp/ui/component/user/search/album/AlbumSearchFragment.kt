@@ -1,16 +1,18 @@
 package com.ahuynh.muzimusicapp.ui.component.user.search.album
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter
 import com.ahuynh.muzimusicapp.adapter.AlbumAdapter.AlbumViewType
 import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.databinding.FragmentAlbumSearchBinding
+import com.ahuynh.muzimusicapp.ui.component.user.album.detail.DetailAlbumDialog
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
+import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +21,7 @@ class AlbumSearchFragment : Fragment(),  AlbumAdapter.OnAlbumClicked{
     private lateinit var binding: FragmentAlbumSearchBinding
     private val viewModel by viewModels<SearchViewModel>({ requireActivity() })
 
-    private val albumAdapter=  AlbumAdapter(this, AlbumViewType.LIST)
+    private val albumAdapter=  AlbumAdapter(this, AlbumViewType.LIST,true)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,13 @@ class AlbumSearchFragment : Fragment(),  AlbumAdapter.OnAlbumClicked{
 
 
     override fun onAlbumClicked(album: Album) {
+        val detailAlbumDialog = DetailAlbumDialog().apply {
+            arguments = Bundle().apply {
+                putParcelable(Constants.ALBUM, album)
+            }
+        }
+        detailAlbumDialog.show(parentFragmentManager, null)
+
     }
 
     override fun onMoreItemAlbumClicked(album: Album) {

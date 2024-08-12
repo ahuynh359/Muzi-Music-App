@@ -30,6 +30,7 @@ class HomeViewModel @Inject constructor(
     var recentSong = MutableLiveData<List<SongEntity>>()
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
+    var loveSingerList = MutableLiveData<List<Singer>>()
     var newSongList = MutableLiveData<List<Song>>()
     var newTypeList = MutableLiveData<List<Type>>()
     var unreadCount = MutableLiveData<Int>()
@@ -87,6 +88,14 @@ class HomeViewModel @Inject constructor(
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
             newTypeList.postValue(typeRepository.getAllTypes(SortName.NEW))
+        }
+        registerEventParentJobFinish()
+    }
+
+    fun getLoveSingers() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            loveSingerList.postValue(singerRepository.getLoveSinger())
         }
         registerEventParentJobFinish()
     }

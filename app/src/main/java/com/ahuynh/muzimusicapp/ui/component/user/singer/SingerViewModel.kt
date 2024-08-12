@@ -1,6 +1,5 @@
 package com.ahuynh.muzimusicapp.ui.component.user.singer
 
-import android.graphics.drawable.GradientDrawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ahuynh.muzimusicapp.data.model.Singer
@@ -17,8 +16,8 @@ class SingerViewModel @Inject constructor(
     private val singerRepository: SingerRepository
 ) : BaseViewModel() {
 
-    var gradientDrawable: MutableLiveData<GradientDrawable> = MutableLiveData()
     var singerList = MutableLiveData<List<Singer>>()
+    var singer = MutableLiveData<Singer>()
 
 
     var songOfSinger = MutableLiveData<List<Song>>()
@@ -74,6 +73,7 @@ class SingerViewModel @Inject constructor(
         }
         registerEventParentJobFinish()
     }
+
 
 
 }

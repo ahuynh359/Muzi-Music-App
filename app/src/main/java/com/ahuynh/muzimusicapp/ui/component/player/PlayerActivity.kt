@@ -1,21 +1,14 @@
 package com.ahuynh.muzimusicapp.ui.component.player
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.databinding.ActivityPlayerBinding
-import com.ahuynh.muzimusicapp.service.BroadcastService
 import com.ahuynh.muzimusicapp.ui.base.activity.BaseActivity
 import com.ahuynh.muzimusicapp.utils.EventBusModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,8 +74,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding>(ActivityPlayerBinding
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
         event.song?.let {
             viewModel.song.postValue(it)
-            viewModel.listen(it.id)
-            viewModel.insertSong(it.toSongEntity())
+
 
         }
     }

@@ -93,6 +93,10 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
         <action
+            app:enterAnim="@anim/bottom_to_top"
+            app:exitAnim="@anim/top_to_bottom"
+            app:popEnterAnim="@anim/bottom_to_top"
+            app:popExitAnim="@anim/top_to_bottom"
             android:id="@+id/action_searchFragment_to_detailTypeFragment"
             app:destination="@id/detailTypeFragment" />
     </fragment>
@@ -110,10 +114,10 @@
             app:destination="@id/playlistFragment" />
         <action
             android:id="@+id/action_profileFragment_to_songFragment"
-            app:destination="@id/songFragment" />
+            app:destination="@id/loveSongFragment" />
         <action
             android:id="@+id/action_profileFragment_to_singerFragment"
-            app:destination="@id/singerFragment" />
+            app:destination="@id/loveSingerFragment" />
     </fragment>
     <dialog
         android:id="@+id/changePasswordFragment"
@@ -178,24 +182,33 @@
             android:name="playlist"
             app:argType="com.ahuynh.muzimusicapp.data.model.Playlist" />
     </dialog>
-    <dialog
-        android:id="@+id/songFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.song.SongFragment"
-        android:label="SongFragment" />
+    <fragment
+        app:enterAnim="@anim/bottom_to_top"
+        app:exitAnim="@anim/top_to_bottom"
+        app:popEnterAnim="@anim/bottom_to_top"
+        app:popExitAnim="@anim/top_to_bottom"
+        android:id="@+id/loveSongFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.song.love.LoveSongFragment"
+        android:label="LoveSongFragment" />
     <fragment
         android:id="@+id/singerDetailFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.detail.DetailSingerFragment"
-        android:label="fragment_singer"
+        android:label="fragment_singer_detail"
         tools:layout="@layout/fragment_detail_singer">
+
         <argument
             android:name="singer"
             app:argType="com.ahuynh.muzimusicapp.data.model.Singer" />
     </fragment>
     <fragment
-        android:id="@+id/singerFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.SingerFragment"
-        android:label="fragment_singer"
-        tools:layout="@layout/fragment_singer" />
+        android:id="@+id/loveSingerFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.love.LoveSingerFragment"
+        android:label="fragment_love_singer"
+        tools:layout="@layout/fragment_love_singer" >
+        <action
+            android:id="@+id/action_loveSingerFragment_to_singerDetailFragment"
+            app:destination="@id/singerDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.chart.ChartFragment"

@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    //Expandable Text
+    implementation ("com.github.giangpham96:expandable-text:2.0.1")
     //Kalaxon
     implementation ("com.beust:klaxon:5.5")
     //Slider Image

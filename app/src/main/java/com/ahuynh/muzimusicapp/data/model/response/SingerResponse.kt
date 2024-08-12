@@ -6,6 +6,7 @@ data class SingerResponse(
     val id: Long,
     val name: String,
     val avatar: String,
+    val description: String? = null,
     val createdAt: String,
     val updatedAt: String
 
@@ -16,6 +17,7 @@ data class SingerResponse(
             id = this.id,
             name = this.name,
             avatar = this.avatar,
+            description = this.description,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt
         )

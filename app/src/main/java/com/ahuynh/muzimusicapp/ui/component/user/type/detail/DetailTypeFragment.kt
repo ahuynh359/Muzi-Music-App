@@ -58,26 +58,33 @@ class DetailTypeFragment :  BaseFragment<FragmentDetailTypeBinding>(FragmentDeta
             songOfType = ArrayList(songs)
             binding.rcySongs.visibility = if (songs.isEmpty()) View.GONE else View.VISIBLE
             binding.tvNoSongs.visibility = if (songs.isEmpty()) View.VISIBLE else View.GONE
-            binding.btnPlay.visibility = if (songs.isEmpty()) View.INVISIBLE else View.VISIBLE
             binding.shimmer.stopShimmer()
             binding.shimmer.visibility = View.GONE
         }
     }
 
     private fun setupUI() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.tvTypeNameOnImage.text = currentType.name
         binding.rcySongs.adapter = songAdapter
         binding.imvType.loadImage(currentType.avatar)
         binding.tvTypeName.text = currentType.name
-        binding.tvTypeName1.text = currentType.name
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+        binding.topAppBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val totalScrollRange = appBarLayout.totalScrollRange
+            if (totalScrollRange + verticalOffset == 0) {
+                binding.edtSearch.visibility = View.VISIBLE
+            } else {
+                binding.edtSearch.visibility = View.GONE
+            }
         }
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
-                    binding.tvNoSongs.visibility = View.GONE
+                    binding.tvNoSongs.visibility = if (songOfType.isEmpty()) View.VISIBLE else View.GONE
                     songAdapter.submitList(songOfType)
                 } else {
                     filterSongs(s.toString())
@@ -87,9 +94,6 @@ class DetailTypeFragment :  BaseFragment<FragmentDetailTypeBinding>(FragmentDeta
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.btnPlay.setOnClickListener {
-            startPlayerActivity(songOfType[0], songOfType)
-        }
     }
 
     private fun filterSongs(query: String) {
@@ -97,17 +101,13 @@ class DetailTypeFragment :  BaseFragment<FragmentDetailTypeBinding>(FragmentDeta
             song.name.contains(query, ignoreCase = true)
         }
         binding.tvNoSongs.visibility = if (filteredList.isEmpty() || songOfType.isEmpty()) View.VISIBLE else View.GONE
-        binding.btnPlay.visibility = if (filteredList.isEmpty()) View.INVISIBLE else View.VISIBLE
         songAdapter.submitList(filteredList)
     }
 
-    private fun startPlayerActivity(song: Song, songList: ArrayList<Song>) {
-        // startActivity(Intent(requireContext(), PlayerActivity::class.java))
-        Utils.sendNewMusic(requireActivity(), MusicService.ACTION_PLAY, song, songList)
-    }
+
 
     override fun onSongClicked(song: Song) {
-        startPlayerActivity(song, songOfType)
+        Utils.sendNewMusic(requireActivity(), MusicService.ACTION_PLAY, song, songOfType)
     }
 
     override fun openMenu(song: Song) {

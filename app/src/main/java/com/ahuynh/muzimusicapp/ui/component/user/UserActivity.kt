@@ -111,7 +111,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
 
 
     private fun observe() {
-        viewModel.song.observe(this) {
+        viewModel.song.observe(this) { it ->
             if (it == null) {
                 binding.player.visibility = View.GONE
             } else {
@@ -135,9 +135,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermission() {
-        if (checkMultiplePermission(this, PERMISSION_REQUEST_ID)) {
-
-        }
+        checkMultiplePermission(this, PERMISSION_REQUEST_ID)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -203,6 +201,8 @@ class UserActivity : BaseActivity<ActivityUserBinding>(ActivityUserBinding::infl
     fun onSongInfo(event: EventBusModel.SongInfoEvent) {
         event.song?.let {
             viewModel.song.postValue(it)
+            viewModel.listen(it.id)
+            viewModel.insertSong(it.toSongEntity())
         }
     }
 

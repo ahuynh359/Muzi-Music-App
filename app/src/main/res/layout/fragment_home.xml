@@ -197,7 +197,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imv_recently_played"
-                    tools:listitem="@layout/item_circle" />
+                    tools:listitem="@layout/item_circle_big" />
 
                 <!--    New song-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -245,7 +245,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tv_new_song"
                     app:layout_constraintTop_toBottomOf="@id/tv_new_song"
-                    tools:listitem="@layout/item_song" />
+                    tools:listitem="@layout/item" />
                 <!--    New singer-->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_new_singer"
@@ -291,7 +291,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_new_singer"
-                    tools:listitem="@layout/item_circle" />
+                    tools:listitem="@layout/item" />
 
                 <!--    New album-->
                 <androidx.appcompat.widget.AppCompatTextView
@@ -339,8 +339,54 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_new_album"
-                    tools:listitem="@layout/item_circle" />
+                    tools:listitem="@layout/item" />
+                <!--    Singer you followed-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_singer_you_followed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/singer_you_followed"
+                    android:textSize="@dimen/_24sp"
+                    app:fontFamily="@font/bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/shimmer_new_album" />
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_single_you_followed"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_singer_you_followed"
+                    app:layout_constraintTop_toBottomOf="@id/tv_singer_you_followed">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                        <include layout="@layout/item_shimmer_circle_big" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcy_singer_you_followed"
+                    android:layout_width="@dimen/_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_singer_you_followed"
+                    tools:listitem="@layout/item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

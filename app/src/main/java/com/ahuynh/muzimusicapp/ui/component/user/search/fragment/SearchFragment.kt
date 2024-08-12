@@ -14,26 +14,21 @@ import com.ahuynh.muzimusicapp.ui.component.user.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) ,
-TypeAdapter.OnTypeClicked{
+class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),
+    TypeAdapter.OnTypeClicked {
 
     private val viewModel by viewModels<SearchViewModel>()
-    private val typeAdapter = TypeAdapter(this,TypeViewType.SIMPLE)
+    private val typeAdapter = TypeAdapter(this, TypeViewType.SIMPLE)
     private var typeList: ArrayList<Type> = arrayListOf()
 
     companion object {
         const val TAG = "SearchFragment"
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         handleUI()
         observeData()
-
-
     }
 
     override fun onResume() {
@@ -43,25 +38,27 @@ TypeAdapter.OnTypeClicked{
 
     private fun handleUI() {
         binding.rcyType.adapter = typeAdapter
-
         binding.edtSearch.setOnClickListener {
             startActivity(Intent(requireActivity(), SearchActivity::class.java))
         }
     }
 
     private fun observeData() {
-      viewModel.typeList.observe(viewLifecycleOwner){
-          typeAdapter.submitList(it)
-          typeList = it as ArrayList<Type>
-      }
+        viewModel.typeList.observe(viewLifecycleOwner) {
+            typeAdapter.submitList(it)
+            typeList = it as ArrayList<Type>
+        }
     }
 
     override fun onTypeClicked(type: Type) {
-        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailTypeFragment(type))
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToDetailTypeFragment(
+                type
+            )
+        )
     }
 
     override fun onMoreClicked(type: Type) {
-        
     }
 
 

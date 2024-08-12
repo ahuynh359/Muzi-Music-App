@@ -10,6 +10,7 @@ data class SingerEntity(
     val singerId: Long,
     val name: String,
     val avatar: String,
+    val description : String ?= null,
     val createdAt : String,
     val updatedAt : String
 ) {
@@ -18,6 +19,7 @@ data class SingerEntity(
             id = this.singerId,
             name = this.name,
             avatar = this.avatar,
+            description = this.description,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt
         )

@@ -2,6 +2,7 @@ package com.ahuynh.muzimusicapp.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ahuynh.muzimusicapp.R
@@ -13,7 +14,8 @@ import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 
 class AlbumAdapter(
     private val listener: OnAlbumClicked,
-    private val viewType: AlbumViewType
+    private val viewType: AlbumViewType,
+    private val hideBtnMore : Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var albums: List<Album> = emptyList()
@@ -39,6 +41,7 @@ class AlbumAdapter(
                 tvName.text = album.name
                 tvName.isSelected = true
                 tvDes.text = binding.root.context.getString(R.string.album)
+
             }
         }
     }
@@ -61,6 +64,7 @@ class AlbumAdapter(
                 tvName.text = album.name
                 tvName.isSelected = true
                 tvDes.text = binding.root.context.getString(R.string.album)
+                btnMore.visibility = if (hideBtnMore) View.GONE else View.VISIBLE
             }
         }
     }

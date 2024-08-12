@@ -10,7 +10,8 @@ import com.ahuynh.muzimusicapp.data.model.request.EditCommentRequest
 import com.ahuynh.muzimusicapp.databinding.FragmentEditCommentBinding
 import com.ahuynh.muzimusicapp.ui.base.dialog_fragment.BaseDialogFragment
 import com.ahuynh.muzimusicapp.ui.component.user.comment.CommentViewModel
-import com.ahuynh.muzimusicapp.ui.component.user.comment.menu.CommentMenuArgs
+import com.ahuynh.muzimusicapp.utils.Constants
+import com.ahuynh.muzimusicapp.utils.Utils.parcelable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +27,10 @@ class EditCommentFragment : BaseDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        currentComment = CommentMenuArgs.fromBundle(requireArguments()).comment
+        val comment = arguments?.parcelable<Comment>(Constants.COMMENT)
+        if (comment == null) dismiss()
+        else
+            currentComment = comment
     }
 
     override fun onCreateView(
@@ -41,11 +45,11 @@ class EditCommentFragment : BaseDialogFragment() {
     }
 
     private fun observeData() {
-    viewModel.updateCommentStatus.observe(viewLifecycleOwner){
-        if(it==true){
-            dismiss()
+        viewModel.updateCommentStatus.observe(viewLifecycleOwner) {
+            if (it == true) {
+                dismiss()
+            }
         }
-    }
 
     }
 

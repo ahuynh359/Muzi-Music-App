@@ -11,6 +11,8 @@ import com.ahuynh.muzimusicapp.adapter.SingerAdapter.SingerViewType
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.databinding.FragmentSingerSearchBinding
 import com.ahuynh.muzimusicapp.ui.component.user.search.SearchViewModel
+import com.ahuynh.muzimusicapp.ui.component.user.singer.detail.DetailSingerDialog
+import com.ahuynh.muzimusicapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +21,7 @@ class SingerSearchFragment : Fragment(), SingerAdapter.OnSingerClicked {
     private lateinit var binding: FragmentSingerSearchBinding
     private val viewModel by viewModels<SearchViewModel>({ requireActivity() })
 
-    private val singerAdapter = SingerAdapter(this,SingerViewType.LIST)
+    private val singerAdapter = SingerAdapter(this,SingerViewType.LIST,true)
 
 
     override fun onCreateView(
@@ -57,7 +59,12 @@ class SingerSearchFragment : Fragment(), SingerAdapter.OnSingerClicked {
 
 
     override fun onSingerClicked(singer: Singer) {
-
+        val detailSingerDialog = DetailSingerDialog().apply {
+            arguments = Bundle().apply {
+                putParcelable(Constants.SINGER, singer)
+            }
+        }
+        detailSingerDialog.show(parentFragmentManager, null)
     }
 
 }

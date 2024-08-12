@@ -6,6 +6,8 @@ import android.graphics.Color
 object Constants {
 
 
+    val SINGER: String = "singer"
+    val ALBUM: String = "album"
     val colorsTopSong = listOf(
         Color.rgb(47,148,240),
         Color.rgb(56,202,147),

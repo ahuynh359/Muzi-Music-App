@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.player
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
@@ -48,11 +47,6 @@ class PlayerViewModel @Inject constructor(
         }
     }
 
-    fun insertSong(song: SongEntity) {
-        viewModelScope.launch {
-            songRepository.insertSong(song)
-        }
-    }
 
 
 
@@ -110,12 +104,6 @@ class PlayerViewModel @Inject constructor(
 
     }
 
-
-    fun listen(id: Long) {
-        viewModelScope.launch {
-            songRepository.listen(id)
-        }
-    }
 
 
 }

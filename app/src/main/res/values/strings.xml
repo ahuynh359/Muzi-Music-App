@@ -176,4 +176,11 @@
     <string name="good_morning">Good Morning</string>
     <string name="good_afternoon">Good Afternoon</string>
     <string name="good_evening">Good Evening</string>
+    <string name="more">More</string>
+    <string name="about">About</string>
+    <string name="no_description">No Description</string>
+    <string name="singer_you_followed">Singer You Followed</string>
+    <string name="restart_app">Restart App</string>
+    <string name="restart_your_app">Restart your app</string>
+    <string name="love_songs">Love Songs</string>
 </resources>
