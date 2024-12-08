@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    //Pagination 3
+    implementation ("androidx.paging:paging-runtime:3.1.1")
     //Expandable Text
     implementation ("com.github.giangpham96:expandable-text:2.0.1")
     //Kalaxon
@@ -89,9 +91,7 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
 
-
     //Chip
-
     implementation(libs.androidx.core.ktx)
     //Gson
     implementation("com.google.code.gson:gson:2.8.8")
@@ -149,10 +149,6 @@ dependencies {
     //Glide
     implementation(libs.glide)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
-
-
-
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     //Navigation Graph
@@ -165,22 +161,16 @@ dependencies {
     //Messaging
     implementation("com.github.DavidBarbaran:FCM-AndroidToOtherDevice:1.1.2")
 
-
     //Retrofit
     implementation(libs.gson)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.palette.ktx)
-
-
-
-
     kapt(libs.hilt.android.compiler)
 
     //Splash Screen
     implementation(libs.androidx.core.splashscreen)
-
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.media)
     implementation(libs.androidx.appcompat)

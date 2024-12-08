@@ -23,16 +23,19 @@
         tools:text="Rounded Square" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:id="@+id/tv_name"
         android:fontFamily="@font/demi"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/imv_type"
         app:layout_constraintEnd_toEndOf="@id/imv_type"
         app:layout_constraintStart_toStartOf="@id/imv_type"
         app:layout_constraintTop_toTopOf="@id/imv_type"
-        tools:text="Type Name " />
+        tools:text="Type Name fdsfdsfdssfsdfdssdfdsdfsdf " />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

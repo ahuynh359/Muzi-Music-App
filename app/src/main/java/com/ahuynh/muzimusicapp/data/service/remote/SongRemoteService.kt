@@ -9,6 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongListen
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.TotalResponse
 import com.ahuynh.muzimusicapp.data.model.response.toListSong
 import com.ahuynh.muzimusicapp.data.service.base.BaseRemoteService
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
@@ -29,6 +30,24 @@ class SongRemoteService @Inject constructor(
             result.data.data.toListSong()
         } else {
             arrayListOf()
+        }
+    }
+
+    suspend fun getRecommendations(userId: Long): List<Song> {
+        val result = callApi { songAPI.getRecommendations(userId) }
+        return if (result is NetworkResult.Success) {
+            result.data.data.toListSong()
+        } else {
+            arrayListOf()
+        }
+    }
+
+    suspend fun getTotal(): TotalResponse? {
+        val result = callApi { songAPI.getTotal() }
+        return if (result is NetworkResult.Success) {
+            result.data
+        } else {
+           null
         }
     }
 

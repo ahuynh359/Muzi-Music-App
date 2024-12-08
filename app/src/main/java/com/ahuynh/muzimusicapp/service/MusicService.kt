@@ -3,13 +3,11 @@ package com.ahuynh.muzimusicapp.service
 import android.app.PendingIntent
 import android.app.Service
 import android.app.TaskStackBuilder
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.media.session.PlaybackState.ACTION_PAUSE
 import android.os.IBinder
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
@@ -64,6 +62,7 @@ class MusicService : Service() {
         const val ACTION_PRE = 13
         const val ACTION_NEXT = 14
         const val ACTION_CLEAR = 15
+        const val ACTION_PAUSE = 16
 
     }
 
@@ -139,8 +138,20 @@ class MusicService : Service() {
                 EventBus.getDefault().postSticky(EventBusModel.ClearMusic())
                 stopSelf()
             }
+            ACTION_PAUSE -> {
+                pause()
+            }
         }
 
+    }
+
+    private fun pause() {
+        player?.let {
+            if (it.isPlaying)
+                it.pause()
+
+
+        }
     }
 
     private fun prev() {

@@ -28,6 +28,35 @@
         app:layout_constraintStart_toStartOf="@id/btn_back"
         app:layout_constraintTop_toBottomOf="@id/imv_avatar" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/description"
+        android:textSize="@dimen/_26sp"
+        app:layout_constraintStart_toStartOf="@id/btn_back"
+        app:layout_constraintTop_toBottomOf="@id/edt_singer" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:hint="@string/description"
+        android:id="@+id/edt_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_25dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@drawable/edittext_background"
+        android:fontFamily="@font/regular"
+        android:inputType="text"
+        android:padding="@dimen/_12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
 
     <androidx.appcompat.widget.AppCompatEditText
         android:hint="@string/singer_name"
@@ -95,7 +124,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_singer" />
+        app:layout_constraintTop_toBottomOf="@id/edt_description" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/pg_loading"

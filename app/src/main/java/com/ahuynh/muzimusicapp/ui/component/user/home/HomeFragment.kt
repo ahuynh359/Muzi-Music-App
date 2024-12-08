@@ -46,13 +46,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private val songEntityAdapter = SongEntityAdapter(this, SongEntityAdapter.TYPE_SONG_ENTITY_HOME)
     private var newSongAdapter = SongAdapter(this)
+    private var recommendSongAdapter = SongAdapter(this)
     private val newAlbumAdapter = AlbumAdapter(this, AlbumViewType.HOME)
     private val newTypeAdapter = TypeAdapter(this, TypeViewType.HOME)
     private val newSingerAdapter = SingerAdapter(this, SingerViewType.HOME)
-    private val singerYouFollowedAdapter =SingerAdapter(this,SingerViewType.HOME)
+    private val singerYouFollowedAdapter = SingerAdapter(this, SingerViewType.HOME)
     private val slideAdapter = SliderAdapter()
 
+    private var recentSongList: ArrayList<SongEntity> = arrayListOf()
     private var newSongList: ArrayList<Song> = arrayListOf()
+    private var recommendSongList: ArrayList<Song> = arrayListOf()
     private var newTypeList: ArrayList<Type> = arrayListOf()
     private var newAlbumList: ArrayList<Album> = arrayListOf()
     private var newSingerList: ArrayList<Singer> = arrayListOf()
@@ -79,7 +82,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             val snapHelper = LinearSnapHelper()
             snapHelper.attachToRecyclerView(this)
         }
-
+        binding.rcyRecommendationSong.apply {
+            adapter = recommendSongAdapter
+            layoutManager = getGridLayoutHorizontal(3)
+            val snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(this)
+        }
         binding.rcyNewSinger.adapter = newSingerAdapter
         binding.rcySingerYouFollowed.adapter = singerYouFollowedAdapter
         binding.rcyNewAlbum.adapter = newAlbumAdapter
@@ -133,11 +141,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.getNewTypes()
         viewModel.getUnreadNotification()
         viewModel.getLoveSingers()
+        viewModel.getRecommendations()
     }
 
     private fun observe() {
         handleRecentSong()
         handleNewSongList()
+        handleRecommendationSongList()
         handleNewAlbumList()
         handleNewSingerList()
         handleNewTypeList()
@@ -168,7 +178,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleNewTypeList() {
-
         viewModel.newTypeList.observe(viewLifecycleOwner) {
             binding.rcyNewType.visibility = View.VISIBLE
             if (it != null) {
@@ -187,6 +196,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         viewModel.recentSong.observe(viewLifecycleOwner) {
             binding.rcyRecentSongs.visibility = View.VISIBLE
             songEntityAdapter.submitList(it)
+            recentSongList = it as ArrayList<SongEntity>
             binding.shimmerRecentSongs.stopShimmer()
             binding.shimmerRecentSongs.visibility = View.INVISIBLE
             binding.swipeRefresh.isRefreshing = false
@@ -203,6 +213,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             binding.shimmerNewSong.stopShimmer()
             binding.shimmerNewSong.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
+
+        }
+    }
+
+    private fun handleRecommendationSongList() {
+
+        viewModel.recommendedSongList.observe(viewLifecycleOwner) {
+            binding.rcyRecommendationSong.visibility = View.VISIBLE
+            newSongList = it as ArrayList<Song>
+            recommendSongAdapter.submitList(it)
+
+            binding.shimmerRecommendation.stopShimmer()
+            binding.shimmerRecommendation.visibility = View.INVISIBLE
             binding.swipeRefresh.isRefreshing = false
 
         }
@@ -256,7 +280,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-
     override fun onSongClicked(song: Song) {
         Utils.sendMusic(
             requireContext(), MusicService.ACTION_PLAY, song, newSongList
@@ -288,10 +311,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onSongEntityClick(songEntity: SongEntity) {
+        val songs = mutableListOf<Song>()
+        for (song in recentSongList) {
+            songs.add(song.toSong())
+        }
+
         val song = songEntity.toSong()
         Utils.sendMusic(
-            requireContext(), MusicService.ACTION_PLAY, song, arrayListOf(song)
-        )
+            requireContext(), MusicService.ACTION_PLAY, song,songs as ArrayList)
+
     }
 
     override fun openMenu(songEntity: SongEntity) {

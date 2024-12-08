@@ -18,10 +18,10 @@ import com.ahuynh.muzimusicapp.databinding.FragmentManageUserDetailBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.ui.component.admin.user.ManageUserViewModel
 import com.ahuynh.muzimusicapp.utils.Utils
+import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
@@ -38,15 +38,18 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        if (uri != null) {
-            val file = FileHelper.from(requireContext(), uri)!!
-            file.let {
-                viewModel.changeAvatar(currentUser.id,it)
+        uri?.let {
+            val file: File? = FileHelper.from(requireContext(), it)
+            file?.let { fileObj ->
+
+                    viewModel.changeAvatar(
+                        currentUser.id,
+                        fileObj
+                    )
             }
-        } else {
-            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
+
     private val loginTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
@@ -55,21 +58,27 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
         }
 
         override fun afterTextChanged(p0: Editable?) {
-            val email = binding.edtEmail.text.toString().trim()
-            val username = binding.edtUserName.text.toString().trim()
-            val isEmail = Utils.isValidEmail(email)
-            isUpdateOk = email.isNotEmpty() && username.isNotEmpty() && isEmail
-            if (!isEmail) {
-                binding.edtEmail.error = "Email is invalid"
-            } else {
-                binding.edtEmail.error = null
+            validateInputs()
 
-            }
-            if (isUpdateOk) {
-                binding.btnDone.setBackgroundResource(R.drawable.btn_enable)
-            } else
-                binding.btnDone.setBackgroundResource(R.drawable.btn_disable)
         }
+    }
+
+    private fun validateInputs() {
+        val email = binding.edtEmail.text.toString().trim()
+        val username = binding.edtUserName.text.toString().trim()
+        val isEmail = Utils.isValidEmail(email)
+        isUpdateOk = email.isNotEmpty() && username.isNotEmpty() && isEmail
+        binding.btnEdit.isEnabled = isUpdateOk
+        if (!isEmail) {
+            binding.edtEmail.error = "Email is invalid"
+        } else {
+            binding.edtEmail.error = null
+
+        }
+        if (isUpdateOk) {
+            binding.btnDone.setBackgroundResource(R.drawable.btn_enable)
+        } else
+            binding.btnDone.setBackgroundResource(R.drawable.btn_disable)
     }
 
 
@@ -77,6 +86,10 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
         super.onCreate(savedInstanceState)
         currentUser = ManageUserDetailFragmentArgs.fromBundle(requireArguments()).user
 
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 
@@ -91,13 +104,8 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
 
     private fun observe() {
 
-        currentUser?.let {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it.avatar)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar)
+       currentUser.let {
+            binding.imvAvatar.loadImage(it.avatar)
 
             binding.edtEmail.setText(it.email)
             binding.edtUserName.setText(it.username)
@@ -116,12 +124,7 @@ class ManageUserDetailFragment : BaseFragment<FragmentManageUserDetailBinding>(
 
 
         viewModel.avatar.observe(viewLifecycleOwner) {
-            Glide
-                .with(binding.imvAvatar.context)
-                .load(it)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imvAvatar);
+            binding.imvAvatar.loadImage(it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

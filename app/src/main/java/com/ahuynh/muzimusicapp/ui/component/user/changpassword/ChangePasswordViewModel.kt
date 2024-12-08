@@ -18,7 +18,7 @@ class ChangePasswordViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var mess: String? = null
-    var status = MutableLiveData<Boolean?>(null)
+    var changePasswordStatus = MutableLiveData<Boolean?>(null)
     fun changePassword(oldPassword: String, newPassword: String, confirmPassword: String) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
@@ -32,7 +32,7 @@ class ChangePasswordViewModel @Inject constructor(
             } else if (result is NetworkResult.Failure) {
                 mess = result.errorMessage.message
             }
-            status.postValue(result is NetworkResult.Success)
+            changePasswordStatus.postValue(result is NetworkResult.Success)
         }
         registerEventParentJobFinish()
 

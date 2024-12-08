@@ -26,7 +26,7 @@ class RecentFragment :
 
     private val songAdapter = SongEntityAdapter(this, SongEntityAdapter.TYPE_SONG_ENTITY_RECENTLY)
     private val viewModel by viewModels<RecentViewModel>()
-    private var recentSongList: ArrayList<Song> = arrayListOf()
+    private var recentSongList: ArrayList<SongEntity> = arrayListOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class RecentFragment :
         viewModel.recentSong.observe(viewLifecycleOwner) {
             binding.rcySongs.visibility = View.VISIBLE
             songAdapter.submitList(it)
-            recentSongList = it as ArrayList<Song>
+            recentSongList = it as ArrayList<SongEntity>
             binding.shimmer.stopShimmer()
             binding.shimmer.visibility = View.INVISIBLE
         }
@@ -60,11 +60,16 @@ class RecentFragment :
 
 
     override fun onSongEntityClick(songEntity: SongEntity) {
+        val songs = mutableListOf<Song>()
+        for (song in recentSongList) {
+            songs.add(song.toSong())
+        }
+
         val song = songEntity.toSong()
         Utils.sendNewMusic(
             requireActivity(),
             MusicService.ACTION_PLAY,
-            song, arrayListOf(song)
+            song, songs as ArrayList
         )
     }
 

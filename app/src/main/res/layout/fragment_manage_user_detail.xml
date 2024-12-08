@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.component.admin.user.detail_manage_user.ManageUserDetailFragment">
+    tools:context=".ui.component.admin.user.manage_user_detail.ManageUserDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +25,6 @@
             android:id="@+id/imv_avatar"
             android:layout_width="@dimen/_123dp"
             android:layout_height="@dimen/_123dp"
-            android:src="@drawable/one_direction"
             android:theme="@style/circle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

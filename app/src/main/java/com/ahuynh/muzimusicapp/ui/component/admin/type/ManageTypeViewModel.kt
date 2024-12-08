@@ -50,7 +50,7 @@ class ManageTypeViewModel @Inject constructor(
     fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllTypes(sharePreferencesHelper.isSortType()))
+            typeList.postValue(typeRepository.getAllTypes(sharePreferencesHelper.isSortType(),0 , 10))
 
         }
         registerEventParentJobFinish()

@@ -43,7 +43,6 @@ class Step1Fragment : BaseFragment<FragmentStep1Binding>(FragmentStep1Binding::i
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.imvAvatar)
                 viewModel.avatar = it
-                binding.tvName.text = it.name
             }
         } else {
             Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()

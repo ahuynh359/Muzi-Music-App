@@ -1,19 +1,13 @@
 package com.ahuynh.muzimusicapp.ui.component.admin.type.detail_manage_type
 
 import android.content.ActivityNotFoundException
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.databinding.FragmentManageTypeDetailBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -23,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.io.FileOutputStream
 
 @AndroidEntryPoint
 class ManageTypeDetailFragment :
@@ -37,17 +30,18 @@ class ManageTypeDetailFragment :
 
     private val viewModel by viewModels<ManageTypeViewModel>({ requireActivity() })
     private lateinit var currentType: Type
-    private lateinit var file: File
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        if (uri != null) {
-            val file = FileHelper.from(requireContext(), uri)!!
-            file.let {
-                viewModel.changeAvatar(currentType.id, it)
+        uri?.let {
+            val file: File? = FileHelper.from(requireContext(), it)
+            file?.let { fileObj ->
+
+                viewModel.changeAvatar(
+                    currentType.id,
+                    fileObj
+                )
             }
-        } else {
-            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -60,15 +54,9 @@ class ManageTypeDetailFragment :
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getTypeById(currentType.id)
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleUI()
         observe()
 
@@ -77,21 +65,19 @@ class ManageTypeDetailFragment :
 
     private fun observe() {
 
-        viewModel.type.observe(viewLifecycleOwner) {
-            it?.let {
-                Glide
-                    .with(binding.imvAvatar.context)
-                    .load(it.avatar)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(binding.imvAvatar)
-                binding.tvType.text = it.id.toString()
-                binding.edtType.setText(it.name)
+        currentType.let {
+            Glide
+                .with(binding.imvAvatar.context)
+                .load(it.avatar)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.imvAvatar)
+            binding.tvType.text = it.id.toString()
+            binding.edtType.setText(it.name)
 
-                binding.tvCreatedAt.text = it.createdAt
-                binding.tvUpdatedAt.text = it.updatedAt
+            binding.tvCreatedAt.text = it.createdAt
+            binding.tvUpdatedAt.text = it.updatedAt
 
-            }
 
         }
 

@@ -2,7 +2,6 @@ package com.ahuynh.muzimusicapp.ui.component.user.search.fragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.ahuynh.muzimusicapp.data.database.entity.SongEntity
 import com.ahuynh.muzimusicapp.data.model.Type
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.TypeRepository
@@ -25,7 +24,7 @@ class SearchViewModel @Inject constructor(
      fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllTypes(SortName.NEW))
+            typeList.postValue(typeRepository.getAllTypes(SortName.NEW,0 , 10))
 
         }
         isSearchDone.postValue(true)

@@ -24,7 +24,9 @@ class ManageUserViewModel @Inject constructor(
     var deleteUserStatus = MutableLiveData<Boolean?>()
     var createUserStatus = MutableLiveData<Boolean?>()
     var updateUserStatus = MutableLiveData<Boolean?>()
-    var user = MutableLiveData<User>()
+    var getUserByIdStatus = MutableLiveData<Boolean?>()
+
+    var currentUser = MutableLiveData<User>()
     var mess: String? = null
     var avatar = MutableLiveData<String>()
     var sortUser = MutableLiveData<SortName>()
@@ -57,7 +59,7 @@ class ManageUserViewModel @Inject constructor(
     fun getUserById(id: Long) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            user.postValue(userRepository.getUserById(id))
+            currentUser.postValue(userRepository.getUserById(id))
         }
         registerEventParentJobFinish()
     }

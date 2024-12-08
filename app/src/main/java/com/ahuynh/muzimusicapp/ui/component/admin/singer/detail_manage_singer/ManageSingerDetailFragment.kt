@@ -34,16 +34,17 @@ class ManageSingerDetailFragment :
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        if (uri != null) {
-            val file = FileHelper.from(requireContext(), uri)!!
-            file.let {
-                viewModel.changeAvatar(currentSinger.id, it)
+        uri?.let {
+            val file: File? = FileHelper.from(requireContext(), it)
+            file?.let { fileObj ->
+
+                viewModel.changeAvatar(
+                    currentSinger.id,
+                    fileObj
+                )
             }
-        } else {
-            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +56,6 @@ class ManageSingerDetailFragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.getSingerById(currentSinger.id)
     }
 
 
@@ -70,8 +70,7 @@ class ManageSingerDetailFragment :
 
     private fun observe() {
 
-        viewModel.singer.observe(viewLifecycleOwner) {
-            it?.let {
+       currentSinger.let {
                 Glide
                     .with(binding.imvAvatar.context)
                     .load(it.avatar)
@@ -80,11 +79,10 @@ class ManageSingerDetailFragment :
                     .into(binding.imvAvatar)
                 binding.tvSingerName.text = it.id.toString()
                 binding.edtSinger.setText(it.name)
-
+                binding.edtDescription.setText(it.description)
                 binding.tvCreatedAt.text = it.createdAt
                 binding.tvUpdatedAt.text = it.updatedAt
 
-            }
 
         }
 

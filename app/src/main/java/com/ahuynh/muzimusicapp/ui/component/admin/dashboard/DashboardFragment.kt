@@ -2,10 +2,14 @@ package com.ahuynh.muzimusicapp.ui.component.admin.dashboard
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.ahuynh.muzimusicapp.R
+import com.ahuynh.muzimusicapp.adapter.MenuAdapter
+import com.ahuynh.muzimusicapp.data.model.ItemMenu
+import com.ahuynh.muzimusicapp.data.model.ItemMenuName
 import com.ahuynh.muzimusicapp.data.model.response.ListenOfDayResponse
 import com.ahuynh.muzimusicapp.databinding.FragmentDashboardBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
@@ -32,9 +36,10 @@ import kotlin.math.min
 
 @AndroidEntryPoint
 class DashboardFragment :
-    BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
+    BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate), MenuAdapter.OnItemMenuAdapterClicked  {
     private val values: ArrayList<ArrayList<Entry>> = ArrayList()
-
+    private val settingList = ArrayList<ItemMenu>()
+    private val settingAdapter = MenuAdapter(this)
     private val viewModel by viewModels<DashboardViewModel>()
 
     companion object {
@@ -80,15 +85,60 @@ class DashboardFragment :
     private fun getData() {
         viewModel.getAllUsers()
         viewModel.getChartList()
+        viewModel.getTotalResponse()
+        //viewModel.getTopSongDrawable(requireContext())
     }
 
 
     private fun handleUI() {
+        binding.rcySetting.adapter = settingAdapter
         handleUserData()
         handleSongData()
+        handleTotalResponse()
 
 
+    }
 
+    private fun handleTotalResponse() {
+        viewModel.totalResponse.observe(viewLifecycleOwner) {
+            Log.d("ABC",it.data.toString())
+            settingList.add(
+                ItemMenu(
+                    it.data.totalUser,
+                    R.drawable.ic_user,
+                    ItemMenuName.LANGUAGE
+                )
+            )
+            settingList.add(
+                ItemMenu(
+                    it.data.totalSong,
+                    R.drawable.ic_song,
+                    ItemMenuName.LANGUAGE
+                )
+            )
+            settingList.add(
+                ItemMenu(
+                    it.data.totalAlbum,
+                    R.drawable.ic_album,
+                    ItemMenuName.LANGUAGE
+                )
+            )
+            settingList.add(
+                ItemMenu(
+                    it.data.totalSinger,
+                    R.drawable.ic_user,
+                    ItemMenuName.LANGUAGE
+                )
+            )
+            settingList.add(
+                ItemMenu(
+                    it.data.totalType,
+                    R.drawable.ic_type,
+                    ItemMenuName.LANGUAGE
+                )
+            )
+            settingAdapter.submitList(settingList)
+        }
     }
 
     private fun handleSongData() {
@@ -96,7 +146,7 @@ class DashboardFragment :
             values.clear()
             for (topIndex in 0 until min(3, it.size)) {
                 values.add(ArrayList())
-                it[topIndex].listenDetail?.let { listListen ->
+                it[topIndex].listenDetail.let { listListen ->
                     val calendar = Calendar.getInstance()
                     calendar.add(Calendar.DAY_OF_MONTH, -10)
                     for (cnt in 0 until 10) {
@@ -250,6 +300,10 @@ class DashboardFragment :
         }
 
         return LineData(sets)
+    }
+
+    override fun onMenuClicked(menu: ItemMenu) {
+
     }
 
 

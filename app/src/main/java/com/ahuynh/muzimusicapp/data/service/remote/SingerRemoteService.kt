@@ -58,12 +58,12 @@ class SingerRemoteService @Inject constructor(
 
     }
 
-    suspend fun createSinger(name: String, avatar: File): NetworkResult<SingerResponseData> {
+    suspend fun createSinger(name: String,description: String, avatar: File): NetworkResult<SingerResponseData> {
         val imageFileRequestBody =
             avatar.asRequestBody("image/*".toMediaTypeOrNull())
         return callApi {
             singerAPI.createSinger(
-                name, MultipartBody.Part.createFormData(
+                name,description, MultipartBody.Part.createFormData(
                     "avatar",
                     avatar.name,
                     imageFileRequestBody

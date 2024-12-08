@@ -55,7 +55,7 @@
             android:id="@+id/action_typeMenu_to_detailTypeFragment"
             app:destination="@id/detailTypeFragment" />
     </dialog>
-    <dialog
+    <fragment
         android:id="@+id/detailTypeFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.type.detail.DetailTypeFragment"
         android:label="fragment_detail_type"
@@ -63,7 +63,7 @@
         <argument
             android:name="type"
             app:argType="com.ahuynh.muzimusicapp.data.model.Type" />
-    </dialog>
+    </fragment>
     <dialog
         android:id="@+id/singerMenu"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.menu.SingerMenu"
@@ -75,7 +75,7 @@
             android:name="song"
             app:argType="com.ahuynh.muzimusicapp.data.model.Song" />
     </dialog>
-    <dialog
+    <fragment
         android:id="@+id/detailSingerFragment"
         android:name="com.ahuynh.muzimusicapp.ui.component.user.singer.detail.DetailSingerFragment"
         android:label="fragment_detail_singer"
@@ -83,7 +83,7 @@
         <argument
             android:name="singer"
             app:argType="com.ahuynh.muzimusicapp.data.model.Singer" />
-    </dialog>
+    </fragment>
     <dialog
         android:id="@+id/sleepDialog"
         android:name="com.ahuynh.muzimusicapp.ui.component.player.sleep.SleepDialog"

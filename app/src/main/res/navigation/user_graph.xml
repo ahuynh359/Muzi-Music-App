@@ -106,6 +106,10 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
+            app:enterAnim="@anim/bottom_to_top"
+            app:exitAnim="@anim/top_to_bottom"
+            app:popEnterAnim="@anim/bottom_to_top"
+            app:popExitAnim="@anim/top_to_bottom"
             android:id="@+id/action_profileFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
         <action
@@ -119,9 +123,9 @@
             android:id="@+id/action_profileFragment_to_singerFragment"
             app:destination="@id/loveSingerFragment" />
     </fragment>
-    <dialog
+    <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.ahuynh.muzimusicapp.ui.component.user.changpassword.ChangePasswordBottomSheetFragment"
+        android:name="com.ahuynh.muzimusicapp.ui.component.user.changpassword.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
     <fragment

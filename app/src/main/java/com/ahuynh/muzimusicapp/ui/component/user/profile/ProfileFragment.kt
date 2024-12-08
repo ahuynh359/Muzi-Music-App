@@ -17,8 +17,6 @@ import com.ahuynh.muzimusicapp.databinding.FragmentProfileBinding
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
 import com.ahuynh.muzimusicapp.utils.Utils.loadImage
 import com.ahuynh.muzimusicapp.utils.helper.FileHelper
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -53,10 +51,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         initData()
     }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,7 +65,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun observeData() {
         viewModel.currentUser.observe(viewLifecycleOwner) {
             binding.imvAvatar.loadImage(it.avatar)
-
         }
 
         viewModel.avatar.observe(viewLifecycleOwner) {

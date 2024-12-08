@@ -3,19 +3,15 @@ package com.ahuynh.muzimusicapp.ui.component.admin.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ahuynh.muzimusicapp.R
 import com.ahuynh.muzimusicapp.adapter.UserAdapter
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.databinding.FragmentManageUserBinding
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortBottomSheetFragment
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.fragment.BaseFragment
-import com.ahuynh.muzimusicapp.ui.component.admin.type.ManageTypeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -73,6 +69,8 @@ class ManageUserFragment :
 
 
     }
+
+
 
 
 

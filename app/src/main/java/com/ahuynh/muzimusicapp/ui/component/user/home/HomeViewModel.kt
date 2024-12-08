@@ -15,6 +15,7 @@ import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.NetworkResult
+import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,16 +26,26 @@ class HomeViewModel @Inject constructor(
     private val songRepository: SongRepository,
     private val singerRepository: SingerRepository,
     private val typeRepository: TypeRepository,
-    private val notificationRepository: NotificationRepository
+    private val notificationRepository: NotificationRepository,
+    private val sharePreferencesHelper: SharePreferencesHelper
 ) : BaseViewModel() {
     var recentSong = MutableLiveData<List<SongEntity>>()
     var newAlbumList = MutableLiveData<List<Album>>()
     var newSingerList = MutableLiveData<List<Singer>>()
     var loveSingerList = MutableLiveData<List<Singer>>()
     var newSongList = MutableLiveData<List<Song>>()
+    var recommendedSongList = MutableLiveData<List<Song>>()
     var newTypeList = MutableLiveData<List<Type>>()
     var unreadCount = MutableLiveData<Int>()
     var mess : String ?= null
+    var currentUserId = MutableLiveData<Long>()
+
+
+
+    init {
+        currentUserId.postValue(sharePreferencesHelper.getId())
+    }
+
     fun getUnreadNotification() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
@@ -66,6 +77,14 @@ class HomeViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
+    fun getRecommendations() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            recommendedSongList.postValue(songRepository.getRecommendations(sharePreferencesHelper.getId()))
+        }
+        registerEventParentJobFinish()
+    }
+
 
     fun getNewSingers() {
         isLoading.postValue(true)
@@ -87,7 +106,7 @@ class HomeViewModel @Inject constructor(
     fun getNewTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            newTypeList.postValue(typeRepository.getAllTypes(SortName.NEW))
+            newTypeList.postValue(typeRepository.getAllTypes(SortName.NEW, 0 ,10))
         }
         registerEventParentJobFinish()
     }

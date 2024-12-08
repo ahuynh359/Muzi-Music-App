@@ -183,4 +183,6 @@
     <string name="restart_app">Restart App</string>
     <string name="restart_your_app">Restart your app</string>
     <string name="love_songs">Love Songs</string>
+    <string name="user_lock_and_unlock">User Lock And Unlock</string>
+    <string name="recommendations">Recommendations</string>
 </resources>

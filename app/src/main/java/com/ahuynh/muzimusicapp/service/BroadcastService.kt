@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
+import com.ahuynh.muzimusicapp.utils.Utils
 
 class BroadcastService : Service() {
 
@@ -45,7 +46,8 @@ class BroadcastService : Service() {
     }
 
     private fun stopMusicService() {
-        stopService(Intent(this,MusicService::class.java))
+        //stopService(Intent(this,MusicService::class.java))
+        Utils.sendMusic(applicationContext, MusicService.ACTION_PAUSE)
     }
 
     override fun onBind(intent: Intent): IBinder? {

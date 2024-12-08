@@ -21,8 +21,8 @@ import javax.inject.Inject
 class TypeRemoteService @Inject constructor(
     private val typeAPI: TypeAPI
 ) : BaseRemoteService() {
-    suspend fun getAllTypes(sortName: SortName): List<Type> {
-        val result = callApi { typeAPI.getAllTypes(sortName) }
+    suspend fun getAllTypes(sortName: SortName , page : Int, size : Int): List<Type> {
+        val result = callApi { typeAPI.getAllTypes(sortName,page,size) }
         return if (result is NetworkResult.Success) {
             result.data.data.toListType()
         } else {

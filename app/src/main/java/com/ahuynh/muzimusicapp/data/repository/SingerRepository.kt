@@ -56,9 +56,9 @@ class SingerRepository @Inject constructor(
 
     }
 
-    suspend fun createSinger(name: String, avatar: File): NetworkResult<SingerResponseData> {
+    suspend fun createSinger(name: String,description : String, avatar: File): NetworkResult<SingerResponseData> {
         return withContext(dispatcher) {
-            singerService.createSinger(name,avatar)
+            singerService.createSinger(name,description,avatar)
         }
     }
 

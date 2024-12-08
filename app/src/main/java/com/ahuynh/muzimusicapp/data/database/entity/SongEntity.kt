@@ -6,14 +6,9 @@ import com.ahuynh.muzimusicapp.data.model.Album
 import com.ahuynh.muzimusicapp.data.model.Singer
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.Type
-import com.ahuynh.muzimusicapp.data.model.response.AlbumResponse
-import com.ahuynh.muzimusicapp.data.model.response.SingerResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponse
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.time.Instant
-import java.time.LocalDateTime
 
 @Entity
 data class SongEntity(
@@ -23,8 +18,8 @@ data class SongEntity(
     val avatar: String,
     val file: String,
     val lyrics: String,
-    val album: String, // Lưu trữ dưới dạng chuỗi JSON
-    val singers: String, // Lưu trữ dưới dạng chuỗi JSON
+    val album: String,
+    val singers: String,
     val types: String,
     val createdAt : String,
     val updatedAt : String,
@@ -55,4 +50,7 @@ data class SongEntity(
             updatedAt = this.updatedAt
         )
     }
+}
+fun List<SongResponse>.toListSong(): List<Song> {
+    return map { it.toSong() }
 }

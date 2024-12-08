@@ -166,4 +166,22 @@
     <string name="search_album_name">Tìm kiếm Tên Album</string>
     <string name="search_singer_name">Tìm kiếm tên ca sĩ</string>
     <string name="search_type_name">Loại tìm kiếm thể loại</string>
+    <string name="millions_of_songs_free_on_muzi_music">Millions of songs free on Muzi Music</string>
+    <string name="can_not_be_empty">Can\'t be empty</string>
+    <string name="invalid_email">Invalid Email Addres</string>
+    <string name="enter_your_email">Enter Your Email</string>
+    <string name="password_must_be_at_least_6_characters"><![CDATA[Password >= 6 characters]]></string>
+    <string name="password_does_not_match">Password does not match</string>
+    <string name="reset_your_password">Reset Your Password</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="good_afternoon">Good Afternoon</string>
+    <string name="good_evening">Good Evening</string>
+    <string name="more">More</string>
+    <string name="about">About</string>
+    <string name="no_description">No Description</string>
+    <string name="singer_you_followed">Singer You Followed</string>
+    <string name="restart_app">Restart App</string>
+    <string name="restart_your_app">Restart your app</string>
+    <string name="love_songs">Love Songs</string>
+    <string name="user_lock_and_unlock">User Lock And Unlock</string>
 </resources>

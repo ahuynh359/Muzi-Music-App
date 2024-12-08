@@ -1,16 +1,11 @@
 package com.ahuynh.muzimusicapp.data.api
 
 import com.ahuynh.muzimusicapp.data.model.request.UpdateSingerRequest
-import com.ahuynh.muzimusicapp.data.model.request.UpdateTypeRequest
-import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
-import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSingerResponse
-import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
+import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
 import com.ahuynh.muzimusicapp.data.model.response.SingerResponseDataList
-import com.ahuynh.muzimusicapp.data.model.response.SongResponse
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Constants
 import okhttp3.MultipartBody
@@ -49,6 +44,7 @@ interface SingerAPI {
     @POST("${Constants.API_VERSION}/singer/create")
     suspend fun createSinger(
         @Query("name") name: String,
+        @Query("description") description: String,
         @Part avatar: MultipartBody.Part
     ): Response<SingerResponseData>
 

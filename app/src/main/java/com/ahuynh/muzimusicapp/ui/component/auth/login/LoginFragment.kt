@@ -70,13 +70,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         val passwordInput = binding.edtPassword.text.toString().trim()
 
         isLoginEnabled =
-            emailInput.isNotEmpty() && passwordInput.isNotEmpty() && Utils.isValidEmail(emailInput)
+            emailInput.isNotEmpty() && passwordInput.isNotEmpty()
 
         binding.btnLogIn.isEnabled = isLoginEnabled
 
         binding.edtEmail.error = when {
             emailInput.isEmpty() -> "Cannot be empty"
-            !Utils.isValidEmail(emailInput) -> "Invalid email address"
             else -> null
         }
 

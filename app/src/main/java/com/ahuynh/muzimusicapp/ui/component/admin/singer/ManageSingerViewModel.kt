@@ -55,10 +55,10 @@ class ManageSingerViewModel @Inject constructor(
         registerEventParentJobFinish()
     }
 
-    fun createSinger(name: String, avatar: File) {
+    fun createSinger(name: String,description : String, avatar: File) {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            val result = singerRepository.createSinger(name, avatar)
+            val result = singerRepository.createSinger(name,description, avatar)
             if (result is NetworkResult.Success) {
                 mess = result.data.message
 

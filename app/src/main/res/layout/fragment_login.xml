@@ -43,7 +43,7 @@
 
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:textSize="@dimen/_16sp"
         android:fontFamily="@font/regular"
         android:id="@+id/edt_email"

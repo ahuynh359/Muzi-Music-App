@@ -130,7 +130,7 @@ class AddSingerFragment : BaseFragment<FragmentAddSingerBinding>(FragmentAddSing
         binding.btnAdd.setOnClickListener {
             if (isCreateOk) {
 
-                viewModel.createSinger(binding.edtSinger.text.toString().trim(),file)
+                viewModel.createSinger(binding.edtSinger.text.toString().trim(),binding.edtDescription.text.toString(),file)
 
 
             }

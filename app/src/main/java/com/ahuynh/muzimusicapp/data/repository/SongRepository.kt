@@ -9,6 +9,7 @@ import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
 import com.ahuynh.muzimusicapp.data.model.response.SearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongListen
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
+import com.ahuynh.muzimusicapp.data.model.response.TotalResponse
 import com.ahuynh.muzimusicapp.data.service.local.SongLocalService
 import com.ahuynh.muzimusicapp.data.service.remote.SongRemoteService
 import com.ahuynh.muzimusicapp.di.IoDispatcher
@@ -31,6 +32,17 @@ class SongRepository @Inject constructor(
     suspend fun getAllSongs(sortName: SortName): List<Song> {
         return withContext(dispatcher) {
             songRemoteService.getAllSongs(sortName)
+        }
+    }
+    suspend fun getRecommendations(userId: Long): List<Song> {
+        return withContext(dispatcher) {
+            songRemoteService.getRecommendations(userId)
+        }
+    }
+
+    suspend fun getTotal(): TotalResponse? {
+        return withContext(dispatcher) {
+            songRemoteService.getTotal()
         }
     }
 
@@ -115,7 +127,7 @@ class SongRepository @Inject constructor(
         albumId: Long,
         singerId: Set<Long>,
         typeId: Set<Long>
-    ) : NetworkResult<SongResponseData> {
+    ): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
             songRemoteService.createSong(name, avatar, file, lyrics, albumId, singerId, typeId)
         }
@@ -123,13 +135,13 @@ class SongRepository @Inject constructor(
 
     suspend fun changeAvatar(id: Long, file: File): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
-            songRemoteService.changeAvatar(id , file)
+            songRemoteService.changeAvatar(id, file)
         }
     }
 
     suspend fun uploadMusic(id: Long, file: File): NetworkResult<SongResponseData> {
         return withContext(dispatcher) {
-            songRemoteService.uploadMusic(id , file)
+            songRemoteService.uploadMusic(id, file)
         }
     }
 

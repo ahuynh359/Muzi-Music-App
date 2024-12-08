@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -23,6 +22,7 @@ import com.ahuynh.muzimusicapp.utils.helper.FileHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 
 @AndroidEntryPoint
@@ -42,13 +42,15 @@ class ManageSongDetailFragment :
     private var fileChooser: ActivityResultLauncher<String> = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        if (uri != null) {
-            val file = FileHelper.from(requireContext(), uri)!!
-            file.let {
-                viewModel.changeAvatar(currentSong.id,it)
+        uri?.let {
+            val file: File? = FileHelper.from(requireContext(), it)
+            file?.let { fileObj ->
+
+                viewModel.changeAvatar(
+                    currentSong.id,
+                    fileObj
+                )
             }
-        } else {
-            Toast.makeText(requireContext(), "No file chosen", Toast.LENGTH_SHORT).show()
         }
     }
 

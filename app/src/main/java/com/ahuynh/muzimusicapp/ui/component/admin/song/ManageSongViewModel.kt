@@ -155,7 +155,7 @@ class ManageSongViewModel @Inject constructor(
     fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllTypes(SortName.A_Z))
+            typeList.postValue(typeRepository.getAllTypes(SortName.A_Z,0 , 10))
         }
         registerEventParentJobFinish()
     }

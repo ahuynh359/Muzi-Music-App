@@ -2,16 +2,13 @@ package com.ahuynh.muzimusicapp.data.api
 
 import com.ahuynh.muzimusicapp.data.model.request.UpdateSongRequest
 import com.ahuynh.muzimusicapp.data.model.response.IsLoveSongResponse
-import com.ahuynh.muzimusicapp.data.model.response.SingerResponseData
-import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
+import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
 import com.ahuynh.muzimusicapp.data.model.response.LoveSongResponse
 import com.ahuynh.muzimusicapp.data.model.response.MessageResponse
-import com.ahuynh.muzimusicapp.data.model.response.ListSearchResponse
-import com.ahuynh.muzimusicapp.data.model.response.SongListen
 import com.ahuynh.muzimusicapp.data.model.response.SongListenResponseDataList
-import com.ahuynh.muzimusicapp.data.model.response.SongResponse
 import com.ahuynh.muzimusicapp.data.model.response.SongResponseData
-import com.ahuynh.muzimusicapp.data.model.response.TypeResponseData
+import com.ahuynh.muzimusicapp.data.model.response.SongResponseDataList
+import com.ahuynh.muzimusicapp.data.model.response.TotalResponse
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.utils.Constants
 import okhttp3.MultipartBody
@@ -27,9 +24,14 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SongAPI {
+    @GET("${Constants.API_VERSION}/song/total")
+    suspend fun getTotal(): Response<TotalResponse>
 
     @GET("${Constants.API_VERSION}/song/all")
     suspend fun getAllSongs(@Query("sort") sortName: SortName): Response<SongResponseDataList>
+
+    @GET("${Constants.API_VERSION}/song/recommendations")
+    suspend fun getRecommendations(@Query("userId") userId: Long): Response<SongResponseDataList>
 
     @GET("${Constants.API_VERSION}/song/top10")
     suspend fun getTop10(): Response<SongResponseDataList>

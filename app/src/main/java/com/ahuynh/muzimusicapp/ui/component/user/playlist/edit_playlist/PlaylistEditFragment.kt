@@ -51,6 +51,7 @@ class PlaylistEditFragment : BaseDialogFragment() {
     }
 
     private fun handleUI() {
+        binding.edtPlaylist.setText(currentPlaylist.name)
         binding.btnCancle.setOnClickListener {
             this.dismiss()
         }

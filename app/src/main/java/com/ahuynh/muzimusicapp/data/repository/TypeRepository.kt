@@ -20,9 +20,9 @@ class TypeRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun getAllTypes(sortName: SortName): List<Type> {
+    suspend fun getAllTypes(sortName: SortName, page : Int, size : Int): List<Type> {
         return withContext(dispatcher) {
-            typeRemoteService.getAllTypes(sortName)
+            typeRemoteService.getAllTypes(sortName, page, size)
         }
     }
 

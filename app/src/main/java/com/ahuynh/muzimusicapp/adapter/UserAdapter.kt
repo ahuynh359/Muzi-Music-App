@@ -1,5 +1,6 @@
 package com.ahuynh.muzimusicapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ class UserAdapter(private val listener: OnUserClicked) :
 
     private var users: List<User> = emptyList()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(data: List<User>) {
         users = data
         notifyDataSetChanged()

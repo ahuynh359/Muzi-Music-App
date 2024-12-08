@@ -12,7 +12,6 @@ import com.ahuynh.muzimusicapp.data.repository.TypeRepository
 import com.ahuynh.muzimusicapp.ui.base.bottom_sheet.SortName
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
 import com.ahuynh.muzimusicapp.utils.NetworkResult
-import com.ahuynh.muzimusicapp.utils.helper.SharePreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -79,7 +78,7 @@ class UploadViewModel @Inject constructor(
     fun getAllTypes() {
         isLoading.postValue(true)
         parentJob = viewModelScope.launch {
-            typeList.postValue(typeRepository.getAllTypes(SortName.A_Z))
+            typeList.postValue(typeRepository.getAllTypes(SortName.A_Z, 0 , 10))
         }
         registerEventParentJobFinish()
     }

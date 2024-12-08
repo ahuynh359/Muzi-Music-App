@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
@@ -14,7 +13,7 @@ import coil.request.SuccessResult
 import com.ahuynh.muzimusicapp.data.model.Song
 import com.ahuynh.muzimusicapp.data.model.User
 import com.ahuynh.muzimusicapp.data.model.response.SongListen
-import com.ahuynh.muzimusicapp.data.repository.SingerRepository
+import com.ahuynh.muzimusicapp.data.model.response.TotalResponse
 import com.ahuynh.muzimusicapp.data.repository.SongRepository
 import com.ahuynh.muzimusicapp.data.repository.UserRepository
 import com.ahuynh.muzimusicapp.ui.base.viewmodel.BaseViewModel
@@ -42,6 +41,14 @@ class DashboardViewModel @Inject constructor(
     val chartList = MutableLiveData<List<Song>>()
     val top3List = MutableLiveData<List<SongListen>>()
     val songDrawables = MutableLiveData<List<Drawable?>>()
+    var totalResponse = MutableLiveData<TotalResponse>()
+    fun getTotalResponse() {
+        isLoading.postValue(true)
+        parentJob = viewModelScope.launch {
+            totalResponse.postValue(songRepository.getTotal())
+        }
+        registerEventParentJobFinish()
+    }
 
     fun getTopSongDrawable(context: Context) {
         viewModelScope.launch {
@@ -66,8 +73,18 @@ class DashboardViewModel @Inject constructor(
             songDrawables.postValue(list)
         }
     }
-    private fun resizeDrawable(context: Context, drawable: Drawable, width: Int, height: Int): Drawable {
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+
+    private fun resizeDrawable(
+        context: Context,
+        drawable: Drawable,
+        width: Int,
+        height: Int
+    ): Drawable {
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
