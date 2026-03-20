@@ -63,7 +63,7 @@ dependencies {
     //Kalaxon
     implementation ("com.beust:klaxon:5.5")
     //Slider Image
-    implementation ("com.github.smarteist:autoimageslider:1.4.0")
+    implementation ("com.github.smarteist:Android-Image-Slider:1.4.0")
     //Edittext Pin
     implementation ("com.github.aabhasr1:OtpView:v1.1.2-ktx") // kotlin
     implementation("com.github.roynx98:transition-button-android:69d3513640")
