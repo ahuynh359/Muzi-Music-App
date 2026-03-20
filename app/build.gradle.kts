@@ -6,7 +6,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
-
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -88,8 +88,8 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
-    // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (ksp)
+    ksp("androidx.room:room-compiler:$room_version")
 
     //Chip
     implementation(libs.androidx.core.ktx)
@@ -167,7 +167,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.palette.ktx)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     //Splash Screen
     implementation(libs.androidx.core.splashscreen)
